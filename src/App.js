@@ -2,12 +2,12 @@
 import './App.css';
 import Chat from './components/Chat'
 import Dashboard from './components/Dashboard'
-import Auth from './components/Auth'
+// import Auth from './components/Auth'
 
 
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/auth';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
 
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
@@ -28,12 +28,38 @@ const firestore = firebase.firestore();
 function App() {
 
   const [user] = useAuthState(auth);
-
+  console.log(user)
   return (
     <div className="App">
-          {user ? <Dashboard /> : <Auth />}
+          {user ? <Dashboard /> : <LogIn />} 
+          <LogOut />
     </div>
   );
 }
+
+
+
+function LogIn() {
+
+  const googleSignIn = () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider);
+  }
+
+  return (
+      <button onClick={googleSignIn}>Google</button>
+  )
+
+}
+
+function LogOut() {
+
+  return auth.currentUser && (
+    <button onClick={() => auth.signOut()}>Log Out</button>
+  )
+
+}
+
+
 
 export default App;
