@@ -1,6 +1,6 @@
 
 import './App.css';
-import Chat from './components/Chat'
+import UserLogIn from './components/UserAuth/UserLogIn'
 import Dashboard from './components/Dashboard'
 // import Auth from './components/Auth'
 
@@ -11,7 +11,7 @@ import 'firebase/compat/firestore';
 
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 firebase.initializeApp({
   apiKey: "AIzaSyDBEtpwRvwCXly_lclR91PpXCiSmolzaAI",
@@ -31,26 +31,13 @@ function App() {
   const [user] = useAuthState(auth);
   return (
     <div className="App">
-          {user ? <PrivateChat /> : <LogIn />} 
+          {user ? <PrivateChat /> : <UserLogIn firebase={firebase} />} 
           <LogOut />
     </div>
   );
 }
 
 
-
-function LogIn() {
-
-  const googleSignIn = () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider);
-  }
-
-  return (
-      <button onClick={googleSignIn}>Google</button>
-  )
-
-}
 
 function LogOut() {
 
@@ -70,6 +57,8 @@ function PrivateChat() {
 
   const [formValue, setFormValue] = useState('')
 
+  const zoomHandle = useRef()
+
   const sendThatThang = async(e) => {
     e.preventDefault();
 
@@ -84,12 +73,16 @@ function PrivateChat() {
 
     setFormValue('')
 
+    zoomHandle.current.scrollIntoView({behavior: 'smooth'})
+
   }
 
   return (
     <>
     <div>
-      {messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
+      {messages && messages.map(msg => <ChatMessage mid={msg.id} message={msg} />)}
+
+      <div ref={zoomHandle}></div>
     </div>
 
     <form onSubmit={sendThatThang}>
@@ -101,13 +94,13 @@ function PrivateChat() {
   )
 }
 
-function ChatMessage({ message }) {
+function ChatMessage({ mid, message }) {
   
   const msgStyle = message.uid === auth.currentUser.uid ? 'sent' : 'received'
 
   return (
-    <div className={`message ${msgStyle}`}>
-      <img src={message.photoURL} />
+    <div key={mid} className={`message ${msgStyle}`}>
+      {/* <img src={message.photoURL} /> */}
       <p>{message.body}</p>
     </div>
   )
