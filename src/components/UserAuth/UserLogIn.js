@@ -14,8 +14,6 @@ export default function UserLogIn({ firebase }) {
   const [residence, setResidence] = useState('')
   const [consent, setConsent] = useState(false)
 
-
-
   const auth = firebase.auth();
   const firestore = firebase.firestore();
 
@@ -32,6 +30,12 @@ export default function UserLogIn({ firebase }) {
   const validateForm = (e) => {
     e.preventDefault()
     console.log(email, password, confirmPass, displayName, birthYear, deceased, gender, residence, consent)
+
+    //email is not already taken
+    //passwords match
+    //consent is checked
+
+    //everything just exists
   }
 
   const backToLogin = (e) => {
@@ -66,16 +70,16 @@ export default function UserLogIn({ firebase }) {
         break
       case 'consent':
         setConsent(e.target.checked)
+        break
     }
   }
-
-
 
   if (regPanel === true) {
     return (
       <div className="wrapper">
         <div className="container">
           <div className="col-left-front">
+                <button onClick={backToLogin} className='btn btn-back'><i className="fa-solid fa-arrow-left"></i> Back to Login</button>
             <div className="col-left-container">
               <form>
                 <label htmlFor="email">Email</label>
@@ -86,7 +90,6 @@ export default function UserLogIn({ firebase }) {
                 <input type="password" name="confirmPass" placeholder="Confirm Password" id="confirmPass" value={confirmPass} onChange={changeHandler} required />
                 <label htmlFor="name">Display Name:</label>
                 <input type="text" name="displayName" placeholder="Name" id="name" value={displayName} onChange={changeHandler} required />
-                <button onClick={backToLogin} className='btn'><i className="fa-solid fa-arrow-left"></i> Back to Login</button>
               </form>
             </div>
           </div>
@@ -118,7 +121,7 @@ export default function UserLogIn({ firebase }) {
                   <option>alphabetized</option>
               </select>
               <div className='consent'>
-                <input type="checkbox" name="consent" value={consent} onChange={changeHandler} required></input>
+                <input type="checkbox" name="consent" id="consent" value={consent} onChange={changeHandler} required></input>
                 <label htmlFor="consent">By clicking this checkbox, I agree to share the above information and allow other users to view the information I shared.</label>
               </div>
               <input className="btn submit-form-btn" type="submit" value="Complete Registation" onClick={validateForm}/>
@@ -139,9 +142,9 @@ export default function UserLogIn({ firebase }) {
               <input type="email" placeholder="Email" required />
               <input type="password" placeholder="Password" required />
               <input className="btn" type="submit" value="Sign In" />
-              <div className='secondary-container'>
-                <button className='btn-secondary' onClick={displayRegistration}>New User?</button>
-                <button className="btn-secondary">Forgot Password?</button>
+              <div className='sub-container'>
+                <button className='btn btn-sub' onClick={displayRegistration}>New User?</button>
+                <button className="btn btn-sub">Forgot Password?</button>
               </div>
             </form>
           </div>

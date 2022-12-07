@@ -28,12 +28,22 @@ function App() {
   const [user] = useAuthState(auth);
   return (
     <div className="App">
-          {/* {user ? <Dashboard /> : <UserLogIn firebase={firebase} />}  */}
-          <UserLogIn firebase={firebase} />
+          {user ? <Dashboard /> : <UserLogIn firebase={firebase} />} 
           <LogOut />
     </div>
   );
 }
+
+
+
+
+
+
+// -----------------------------------------------
+
+
+
+
 
 
 

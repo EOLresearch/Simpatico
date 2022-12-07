@@ -75,10 +75,6 @@ input:focus {
   border-color: transparent transparent #bbaaff transparent;
 }
 
-.login-with-container .btn{
-  margin-top:1rem;
-}
-
 select{
   display: block;
   width: 100%;
@@ -91,10 +87,10 @@ select{
 }
 .consent{
   display:flex;
-  margin-bottom:1rem;
 }
 .consent label, .consent input{
   margin-top: 1rem;
+  margin-bottom:2rem;
   width:unset;
   text-align: left;
 }
@@ -113,12 +109,15 @@ select{
   padding:0.4rem;
   margin-top:1.8rem;
 }
+
+/* // ----- // BUTTONS  */
+
 .btn {
   position: relative;
   display: inline-block;
   width: 100%;
-  margin-bottom: 1rem;
-  padding: 1rem 0;
+  padding: 1rem;
+  margin-bottom:1rem;
   text-align: center;
   color: #ffffff;
   font-size: 1rem;
@@ -138,12 +137,38 @@ select{
 .btn:hover {
   background: #bbaaff;
 }
+.btn-back {
+  padding: 0.5rem;
+  background-color: white;
+  color: #2e85a4;
+  text-align: left;
+  font-size: 1rem;
+  position: relative;
+  right:1rem;
+}
+.btn-back:hover{
+  background-color: white;
+  color: #bbaaff;
+}
 
-.secondary-container{
+.sub-container{
   display: flex;
 }
 
-.btn-secondary{
+/* .login-with-container{
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height:100%;
+} */
+.login-with-container h2{
+  position: relative;
+}
+.login-with-container .btn{
+  margin-top:1rem;
+}
+
+.btn-sub{
   position: relative;
   display: inline-block;
   width: 100%;
@@ -156,9 +181,10 @@ select{
   border: none;
   cursor: pointer;
 }
-.btn-secondary:hover{
+.btn-sub:hover{
   text-decoration: underline;
   color: #bbaaff;
+  background-color: transparent;
   
 }
 @media(max-width: 570px) {
