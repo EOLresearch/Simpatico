@@ -1,9 +1,6 @@
 
-import './App.css';
 import UserLogIn from './components/UserAuth/UserLogIn'
 import Dashboard from './components/Dashboard'
-// import Auth from './components/Auth'
-
 
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
@@ -31,7 +28,8 @@ function App() {
   const [user] = useAuthState(auth);
   return (
     <div className="App">
-          {user ? <PrivateChat /> : <UserLogIn firebase={firebase} />} 
+          {/* {user ? <Dashboard /> : <UserLogIn firebase={firebase} />}  */}
+          <UserLogIn firebase={firebase} />
           <LogOut />
     </div>
   );
