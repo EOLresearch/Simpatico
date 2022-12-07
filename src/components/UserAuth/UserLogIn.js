@@ -89,7 +89,7 @@ export default function UserLogIn({ firebase }) {
                 <label htmlFor="confirmPass">Confirm Password</label>
                 <input type="password" name="confirmPass" placeholder="Confirm Password" id="confirmPass" value={confirmPass} onChange={changeHandler} required />
                 <label htmlFor="name">Display Name:</label>
-                <input type="text" name="displayName" placeholder="Name" id="name" value={displayName} onChange={changeHandler} required />
+                <input type="text" name="displayName" placeholder="Display Name" id="name" value={displayName} onChange={changeHandler} required />
               </form>
             </div>
           </div>
