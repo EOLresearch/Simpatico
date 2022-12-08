@@ -23,6 +23,10 @@ body {
     height: auto;
     display: flex;
 }
+.col-left-container {
+  position: relative;
+  bottom:2rem;
+}
 .col-left-container label{
   visibility: hidden;
 }
@@ -31,8 +35,6 @@ h2 {
     position: relative;
     margin: 0 0 15px 0;
     padding-bottom: 10px;
-    font-size: 22px;
-    font-weight: 700;
 }
 input {
     margin: 0 0 20px 0;
@@ -48,26 +50,6 @@ input a {
     font-size: 14px;
     text-decoration: none;
 }
-.col-left-front,
-.col-right-front {
-    position: relative;
-    width: 50%;
-    padding: 2rem;
-    border-radius: 1rem;
-}
-.col-left-front {
-    margin-right: 1rem;
-    background: #ffffff;
-}
-.col-right-front {
-    background: #ffffff;
-}
-.col-right-front form select {
-  margin-bottom:1rem;
-}
-.fields-container input {
-  padding:0;
-}
 input {
   display: block;
   width: 100%;
@@ -79,6 +61,30 @@ input {
 }
 input:focus {
   border-color: transparent transparent #bbaaff transparent;
+}
+.fields-container input {
+  padding:0;
+}
+.col-left,
+.col-right {
+    position: relative;
+    width: 50%;
+    padding: 2rem;
+    border-radius: 1rem;
+}
+.col-left {
+    margin-right: 1rem;
+    background: #ffffff;
+}
+.col-right {
+    background: #ffffff;
+}
+.col-right form{
+  display: flex;
+  flex-direction: column;
+}
+.col-right form select {
+  margin-bottom:1rem;
 }
 
 select{
@@ -95,7 +101,7 @@ select{
   display:flex;
 }
 .consent label, .consent input{
-  margin-top: 1rem;
+  margin-top: 2rem;
   margin-bottom:2rem;
   width:unset;
   text-align: left;
@@ -106,9 +112,6 @@ select{
 }
 .consent input{
   width:3rem;
-}
-.submit-form-btn{
-  padding:0 !important;
 }
 
 
@@ -131,6 +134,9 @@ select{
   cursor: pointer;
 }
 
+.submit-form-btn{
+  padding:0 !important;
+}
 .btn.btn-go {
   background: #a791ff;
 }
@@ -148,6 +154,7 @@ select{
   font-size: 1rem;
   position: relative;
   right:1rem;
+  top:-1rem;
 }
 .btn-back:hover{
   background-color: white;
@@ -195,13 +202,13 @@ select{
         flex-direction: column;
     }
     
-    .col-left-front,
-    .col-right-front {
+    .col-left,
+    .col-right {
         margin: 0 auto;
         padding: 2rem;
     }
     
-    .col-right-front {
+    .col-right {
         margin-top:1rem;
     }
 }

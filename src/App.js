@@ -1,6 +1,8 @@
 
-import UserLogIn from './components/UserAuth/UserLogIn'
+import UserAuth from './components/UserAuth/UserAuth'
 import Dashboard from './components/Dashboard'
+// import Dashboard from './components/Dashboard'
+
 
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
@@ -28,7 +30,7 @@ function App() {
   const [user] = useAuthState(auth);
   return (
     <div className="App">
-          {user ? <Dashboard /> : <UserLogIn firebase={firebase} />} 
+          {user ? <PrivateChat /> : <UserAuth user={user} firebase={firebase} />} 
           <LogOut />
     </div>
   );
@@ -36,14 +38,7 @@ function App() {
 
 
 
-
-
-
 // -----------------------------------------------
-
-
-
-
 
 
 
