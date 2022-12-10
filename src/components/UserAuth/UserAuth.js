@@ -54,6 +54,7 @@ export default function UserAuth({ user, firebase }) {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        console.log(errorMessage)
         // ..
     });
 
@@ -119,9 +120,6 @@ export default function UserAuth({ user, firebase }) {
           </div>
           <div className="col-right">
             <form>
-              {/* <label htmlFor="birthYear">Birth Year</label>
-              <input type="number" name="birthYear" placeholder="e.g. 1987" id="birthYear" value={birthYear} onChange={changeHandler} required /> */}
-              {/* <label htmlFor="deceased">The deceased is my... </label> */}
               <select name="deceased" id="deceased" value={deceased} onChange={changeHandler} required>
                 <option>The deceased is my...</option>
                 <option>Homie</option>
@@ -129,14 +127,12 @@ export default function UserAuth({ user, firebase }) {
                 <option>Cousin</option>
                 <option>Prefer not to disclose</option>
               </select>
-              {/* <label htmlfFor="gender">Gender</label> */}
               <select name="gender" id="gender" value={gender} onChange={changeHandler} required>
                 <option>Your sex/gender</option>
                 <option>Male</option>
                 <option>Female</option>
                 <option>Prefer not to disclose</option>
               </select>
-              {/* <label htmlfFor="residence">Where do you live in the US?</label> */}
               <select name="residence" id="residence" value={residence} onChange={changeHandler} required>
                 <option>Where do you live in the us?</option>
                 <option>every </option>
