@@ -1,6 +1,6 @@
 import './userauth.css';
 import { useState } from "react";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
 
 export default function UserAuth({ user, firebase }) {
@@ -29,7 +29,7 @@ export default function UserAuth({ user, firebase }) {
 
 
   }
-  const validateForm = (e) => {
+  const validateNewUser = (e) => {
     e.preventDefault()
     // console.log(email, password, confirmPass, displayName, birthYear, deceased, gender, residence, consent)
 
@@ -40,13 +40,13 @@ export default function UserAuth({ user, firebase }) {
     //everything just exists
 
 
- 
+
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, email, password)
 
-    .then((userCredential) => {
-      console.log(userCredential)
-      // Signed in 
+      .then((userCredential) => {
+        console.log(userCredential)
+        // Signed in 
         const user = userCredential.user;
         console.log(user)
         // ...
@@ -56,9 +56,26 @@ export default function UserAuth({ user, firebase }) {
         const errorMessage = error.message;
         console.log(errorMessage)
         // ..
-    });
+      });
+  }
 
+  const returningUser = (e) => {
+    e.preventDefault()
 
+    console.log(email, password)
+
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in 
+        const user = userCredential.user;
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+         console.log(errorMessage)
+      });
   }
 
   const backToLogin = (e) => {
@@ -144,7 +161,7 @@ export default function UserAuth({ user, firebase }) {
                 <input type="checkbox" name="consent" id="consent" value={consent} onChange={changeHandler} required></input>
                 <label htmlFor="consent">By clicking this checkbox, I agree to share the above information and allow other users to view the information I shared.</label>
               </div>
-              <input className="btn submit-form-btn" type="submit" value="Complete Registation" onClick={validateForm} />
+              <input className="btn submit-form-btn" type="submit" value="Complete Registation" onClick={validateNewUser} />
             </form>
           </div>
         </div>
@@ -152,13 +169,15 @@ export default function UserAuth({ user, firebase }) {
     )
   }
 
+
+  //TODO: form is not controlled and giving the creds in state thay are needed for user sign in
   return (
     <div className="wrapper">
       <div className="container">
         <div className="col-left">
           <div className="fields-container">
             <h2>Login</h2>
-            <form>
+            <form onSubmit={returningUser}>
               <input type="email" placeholder="Email" required />
               <input type="password" placeholder="Password" required />
               <input className="btn" type="submit" value="Sign In" />
