@@ -83,7 +83,7 @@ function PrivateChat() {
   return (
     <>
     <div>
-      {messages && messages.map(msg => <ChatMessage mid={msg.id} message={msg} />)}
+      {messages.map(msg => <ChatMessage mid={msg.id} message={msg} />)}
 
       <div ref={zoomHandle}></div>
     </div>

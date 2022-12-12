@@ -16,7 +16,7 @@ export default function UserAuth({ user, firebase }) {
   const [consent, setConsent] = useState(false)
 
   const auth = firebase.auth();
-  // const firestore = firebase.firestore();
+  const firestore = firebase.firestore();
 
   const googleSignIn = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
@@ -29,41 +29,37 @@ export default function UserAuth({ user, firebase }) {
 
 
   }
-  const validateNewUser = (e) => {
+  const validateNewUser = async(e) => {
     e.preventDefault()
+    if (consent === false) return
     // console.log(email, password, confirmPass, displayName, birthYear, deceased, gender, residence, consent)
 
-    //email is not already taken -- this happens automatically -   readonly EMAIL_EXISTS: "auth/email-already-in-use";
-    //passwords match 
-    //consent is checked
+    const userRef = firestore.collection('users');
 
-    //everything just exists
+    await userRef.add({
+      email: email, 
+      displayName: displayName,
+      birthDate: birthYear,
+      deceased: deceased,
+      gender: gender,
+      residence: residence,
+    })
 
-
-
+  
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, email, password)
-
       .then((userCredential) => {
-        console.log(userCredential)
-        // Signed in 
         const user = userCredential.user;
-        console.log(user)
-        // ...
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorMessage)
-        // ..
+        alert(error.message)
       });
   }
 
   const returningUser = (e) => {
     e.preventDefault()
-
-    console.log(email, password)
-
     const auth = getAuth();
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -74,7 +70,8 @@ export default function UserAuth({ user, firebase }) {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-         console.log(errorMessage)
+        alert(error.message)
+
       });
   }
 
@@ -110,6 +107,12 @@ export default function UserAuth({ user, firebase }) {
         break
       case 'consent':
         setConsent(e.target.checked)
+        break
+      case 'useremail':
+        setEmail(e.target.value)
+        break
+      case 'userpass':
+        setPassword(e.target.value)
         break
     }
   }
@@ -178,8 +181,8 @@ export default function UserAuth({ user, firebase }) {
           <div className="fields-container">
             <h2>Login</h2>
             <form onSubmit={returningUser}>
-              <input type="email" placeholder="Email" required />
-              <input type="password" placeholder="Password" required />
+              <input type="email" placeholder="Email" value={email} onChange={changeHandler} name="useremail" required />
+              <input type="password" placeholder="Password" value={password} onChange={changeHandler} name="userpass" required />
               <input className="btn" type="submit" value="Sign In" />
               <div className='sub-container'>
                 <button className='btn btn-sub' onClick={displayRegistration}>New User?</button>
