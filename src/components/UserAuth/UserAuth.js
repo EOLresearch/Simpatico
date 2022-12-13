@@ -1,9 +1,9 @@
 import './userauth.css';
 import { useState } from "react";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { useAuthState } from 'react-firebase-hooks/auth';
 
-
-export default function UserAuth({ user, firebase }) {
+export default function UserAuth({ currentUser, firebase }) {
   const [regPanel, setRegPanel] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -26,36 +26,37 @@ export default function UserAuth({ user, firebase }) {
   const displayRegistration = (e) => {
     e.preventDefault()
     setRegPanel(true)
-
-
   }
+  //TODO: something about the firestore rules are prohibiting the storing of this user data. **IT ALSO NEEDS THE USER ID YALL
+  // Uncaught (in promise) FirebaseError: Missing or insufficient permissions.
+
+  
   const validateNewUser = async(e) => {
     e.preventDefault()
     if (consent === false) return
     // console.log(email, password, confirmPass, displayName, birthYear, deceased, gender, residence, consent)
 
     const userRef = firestore.collection('users');
-
-    await userRef.add({
-      email: email, 
-      displayName: displayName,
-      birthDate: birthYear,
-      deceased: deceased,
-      gender: gender,
-      residence: residence,
-    })
-
-  
     const auth = getAuth();
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
+    
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      console.log(user.uid)
+      userRef.add({
+        uid: user.uid,
+        email: email, 
+        displayName: displayName,
+        birthDate: birthYear,
+        deceased: deceased,
+        gender: gender,
+        residence: residence,
       })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        alert(error.message)
-      });
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      alert(error.message)
+    }
   }
 
   const returningUser = (e) => {
@@ -172,8 +173,6 @@ export default function UserAuth({ user, firebase }) {
     )
   }
 
-
-  //TODO: form is not controlled and giving the creds in state thay are needed for user sign in
   return (
     <div className="wrapper">
       <div className="container">

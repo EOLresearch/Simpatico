@@ -30,8 +30,8 @@ function App() {
   const [user] = useAuthState(auth);
   return (
     <div className="App">
-          {user ? <PrivateChat /> : <UserAuth user={user} firebase={firebase} />} 
-          <LogOut />
+      {user ? <PrivateChat /> : <UserAuth currentUser={user} firebase={firebase} />}
+      <LogOut />
     </div>
   );
 }
@@ -54,15 +54,16 @@ function PrivateChat() {
 
   const chatRef = firestore.collection('messages');
   const query = chatRef.orderBy('createdAt').limit(25);
- 
 
-  const [messages = []] = useCollectionData(query, {idField: 'id'});
+  console.log(chatRef)
+
+  const [messages = []] = useCollectionData(query, { idField: 'id' });
 
   const [formValue, setFormValue] = useState('')
 
   const zoomHandle = useRef()
 
-  const sendThatThang = async(e) => {
+  const sendThatThang = async (e) => {
     e.preventDefault();
 
     const { uid, photoURL } = auth.currentUser;
@@ -76,29 +77,26 @@ function PrivateChat() {
 
     setFormValue('')
 
-    zoomHandle.current.scrollIntoView({behavior: 'smooth'})
+    zoomHandle.current.scrollIntoView({ behavior: 'smooth' })
 
   }
 
   return (
     <>
-    <div>
-      {messages.map(msg => <ChatMessage mid={msg.id} message={msg} />)}
-
-      <div ref={zoomHandle}></div>
-    </div>
-
-    <form onSubmit={sendThatThang}>
-      <input value={formValue} onChange={e => setFormValue(e.target.value)}/>
-      <button type="submit">🚀</button>
-    </form>
-
+      <div>
+        {messages.map(msg => <ChatMessage mid={msg.id} message={msg} />)}
+        <div ref={zoomHandle}></div>
+      </div>
+      <form onSubmit={sendThatThang}>
+        <input value={formValue} onChange={e => setFormValue(e.target.value)} />
+        <button type="submit">🚀</button>
+      </form>
     </>
   )
 }
 
 function ChatMessage({ mid, message }) {
-  
+
   const msgStyle = message.uid === auth.currentUser.uid ? 'sent' : 'received'
 
   return (
