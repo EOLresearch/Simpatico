@@ -1,9 +1,10 @@
 import './userauth.css';
 import { useState } from "react";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { useAuthState } from 'react-firebase-hooks/auth';
+// import { useAuthState } from 'react-firebase-hooks/auth';
 
 import firebase from 'firebase/compat/app';
+//TODO: import this here or pass firebase as a prop? get a real answer
 
 export default function UserAuth({ currentUser }) {
   const [regPanel, setRegPanel] = useState(false)
@@ -25,26 +26,22 @@ export default function UserAuth({ currentUser }) {
     auth.signInWithPopup(provider);
   }
 
+  //TODO: Currently, This google sign in DOES NOT create a user record in firestore. 
+
+
   const displayRegistration = (e) => {
     e.preventDefault()
     setRegPanel(true)
   }
-  //TODO: something about the firestore rules are prohibiting the storing of this user data. **IT ALSO NEEDS THE USER ID YALL
-  // Uncaught (in promise) FirebaseError: Missing or insufficient permissions.
 
-  
   const validateNewUser = async(e) => {
     e.preventDefault()
     if (consent === false) return
-    // console.log(email, password, confirmPass, displayName, birthYear, deceased, gender, residence, consent)
-
     const userRef = firestore.collection('users');
     const auth = getAuth();
-    
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-      console.log(user.uid)
       userRef.add({
         uid: user.uid,
         email: email, 
@@ -57,7 +54,7 @@ export default function UserAuth({ currentUser }) {
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
-      alert(errorMessage)
+      console.log(errorCode, errorMessage)
     }
   }
 
@@ -67,13 +64,13 @@ export default function UserAuth({ currentUser }) {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in 
-        const user = userCredential.user;
+        // const user = userCredential.user;
         // ...
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        alert(errorMessage)
+        console.log(errorCode, errorMessage)
 
       });
   }
@@ -117,6 +114,8 @@ export default function UserAuth({ currentUser }) {
       case 'userpass':
         setPassword(e.target.value)
         break
+      default:
+        console.log('default case')
     }
   }
 
