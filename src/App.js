@@ -13,13 +13,13 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useRef, useState } from 'react';
 
 firebase.initializeApp({
-  apiKey: "AIzaSyDBEtpwRvwCXly_lclR91PpXCiSmolzaAI",
-  authDomain: "simpatico-pilot.firebaseapp.com",
-  projectId: "simpatico-pilot",
-  storageBucket: "simpatico-pilot.appspot.com",
-  messagingSenderId: "577382292427",
-  appId: "1:577382292427:web:f61f22230b553746b7344e"
-
+  apiKey: "AIzaSyAxg7-rLpEzc7-4AE0l12lVJUbPFef2T2I",
+  authDomain: "simpatico-a5b64.firebaseapp.com",
+  projectId: "simpatico-a5b64",
+  storageBucket: "simpatico-a5b64.appspot.com",
+  messagingSenderId: "767358111176",
+  appId: "1:767358111176:web:9003318c304d5422e8c4fd",
+  measurementId: "G-VC7VQ32QB3"
 })
 
 const auth = firebase.auth();
@@ -30,7 +30,7 @@ function App() {
   const [user] = useAuthState(auth);
   return (
     <div className="App">
-      {user ? <PrivateChat /> : <UserAuth currentUser={user} firebase={firebase} />}
+      {user ? <PrivateChat /> : <UserAuth currentUser={user}  />}
       <LogOut />
     </div>
   );

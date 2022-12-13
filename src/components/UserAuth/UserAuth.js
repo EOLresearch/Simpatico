@@ -3,7 +3,9 @@ import { useState } from "react";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { useAuthState } from 'react-firebase-hooks/auth';
 
-export default function UserAuth({ currentUser, firebase }) {
+import firebase from 'firebase/compat/app';
+
+export default function UserAuth({ currentUser }) {
   const [regPanel, setRegPanel] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -55,7 +57,7 @@ export default function UserAuth({ currentUser, firebase }) {
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
-      alert(error.message)
+      alert(errorMessage)
     }
   }
 
@@ -71,7 +73,7 @@ export default function UserAuth({ currentUser, firebase }) {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        alert(error.message)
+        alert(errorMessage)
 
       });
   }

@@ -22,5 +22,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-#firebase security rules
+#firebase
 firestore.rules
+storage.rules
+firestore.indexes.json
+firebase.json
+.firebaserc
+/functions
