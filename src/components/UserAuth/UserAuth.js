@@ -8,6 +8,7 @@ import firebase from 'firebase/compat/app';
 
 export default function UserAuth({ currentUser }) {
   const [regPanel, setRegPanel] = useState(false)
+  const [resetPass, setResetPass] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPass, setConfirmPass] = useState('')
@@ -18,7 +19,8 @@ export default function UserAuth({ currentUser }) {
   const [residence, setResidence] = useState('')
   const [consent, setConsent] = useState(false)
 
-  const auth = firebase.auth();
+  // const auth = firebase.auth();
+  const auth = getAuth();
   const firestore = firebase.firestore();
 
   const googleSignIn = () => {
@@ -29,16 +31,27 @@ export default function UserAuth({ currentUser }) {
   //TODO: Currently, This google sign in DOES NOT create a user record in firestore. 
 
 
-  const displayRegistration = (e) => {
+  const registrationDisplaySwitch = (e) => {
     e.preventDefault()
-    setRegPanel(true)
+    setResetPass(false)
+    setRegPanel(!regPanel)
+  }
+
+  const forgotPassDisplaySwitch = (e) => {
+    e.preventDefault()
+    setRegPanel(false)
+    setResetPass(!resetPass)
+  }
+
+  const sendResetEmail = (e) => {
+    e.preventDefault()
+    console.log("email")
   }
 
   const validateNewUser = async(e) => {
     e.preventDefault()
     if (consent === false) return
     const userRef = firestore.collection('users');
-    const auth = getAuth();
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
@@ -60,7 +73,6 @@ export default function UserAuth({ currentUser }) {
 
   const returningUser = (e) => {
     e.preventDefault()
-    const auth = getAuth();
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in 
@@ -73,10 +85,6 @@ export default function UserAuth({ currentUser }) {
         console.log(errorCode, errorMessage)
 
       });
-  }
-
-  const backToLogin = (e) => {
-    setRegPanel(false)
   }
 
   const changeHandler = (e) => {
@@ -119,12 +127,42 @@ export default function UserAuth({ currentUser }) {
     }
   }
 
+  if (resetPass === true) {
+    return (
+      <div className="wrapper">
+        <div className="container">
+          <div className="col-left">
+            <div className="fields-container">
+              <h2>Login</h2>
+              <form onSubmit={sendResetEmail}>
+                <p>Please submit the email address associated with your account</p>
+                <input type="email" placeholder="Email" value={email} onChange={changeHandler} name="useremail" required />
+                <input className="btn" type="submit" value="Send Password Reset" />
+                <div className='sub-container'>
+                  <button className='btn btn-sub' onClick={registrationDisplaySwitch}>New User?</button>
+                  <button className="btn btn-sub" onClick={forgotPassDisplaySwitch}>Back to Login</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div className="col-right">
+            <div className="login-with-container">
+              <h2>Login with</h2>
+              <button className="btn btn-go" onClick={googleSignIn}>Google</button>
+              <button className="btn btn-fb">Facebook</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   if (regPanel === true) {
     return (
       <div className="wrapper">
         <div className="container">
           <div className="col-left">
-            <button onClick={backToLogin} className='btn btn-back'><i className="fa-solid fa-arrow-left"></i> Back to Login</button>
+            <button onClick={registrationDisplaySwitch} className='btn btn-back'><i className="fa-solid fa-arrow-left"></i> Back to Login</button>
             <div className="col-left-container">
               <form>
                 <label htmlFor="email">Email</label>
@@ -185,8 +223,8 @@ export default function UserAuth({ currentUser }) {
               <input type="password" placeholder="Password" value={password} onChange={changeHandler} name="userpass" required />
               <input className="btn" type="submit" value="Sign In" />
               <div className='sub-container'>
-                <button className='btn btn-sub' onClick={displayRegistration}>New User?</button>
-                <button className="btn btn-sub">Forgot Password?</button>
+                <button className='btn btn-sub' onClick={registrationDisplaySwitch}>New User?</button>
+                <button className="btn btn-sub" onClick={forgotPassDisplaySwitch}>Forgot Password?</button>
               </div>
             </form>
           </div>
