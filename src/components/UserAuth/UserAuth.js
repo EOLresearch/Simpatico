@@ -1,6 +1,6 @@
 import './userauth.css';
 import { useState } from "react";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 // import { useAuthState } from 'react-firebase-hooks/auth';
 
 import firebase from 'firebase/compat/app';
@@ -43,9 +43,10 @@ export default function UserAuth({ currentUser }) {
     setResetPass(!resetPass)
   }
 
-  const sendResetEmail = (e) => {
+  const sendResetEmail = async(e) => {
     e.preventDefault()
-    console.log("email")
+    await sendPasswordResetEmail(auth, email)
+    console.log("Password reset email sent")
   }
 
   const validateNewUser = async(e) => {
