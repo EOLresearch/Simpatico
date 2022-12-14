@@ -1,6 +1,6 @@
 import './userauth.css';
 import { useState } from "react";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, signInWithPopup } from "firebase/auth";
 // import { useAuthState } from 'react-firebase-hooks/auth';
 
 import firebase from 'firebase/compat/app';
@@ -20,15 +20,18 @@ export default function UserAuth({ currentUser }) {
   const [consent, setConsent] = useState(false)
 
   // const auth = firebase.auth();
+  // console.log(firebase.auth(), getAuth() )
   const auth = getAuth();
   const firestore = firebase.firestore();
 
   const googleSignIn = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider);
-  }
+    // console.log(provider)
+    firebase.auth().signInWithPopup(provider);
 
-  //TODO: Currently, This google sign in DOES NOT create a user record in firestore. 
+  }
+  //TODO: Currently, This google sign in DOES NOT create a user record in firestore.
+  //TODO: get past the blockers on FACEBOOK AUTH 
 
 
   const registrationDisplaySwitch = (e) => {
@@ -48,7 +51,8 @@ export default function UserAuth({ currentUser }) {
     await sendPasswordResetEmail(auth, email)
     console.log("Password reset email sent")
   }
-
+  //TODO: this forgot password flow is nice out of the box but not awesome. Lets rework this find out a way to overwrite the default firebase behvior for this action.
+  
   const validateNewUser = async(e) => {
     e.preventDefault()
     if (consent === false) return
@@ -127,6 +131,8 @@ export default function UserAuth({ currentUser }) {
         console.log('default case')
     }
   }
+
+
 
   if (resetPass === true) {
     return (

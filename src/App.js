@@ -1,6 +1,8 @@
 
 import UserAuth from './components/UserAuth/UserAuth'
 import Dashboard from './components/Dashboard'
+import Questionaire from './components/Questionaire'
+
 // import Dashboard from './components/Dashboard'
 
 
@@ -28,9 +30,17 @@ const firestore = firebase.firestore();
 function App() {
 
   const [user] = useAuthState(auth);
+  console.log(user)
+
+  //TODO: user checks below doesnt work for the questionaire because its not getting the user collection data which ahs the hasQuestionaire boolean. Its gett auth data. 
+
   return (
     <div className="App">
-      {user ? <PrivateChat /> : <UserAuth currentUser={user}  />}
+      {
+        user ? 
+          user.hasQuestionaire === true ? 
+            <Dashboard user={user} /> : <Questionaire user={user} /> : <UserAuth currentUser={user}  />
+      }
       <LogOut />
     </div>
   );
