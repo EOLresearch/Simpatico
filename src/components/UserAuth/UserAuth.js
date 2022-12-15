@@ -32,6 +32,7 @@ export default function UserAuth({ currentUser }) {
   }
   //TODO: Currently, This google sign in DOES NOT create a user record in firestore.
   //TODO: get past the blockers on FACEBOOK AUTH 
+  //TODO: MEANINGFUL ERRORS/FORM VALIDATION
 
 
   const registrationDisplaySwitch = (e) => {
@@ -46,14 +47,15 @@ export default function UserAuth({ currentUser }) {
     setResetPass(!resetPass)
   }
 
-  const sendResetEmail = async(e) => {
+  const sendResetEmail = async (e) => {
     e.preventDefault()
     await sendPasswordResetEmail(auth, email)
     console.log("Password reset email sent")
   }
   //TODO: this forgot password flow is nice out of the box but not awesome. Lets rework this find out a way to overwrite the default firebase behvior for this action.
-  
-  const validateNewUser = async(e) => {
+
+  const validateNewUser = async (e) => {
+    //TODO: EMAIL ACTIVATION FLOW - once user is signed in they should get an email to validate thier account - they should have a logo indicating they have not done this until it is done.
     e.preventDefault()
     if (consent === false) return
     const userRef = firestore.collection('users');
@@ -62,7 +64,7 @@ export default function UserAuth({ currentUser }) {
       const user = userCredential.user;
       userRef.add({
         uid: user.uid,
-        email: email, 
+        email: email,
         displayName: displayName,
         birthDate: birthYear,
         deceased: deceased,
@@ -88,7 +90,6 @@ export default function UserAuth({ currentUser }) {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage)
-
       });
   }
 
@@ -189,10 +190,19 @@ export default function UserAuth({ currentUser }) {
             <form>
               <select name="deceased" id="deceased" value={deceased} onChange={changeHandler} required>
                 <option>The deceased is my...</option>
-                <option>Homie</option>
-                <option>Father</option>
-                <option>Cousin</option>
-                <option>Prefer not to disclose</option>
+                <option>Partner</option>
+                <option>Grandparent</option>
+                <option>Parent</option>
+                <option>Offspring</option>
+                <option>Sibling</option>
+                <option>Grand child</option>
+                <option>Aunt</option>
+                <option>Uncle</option>
+                <option>Niece</option>
+                <option>Nephew</option>
+                <option>Friend</option>
+                <option>Other</option>
+                <option>I want to support others</option>
               </select>
               <select name="gender" id="gender" value={gender} onChange={changeHandler} required>
                 <option>Your sex/gender</option>
@@ -201,11 +211,58 @@ export default function UserAuth({ currentUser }) {
                 <option>Prefer not to disclose</option>
               </select>
               <select name="residence" id="residence" value={residence} onChange={changeHandler} required>
-                <option>Where do you live in the us?</option>
-                <option>every </option>
-                <option>single</option>
-                <option>state</option>
-                <option>alphabetized</option>
+                <option>What state do you live in?</option>
+                <option value="AL">Alabama</option>
+                <option value="AK">Alaska</option>
+                <option value="AZ">Arizona</option>
+                <option value="AR">Arkansas</option>
+                <option value="CA">California</option>
+                <option value="CO">Colorado</option>
+                <option value="CT">Connecticut</option>
+                <option value="DE">Delaware</option>
+                <option value="DC">District Of Columbia</option>
+                <option value="FL">Florida</option>
+                <option value="GA">Georgia</option>
+                <option value="HI">Hawaii</option>
+                <option value="ID">Idaho</option>
+                <option value="IL">Illinois</option>
+                <option value="IN">Indiana</option>
+                <option value="IA">Iowa</option>
+                <option value="KS">Kansas</option>
+                <option value="KY">Kentucky</option>
+                <option value="LA">Louisiana</option>
+                <option value="ME">Maine</option>
+                <option value="MD">Maryland</option>
+                <option value="MA">Massachusetts</option>
+                <option value="MI">Michigan</option>
+                <option value="MN">Minnesota</option>
+                <option value="MS">Mississippi</option>
+                <option value="MO">Missouri</option>
+                <option value="MT">Montana</option>
+                <option value="NE">Nebraska</option>
+                <option value="NV">Nevada</option>
+                <option value="NH">New Hampshire</option>
+                <option value="NJ">New Jersey</option>
+                <option value="NM">New Mexico</option>
+                <option value="NY">New York</option>
+                <option value="NC">North Carolina</option>
+                <option value="ND">North Dakota</option>
+                <option value="OH">Ohio</option>
+                <option value="OK">Oklahoma</option>
+                <option value="OR">Oregon</option>
+                <option value="PA">Pennsylvania</option>
+                <option value="RI">Rhode Island</option>
+                <option value="SC">South Carolina</option>
+                <option value="SD">South Dakota</option>
+                <option value="TN">Tennessee</option>
+                <option value="TX">Texas</option>
+                <option value="UT">Utah</option>
+                <option value="VT">Vermont</option>
+                <option value="VA">Virginia</option>
+                <option value="WA">Washington</option>
+                <option value="WV">West Virginia</option>
+                <option value="WI">Wisconsin</option>
+                <option value="WY">Wyoming</option>
               </select>
               <div className='consent'>
                 <input type="checkbox" name="consent" id="consent" value={consent} onChange={changeHandler} required></input>

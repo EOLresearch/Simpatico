@@ -1,7 +1,7 @@
 
 import UserAuth from './components/UserAuth/UserAuth'
 import Dashboard from './components/Dashboard'
-import Questionaire from './components/Questionaire'
+import Questionaire from './components/Questionaire/Questionaire'
 
 // import Dashboard from './components/Dashboard'
 
@@ -30,7 +30,6 @@ const firestore = firebase.firestore();
 function App() {
 
   const [user] = useAuthState(auth);
-  console.log(user)
 
   //TODO: user checks below doesnt work for the questionaire because its not getting the user collection data which ahs the hasQuestionaire boolean. Its gett auth data. 
 
@@ -38,8 +37,7 @@ function App() {
     <div className="App">
       {
         user ? 
-          user.hasQuestionaire === true ? 
-            <Dashboard user={user} /> : <Questionaire user={user} /> : <UserAuth currentUser={user}  />
+            <Dashboard user={user} /> : <UserAuth currentUser={user}  />
       }
       <LogOut />
     </div>
@@ -61,23 +59,15 @@ function LogOut() {
 }
 
 function PrivateChat() {
-
   const chatRef = firestore.collection('messages');
   const query = chatRef.orderBy('createdAt').limit(25);
-
-  console.log(chatRef)
-
   const [messages = []] = useCollectionData(query, { idField: 'id' });
-
   const [formValue, setFormValue] = useState('')
-
   const zoomHandle = useRef()
 
   const sendThatThang = async (e) => {
     e.preventDefault();
-
     const { uid, photoURL } = auth.currentUser;
-
     await chatRef.add({
       body: formValue,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -86,9 +76,7 @@ function PrivateChat() {
     })
 
     setFormValue('')
-
     zoomHandle.current.scrollIntoView({ behavior: 'smooth' })
-
   }
 
   return (

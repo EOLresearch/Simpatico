@@ -1,0 +1,42 @@
+.questionaire-wrapper{
+    width:70%;
+    background-color: #fff;
+    border-radius: 1rem;
+    margin: 5vh auto;
+    box-shadow: 3px 3px 10px black;
+    margin: 0 auto;
+}
+.questionaire-wrapper button{
+    width:10rem;
+    left:40%;
+}
+.questionaire-header{
+    margin: auto;
+    width:90%;
+    border-bottom:solid rgb(221, 221, 221) 1px;
+}
+.questionaire-header h2{
+    margin: auto;
+    width:75%;
+    padding-top:2rem;
+}
+.questionaire-header p{
+    margin: auto;
+    padding-bottom:2rem;
+    width:70%;
+}
+.question-container{
+    margin: 0 3rem;
+    columns: 3;
+    padding:3rem;
+}
+.questionaire-wrapper .question{
+    padding:1rem;
+}
+.questionaire-wrapper .answers{
+    margin-top:1rem;
+    margin-left:1rem;
+}
+.questionaire-wrapper .answer-container{
+    padding: 0.3em;
+}
