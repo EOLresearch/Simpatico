@@ -1,3 +1,5 @@
+import './privatechat.css';
+
 import ChatMessage from '../ChatMessage/ChatMessage'
 
 import { useCollectionData } from 'react-firebase-hooks/firestore';
@@ -8,10 +10,10 @@ export default function PrivateChat({ firebase }) {
     const firestore = firebase.firestore()
     const chatRef = firestore.collection('messages');
     const query = chatRef.orderBy('createdAt').limit(25);
+    const zoomHandle = useRef()
     const [messages = []] = useCollectionData(query, { idField: 'id' });
     const [formValue, setFormValue] = useState('')
 
-    const zoomHandle = useRef()
   
     const sendThatThang = async (e) => {
       e.preventDefault();
@@ -28,15 +30,15 @@ export default function PrivateChat({ firebase }) {
     }
   
     return (
-      <>
+      <div className='private-chat-container'>
         <div>
-          {messages.map(msg => <ChatMessage auth={auth} mid={msg.id} message={msg} />)}
+          {messages.map(msg => <ChatMessage auth={auth} mid={msg.uid} message={msg} />)}
           <div ref={zoomHandle}></div>
         </div>
         <form onSubmit={sendThatThang}>
           <input value={formValue} onChange={e => setFormValue(e.target.value)} />
           <button type="submit">🚀</button>
         </form>
-      </>
+      </div>
     )
   }

@@ -1,3 +1,5 @@
+import './chatmessage.css';
+
 export default function ChatMessage({ auth, mid, message }) {
 
     const msgStyle = message.uid === auth.currentUser.uid ? 'sent' : 'received'
@@ -5,7 +7,7 @@ export default function ChatMessage({ auth, mid, message }) {
     return (
       <div key={mid} className={`message ${msgStyle}`}>
         {/* <img src={message.photoURL} /> */}
-        <p>{message.body}</p>
+        <p key={mid}>{message.body}</p>
       </div>
     )
 }

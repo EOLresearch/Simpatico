@@ -1,0 +1,7 @@
+.private-chat-container{
+    max-width:30rem;
+    border: 3px white solid;
+    border-radius: 1rem;
+    padding: 1rem;
+    background: #9abfd6;
+}
