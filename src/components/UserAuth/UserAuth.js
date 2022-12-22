@@ -1,12 +1,9 @@
 import './userauth.css';
 import { useState } from "react";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, signInWithPopup } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 // import { useAuthState } from 'react-firebase-hooks/auth';
 
-import firebase from 'firebase/compat/app';
-//TODO: import this here or pass firebase as a prop? get a real answer
-
-export default function UserAuth({ currentUser }) {
+export default function UserAuth({ firebase, currentUser }) {
   const [regPanel, setRegPanel] = useState(false)
   const [resetPass, setResetPass] = useState(false)
   const [email, setEmail] = useState('')
@@ -19,14 +16,12 @@ export default function UserAuth({ currentUser }) {
   const [residence, setResidence] = useState('')
   const [consent, setConsent] = useState(false)
 
-  // const auth = firebase.auth();
-  // console.log(firebase.auth(), getAuth() )
+
   const auth = getAuth();
   const firestore = firebase.firestore();
 
   const googleSignIn = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
-    // console.log(provider)
     firebase.auth().signInWithPopup(provider);
 
   }

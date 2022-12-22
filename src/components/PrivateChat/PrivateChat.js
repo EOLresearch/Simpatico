@@ -1,0 +1,42 @@
+import ChatMessage from '../ChatMessage/ChatMessage'
+
+import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { useRef, useState } from 'react';
+
+export default function PrivateChat({ firebase }) {
+    const auth = firebase.auth();
+    const firestore = firebase.firestore()
+    const chatRef = firestore.collection('messages');
+    const query = chatRef.orderBy('createdAt').limit(25);
+    const [messages = []] = useCollectionData(query, { idField: 'id' });
+    const [formValue, setFormValue] = useState('')
+
+    const zoomHandle = useRef()
+  
+    const sendThatThang = async (e) => {
+      e.preventDefault();
+      const { uid, photoURL } = auth.currentUser;
+      await chatRef.add({
+        body: formValue,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        uid,
+        photoURL
+      })
+  
+      setFormValue('')
+      zoomHandle.current.scrollIntoView({ behavior: 'smooth' })
+    }
+  
+    return (
+      <>
+        <div>
+          {messages.map(msg => <ChatMessage auth={auth} mid={msg.id} message={msg} />)}
+          <div ref={zoomHandle}></div>
+        </div>
+        <form onSubmit={sendThatThang}>
+          <input value={formValue} onChange={e => setFormValue(e.target.value)} />
+          <button type="submit">🚀</button>
+        </form>
+      </>
+    )
+  }
