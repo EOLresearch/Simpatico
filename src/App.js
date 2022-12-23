@@ -6,9 +6,11 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 
+import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 import { useAuthState } from 'react-firebase-hooks/auth';
 
-firebase.initializeApp({
+const firebaseApp = ({
   apiKey: "AIzaSyAxg7-rLpEzc7-4AE0l12lVJUbPFef2T2I",
   authDomain: "simpatico-a5b64.firebaseapp.com",
   projectId: "simpatico-a5b64",
@@ -17,8 +19,8 @@ firebase.initializeApp({
   appId: "1:767358111176:web:9003318c304d5422e8c4fd",
   measurementId: "G-VC7VQ32QB3"
 })
-
-const auth = firebase.auth();
+const auth = getAuth(firebaseApp);
+const db = getFirestore(firebaseApp)
 
 function App() {
 
@@ -28,7 +30,7 @@ function App() {
     <div className="App">
       {
         user ? 
-            <Dashboard firebase={firebase} user={user} /> : <UserAuth firebase={firebase} currentUser={user}  />
+            <Dashboard auth={auth} firestore={db} user={user} /> : <UserAuth firebase={firebase} currentUser={user}  />
       }
       <LogOut />
     </div>
@@ -46,7 +48,6 @@ function LogOut() {
   return auth.currentUser && (
     <button onClick={() => auth.signOut()}>Log Out</button>
   )
-
 }
 
 export default App;
