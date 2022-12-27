@@ -13,15 +13,17 @@ export default function PrivateChat({ firebase }) {
     const zoomHandle = useRef()
     const [messages = []] = useCollectionData(query, { idField: 'id' });
     const [formValue, setFormValue] = useState('')
-
+    
     const sendThatThang = async (e) => {
       e.preventDefault();
       const { uid, photoURL } = auth.currentUser;
-      await chatRef.add({
+      const msgDocRef = chatRef.doc()
+      await msgDocRef.set({
         body: formValue,
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         uid,
-        photoURL
+        photoURL,
+        mid:msgDocRef.id
       })
   
       setFormValue('')
@@ -31,7 +33,7 @@ export default function PrivateChat({ firebase }) {
     return (
       <div className='private-chat-container'>
         <div>
-          {messages.map(msg => <ChatMessage auth={auth} mid={msg.uid} message={msg} />)}
+          {messages.map(msg => <ChatMessage key={msg.mid} auth={auth} mid={msg.mid} message={msg} />)}
           <div ref={zoomHandle}></div>
         </div>
         <form onSubmit={sendThatThang}>
