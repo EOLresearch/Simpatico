@@ -3,30 +3,41 @@ import { useState } from "react";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 // import { useAuthState } from 'react-firebase-hooks/auth';
 
-export default function UserAuth({ firebase, currentUser }) {
+export default function UserAuth({ firebase, user }) {
   const [regPanel, setRegPanel] = useState(false)
   const [resetPass, setResetPass] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPass, setConfirmPass] = useState('')
   const [displayName, setDisplayName] = useState('')
-  const [birthYear, setBirthYear] = useState('')
+  const [birthDate, setBirthDate] = useState('')
   const [deceased, setDeceased] = useState('')
   const [gender, SetGender] = useState('')
   const [residence, setResidence] = useState('')
   const [consent, setConsent] = useState(false)
-
-
+  
+  
   const auth = getAuth();
   const firestore = firebase.firestore();
+  const userRef = firestore.collection('users');
 
   const googleSignIn = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(provider);
-
+    console.log(provider)
+    firebase.auth().signInWithPopup(provider)
+      .then(result => {
+        userRef.add({
+          uid: result.user.uid,
+          email: result.user.email,
+          displayName: result.user.displayName,
+          birthDate: birthDate,
+          deceased: deceased,
+          gender: gender,
+          residence: residence,
+        })
+      });
   }
   //TODO: Currently, This google sign in DOES NOT create a user record in firestore.
-  //TODO: get past the blockers on FACEBOOK AUTH 
   //TODO: MEANINGFUL ERRORS/FORM VALIDATION
 
 
@@ -49,11 +60,11 @@ export default function UserAuth({ firebase, currentUser }) {
   }
   //TODO: this forgot password flow is nice out of the box but not awesome. Lets rework this find out a way to overwrite the default firebase behvior for this action.
 
-  const validateNewUser = async (e) => {
-    //TODO: EMAIL ACTIVATION FLOW - once user is signed in they should get an email to validate thier account - they should have a logo indicating they have not done this until it is done.
+  const createNewUser = async (e) => {
+    //TODO: EMAIL ACTIVATION FLOW - once user is signed in they should get an email to create thier account - they should have a logo indicating they have not done this until it is done.
+
     e.preventDefault()
     if (consent === false) return
-    const userRef = firestore.collection('users');
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
@@ -61,7 +72,7 @@ export default function UserAuth({ firebase, currentUser }) {
         uid: user.uid,
         email: email,
         displayName: displayName,
-        birthDate: birthYear,
+        birthDate: birthDate,
         deceased: deceased,
         gender: gender,
         residence: residence,
@@ -102,8 +113,8 @@ export default function UserAuth({ firebase, currentUser }) {
       case 'displayName':
         setDisplayName(e.target.value)
         break
-      case 'birthYear':
-        setBirthYear(e.target.value)
+      case 'birthDate':
+        setBirthDate(e.target.value)
         break
       case 'deceased':
         setDeceased(e.target.value)
@@ -168,16 +179,16 @@ export default function UserAuth({ firebase, currentUser }) {
             <button onClick={registrationDisplaySwitch} className='btn btn-back'><i className="fa-solid fa-arrow-left"></i> Back to Login</button>
             <div className="col-left-container">
               <form>
-                <label htmlFor="email">Email</label>
+                {/* <label htmlFor="email">Email</label> */}
                 <input type="email" name="email" placeholder="Email" id="email" value={email} onChange={changeHandler} required />
-                <label htmlFor="password">Password</label>
+                {/* <label htmlFor="password">Password</label> */}
                 <input type="password" name="password" placeholder="Password" id="password" value={password} onChange={changeHandler} required />
-                <label htmlFor="confirmPass">Confirm Password</label>
+                {/* <label htmlFor="confirmPass">Confirm Password</label> */}
                 <input type="password" name="confirmPass" placeholder="Confirm Password" id="confirmPass" value={confirmPass} onChange={changeHandler} required />
-                <label htmlFor="name">Display Name:</label>
+                {/* <label htmlFor="name">Display Name:</label> */}
                 <input type="text" name="displayName" placeholder="Display Name" id="name" value={displayName} onChange={changeHandler} required />
-                <label htmlFor="birthYear">Birth Year</label>
-                <input type="number" name="birthYear" id="birthYear" placeholder="Birth Year - YYYY" value={birthYear} onChange={changeHandler} />
+                <label htmlFor="birthDate">Birthdate</label>
+                <input type="date" name="birthDate" id="birthDate" placeholder="Birth Date" value={birthDate} onChange={changeHandler} />
               </form>
             </div>
           </div>
@@ -263,7 +274,7 @@ export default function UserAuth({ firebase, currentUser }) {
                 <input type="checkbox" name="consent" id="consent" value={consent} onChange={changeHandler} required></input>
                 <label htmlFor="consent">By clicking this checkbox, I agree to share the above information and allow other users to view the information I shared.</label>
               </div>
-              <input className="btn submit-form-btn" type="submit" value="Complete Registation" onClick={validateNewUser} />
+              <input className="btn submit-form-btn" type="submit" value="Complete Registation" onClick={createNewUser} />
             </form>
           </div>
         </div>

@@ -20,8 +20,8 @@
   position: relative;
   bottom:1.5rem;
 }
-.col-left-container label{
-  visibility: hidden;
+.col-left-container input{
+  margin-top:2rem;
 }
 
 h2 {
