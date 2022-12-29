@@ -5,7 +5,7 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, se
 
 // import { useAuthState } from 'react-firebase-hooks/auth';
 
-export default function UserAuth({ firebase, user }) {
+export default function UserAuth({ firebase }) {
   const [regPanel, setRegPanel] = useState(false)
   const [resetPass, setResetPass] = useState(false)
   const [email, setEmail] = useState('')
@@ -30,7 +30,7 @@ export default function UserAuth({ firebase, user }) {
     setResetPass(!resetPass)
   }
   
-  const auth = getAuth();
+  const auth = firebase.auth();
   const firestore = firebase.firestore();
   const userRef = firestore.collection('users');
 
@@ -38,29 +38,33 @@ export default function UserAuth({ firebase, user }) {
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider)
       .then(result => {
+        
+        // console.log(result.user)
+        // console.log(user)
         const userQuery = userRef.where("email", "==", result.user.email)
 
+
+
         userQuery.get().then(snapShot => {
-          snapShot.forEach(doc => {
-            const userData = doc.data()
- 
-          })
+          if (snapShot.docs.length > 0) {
+            snapShot.forEach(doc => {
+              const userData = doc.data()
+              console.log(userData)
+            })
+          } else {
+            console.log("snapshot empty, needs to be created")
+            userRef.add({
+              uid: result.user.uid,
+              email: result.user.email,
+              displayName: result.user.displayName,
+              birthDate: birthDate,
+              deceased: deceased,
+              gender: gender,
+              residence: residence,
+            })
+          }
         })
 
-
-        //ISSUE: log in with google is creating users with below code, but it first needs to check if the user is already in firestore and then only add if they are not. 
-
-        //Maybe i can solve this with security rules? is that the best way?
-
-        // userRef.add({
-        //   uid: result.user.uid,
-        //   email: result.user.email,
-        //   displayName: result.user.displayName,
-        //   birthDate: birthDate,
-        //   deceased: deceased,
-        //   gender: gender,
-        //   residence: residence,
-        // })
       });
   }
 
