@@ -1,6 +1,8 @@
 import './userauth.css';
 import { useState } from "react";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
+
+
 // import { useAuthState } from 'react-firebase-hooks/auth';
 
 export default function UserAuth({ firebase, user }) {
@@ -16,31 +18,6 @@ export default function UserAuth({ firebase, user }) {
   const [residence, setResidence] = useState('')
   const [consent, setConsent] = useState(false)
   
-  
-  const auth = getAuth();
-  const firestore = firebase.firestore();
-  const userRef = firestore.collection('users');
-
-  const googleSignIn = () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    console.log(provider)
-    firebase.auth().signInWithPopup(provider)
-      .then(result => {
-        userRef.add({
-          uid: result.user.uid,
-          email: result.user.email,
-          displayName: result.user.displayName,
-          birthDate: birthDate,
-          deceased: deceased,
-          gender: gender,
-          residence: residence,
-        })
-      });
-  }
-  //TODO: Currently, This google sign in DOES NOT create a user record in firestore.
-  //TODO: MEANINGFUL ERRORS/FORM VALIDATION
-
-
   const registrationDisplaySwitch = (e) => {
     e.preventDefault()
     setResetPass(false)
@@ -52,6 +29,42 @@ export default function UserAuth({ firebase, user }) {
     setRegPanel(false)
     setResetPass(!resetPass)
   }
+  
+  const auth = getAuth();
+  const firestore = firebase.firestore();
+  const userRef = firestore.collection('users');
+
+  const googleSignIn = () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(provider)
+      .then(result => {
+        const userQuery = userRef.where("email", "==", result.user.email)
+
+        userQuery.get().then(snapShot => {
+          snapShot.forEach(doc => {
+            const userData = doc.data()
+ 
+          })
+        })
+
+
+        //ISSUE: log in with google is creating users with below code, but it first needs to check if the user is already in firestore and then only add if they are not. 
+
+        //Maybe i can solve this with security rules? is that the best way?
+
+        // userRef.add({
+        //   uid: result.user.uid,
+        //   email: result.user.email,
+        //   displayName: result.user.displayName,
+        //   birthDate: birthDate,
+        //   deceased: deceased,
+        //   gender: gender,
+        //   residence: residence,
+        // })
+      });
+  }
+
+  //TODO: MEANINGFUL ERRORS/FORM VALIDATION
 
   const sendResetEmail = async (e) => {
     e.preventDefault()
