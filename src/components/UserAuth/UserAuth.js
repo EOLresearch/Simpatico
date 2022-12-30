@@ -107,7 +107,7 @@ export default function UserAuth({ firebase }) {
       })
       .catch((error) => {
         const errorCode = error.code;
-        setAnError(errorCode, setAnError)
+        setAnError(errorCode)
       });
   }
 
@@ -151,6 +151,9 @@ export default function UserAuth({ firebase }) {
     }
   }
 
+  const cancelError = () => {
+    setAnError('')
+  }
 
 
   if (resetPass === true) {
@@ -301,7 +304,7 @@ export default function UserAuth({ firebase }) {
           <div className="fields-container">
             <h2>Login</h2>
             {(anError !== "")
-              ? <ErrorMessage errCode={anError} /> : null
+              ? <ErrorMessage errCode={anError} cancelError={cancelError}/> : null
             }
             <form onSubmit={onSubmit}>
               <input type="email" placeholder="Email" value={email} onChange={changeHandler} name="useremail" required />
@@ -328,8 +331,7 @@ export default function UserAuth({ firebase }) {
 
 
 
-function ErrorMessage({ errCode, setAnError }) {
-
+function ErrorMessage({ errCode, cancelError }) {
   const errorMaker = (err) => {
     switch (err){
       case 'auth/user-not-found' :
@@ -338,13 +340,9 @@ function ErrorMessage({ errCode, setAnError }) {
           console.log('switch default')
     }
   }
-
-
   return (
-
-    <div className='error-message'>
-      <p>{errorMaker(errCode)}</p><div onClick={()=> setAnError('')} className='x-btn'>✕</div>
+    <div className='error-message' onClick={cancelError}>
+      <p>{errorMaker(errCode)}</p><div className='x-btn'>✕</div>
     </div>
-
   )
 }

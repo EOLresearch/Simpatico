@@ -181,6 +181,8 @@ select{
 
 .error-message{
   position: absolute;
+  top:1rem;
+  right:1rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -191,6 +193,7 @@ select{
   height:4rem;
   padding-left:1rem;
   border-radius: 1rem;
+  animation:dropDownFadeInOut 3s;
 }
 .x-btn{
   font-size: 1rem; 
@@ -222,4 +225,19 @@ select{
     .col-right {
         margin-top:1rem;
     }
+}
+
+@keyframes dropDownFadeInOut {
+	0% {
+		opacity: 0;
+		transform: translateY(-3rem);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+  /* 100% {
+		opacity: 0;
+		transform: translateY(3rem);
+	} */
 }
