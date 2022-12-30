@@ -2,12 +2,13 @@ import './userauth.css';
 import { useState } from "react";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 
-
 // import { useAuthState } from 'react-firebase-hooks/auth';
 
 export default function UserAuth({ firebase }) {
   const [regPanel, setRegPanel] = useState(false)
   const [resetPass, setResetPass] = useState(false)
+  const [anError, setAnError] = useState('')
+  
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPass, setConfirmPass] = useState('')
@@ -38,21 +39,16 @@ export default function UserAuth({ firebase }) {
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider)
       .then(result => {
-        
-        // console.log(result.user)
-        // console.log(user)
         const userQuery = userRef.where("email", "==", result.user.email)
-
-
-
         userQuery.get().then(snapShot => {
+          //check if user coming back from Google is in Firestore
           if (snapShot.docs.length > 0) {
             snapShot.forEach(doc => {
               const userData = doc.data()
               console.log(userData)
             })
           } else {
-            console.log("snapshot empty, needs to be created")
+            console.log("there was no firestore record, it is now being created")
             userRef.add({
               uid: result.user.uid,
               email: result.user.email,
@@ -78,7 +74,7 @@ export default function UserAuth({ firebase }) {
   //TODO: this forgot password flow is nice out of the box but not awesome. Lets rework this find out a way to overwrite the default firebase behvior for this action.
 
   const createNewUser = async (e) => {
-    //TODO: EMAIL ACTIVATION FLOW - once user is signed in they should get an email to create thier account - they should have a logo indicating they have not done this until it is done.
+    //TODO: EMAIL ACTIVATION FLOW - once user is signed in they should get an email to create thier account - they will not be able to send any messages until this has been completed.
 
     e.preventDefault()
     if (consent === false) return
@@ -101,7 +97,7 @@ export default function UserAuth({ firebase }) {
     }
   }
 
-  const returningUser = (e) => {
+  const onSubmit = (e) => {
     e.preventDefault()
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -111,8 +107,7 @@ export default function UserAuth({ firebase }) {
       })
       .catch((error) => {
         const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage)
+        setAnError(errorCode, setAnError)
       });
   }
 
@@ -305,7 +300,10 @@ export default function UserAuth({ firebase }) {
         <div className="col-left">
           <div className="fields-container">
             <h2>Login</h2>
-            <form onSubmit={returningUser}>
+            {(anError !== "")
+              ? <ErrorMessage errCode={anError} /> : null
+            }
+            <form onSubmit={onSubmit}>
               <input type="email" placeholder="Email" value={email} onChange={changeHandler} name="useremail" required />
               <input type="password" placeholder="Password" value={password} onChange={changeHandler} name="userpass" required />
               <input className="btn" type="submit" value="Sign In" />
@@ -325,5 +323,28 @@ export default function UserAuth({ firebase }) {
         </div>
       </div>
     </div>
+  )
+}
+
+
+
+function ErrorMessage({ errCode, setAnError }) {
+
+  const errorMaker = (err) => {
+    switch (err){
+      case 'auth/user-not-found' :
+        return "User not found."
+        default:
+          console.log('switch default')
+    }
+  }
+
+
+  return (
+
+    <div className='error-message'>
+      <p>{errorMaker(errCode)}</p><div onClick={()=> setAnError('')} className='x-btn'>✕</div>
+    </div>
+
   )
 }

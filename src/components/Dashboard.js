@@ -19,12 +19,14 @@ export default function Dashboard({ firebase, user }) {
     
     return (
         <div className='dashboard-wrapper'>
-            {/* <Profile fsUser={fsUser} firebase={firebase}/> */}
+            <Profile fsUser={fsUser} firebase={firebase}/>
             <PrivateChat firebase={firebase}/>
         </div>
     );
   
 }
+
+
 
 function Profile({ fsUser }) {
     
