@@ -192,12 +192,13 @@ select{
   font-weight: 700;
   height:4rem;
   padding-left:1rem;
+  margin-left:1rem;
   border-radius: 1rem;
   animation:dropDownFadeInOut 3s;
 }
 .x-btn{
   font-size: 1rem; 
-  margin-left:2rem;
+  margin-left:1rem;
   position: relative;
   right:1rem;
   /* top:0.5rem; */

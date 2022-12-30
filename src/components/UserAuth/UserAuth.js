@@ -1,8 +1,6 @@
 import './userauth.css';
 import { useState } from "react";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
-
-// import { useAuthState } from 'react-firebase-hooks/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 
 export default function UserAuth({ firebase }) {
   const [regPanel, setRegPanel] = useState(false)
@@ -64,8 +62,6 @@ export default function UserAuth({ firebase }) {
       });
   }
 
-  //TODO: MEANINGFUL ERRORS/FORM VALIDATION
-
   const sendResetEmail = async (e) => {
     e.preventDefault()
     await sendPasswordResetEmail(auth, email)
@@ -74,30 +70,54 @@ export default function UserAuth({ firebase }) {
   //TODO: this forgot password flow is nice out of the box but not awesome. Lets rework this find out a way to overwrite the default firebase behvior for this action.
 
   const createNewUser = async (e) => {
-    //TODO: EMAIL ACTIVATION FLOW - once user is signed in they should get an email to create thier account - they will not be able to send any messages until this has been completed.
 
     e.preventDefault()
-    if (consent === false) return
+    //TODO: EMAIL ACTIVATION FLOW - once user is signed in they should get an email to create thier account - they will not be able to send any messages until this has been completed.
+
+    // if (consent === false) {
+    //   setAnError('consent')
+    // } 
+    // if (password === '') {
+    //   setAnError('nopass')
+    // }
+    // if (password !== confirmPass) {
+    //   setAnError('nomatchpass')
+    // }
+    // if (birthDate === '') {
+    //   setAnError('pleasecomplete')
+    // }
+    // if (deceased === ''|| "The deceased is my...") {
+    //   setAnError('pleasecomplete')
+    // }
+    // if (residence === '') {
+    //   setAnError('pleasecomplete')
+    // }
+    if (anError !== '') {
+      setAnError('')
+    }
+
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-      userRef.add({
-        uid: user.uid,
-        email: email,
-        displayName: displayName,
-        birthDate: birthDate,
-        deceased: deceased,
-        gender: gender,
-        residence: residence,
-      })
+      if (setAnError === ''){
+        userRef.add({
+          uid: user.uid,
+          email: email,
+          displayName: displayName,
+          birthDate: birthDate,
+          deceased: deceased,
+          gender: gender,
+          residence: residence,
+        })
+      }
     } catch (error) {
       const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorCode, errorMessage)
+      console.log(errorCode, error.message)
+      setAnError(errorCode)
     }
   }
 
-  const onSubmit = (e) => {
+  const onSubmitReturningUser = (e) => {
     e.preventDefault()
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -138,7 +158,7 @@ export default function UserAuth({ firebase }) {
         setResidence(e.target.value)
         break
       case 'consent':
-        setConsent(e.target.checked)
+        setConsent(!consent)
         break
       case 'useremail':
         setEmail(e.target.value)
@@ -191,17 +211,17 @@ export default function UserAuth({ firebase }) {
       <div className="wrapper">
         <div className="container">
           <div className="col-left">
+          {(anError !== "")
+            // this component is currently still in this document
+              ? <ErrorMessage error={anError} cancelError={cancelError}/> : null
+            }
             <button onClick={registrationDisplaySwitch} className='btn btn-back'><i className="fa-solid fa-arrow-left"></i> Back to Login</button>
             <div className="col-left-container">
               <form>
-                {/* <label htmlFor="email">Email</label> */}
-                <input type="email" name="email" placeholder="Email" id="email" value={email} onChange={changeHandler} required />
-                {/* <label htmlFor="password">Password</label> */}
-                <input type="password" name="password" placeholder="Password" id="password" value={password} onChange={changeHandler} required />
-                {/* <label htmlFor="confirmPass">Confirm Password</label> */}
-                <input type="password" name="confirmPass" placeholder="Confirm Password" id="confirmPass" value={confirmPass} onChange={changeHandler} required />
-                {/* <label htmlFor="name">Display Name:</label> */}
-                <input type="text" name="displayName" placeholder="Display Name" id="name" value={displayName} onChange={changeHandler} required />
+                <input type="email" name="email" placeholder="Email" id="email" value={email} onChange={changeHandler}  />
+                <input type="password" name="password" placeholder="Password" id="password" value={password} onChange={changeHandler}  />
+                <input type="password" name="confirmPass" placeholder="Confirm Password" id="confirmPass" value={confirmPass} onChange={changeHandler}  />
+                <input type="text" name="displayName" placeholder="Display Name" id="name" value={displayName} onChange={changeHandler}  />
                 <label htmlFor="birthDate">Birthdate</label>
                 <input type="date" name="birthDate" id="birthDate" placeholder="Birth Date" value={birthDate} onChange={changeHandler} />
               </form>
@@ -209,7 +229,7 @@ export default function UserAuth({ firebase }) {
           </div>
           <div className="col-right">
             <form>
-              <select name="deceased" id="deceased" value={deceased} onChange={changeHandler} required>
+              <select name="deceased" id="deceased" value={deceased} onChange={changeHandler} >
                 <option>The deceased is my...</option>
                 <option>Partner</option>
                 <option>Grandparent</option>
@@ -225,13 +245,13 @@ export default function UserAuth({ firebase }) {
                 <option>Other</option>
                 <option>I want to support others</option>
               </select>
-              <select name="gender" id="gender" value={gender} onChange={changeHandler} required>
+              <select name="gender" id="gender" value={gender} onChange={changeHandler} >
                 <option>Your sex/gender</option>
                 <option>Male</option>
                 <option>Female</option>
                 <option>Prefer not to disclose</option>
               </select>
-              <select name="residence" id="residence" value={residence} onChange={changeHandler} required>
+              <select name="residence" id="residence" value={residence} onChange={changeHandler} >
                 <option>What state do you live in?</option>
                 <option value="AL">Alabama</option>
                 <option value="AK">Alaska</option>
@@ -286,7 +306,7 @@ export default function UserAuth({ firebase }) {
                 <option value="WY">Wyoming</option>
               </select>
               <div className='consent'>
-                <input type="checkbox" name="consent" id="consent" value={consent} onChange={changeHandler} required></input>
+                <input type="checkbox" name="consent" id="consent" value={consent} onChange={changeHandler} ></input>
                 <label htmlFor="consent">By clicking this checkbox, I agree to share the above information and allow other users to view the information I shared.</label>
               </div>
               <input className="btn submit-form-btn" type="submit" value="Complete Registation" onClick={createNewUser} />
@@ -304,9 +324,10 @@ export default function UserAuth({ firebase }) {
           <div className="fields-container">
             <h2>Login</h2>
             {(anError !== "")
-              ? <ErrorMessage errCode={anError} cancelError={cancelError}/> : null
+            // this component is currently still in this document
+              ? <ErrorMessage error={anError} cancelError={cancelError}/> : null
             }
-            <form onSubmit={onSubmit}>
+            <form onSubmit={onSubmitReturningUser}>
               <input type="email" placeholder="Email" value={email} onChange={changeHandler} name="useremail" required />
               <input type="password" placeholder="Password" value={password} onChange={changeHandler} name="userpass" required />
               <input className="btn" type="submit" value="Sign In" />
@@ -329,20 +350,44 @@ export default function UserAuth({ firebase }) {
   )
 }
 
+// if (consent === false) {
+//   setAnError('consent')
+// } 
+// if (password === '') {
+//   setAnError('nopass')
+// }
+// if (password !== confirmPass) {
+//   setAnError('nomatchpass')
+// }
+// if (birthDate === '') {
+//   setAnError('pleasecomplete')
+// }
+// if (deceased === ''|| "The deceased is my...") {
+//   setAnError('pleasecomplete')
+// }
+// if (residence === '') {
+//   setAnError('pleasecomplete')
+// }
 
-
-function ErrorMessage({ errCode, cancelError }) {
+function ErrorMessage({ error, cancelError }) {
   const errorMaker = (err) => {
     switch (err){
       case 'auth/user-not-found' :
         return "User not found."
+      case "auth/invalid-email":
+      case "auth/internal-error":
+        return "Email is invalid"
+      case "auth/weak-password":
+        return "Password should be at least 6 characters"
+      case 'consent':
+        return "You must consent to share your information"
         default:
-          console.log('switch default')
+          console.log('switch default' + error)
     }
   }
   return (
     <div className='error-message' onClick={cancelError}>
-      <p>{errorMaker(errCode)}</p><div className='x-btn'>✕</div>
+      <p>{errorMaker(error)}</p><div className='x-btn'>✕</div>
     </div>
   )
 }
