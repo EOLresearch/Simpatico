@@ -14,21 +14,10 @@ export default function UserAuth({ firebase }) {
   const [displayName, setDisplayName] = useState('')
   const [birthDate, setBirthDate] = useState('')
   const [deceased, setDeceased] = useState('')
+  const [cause, setCause] = useState('')
   const [gender, SetGender] = useState('')
   const [residence, setResidence] = useState('')
   const [consent, setConsent] = useState(false)
-
-  const registrationDisplaySwitch = (e) => {
-    e.preventDefault()
-    setResetPass(false)
-    setRegPanel(!regPanel)
-  }
-
-  const forgotPassDisplaySwitch = (e) => {
-    e.preventDefault()
-    setRegPanel(false)
-    setResetPass(!resetPass)
-  }
 
   const auth = firebase.auth();
   const firestore = firebase.firestore();
@@ -59,18 +48,15 @@ export default function UserAuth({ firebase }) {
             })
           }
         })
-
       });
   }
-
+  
   const sendResetEmail = async (e) => {
     e.preventDefault()
     await sendPasswordResetEmail(auth, email)
     console.log("Password reset email sent")
+    //TODO: this forgot password flow is nice out of the box but not awesome. Lets rework this find out a way to overwrite the default firebase behvior for this action.
   }
-  //TODO: this forgot password flow is nice out of the box but not awesome. Lets rework this find out a way to overwrite the default firebase behvior for this action.
-
-
   const validateNewUser = (e) => {
     e.preventDefault()
     if (email === "") {
@@ -83,7 +69,9 @@ export default function UserAuth({ firebase }) {
       setAnError('nobirth')
     } else if (deceased === '') {
       setAnError('nodeceased')
-    } else if (residence === '') {
+    } else if (cause === '') {
+      setAnError('nocause')
+    }else if (residence === '') {
       setAnError('noresidence')
     } else if (consent === false) {
       setAnError('consent')
@@ -91,20 +79,10 @@ export default function UserAuth({ firebase }) {
       setAnError('')
       createNewUser()
     }
-
-    // if (anError !== "") {
-    //   console.log(anError)
-
-    // } else if (consent === true) {
-    //   createNewUser()
-    // }
-
   }
 
   const createNewUser = async () => {
-    // e.preventDefault()
     //TODO: EMAIL ACTIVATION FLOW - once user is signed in they should get an email to create thier account - they will not be able to send any messages until this has been completed.
-
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
@@ -122,7 +100,6 @@ export default function UserAuth({ firebase }) {
       console.log(errorCode, error.message)
       setAnError(errorCode)
     }
-
   }
 
   const onSubmitReturningUser = (e) => {
@@ -174,6 +151,9 @@ export default function UserAuth({ firebase }) {
       case 'userpass':
         setPassword(e.target.value)
         break
+      case 'cause':
+        setCause(e.target.value)
+      break
       default:
         console.log('default case')
     }
@@ -183,6 +163,17 @@ export default function UserAuth({ firebase }) {
     setAnError('')
   }
 
+  const registrationDisplaySwitch = (e) => {
+    e.preventDefault()
+    setResetPass(false)
+    setRegPanel(!regPanel)
+  }
+
+  const forgotPassDisplaySwitch = (e) => {
+    e.preventDefault()
+    setRegPanel(false)
+    setResetPass(!resetPass)
+  }
 
   if (resetPass === true) {
     return (
@@ -252,6 +243,12 @@ export default function UserAuth({ firebase }) {
                 <option>Friend</option>
                 <option>Other</option>
                 <option>I want to support others</option>
+              </select>
+              <select name="cause" id="cause" value={cause} onChange={changeHandler} >
+                <option>Cause of death</option>
+                <option>Natural</option>
+                <option>Unnatural</option>
+                <option>Prefer not to disclose</option>
               </select>
               <select name="gender" id="gender" value={gender} onChange={changeHandler} >
                 <option>Your sex/gender</option>
@@ -358,28 +355,9 @@ export default function UserAuth({ firebase }) {
   )
 }
 
-// if (consent === false) {
-//   setAnError('consent')
-// } 
-// if (password === '') {
-//   setAnError('nopass')
-// }
-// if (password !== confirmPass) {
-//   setAnError('nomatchpass')
-// }
-// if (birthDate === '') {
-//   setAnError('pleasecomplete')
-// }
-// if (deceased === ''|| "The deceased is my...") {
-//   setAnError('pleasecomplete')
-// }
-// if (residence === '') {
-//   setAnError('pleasecomplete')
-// }
 
 function ErrorMessage({ error, cancelError }) {
-  //can refactor this to using lookupobj with lookUpOBJ[error] in the html. but not needed now
-
+  //can refactor this to using lookupobj with {lookUpOBJ[error]} in the JSX. but not needed now
 
   const errorMaker = (err) => {
     switch (err) {
@@ -391,6 +369,8 @@ function ErrorMessage({ error, cancelError }) {
         return "Email is missing"
       case "auth/invalid-email":
         return "Email is invalid"
+      case "auth/email-already-in-use":
+        return "Email is already in use"
       case "auth/weak-password":
         return "Password should be at least 6 characters"
       case 'nopass':
@@ -401,6 +381,8 @@ function ErrorMessage({ error, cancelError }) {
         return "Please enter your birthday"
       case 'nodeceased':
         return "Please enter kinship to the deceased"
+      case 'nocause':
+        return "Please enter cause of death"  
       case 'noresidence':
         return "Please enter your home state"
       case 'consent':
