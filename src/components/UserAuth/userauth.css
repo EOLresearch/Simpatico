@@ -226,7 +226,7 @@ select {
 
 .x-btn {
   font-size: 1rem;
-  margin-left: 1rem;
+  margin-left: 2rem;
   position: relative;
   right: 1rem;
   /* top:0.5rem; */
@@ -260,7 +260,7 @@ select {
 @keyframes dropDownFadeInOut {
   0% {
     opacity: 0;
-    transform: translateY(-3rem);
+    transform: translateY(-1rem);
   }
 
   100% {

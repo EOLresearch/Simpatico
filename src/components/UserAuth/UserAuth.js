@@ -19,7 +19,7 @@ export default function UserAuth({ firebase }) {
   const [lossDate, setLossDate] = useState('')
   const [deceased, setDeceased] = useState('')
   const [cause, setCause] = useState('')
-  const [residence, setResidence] = useState('')
+  // const [residence, setResidence] = useState('')
   const [consent, setConsent] = useState(false)
 
   const auth = firebase.auth();
@@ -47,7 +47,9 @@ export default function UserAuth({ firebase }) {
               birthDate: birthDate,
               lossDate: lossDate,
               deceased: deceased,
-              residence: residence,
+              simpatico: false,
+
+              // residence: residence,
             })
           }
         })
@@ -77,9 +79,13 @@ export default function UserAuth({ firebase }) {
       setAnError('nodeceased')
     } else if (cause === '') {
       setAnError('nocause')
-    } else if (residence === '') {
-      setAnError('noresidence')
-    } else if (consent === false) {
+    } 
+
+    // else if (residence === '') {
+    //   setAnError('noresidence')
+    // } 
+    
+    else if (consent === false) {
       setAnError('consent')
     } else if (consent === true) {
       setAnError('')
@@ -99,7 +105,8 @@ export default function UserAuth({ firebase }) {
         birthDate: birthDate,
         deceased: deceased,
         lossDate: lossDate,
-        residence: residence,
+        simpatico: false,
+        // residence: residence,
       })
     } catch (error) {
       const errorCode = error.code;
@@ -145,9 +152,9 @@ export default function UserAuth({ firebase }) {
       case 'deceased':
         setDeceased(e.target.value)
         break
-      case 'residence':
-        setResidence(e.target.value)
-        break
+      // case 'residence':
+      //   setResidence(e.target.value)
+      //   break
       case 'consent':
         setConsent(!consent)
         break
@@ -210,8 +217,6 @@ export default function UserAuth({ firebase }) {
       </div>
     )
   }
-
-  //break this out into a component in order to use it with users who have logged in already, but have not yet completed these fields. 
 
   if (regPanel === true) {
     return (

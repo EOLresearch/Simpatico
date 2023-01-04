@@ -8,7 +8,7 @@ export default function Profile({ fsUser }) {
         fsUser ?
           fsUser.map(user => {
             return (
-              <div className='profile-container'>
+              <div key={user.uid} className='profile-container'>
                 <h4>Hello {user.displayName}</h4>
                 <p>
                   Email: {user.email}<br />
