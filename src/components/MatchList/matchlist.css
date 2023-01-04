@@ -5,3 +5,8 @@
   padding: 1rem;
   background: #8bb8d5;
 }
+
+.match:hover{
+  text-decoration: underline;
+  cursor: pointer;
+}

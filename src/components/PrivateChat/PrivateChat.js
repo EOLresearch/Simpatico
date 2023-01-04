@@ -5,7 +5,7 @@ import ChatMessage from '../ChatMessage/ChatMessage'
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useRef, useState } from 'react';
 
-export default function PrivateChat({ firebase }) {
+export default function PrivateChat({ firebase, fsUser }) {
   const auth = firebase.auth();
   const firestore = firebase.firestore()
   const chatRef = firestore.collection('messages');
