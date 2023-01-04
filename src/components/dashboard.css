@@ -6,14 +6,3 @@
     align-items: center;
     justify-content: center;
 }
-
-/* profile--------------------- */
-
-.profile-container{
-    border:2px black solid;
-    position: relative;
-    width: 100%;
-    max-width: 50rem;
-    height: auto;
-    display: flex;
-}

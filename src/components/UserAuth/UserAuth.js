@@ -2,6 +2,9 @@ import './userauth.css';
 import { useState } from "react";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 
+
+// ******problems with any email being allowed to sign up, thats a spam bots dream******************
+
 export default function UserAuth({ firebase }) {
   const [regPanel, setRegPanel] = useState(false)
   const [resetPass, setResetPass] = useState(false)
@@ -13,9 +16,9 @@ export default function UserAuth({ firebase }) {
   const [confirmPass, setConfirmPass] = useState('')
   const [displayName, setDisplayName] = useState('')
   const [birthDate, setBirthDate] = useState('')
+  const [lossDate, setLossDate] = useState('')
   const [deceased, setDeceased] = useState('')
   const [cause, setCause] = useState('')
-  const [gender, SetGender] = useState('')
   const [residence, setResidence] = useState('')
   const [consent, setConsent] = useState(false)
 
@@ -36,27 +39,28 @@ export default function UserAuth({ firebase }) {
               console.log(userData)
             })
           } else {
-            console.log("there was no firestore record, it is now being created")
+            console.log("no firestore record, now being created")
             userRef.add({
               uid: result.user.uid,
               email: result.user.email,
               displayName: result.user.displayName,
               birthDate: birthDate,
+              lossDate: lossDate,
               deceased: deceased,
-              gender: gender,
               residence: residence,
             })
           }
         })
       });
   }
-  
+
   const sendResetEmail = async (e) => {
     e.preventDefault()
     await sendPasswordResetEmail(auth, email)
     console.log("Password reset email sent")
     //TODO: this forgot password flow is nice out of the box but not awesome. Lets rework this find out a way to overwrite the default firebase behvior for this action.
   }
+
   const validateNewUser = (e) => {
     e.preventDefault()
     if (email === "") {
@@ -67,11 +71,13 @@ export default function UserAuth({ firebase }) {
       setAnError('nomatchpass')
     } else if (birthDate === '') {
       setAnError('nobirth')
+    } else if (lossDate === '') {
+      setAnError('nolossdate')
     } else if (deceased === '') {
       setAnError('nodeceased')
     } else if (cause === '') {
       setAnError('nocause')
-    }else if (residence === '') {
+    } else if (residence === '') {
       setAnError('noresidence')
     } else if (consent === false) {
       setAnError('consent')
@@ -92,7 +98,7 @@ export default function UserAuth({ firebase }) {
         displayName: displayName,
         birthDate: birthDate,
         deceased: deceased,
-        gender: gender,
+        lossDate: lossDate,
         residence: residence,
       })
     } catch (error) {
@@ -133,11 +139,11 @@ export default function UserAuth({ firebase }) {
       case 'birthDate':
         setBirthDate(e.target.value)
         break
+      case 'lossDate':
+        setLossDate(e.target.value)
+        break
       case 'deceased':
         setDeceased(e.target.value)
-        break
-      case 'gender':
-        SetGender(e.target.value)
         break
       case 'residence':
         setResidence(e.target.value)
@@ -153,7 +159,7 @@ export default function UserAuth({ firebase }) {
         break
       case 'cause':
         setCause(e.target.value)
-      break
+        break
       default:
         console.log('default case')
     }
@@ -205,6 +211,8 @@ export default function UserAuth({ firebase }) {
     )
   }
 
+  //break this out into a component in order to use it with users who have logged in already, but have not yet completed these fields. 
+
   if (regPanel === true) {
     return (
       <div className="wrapper">
@@ -228,6 +236,8 @@ export default function UserAuth({ firebase }) {
           </div>
           <div className="col-right">
             <form>
+              <label htmlFor="lossDate">When did you experience your loss?</label>
+              <input type="date" name="lossDate" id="lossDate" placeholder="Loss Date" value={lossDate} onChange={changeHandler} />
               <select name="deceased" id="deceased" value={deceased} onChange={changeHandler} >
                 <option>The deceased is my...</option>
                 <option>Partner</option>
@@ -248,15 +258,9 @@ export default function UserAuth({ firebase }) {
                 <option>Cause of death</option>
                 <option>Natural</option>
                 <option>Unnatural</option>
-                <option>Prefer not to disclose</option>
+                {/* <option>Prefer not to disclose</option> */}
               </select>
-              <select name="gender" id="gender" value={gender} onChange={changeHandler} >
-                <option>Your sex/gender</option>
-                <option>Male</option>
-                <option>Female</option>
-                <option>Prefer not to disclose</option>
-              </select>
-              <select name="residence" id="residence" value={residence} onChange={changeHandler} >
+              {/* <select name="residence" id="residence" value={residence} onChange={changeHandler} >
                 <option>What state do you live in?</option>
                 <option value="AL">Alabama</option>
                 <option value="AK">Alaska</option>
@@ -309,7 +313,7 @@ export default function UserAuth({ firebase }) {
                 <option value="WV">West Virginia</option>
                 <option value="WI">Wisconsin</option>
                 <option value="WY">Wyoming</option>
-              </select>
+              </select> */}
               <div className='consent'>
                 <input type="checkbox" name="consent" id="consent" value={consent} onChange={changeHandler} ></input>
                 <label htmlFor="consent">By clicking this checkbox, I agree to share the above information and allow other users to view the information I shared.</label>
@@ -379,10 +383,12 @@ function ErrorMessage({ error, cancelError }) {
         return "Passwords do not match"
       case 'nobirth':
         return "Please enter your birthday"
+      case 'nolossdate':
+        return "Please enter a date of loss"
       case 'nodeceased':
         return "Please enter kinship to the deceased"
       case 'nocause':
-        return "Please enter cause of death"  
+        return "Please enter cause of death"
       case 'noresidence':
         return "Please enter your home state"
       case 'consent':
