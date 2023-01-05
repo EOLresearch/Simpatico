@@ -14,6 +14,8 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 export default function Dashboard({ firebase, user }) {
   const [openChatWindow, setOpenChatWindow] = useState(false)
+  const [selectedUser, setSelectedUser] = useState()
+
 
 
   //account options - details to add or update.
@@ -25,9 +27,9 @@ export default function Dashboard({ firebase, user }) {
 
   const [users] = useCollectionData(usersRef);
 
-
-  const activateChatWindow = () => {
+  const activateChatWindow = (user) => {
     setOpenChatWindow(!openChatWindow)
+    setSelectedUser(user)
   }
 
   return (
@@ -36,7 +38,7 @@ export default function Dashboard({ firebase, user }) {
       <MatchList users={users} activateChatWindow={activateChatWindow} />
       {
         openChatWindow === true ?
-          <PrivateChat firebase={firebase} fsUser={fsUser} /> : null
+          <PrivateChat firebase={firebase} fsUser={fsUser} userToChatWith={selectedUser} /> : null
       }
     </div>
   );

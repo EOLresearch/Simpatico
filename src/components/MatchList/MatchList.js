@@ -17,7 +17,7 @@ export default function MatchList({ users, activateChatWindow }) {
         users ?
           users.map(user => {
             return (
-              <div onClick={activateChatWindow} className='match'>
+              <div key={user.uid} onClick={()=>activateChatWindow(user)} className='match'>
                 <p>{user.displayName}</p>
               </div>  
             )
