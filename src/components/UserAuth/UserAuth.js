@@ -36,7 +36,7 @@ export default function UserAuth({ firebase }) {
           if (snapShot.docs.length > 0) {
             snapShot.forEach(doc => {
               const userData = doc.data()
-              console.log(userData)
+              // console.log(userData)
             })
           } else {
             console.log("no firestore record, now being created")

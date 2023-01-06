@@ -6,6 +6,7 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useRef, useState } from 'react';
 
 export default function PrivateChat({ firebase, fsUser, userToChatWith }) {
+  const [messageBody, setMessageBody] = useState('')
   const zoomHandle = useRef()
   
   const auth = firebase.auth();
@@ -14,11 +15,19 @@ export default function PrivateChat({ firebase, fsUser, userToChatWith }) {
 
   const { uid, photoURL } = auth.currentUser;
   // const messagesQuery = chatRef.orderBy('createdAt').limit(25);
-  const messagesQuery = chatRef.where("fromUid", "==", uid).where("toUid", "==", userToChatWith.uid)
 
+  const messagesFromMeQuery = chatRef.where("fromUid", "==", uid).where("toUid", "==", userToChatWith.uid)
+  const [messagesFromMe = []] = useCollectionData(messagesFromMeQuery, { idField: 'id' });
 
-  const [messages = []] = useCollectionData(messagesQuery, { idField: 'id' });
-  const [messageBody, setMessageBody] = useState('')
+  const messagesFromThemQuery = chatRef.where("fromUid", "==",userToChatWith.uid).where("toUid", "==", uid)
+  const [messagesFromThem = []] = useCollectionData(messagesFromThemQuery, { idField: 'id' });
+
+// console.log(messagesFromMe)
+// console.log(messagesFromThem)
+
+  const allMessages = [...messagesFromMe, ...messagesFromThem]
+
+  console.log(allMessages)
 
   const sendThatThang = async (e) => {
     e.preventDefault();
@@ -40,7 +49,7 @@ export default function PrivateChat({ firebase, fsUser, userToChatWith }) {
     <div className='private-chat-container'>
       <div>
         <p>{userToChatWith.displayName}</p>
-        {messages.map(msg => <ChatMessage key={msg.mid} auth={auth} mid={msg.mid} message={msg} />)}
+        {allMessages.map(msg => <ChatMessage key={msg.mid} auth={auth} mid={msg.mid} message={msg} />)}
         <div ref={zoomHandle}></div>
       </div>
       <form onSubmit={sendThatThang}>
