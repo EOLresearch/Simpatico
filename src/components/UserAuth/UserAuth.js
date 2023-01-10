@@ -109,10 +109,10 @@ export default function UserAuth({ firebase }) {
         // residence: residence,
       })
     } catch (error) {
-      const errorCode = error.code;
-      console.log(errorCode, error.message)
-      setAnError(errorCode)
-    }
+        const errorCode = error.code;
+        console.log(errorCode, error.message)
+        setAnError(errorCode)
+      }
   }
 
   const onSubmitReturningUser = (e) => {

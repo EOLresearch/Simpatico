@@ -1,14 +1,57 @@
 import './matchlist.css';
+import { useCollectionData } from 'react-firebase-hooks/firestore';
 
-export default function MatchList({ users, activateChatWindow }) {
 
-  //a list of users who have been matched to the logged in user to chat with. 
+export default function MatchList({ firebase, users, activateConversationWindow }) {
+  //conversations need to get created here
+  //activateConversationWindow(user) needs to get called
+  const auth = firebase.auth();
+  const firestore = firebase.firestore()
+  
+  const { uid, photoURL } = auth.currentUser;
 
-  //click a user on the match list and it should open a private chat component with that user. 
 
-  //messages should only be viewable by 2 users. sender and receiver
+  const conversationsRef = firestore.collection('conversations');
+  const convoDocRef = conversationsRef.doc()
+  const [convos = []] = useCollectionData(conversationsRef);
 
-  //perhaps messages need to be sub collected under conversations? and then only messages in the conversation with both UUIDs will be viewable??
+  console.log(convos)
+
+    // const sendThatThang = async (e) => {
+  //   e.preventDefault();
+  //   const msgDocRef = chatRef.doc()
+  //   await msgDocRef.set({
+  //     body: messageBody,
+  //     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+  //     author: uid,
+  //     users: [uid, userToChatWith.uid],
+  //     photoURL,
+  //     mid: msgDocRef.id
+  //   })
+   const createConvo = async (user) => {
+    await convoDocRef.set({
+      initiator: uid,
+      users: [uid, user.uid],
+      isPrivate: true
+    })
+   }
+  
+  const checkForConvo = (e, user) => {
+    //check if conversation already exists, 
+    //creates a conversation if not
+    e.preventDefault();
+    
+    convos.map((c) => {
+      if (!c.users.includes(uid && user.uid) ){
+        createConvo(user)
+      } else {
+        console.log('convo already exists')
+      }
+    })
+
+    
+    activateConversationWindow(user)
+  }
 
   return (
     <div className='match-list-container'>
@@ -17,7 +60,7 @@ export default function MatchList({ users, activateChatWindow }) {
         users ?
           users.map(user => {
             return (
-              <div key={user.uid} onClick={()=>activateChatWindow(user)} className='match'>
+              <div key={user.uid} onClick={(e)=>checkForConvo(e, user)} className='match'>
                 <p>{user.displayName}</p>
               </div>  
             )

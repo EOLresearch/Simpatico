@@ -1,5 +1,5 @@
 import './dashboard.css';
-import PrivateChat from './PrivateChat/PrivateChat'
+import Conversation from './Conversation/Conversation'
 import Profile from './Profile/Profile'
 import MatchList from './MatchList/MatchList'
 
@@ -8,15 +8,11 @@ import { useState } from "react";
 // import React, { useEffect } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
-
-
 // import { getAuth } from "firebase/auth";
 
 export default function Dashboard({ firebase, user }) {
-  const [openChatWindow, setOpenChatWindow] = useState(false)
+  const [openConversationWindow, setOpenConversationWindow] = useState(false)
   const [selectedUser, setSelectedUser] = useState()
-
-
 
   //account options - details to add or update.
   // const auth = getAuth();
@@ -27,18 +23,18 @@ export default function Dashboard({ firebase, user }) {
 
   const [users] = useCollectionData(usersRef);
 
-  const activateChatWindow = (user) => {
-    setOpenChatWindow(!openChatWindow)
+  const activateConversationWindow = (user) => {
+    setOpenConversationWindow(!openConversationWindow)
     setSelectedUser(user)
   }
 
   return (
     <div className='dashboard-wrapper'>
       <Profile fsUser={fsUser} />
-      <MatchList users={users} activateChatWindow={activateChatWindow} />
+      <MatchList firebase={firebase} users={users} activateConversationWindow={activateConversationWindow} />
       {
-        openChatWindow === true ?
-          <PrivateChat firebase={firebase} fsUser={fsUser} userToChatWith={selectedUser} /> : null
+        openConversationWindow === true ?
+        <Conversation firebase={firebase} fsUser={fsUser} userToChatWith={selectedUser} /> : null
       }
     </div>
   );
