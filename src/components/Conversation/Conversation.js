@@ -16,7 +16,7 @@ export default function Conversation({ firebase, userToChatWith, convoDocId }) {
   const messagesColRef = conversationRef.collection('messages')
   const [messages = []] = useCollectionData(messagesColRef);
 
-  console.log(messages)
+  // console.log(messages)
 
   function submitHandler(e) {
     e.preventDefault()
