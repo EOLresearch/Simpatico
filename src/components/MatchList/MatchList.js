@@ -1,20 +1,17 @@
 import './matchlist.css';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
+// import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useState } from 'react';
-
-
 
 export default function MatchList({ firebase, users, activateConversationWindow }) {
 
   const auth = firebase.auth();
   const firestore = firebase.firestore()
-  const { uid, photoURL } = auth.currentUser;
+  const { uid } = auth.currentUser;
   const [docId, setDocId] = useState()
 
   const conversationsRef = firestore.collection('conversations');
-  // const [convos = []] = useCollectionData(conversationsRef)
-  // console.log(convos)
 
+//TODO:: REFACTOR THIS FUNCTION after MVP maybe even everything into the parent component to keep this one basic
   function convoHandler(e, user) {
     e.preventDefault();
     const docId1 = `${uid} + ${user.uid}`
@@ -23,14 +20,12 @@ export default function MatchList({ firebase, users, activateConversationWindow 
     const a = conversationsRef.doc(docId1)
     const b = conversationsRef.doc(docId2)
 
-
     a.get().then((doc) => {
       if (doc.exists) {
         console.log("Document data:", doc.data());
         setDocId(docId1)
       } else {
-        // doc.data() will be undefined in this case
-        console.log("No such document!");
+        confirmCreateConversation(user)
       }
     }).catch((error) => {
       console.log("Error getting document:", error);
@@ -41,23 +36,21 @@ export default function MatchList({ firebase, users, activateConversationWindow 
         console.log("Document data:", doc.data());
         setDocId(docId2)
       } else {
-        // doc.data() will be undefined in this case
-        console.log("No such document!");
+        confirmCreateConversation(user)
       }
     }).catch((error) => {
       console.log("Error getting document:", error);
     });
+  }
 
-    //this feels repetative and wasteful so i think there is a better way, I am tired. 
-
-    //NEED TO DETERMINE DOCID HERE AS A WAY OF ENSURING CONVERSATIONS ARE UNIQUE AND NOT DUPLICATED
-    //maybe i can embed the docid on the conversation document itself, and then check for both variations with the convos array alrady here
+  function confirmCreateConversation(user){
+    //modal - this person's details with a button that says "Start a conversation?"
+    console.log("this function is running twice? is this from strictmode?")
+    
 
   }
 
-  const createConvo = async (e, user) => {
-    e.preventDefault();
-
+  async function createConvo(user){
     const docId = `${uid} + ${user.uid}`
     await conversationsRef.doc(docId).set({
       users: [uid, user.uid],
