@@ -17,8 +17,11 @@ export default function Dashboard({ firebase, user }) {
   const auth = firebase.auth();
   const { uid } = auth.currentUser;
   const firestore = firebase.firestore();
+
   const usersRef = firestore.collection('users');
   const [users] = useCollectionData(usersRef);
+  //TODO:Right now, this is ALL USERS that gets sent to the matchlist, we will need to be able to filter this by profile data when the time is right. 
+
   const userQuery = usersRef.where("email", "==", user.email)
   const [fsUser] = useCollectionData(userQuery);
 
@@ -43,7 +46,6 @@ export default function Dashboard({ firebase, user }) {
     const a = conversationsRef.doc(docId1)
     const b = conversationsRef.doc(docId2)
 
-    
     a.get().then((doc) => {
       if (doc.exists) {
         console.log("Document data:", doc.data());
