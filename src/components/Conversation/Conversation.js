@@ -16,7 +16,6 @@ export default function Conversation({ firebase, userToChatWith, convoDocId }) {
   const messagesColOrderedRef = conversationRef.collection('messages').orderBy('createdAt')
   const [messages = []] = useCollectionData(messagesColOrderedRef);
 
-  // console.log(messages)
   const messagesColRef = conversationRef.collection('messages')
   function submitHandler(e) {
     e.preventDefault()

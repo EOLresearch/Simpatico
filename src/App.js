@@ -29,7 +29,7 @@ function App() {
     <div className="App">
       {
         user ? 
-            <Dashboard firebase={firebase} user={user} /> : <UserAuth firebase={firebase}  />
+            <Dashboard firebase={firebase} /> : <UserAuth firebase={firebase}  />
       }
       <LogOut />
     </div>
