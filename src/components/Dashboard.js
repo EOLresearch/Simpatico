@@ -3,6 +3,7 @@ import Conversation from './Conversation/Conversation'
 import Profile from './Profile/Profile'
 import MatchList from './MatchList/MatchList'
 import MatchDetails from './MatchDetails/MatchDetails'
+//TODO: component import-index refactor
 
 import { useState } from "react";
 import { useCollectionData } from 'react-firebase-hooks/firestore';
@@ -10,7 +11,7 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 export default function Dashboard({ firebase, user }) {
   const [showMatchDetails, setShowMatchDetails] = useState(false)
   const [openConversationWindow, setOpenConversationWindow] = useState(false)
-  const [selectedUser, setSelectedUser] = useState()
+  const [userToChatWith, setUserToChatWith] = useState()
   const [convoDocId, setConvoDocId] = useState()
 
   const auth = firebase.auth();
@@ -23,57 +24,60 @@ export default function Dashboard({ firebase, user }) {
 
   const conversationsRef = firestore.collection('conversations');
 
-  function activateConversationWindow(user, docId){
-    setOpenConversationWindow(!openConversationWindow)
-    setSelectedUser(user)
-  }
+  // function activateConversationWindow(user) {
+  //   setOpenConversationWindow(!openConversationWindow)
+  //   setUserToChatWith(user)
+  // }
 
   //TODO:: REFACTOR THIS FUNCTION after MVP
   function convoHandler(e, user) {
     e.preventDefault();
+    setConvoDocId('')
+    setOpenConversationWindow(false)
+    setShowMatchDetails(false)
+    setUserToChatWith(user)
+
     const docId1 = `${uid} + ${user.uid}`
     const docId2 = `${user.uid} + ${uid}`
 
     const a = conversationsRef.doc(docId1)
     const b = conversationsRef.doc(docId2)
 
+    
     a.get().then((doc) => {
       if (doc.exists) {
         console.log("Document data:", doc.data());
         setConvoDocId(docId1)
+        setOpenConversationWindow(true)
       } else {
-        checkMatch(user)
+        console.log('else, now run b')
+        b.get().then((doc) => {
+          if (doc.exists) {
+            console.log("Document data:", doc.data());
+            setConvoDocId(docId2)
+            setOpenConversationWindow(true)
+          } else {    
+            setShowMatchDetails(true)
+          }
+        }).catch((error) => {
+          console.log("Error getting document:", error);
+        });
       }
-    }).catch((error) => {
-      console.log("Error getting document:", error);
-    });
-
-    b.get().then((doc) => {
-      if (doc.exists) {
-        console.log("Document data:", doc.data());
-        setConvoDocId(docId2)
-      } else {
-        checkMatch(user)
-      }
-    }).catch((error) => {
-      console.log("Error getting document:", error);
-    });
+    })
   }
 
-  function checkMatch(user){
-    //modal - this person's details with a button that says "Start a conversation?"
-    setShowMatchDetails(true)
 
-  }
-
-  async function createConvo(user){
+  async function createConvo(user) {
+    // need more checks here to make sure conversations dont get erroneously made
     const docId = `${uid} + ${user.uid}`
     await conversationsRef.doc(docId).set({
       users: [uid, user.uid],
       isPrivate: true,
       docId: docId
     })
-    activateConversationWindow(user, docId)
+    setConvoDocId(docId)
+    setOpenConversationWindow(true)
+    setShowMatchDetails(false)
   }
 
   return (
@@ -82,11 +86,11 @@ export default function Dashboard({ firebase, user }) {
       <MatchList firebase={firebase} users={users} convoHandler={convoHandler} />
       {
         openConversationWindow === true ?
-        <Conversation firebase={firebase} userToChatWith={selectedUser} convoDocId={convoDocId}/> : null
+          <Conversation firebase={firebase} userToChatWith={userToChatWith} convoDocId={convoDocId} /> : null
       }
       {
         showMatchDetails === true ?
-        <MatchDetails /> : null
+          <MatchDetails userToChatWith={userToChatWith} createConvo={createConvo}/> : null
       }
     </div>
   );

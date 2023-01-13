@@ -17,7 +17,7 @@ export default function MatchList({ firebase, users, convoHandler }) {
           users.map(user => {
             return (
               <div key={user.uid} onClick={(e) => convoHandler(e, user)} className='match'>
-                <p>{user.displayName}</p>
+                <p>{user.displayName}<br/>{user.email}</p>
               </div>
             )
           }) : null

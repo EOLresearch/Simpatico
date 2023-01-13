@@ -13,7 +13,7 @@ export default function Conversation({ firebase, userToChatWith, convoDocId }) {
   const zoomHandle = useRef()
   const [messageBody, setMessageBody] = useState('')
 
-  const messagesColRef = conversationRef.collection('messages')
+  const messagesColRef = conversationRef.collection('messages').orderBy("createdAt")
   const [messages = []] = useCollectionData(messagesColRef);
 
   // console.log(messages)
