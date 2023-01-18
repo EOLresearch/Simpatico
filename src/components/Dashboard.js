@@ -1,6 +1,6 @@
 import './dashboard.css';
 import Conversation from './Conversation/Conversation'
-import Profile from './Profile/Profile'
+import Nav from './Nav/Nav'
 import MatchList from './MatchList/MatchList'
 import MatchDetails from './MatchDetails/MatchDetails'
 //TODO: component import-index refactor
@@ -8,13 +8,14 @@ import MatchDetails from './MatchDetails/MatchDetails'
 import { useState } from "react";
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
-export default function Dashboard({ firebase }) {
+export default function Dashboard({ auth, firebase }) {
+  const [showMatchList, setShowMatchList] = useState(true)
+
   const [showMatchDetails, setShowMatchDetails] = useState(false)
   const [openConversationWindow, setOpenConversationWindow] = useState(false)
   const [userToChatWith, setUserToChatWith] = useState()
   const [convoDocId, setConvoDocId] = useState()
 
-  const auth = firebase.auth();
   const { uid, email } = auth.currentUser;
   const firestore = firebase.firestore();
 
@@ -52,7 +53,7 @@ export default function Dashboard({ firebase }) {
             // console.log("Document data:", doc.data());
             setConvoDocId(docId2)
             setOpenConversationWindow(true)
-          } else {    
+          } else {
             setShowMatchDetails(true)
           }
         }).catch((error) => {
@@ -78,16 +79,21 @@ export default function Dashboard({ firebase }) {
 
   return (
     <div className='dashboard-wrapper'>
-      <Profile fsUser={fsUser} />
-      <MatchList currentUid={uid} users={users} convoHandler={convoHandler} />
-      {
-        openConversationWindow === true ?
-          <Conversation firebase={firebase} userToChatWith={userToChatWith} convoDocId={convoDocId} /> : null
-      }
-      {
-        showMatchDetails === true ?
-          <MatchDetails userToChatWith={userToChatWith} createConvo={createConvo}/> : null
-      }
+      <Nav fsUser={fsUser} />
+      <div className='dashboard-body'>
+        {
+          showMatchList === true ?
+            <MatchList currentUid={uid} users={users} convoHandler={convoHandler} /> : null
+        }
+        {
+          openConversationWindow === true ?
+            <Conversation firebase={firebase} userToChatWith={userToChatWith} convoDocId={convoDocId} /> : null
+        }
+        {
+          showMatchDetails === true ?
+            <MatchDetails userToChatWith={userToChatWith} createConvo={createConvo} /> : null
+        }
+      </div>
     </div>
   );
 

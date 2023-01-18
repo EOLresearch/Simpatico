@@ -1,8 +1,26 @@
-.dashboard-wrapper{
-    margin: 0 auto;
-    width: 100%;
-    min-height: 90vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.dashboard-wrapper {
+  margin: 0 auto;
+  max-width: 90vw;
+  min-height: 90vh;
+  display: flex;
+  align-items: flex-start;
+  /* justify-content: center; */
+  border: black solid 5px;
+  border-radius: 5rem;
+  overflow: hidden;
+}
+
+.dashboard-body {
+  background: blue;
+  width: 100vw;
+  height:90vh;
+  padding:1rem;
+
+  border-radius: 3rem;
+  position: relative;
+  right:3rem;
+  /* padding:1rem 100%; */
+
+  
+
 }
