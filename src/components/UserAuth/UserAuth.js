@@ -44,10 +44,10 @@ export default function UserAuth({ firebase }) {
               uid: result.user.uid,
               email: result.user.email,
               displayName: result.user.displayName,
+              photoURL: result.user.photoURL,
               birthDate: birthDate,
               lossDate: lossDate,
               deceased: deceased,
-              simpatico: false,
               // residence: residence,
             })
           }
@@ -102,9 +102,9 @@ export default function UserAuth({ firebase }) {
         email: email,
         displayName: displayName,
         birthDate: birthDate,
+        photoURL: null,
         deceased: deceased,
         lossDate: lossDate,
-        simpatico: false,
         // residence: residence,
       })
     } catch (error) {

@@ -19,6 +19,7 @@ export default function Dashboard({ auth, firebase }) {
   const [convoDocId, setConvoDocId] = useState()
 
   const { uid, email, photoURL } = auth.currentUser;
+  console.log(auth.currentUser)
   const firestore = firebase.firestore();
 
   const usersRef = firestore.collection('users');
@@ -78,15 +79,17 @@ export default function Dashboard({ auth, firebase }) {
     setOpenConversationWindow(true)
     setShowMatchDetails(false)
   }
-  
+
   //when the time comes for randomized avatars for users this package which is already installted via npm should work
   //https://github.com/multiavatar/Multiavatar
   // let svgCode = multiavatar('Binx Bond')
   // console.log(svgCode)
+
+  //TODO: nav is not responsive, need a hamburger menu to crash into
   return (
     <div className='dashboard-wrapper'>
 
-      <Nav fsUser={fsUser} />
+      <Nav fsUser={fsUser} photoURL={photoURL} />
       
       <div className='dashboard-body'>
         {/* {
