@@ -29,25 +29,11 @@ function App() {
     <div className="App">
       {
         user ? 
-            <Dashboard auth={auth} firebase={firebase} /> : <UserAuth firebase={firebase}/>
+            <Dashboard auth={auth} firebase={firebase} /> : <UserAuth auth={auth} firebase={firebase}/>
       }
-      <LogOut />
     </div>
   );
 }
 
-
-
-// -----------------------------------------------
-
-
-
-function LogOut() {
-
-  return auth.currentUser && (
-    <button onClick={() => auth.signOut()}>Log Out</button>
-  )
-
-}
 
 export default App;

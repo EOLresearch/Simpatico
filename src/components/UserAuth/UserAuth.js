@@ -200,7 +200,7 @@ export default function UserAuth({ firebase }) {
                 <input className="btn" type="submit" value="Send Password Reset" />
                 <div className='sub-container'>
                   <button className='btn btn-sub' onClick={registrationDisplaySwitch}>New User?</button>
-                  <button className="btn btn-sub" onClick={forgotPassDisplaySwitch}>Back to Login</button>
+                  <button onClick={forgotPassDisplaySwitch} className='btn btn-back'><i className="fa-solid fa-arrow-left"></i> Back to Login</button>
                 </div>
               </form>
             </div>

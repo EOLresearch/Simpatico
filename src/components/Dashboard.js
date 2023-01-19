@@ -86,10 +86,11 @@ export default function Dashboard({ auth, firebase }) {
   // console.log(svgCode)
 
   //TODO: nav is not responsive, need a hamburger menu to crash into
+
   return (
     <div className='dashboard-wrapper'>
 
-      <Nav fsUser={fsUser} photoURL={photoURL} />
+      <Nav fsUser={fsUser} auth={auth}/>
       
       <div className='dashboard-body'>
         {/* {
