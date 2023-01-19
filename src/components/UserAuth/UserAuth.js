@@ -48,7 +48,6 @@ export default function UserAuth({ firebase }) {
               lossDate: lossDate,
               deceased: deceased,
               simpatico: false,
-
               // residence: residence,
             })
           }

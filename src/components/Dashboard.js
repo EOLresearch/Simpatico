@@ -8,6 +8,8 @@ import MatchDetails from './MatchDetails/MatchDetails'
 import { useState } from "react";
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
+import multiavatar from '@multiavatar/multiavatar/esm'
+
 export default function Dashboard({ auth, firebase }) {
   const [showMatchList, setShowMatchList] = useState(true)
 
@@ -16,7 +18,7 @@ export default function Dashboard({ auth, firebase }) {
   const [userToChatWith, setUserToChatWith] = useState()
   const [convoDocId, setConvoDocId] = useState()
 
-  const { uid, email } = auth.currentUser;
+  const { uid, email, photoURL } = auth.currentUser;
   const firestore = firebase.firestore();
 
   const usersRef = firestore.collection('users');
@@ -76,15 +78,21 @@ export default function Dashboard({ auth, firebase }) {
     setOpenConversationWindow(true)
     setShowMatchDetails(false)
   }
-
+  
+  //when the time comes for randomized avatars for users this package which is already installted via npm should work
+  //https://github.com/multiavatar/Multiavatar
+  // let svgCode = multiavatar('Binx Bond')
+  // console.log(svgCode)
   return (
     <div className='dashboard-wrapper'>
+
       <Nav fsUser={fsUser} />
+      
       <div className='dashboard-body'>
-        {
+        {/* {
           showMatchList === true ?
             <MatchList currentUid={uid} users={users} convoHandler={convoHandler} /> : null
-        }
+        } */}
         {
           openConversationWindow === true ?
             <Conversation firebase={firebase} userToChatWith={userToChatWith} convoDocId={convoDocId} /> : null

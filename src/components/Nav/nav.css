@@ -1,7 +1,30 @@
 .nav-container{
   height:90vh;
-  padding: 1rem;
-  background: #ffffff;
-  padding-right:8rem;
-  
+  width:15vw;
+  text-align: center;
+}
+.profile{
+  color:white;
+
+}
+.nav-body ul{
+  height:80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  text-align: left;
+
+}
+.nav-body ul li{
+  list-style: none;
+  color:white;
+}
+
+.react-icons-nav{
+  color:white;
+  font-size:2rem;
+  position: relative;
+  top:0.5rem;
+  right:1rem;
+  padding-left:0.5rem;
 }
