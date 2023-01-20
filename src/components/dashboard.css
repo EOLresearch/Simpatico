@@ -20,8 +20,11 @@
 }
 .welcome{
   width:80%;
+  height:90vh;
   margin: 0 auto;
-  margin-top:2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .hero-image{
   border: black 2px solid;
