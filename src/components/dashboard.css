@@ -15,7 +15,42 @@
   background-color: rgba(255, 255, 255, 0.533);
   border: 1rem rgba(255, 255, 255, 0) solid;
   border-radius: 5rem;
-
   width:100%;
   height:90vh;
+}
+.welcome{
+  width:80%;
+  margin: 0 auto;
+  margin-top:2rem;
+}
+.hero-image{
+  border: black 2px solid;
+  width:100%;
+  height:200px;
+}
+.welcome ul{
+  display: flex;
+  justify-content: space-evenly;
+  list-style: none;
+  min-width:80%;
+}
+.react-icons-welcome{
+  font-size:2rem;
+  position: relative;
+  top:0.5rem;
+  /* right:1rem; */
+  margin-left:2rem;
+  margin-right:1rem;
+}
+.callouts{
+  margin-top:4rem;
+  display: flex;
+  justify-content: space-evenly;
+}
+.callouts div{
+  width:10rem;
+  height:10rem;
+  border:black solid 2px;
+  border-radius: 1rem;
+  padding:1rem;
 }

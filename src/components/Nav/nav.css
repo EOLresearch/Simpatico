@@ -30,6 +30,10 @@
   color:white;
   line-height: 3rem;
 }
+/* .nav-body ul li:first-child{
+  color: black;
+} */
+
 .nav-body ul li:hover{
   background-color: rgba(255, 255, 255, 0.533);
   border-radius:5rem 0 0 5rem ;
@@ -44,6 +48,11 @@
   /* right:1rem; */
   margin-left:2rem;
   margin-right:1rem;
+  pointer-events: none;
+}
+
+.home-btn:hover {
+  cursor: pointer;
 }
 
 .log-out{
@@ -58,8 +67,9 @@
   /* right:0.5rem; */
   color:white;
 }
-.log-out:hover{
+div.log-out:hover{
   cursor: pointer;
-  text-decoration: underline;
-  text-decoration-color: white ;
+  /* text-decoration: underline;
+  text-decoration-color: white ; */
+  border-bottom:2px solid rgba(26, 9, 9, 0.375);
 }
