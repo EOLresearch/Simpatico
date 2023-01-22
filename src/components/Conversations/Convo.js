@@ -1,11 +1,11 @@
-import './conversation.css';
+import './convo.css';
 
 import ChatMessage from '../ChatMessage/ChatMessage'
 
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useRef, useState } from 'react';
 
-export default function Conversation({ firebase, userToChatWith, convoDocId }) {
+export default function Convo({ firebase, userToChatWith, convoDocId }) {
   const auth = firebase.auth();
   const firestore = firebase.firestore()
   const conversationRef = firestore.collection('conversations').doc(convoDocId);
@@ -31,7 +31,7 @@ export default function Conversation({ firebase, userToChatWith, convoDocId }) {
   }
 
   return (
-    <div className='conversation-container'>
+    <div className='convo-container'>
       <div>
         <p>{userToChatWith.displayName}</p>
         {messages.map(msg => <ChatMessage key={msg.mid} auth={auth} mid={msg.mid} message={msg} />)}

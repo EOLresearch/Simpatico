@@ -48,6 +48,7 @@ export default function UserAuth({ firebase }) {
               birthDate: birthDate,
               lossDate: lossDate,
               deceased: deceased,
+              cause: cause,
               // residence: residence,
             })
           }
@@ -105,6 +106,7 @@ export default function UserAuth({ firebase }) {
         photoURL: null,
         deceased: deceased,
         lossDate: lossDate,
+        cause: cause,
         // residence: residence,
       })
     } catch (error) {

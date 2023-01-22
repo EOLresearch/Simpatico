@@ -1,11 +1,11 @@
 import './dashboard.css';
-import Conversation from './Conversation/Conversation'
+import Conversations from './Conversations/Conversations'
 import Nav from './Nav/Nav'
 import MatchList from './MatchList/MatchList'
 import MatchDetails from './MatchDetails/MatchDetails'
 //TODO: component import-index refactor
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 import { IconContext } from "react-icons";
@@ -18,26 +18,28 @@ export default function Dashboard({ auth, firebase }) {
   const [showMatchDetails, setShowMatchDetails] = useState(false)
   const [showConversationWindow, setShowConversationWindow] = useState(false)
   //TODO: these need to correspond with the nav styles for which button is clicked, so if welcomemessage is showing - we need appropriate styles for that button while that is true.
-
   const [userToChatWith, setUserToChatWith] = useState({})
   const [convoDocId, setConvoDocId] = useState()
 
   const { uid, email, photoURL } = auth.currentUser;
-  console.log(auth.currentUser)
+  // console.log(auth.currentUser)
   const firestore = firebase.firestore();
-
   const usersRef = firestore.collection('users');
   const [users] = useCollectionData(usersRef);
   //TODO:Right now, this is ALL USERS that gets sent to the matchlist, we will need to be able to filter this by profile data when the time is right. 
-
   const userQuery = usersRef.where("email", "==", email)
   const [fsUser] = useCollectionData(userQuery);
 
   const conversationsRef = firestore.collection('conversations');
+  const myConvos = conversationsRef.where('users', 'array-contains', uid)
+
+  const [convos] = useCollectionData(myConvos);
+  console.log(convos)
+
 
   function convoHandler(e, user) {
     e.preventDefault();
-    if(user === "no user") {
+    if (user === "no user") {
       setShowMatchDetails(false)
       return
     }
@@ -80,8 +82,9 @@ export default function Dashboard({ auth, firebase }) {
     const docId = `${uid} + ${user.uid}`
     await conversationsRef.doc(docId).set({
       users: [uid, user.uid],
-      isPrivate: true,
-      docId: docId
+      docId: docId,
+      mutualConsent: false, 
+      isActive: false, 
     })
     setConvoDocId(docId)
     setShowConversationWindow(true)
@@ -91,17 +94,13 @@ export default function Dashboard({ auth, firebase }) {
   //TODO: nav is not responsive, need a hamburger menu to crash into
 
   function navHandler(e) {
-    console.log(e.target)
+    // console.log(e.target)
     switch (e.target.dataset.identifier) {
       case 'Conversations':
         setShowMatchList(false)
         setShowMatchDetails(false)
         setShowWelcomeMessage(false)
-        if (JSON.stringify(userToChatWith) === '{}'){
-          console.log("no user to chat with")
-        } else {
-          setShowConversationWindow(true)
-        }
+        setShowConversationWindow(true)
         return
       case 'Matches':
         setShowMatchList(true)
@@ -136,26 +135,21 @@ export default function Dashboard({ auth, firebase }) {
 
   return (
     <div className='dashboard-wrapper'>
-
       <Nav fsUser={fsUser} auth={auth} navHandler={navHandler} />
-
-
       <div className='dashboard-body'>
         {
           showWelcomeMessage === true ?
             <WelcomeMessage /> : null
-            //this component is in THIS FILE
+          //this component is in THIS FILE
         }
         {
+          //refactor all of these to essentially be nav routes - this will turn into a Matches component
           showMatchList === true ?
             <MatchList currentUid={uid} users={users} convoHandler={convoHandler} /> : null
         }
         {
-          // this WILL need to change to an index of all users conversations (which should be easy enough to query)
-          // setShowConversationsIndex
-
           showConversationWindow === true ?
-            <Conversation firebase={firebase} userToChatWith={userToChatWith} convoDocId={convoDocId} /> : null
+            <Conversations firebase={firebase} userToChatWith={userToChatWith} convoDocId={convoDocId} convos={convos}/> : null
         }
         {
           showMatchDetails === true ?

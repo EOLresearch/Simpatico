@@ -1,5 +1,6 @@
 .match-list-container{
   color: rgb(202, 73, 73);
+  padding:2rem;
 }
 
 .match:hover{
