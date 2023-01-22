@@ -23,10 +23,10 @@ export default function Nav({ fsUser, auth, navHandler }) {
         }
         <div className='nav-body'>
           <ul>
-            <li data-identifier="Conversations" onClick={e => navHandler(e)}><IoChatbubblesSharp />Conversations</li>
             <li data-identifier="Matches"  onClick={e => navHandler(e)}><IoPeopleCircleOutline />Matches</li>
-            <li data-identifier="My Details" onClick={e => navHandler(e)}><FaList />My Details</li>
-            <li data-identifier="My Story" onClick={e => navHandler(e)}><FaBookOpen />My Story</li>
+            <li data-identifier="Conversations" onClick={e => navHandler(e)}><IoChatbubblesSharp />---</li>
+            <li data-identifier="My Details" onClick={e => navHandler(e)}><FaList />---</li>
+            <li data-identifier="My Story" onClick={e => navHandler(e)}><FaBookOpen />---</li>
           </ul>
         </div>
         <div className='log-out' onClick={() => auth.signOut()}><FaArrowLeft size="1rem" /><span className='text'>logout</span></div>

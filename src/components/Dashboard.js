@@ -8,8 +8,6 @@ import MatchDetails from './MatchDetails/MatchDetails'
 import { useState } from "react";
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
-import multiavatar from '@multiavatar/multiavatar/esm'
-
 import { IconContext } from "react-icons";
 import { FaBookOpen, FaList, FaArrowLeft } from 'react-icons/fa';
 import { IoPeopleCircleOutline, IoChatbubblesSharp } from "react-icons/io5";
@@ -19,8 +17,9 @@ export default function Dashboard({ auth, firebase }) {
   const [showMatchList, setShowMatchList] = useState(false)
   const [showMatchDetails, setShowMatchDetails] = useState(false)
   const [showConversationWindow, setShowConversationWindow] = useState(false)
+  //TODO: these need to correspond with the nav styles for which button is clicked, so if welcomemessage is showing - we need appropriate styles for that button while that is true.
 
-  const [userToChatWith, setUserToChatWith] = useState()
+  const [userToChatWith, setUserToChatWith] = useState({})
   const [convoDocId, setConvoDocId] = useState()
 
   const { uid, email, photoURL } = auth.currentUser;
@@ -38,6 +37,10 @@ export default function Dashboard({ auth, firebase }) {
 
   function convoHandler(e, user) {
     e.preventDefault();
+    if(user === "no user") {
+      setShowMatchDetails(false)
+      return
+    }
     setConvoDocId('')
     setShowConversationWindow(false)
     setShowMatchDetails(false)
@@ -85,25 +88,20 @@ export default function Dashboard({ auth, firebase }) {
     setShowMatchDetails(false)
   }
 
-  //when the time comes for randomized avatars for users this package which is already installted via npm should work
-  //https://github.com/multiavatar/Multiavatar
-  // let svgCode = multiavatar('Binx Bond')
-  // console.log(svgCode)
-
   //TODO: nav is not responsive, need a hamburger menu to crash into
 
   function navHandler(e) {
-    // setShowConversationWindow
-    // setShowMatchDetails
-    // setShowMatchList
-    // setShowWelcomeMessage
     console.log(e.target)
     switch (e.target.dataset.identifier) {
       case 'Conversations':
         setShowMatchList(false)
         setShowMatchDetails(false)
         setShowWelcomeMessage(false)
-        setShowConversationWindow(true)
+        if (JSON.stringify(userToChatWith) === '{}'){
+          console.log("no user to chat with")
+        } else {
+          setShowConversationWindow(true)
+        }
         return
       case 'Matches':
         setShowMatchList(true)
@@ -146,6 +144,7 @@ export default function Dashboard({ auth, firebase }) {
         {
           showWelcomeMessage === true ?
             <WelcomeMessage /> : null
+            //this component is in THIS FILE
         }
         {
           showMatchList === true ?
@@ -160,7 +159,7 @@ export default function Dashboard({ auth, firebase }) {
         }
         {
           showMatchDetails === true ?
-            <MatchDetails userToChatWith={userToChatWith} createConvo={createConvo} /> : null
+            <MatchDetails userToChatWith={userToChatWith} convoHandler={convoHandler} createConvo={createConvo} /> : null
         }
       </div>
     </div>
