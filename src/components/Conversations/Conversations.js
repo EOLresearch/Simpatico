@@ -1,8 +1,13 @@
+import { useState } from "react";
 import './conversations.css';
+import Convo from './Convo'
+
 
 export default function Conversations({ firebase, convos = []}) {
   //THis may be the only component that needs to know WHO to chat with
   //THis may also be the only component that needs to know WHICH convo we are in. 
+  const [chatView, setChatView] = useState(false)
+
 
 
   const auth = firebase.auth();
@@ -18,10 +23,7 @@ export default function Conversations({ firebase, convos = []}) {
     <div className='conversations-container'>
       <h2>conversations</h2>
         {convos.map(convo => {
-          if (convo.mutualConsent === false){
-            console.log('no consent')
-          }
-          console.log(convo)
+          return <div key={convo.docId}>{convo.docId}</div>
         })}
     </div>
   )

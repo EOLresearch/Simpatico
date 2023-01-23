@@ -37,11 +37,11 @@ export default function UserAuth({ firebase }) {
           if (snapShot.docs.length > 0) {
             snapShot.forEach(doc => {
               const userData = doc.data()
-              // console.log(userData)
+              console.log(userData)
             })
           } else {
             console.log("no firestore record, now being created")
-            userRef.add({
+            userRef.doc(result.user.uid).set({
               uid: result.user.uid,
               email: result.user.email,
               displayName: result.user.displayName,
@@ -99,7 +99,7 @@ export default function UserAuth({ firebase }) {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-      userRef.add({
+      userRef.doc(user.uid).set({
         uid: user.uid,
         email: email,
         displayName: displayName,

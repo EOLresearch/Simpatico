@@ -5,7 +5,7 @@ import MatchList from './MatchList/MatchList'
 import MatchDetails from './MatchDetails/MatchDetails'
 //TODO: component import-index refactor
 
-import { useEffect, useInsertionEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 import { IconContext } from "react-icons";
@@ -18,16 +18,16 @@ export default function Dashboard({ auth, firebase }) {
   const [showMatchDetails, setShowMatchDetails] = useState(false)
   const [showConversationWindow, setShowConversationWindow] = useState(false)
   //TODO: these need to correspond with the nav styles for which button is clicked, so if welcomemessage is showing - we need appropriate styles for that button while that is true.
+
   const [userToChatWith, setUserToChatWith] = useState({})
   const [convoDocId, setConvoDocId] = useState([])
-  const [convoRequestArr, setConvoRequestArr] = useState([])
-
+  // const [convoRequestArr, setConvoRequestArr] = useState([])
 
   const { uid, email, photoURL } = auth.currentUser;
-  // console.log(auth.currentUser)
   const firestore = firebase.firestore();
 
   const usersRef = firestore.collection('users');
+
   const [users] = useCollectionData(usersRef);
   //TODO:Right now, this is ALL USERS that gets sent to the matchlist, we will need to be able to filter this by profile data when the time is right. 
 
@@ -37,35 +37,7 @@ export default function Dashboard({ auth, firebase }) {
   const conversationsRef = firestore.collection('conversations');
   const myConvos = conversationsRef.where('users', 'array-contains', uid)
 
-  // const [convos = []] = useCollectionData(myConvos);
-  // console.log(convos)
-  
-  // useEffect(()=>{
-  //   let convoArr = []
-  //   convos.map(c => {
-  //     if(c.users[1] === uid && c.mutualConsent === false){
-  //       convoArr.push(c)
-  //       return console.log(c)
-  //     } else {
-  //       return console.log('fail')
-  //     }
-  //   })
-  //   // setConvoRequestArr(convoArr)
-  // }, [convos])
-
-  useEffect(()=>{
-    myConvos.get().then(snapShot => {
-      snapShot.forEach((doc) => {
-        const con = doc.data()
-        if (con.mutualConsent === "false" && con.users[1] === "uid"){
-          setConvoRequestArr([...convoRequestArr, con])
-        }
-      })
-    })
-  }, [])
-
-  //still not working - I think I may need to put convos in state and then work it that way,. 
-
+  const [convos = []] = useCollectionData(myConvos);
 
 
   function convoHandler(e, user) {
@@ -118,6 +90,7 @@ export default function Dashboard({ auth, firebase }) {
     })
     setConvoDocId(docId)
     setShowConversationWindow(true)
+    setShowMatchList(false)
     setShowMatchDetails(false)
   }
 
@@ -179,7 +152,7 @@ export default function Dashboard({ auth, firebase }) {
         }
         {
           showConversationWindow === true ?
-            <Conversations firebase={firebase} convos={[]}/> : null
+            <Conversations firebase={firebase} convos={convos}/> : null
         }
         {
           showMatchDetails === true ?
