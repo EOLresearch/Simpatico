@@ -4,6 +4,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswor
 
 
 // ******problems with any email being allowed to sign up, thats a spam bots dream******************
+//****************PROBLEMS WITH DB user UIDS. there auth uid and firestore uid's consolodate these into one single UID for the user */
 
 export default function UserAuth({ firebase }) {
   const [regPanel, setRegPanel] = useState(false)

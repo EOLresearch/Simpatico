@@ -1,17 +1,17 @@
-import './conversation.css';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { useRef, useState } from 'react';
+import './conversations.css';
 
 export default function Conversations({ firebase, convos = []}) {
+  //THis may be the only component that needs to know WHO to chat with
+  //THis may also be the only component that needs to know WHICH convo we are in. 
+
+
   const auth = firebase.auth();
   const firestore = firebase.firestore()
   const { uid, photoURL } = auth.currentUser;
 
 
-  //we need to know who send it and who received it, and that might be easier to do by just adding those fields directly instead of the naming order. 
-  //right now, first user is always sender, but thats not obvious and therefore easy to forget. 
-  //want to get for consent, if not, ask for it, and then set the conversation to mutualCOnsent = true and isActive = True
-  //trying to figure out how to only queery conversations which are active. how to know which are active without querying them?
+
+  //trying to figure out how to only query conversations which are active. how to know which are active without querying them?
   //maybe record all user uids of all users a user has ever had a conversation with on the user record, just an array of UIDS, and then we an querry any documents with the doc id combinations of UIDS we already have in that case?
 
   return (
