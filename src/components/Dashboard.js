@@ -36,9 +36,7 @@ export default function Dashboard({ auth, firebase }) {
 
   const conversationsRef = firestore.collection('conversations');
   const myConvos = conversationsRef.where('users', 'array-contains', uid)
-
   const [convos = []] = useCollectionData(myConvos);
-
 
   function convoHandler(e, user) {
     e.preventDefault();
@@ -62,6 +60,7 @@ export default function Dashboard({ auth, firebase }) {
         // console.log("Document data:", doc.data());
         setConvoDocId(docId1)
         setShowConversationWindow(true)
+        setShowMatchList(false)
       } else {
         console.log('else, now run b')
         b.get().then((doc) => {
@@ -69,6 +68,7 @@ export default function Dashboard({ auth, firebase }) {
             // console.log("Document data:", doc.data());
             setConvoDocId(docId2)
             setShowConversationWindow(true)
+            setShowMatchList(false)
           } else {
             setShowMatchDetails(true)
           }
@@ -79,12 +79,16 @@ export default function Dashboard({ auth, firebase }) {
     })
   }
 
-
   async function createConvo(user) {
     // need more checks here to make sure conversations dont get erroneously made
     const docId = `${uid} + ${user.uid}`
     await conversationsRef.doc(docId).set({
       users: [uid, user.uid],
+      userData: {
+        sender: fsUser[0],
+        receiver: user,
+      },
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       docId: docId,
       mutualConsent: false,
     })
@@ -146,13 +150,12 @@ export default function Dashboard({ auth, firebase }) {
           //this component is in THIS FILE
         }
         {
-          //refactor all of these to essentially be nav routes - this will turn into a Matches component
           showMatchList === true ?
             <MatchList currentUid={uid} users={users} convoHandler={convoHandler} /> : null
         }
         {
           showConversationWindow === true ?
-            <Conversations firebase={firebase} convos={convos}/> : null
+            <Conversations firebase={firebase} convos={convos} /> : null
         }
         {
           showMatchDetails === true ?

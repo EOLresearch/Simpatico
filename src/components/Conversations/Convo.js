@@ -2,19 +2,27 @@ import './convo.css';
 
 import ChatMessage from '../ChatMessage/ChatMessage'
 
-import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { useCollectionData, useDocumentData } from 'react-firebase-hooks/firestore';
 import { useRef, useState } from 'react';
 
-export default function Convo({ firebase, userToChatWith, convoDocId }) {
+export default function Convo({ firebase, convoDocId }) {
   const auth = firebase.auth();
   const firestore = firebase.firestore()
-  const conversationRef = firestore.collection('conversations').doc(convoDocId);
   const { uid, photoURL } = auth.currentUser;
   const zoomHandle = useRef()
-  const [messageBody, setMessageBody] = useState('')
+
+  const conversationRef = firestore.collection('conversations').doc(convoDocId);
+  const [thisConversation] = useDocumentData(conversationRef);
+
+
+  //this is probably all going to get another component for the actual chat window. and then ill need to go back through and rename some shit becasue there are lots of convos now. 
+
 
   const messagesColOrderedRef = conversationRef.collection('messages').orderBy('createdAt')
   const [messages = []] = useCollectionData(messagesColOrderedRef);
+
+  const [messageBody, setMessageBody] = useState('')
+
 
   const messagesColRef = conversationRef.collection('messages')
   function submitHandler(e) {
@@ -33,8 +41,8 @@ export default function Convo({ firebase, userToChatWith, convoDocId }) {
   return (
     <div className='convo-container'>
       <div>
-        <p>{userToChatWith.displayName}</p>
-        {messages.map(msg => <ChatMessage key={msg.mid} auth={auth} mid={msg.mid} message={msg} />)}
+        <p>blart</p>
+        {messages.map(msg => <ChatMessage key={msg.mid} auth={auth} mid={msg.mid} message={msg} photoURL={photoURL} />)}
         <div ref={zoomHandle}></div>
       </div>
       <form onSubmit={submitHandler}>
