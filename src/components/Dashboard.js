@@ -1,5 +1,6 @@
 import './dashboard.css';
 import Conversations from './Conversations/Conversations'
+import ChatWindow from './ChatWindow/ChatWindow'
 import Nav from './Nav/Nav'
 import MatchList from './MatchList/MatchList'
 import MatchDetails from './MatchDetails/MatchDetails'
@@ -17,6 +18,8 @@ export default function Dashboard({ auth, firebase }) {
   const [showMatchList, setShowMatchList] = useState(false)
   const [showMatchDetails, setShowMatchDetails] = useState(false)
   const [showConversationWindow, setShowConversationWindow] = useState(false)
+  const [showChatWindow, setShowChatWindow] = useState(false)
+
   //TODO: these need to correspond with the nav styles for which button is clicked, so if welcomemessage is showing - we need appropriate styles for that button while that is true.
 
   const [userToChatWith, setUserToChatWith] = useState({})
@@ -100,13 +103,16 @@ export default function Dashboard({ auth, firebase }) {
 
   //TODO: nav is not responsive, need a hamburger menu to crash into
 
-  function navHandler(e) {
+  function navHandler(e, convoDocId) {
     // console.log(e.target)
-    switch (e.target.dataset.identifier) {
+    console.log(e.target)
+    switch (e.target.dataset.identifier)
+     {
       case 'Conversations':
         setShowMatchList(false)
         setShowMatchDetails(false)
         setShowWelcomeMessage(false)
+        setShowChatWindow(false)
         setShowConversationWindow(true)
         return
       case 'Matches':
@@ -119,6 +125,7 @@ export default function Dashboard({ auth, firebase }) {
         setShowMatchList(false)
         setShowMatchDetails(false)
         setShowWelcomeMessage(true)
+        setShowChatWindow(false)
         setShowConversationWindow(false)
         return
       case 'My Story':
@@ -126,12 +133,22 @@ export default function Dashboard({ auth, firebase }) {
         setShowMatchDetails(false)
         setShowWelcomeMessage(false)
         setShowConversationWindow(false)
+        setShowChatWindow(false)
         return
       case 'My Details':
         setShowMatchList(false)
         setShowMatchDetails(false)
         setShowWelcomeMessage(false)
         setShowConversationWindow(false)
+        setShowChatWindow(false)
+        return
+      case 'openChat':
+        setConvoDocId(convoDocId)
+        setShowMatchList(false)
+        setShowMatchDetails(false)
+        setShowWelcomeMessage(false)
+        setShowConversationWindow(false)
+        setShowChatWindow(true)
         return
       default:
         console.log('switch default NAV')
@@ -155,11 +172,15 @@ export default function Dashboard({ auth, firebase }) {
         }
         {
           showConversationWindow === true ?
-            <Conversations firebase={firebase} convos={convos} /> : null
+            <Conversations firebase={firebase} convos={convos} navHandler={navHandler} /> : null
         }
         {
           showMatchDetails === true ?
             <MatchDetails userToChatWith={userToChatWith} convoHandler={convoHandler} createConvo={createConvo} /> : null
+        }
+        {
+          showChatWindow === true ?
+            <ChatWindow firebase={firebase} convoDocId={convoDocId} /> : null
         }
       </div>
     </div>
