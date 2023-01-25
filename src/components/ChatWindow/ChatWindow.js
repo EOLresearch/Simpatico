@@ -33,13 +33,12 @@ export default function ChatWindow({ firebase, convoDocId }) {
   return (
     <div className="chat-window-container">
       <div>
-        <p>blart</p>
         {messages.map(msg => <ChatMessage key={msg.mid} auth={auth} mid={msg.mid} message={msg} photoURL={photoURL} />)}
         <div ref={zoomHandle}></div>
       </div>
       <form onSubmit={submitHandler}>
         <input value={messageBody} onChange={e => setMessageBody(e.target.value)} />
-        <button type="submit">🚀</button>
+        <button type="submit">Send</button>
       </form>
 
     </div>
