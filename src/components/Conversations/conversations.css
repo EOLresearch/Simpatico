@@ -1,3 +1,38 @@
-.conversations-container {
-
+.conversations-wrapper {
+  width:100%;
+  height: 100%;
+  border-radius: 5rem;
+  background-color: rgba(0, 0, 0, 0.225);
+}
+.conversations-container{
+  width:25%;
+  height:100%;
+  border-radius: 5rem;
+  background-color: rgba(0, 0, 255, 0.208);
+}
+.conversations-container h2{
+  color: white;
+  text-align: center;
+}
+.conversations-inner-container{
+  padding-top:3rem;
+}
+.convo-container{
+  margin:1rem;
+  border-radius: 2rem;
+  background-color: rgba(0, 0, 0, 0.224);
+}
+.convo{
+  display: flex;
+  
+}
+.convo img{
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.convo h4{
+  margin-left:1rem;
+  color: white;
 }
