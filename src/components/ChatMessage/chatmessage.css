@@ -1,3 +1,30 @@
 .message{
-    border-bottom: 1px solid rgb(211, 211, 211);
+    /* border-bottom: 1px solid rgb(211, 211, 211); */
+    color: white;
+    display: flex;
+}
+.message img{
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  object-fit: cover;
+  position: relative;
+  top:0.5rem;
+}
+.message span{
+  font-size: 0.7rem;;
+}
+.sent{
+  /* background-color: aqua; */
+}
+.received{
+  /* background-color: blueviolet; */
+  justify-content: flex-end;
+}
+
+.sent img{
+  margin-right:1rem;
+}
+.received img{
+  margin-left:1rem;
 }

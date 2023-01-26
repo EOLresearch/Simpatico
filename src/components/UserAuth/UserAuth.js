@@ -251,7 +251,8 @@ export default function UserAuth({ firebase }) {
                 <option>Parent</option>
                 <option>Offspring</option>
                 <option>Sibling</option>
-                <option>Grand child</option>
+                <option>Cousin</option>
+                <option>Grandchild</option>
                 <option>Aunt</option>
                 <option>Uncle</option>
                 <option>Niece</option>

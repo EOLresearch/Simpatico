@@ -4,7 +4,7 @@ import { useRef, useState } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 
-export default function ChatWindow({ firebase, convoDocId }) {
+export default function ChatWindow({ firebase, convoDocId, fsUser }) {
   const auth = firebase.auth();
   const firestore = firebase.firestore()
   const { uid, photoURL } = auth.currentUser;
@@ -22,17 +22,18 @@ export default function ChatWindow({ firebase, convoDocId }) {
     e.preventDefault()
     const msgDocRef = conversationRef.collection('messages').doc()
     msgDocRef.set({
+      mid: msgDocRef.id,
       body: messageBody,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      sentFrom: uid,
+      sentFromUid: uid,
+      sentFromDisplayName: fsUser.displayName,
       photoURL,
-      mid: msgDocRef.id
     })
     setMessageBody('')
   }
   return (
     <div className="chat-window-container">
-      <div>
+      <div className='message-container'>
         {messages.map(msg => <ChatMessage key={msg.mid} auth={auth} mid={msg.mid} message={msg} photoURL={photoURL} />)}
         <div ref={zoomHandle}></div>
       </div>

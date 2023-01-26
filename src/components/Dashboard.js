@@ -173,7 +173,7 @@ export default function Dashboard({ auth, firebase }) {
         }
         {
           showConversationWindow === true ?
-            <Conversations firebase={firebase} convos={convos} navHandler={navHandler} /> : null
+            <Conversations firebase={firebase} convos={convos} fsUser={fsUser[0]} /> : null
         }
         {
           showMatchDetails === true ?

@@ -4,7 +4,7 @@ import Convo from './Convo'
 import ChatWindow from '../ChatWindow/ChatWindow'
 import { doc } from "firebase/firestore";
 
-export default function Conversations({ firebase, convos, navHandler }) {
+export default function Conversations({ firebase, convos, fsUser }) {
   const [showChatWindow, setShowChatWindow] = useState(false)
   const [docID, setDocId] = useState()
   
@@ -32,7 +32,7 @@ function chatHandler(e, documentID){
       </div>
           {
             showChatWindow === true ?
-              <ChatWindow firebase={firebase} convoDocId={docID} /> : null
+              <ChatWindow firebase={firebase} convoDocId={docID} fsUser={fsUser}/> : null
           }
     </div>
   )
