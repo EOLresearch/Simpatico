@@ -15,7 +15,7 @@ export default function ChatWindow({ firebase, convoDocId, fsUser }) {
   const [messages = []] = useCollectionData(messagesColOrderedRef);
 
   const [messageBody, setMessageBody] = useState('')
-  const zoomHandle = useRef()
+  const scrollHandle = useRef()
 
 
   function submitHandler(e) {
@@ -30,18 +30,18 @@ export default function ChatWindow({ firebase, convoDocId, fsUser }) {
       photoURL,
     })
     setMessageBody('')
+    scrollHandle.current.scrollIntoView({ behavior: 'smooth' });
   }
   return (
     <div className="chat-window-container">
       <div className='message-container'>
         {messages.map(msg => <ChatMessage key={msg.mid} auth={auth} mid={msg.mid} message={msg} photoURL={photoURL} />)}
-        <div ref={zoomHandle}></div>
       </div>
+        <div className='scrollref' ref={scrollHandle}></div>
       <form onSubmit={submitHandler}>
         <input value={messageBody} onChange={e => setMessageBody(e.target.value)} />
         <button type="submit">Send</button>
       </form>
-
     </div>
   )
 }

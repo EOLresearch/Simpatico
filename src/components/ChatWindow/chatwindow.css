@@ -1,38 +1,40 @@
-.chat-window-container{
-  height: 100%;
-  width: 70%;
+.chat-window-container {
+  /* height: 80%; */
+  width: 80%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   border-radius: 3rem;
-}
-.chat-window-container form{
-  /* display: flex;
-  background-color: rgba(0, 0, 0, 0.32);
-  border-radius:5px 5px 5rem 5px ;
-  margin-top:1rem;
-  margin-bottom:1rem; */
-}
-.chat-window-container form input{
-  /* height: 2rem;
-  width:70%;
-  margin:0 auto;
-  background-color: rgba(51, 238, 41, 0.063);
-  color: white;
-  border:none; */
-}
-.chat-window-container form button{
-  /* height: 2rem;
-  margin-right:5%;
-  width:20%;
-  background-color: rgba(0, 0, 0, 0.148);
-  border:none; */
+  overflow: scroll;
 }
 
-.message-container{
-  margin:1rem;
-  padding:3rem;
-  background-color: rgba(0, 0, 0, 0.273);
-  border-radius: 3rem;
+.chat-window-container form {
+  position: fixed;
+  bottom: 5%;
+  /* left:80%; */
+  display: flex;
+  width: 50%;
+  margin-left: 2rem;
 
+}
+
+.chat-window-container form input {
+  background-color: black;
+}
+
+.chat-window-container form button {
+  height: 2rem;
+  margin-right: 5%;
+
+  border: none;
+}
+
+.message-container {
+  padding: 2rem;
+  
+}
+.scrollref{
+  height: 10rem;
+  border: 2px solid white;
+  width:100%;
 }

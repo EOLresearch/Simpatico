@@ -2,14 +2,14 @@
   width:100%;
   height: 100%;
   border-radius: 5rem;
-  background-color: rgba(0, 0, 0, 0.225);
+  background-color: rgba(0, 0, 0, 0.529);
   display: flex;
 }
 .conversations-container{
   width:25%;
   height:100%;
   border-radius: 5rem;
-  background-color: rgba(0, 0, 255, 0.208);
+  background-color: rgba(0, 0, 255, 0.332);
 }
 .conversations-container h2{
   color: white;

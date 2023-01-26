@@ -1,9 +1,9 @@
 .message{
-    /* border-bottom: 1px solid rgb(211, 211, 211); */
     color: white;
     display: flex;
+    font-size: 1.2rem;
 }
-.message img{
+.msg-inner-container img{
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
@@ -11,14 +11,21 @@
   position: relative;
   top:0.5rem;
 }
-.message span{
-  font-size: 0.7rem;;
+.msg-inner-container{
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.408);
+  padding:0.5rem 1.5rem;
+  margin: 0.5rem;
+  border-radius: 0.5rem;
 }
-.sent{
-  /* background-color: aqua; */
+.message span{
+  font-size: 0.6rem;
+}
+.sent .msg-inner-container{
+  background-color: rgba(39, 39, 101, 0.247);
+
 }
 .received{
-  /* background-color: blueviolet; */
   justify-content: flex-end;
 }
 
