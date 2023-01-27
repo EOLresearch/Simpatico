@@ -1,7 +1,13 @@
 import './chatmessage.css';
+import { useRef, useState, useEffect } from 'react';
 
 export default function ChatMessage({ auth, mid, message }) {
   const msgStyle = message.sentFromUid === auth.currentUser.uid ? 'sent' : 'received'
+
+  // const scrollHandle = useRef()
+  // useEffect(()=>{
+  //   scrollHandle.current.scrollIntoView({ behavior: 'smooth' });
+  // },[message])
 
   // const dateTime = new Date(message.createdAt.seconds).toLocaleString()
   function subScript(){

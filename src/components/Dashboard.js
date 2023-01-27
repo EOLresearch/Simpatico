@@ -42,6 +42,10 @@ export default function Dashboard({ auth, firebase }) {
   const [convos = []] = useCollectionData(myConvos);
 
   function convoHandler(e, user) {
+
+    //the click from the match list does NOT need to do any document reads
+    //lets get an exit clause here so the rest of the function doesnt have to run from match-list clicks where conversations have already been created and in the component tree. 
+
     e.preventDefault();
     if (user === "no user") {
       setShowMatchDetails(false)

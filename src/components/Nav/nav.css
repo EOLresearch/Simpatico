@@ -1,12 +1,19 @@
 .nav-container{
-  height:90vh;
+  /* height:90vh; */
   min-width:15rem;
   text-align: center;
 }
+.home-btn{
+  /* position: absolute;
+  left:15rem; */
+}
+.home-btn:hover {
+  cursor: pointer;
+}
 .profile{
+  margin-top:2rem;
   color:white;
   position: relative;
-  top:3rem;
 }
 .profile img{
   width: 70px;
@@ -15,17 +22,19 @@
   object-fit: cover;
 }
 .nav-body ul{
-  height:75vh;
+  /* height:70vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-evenly; */
   text-align: left;
   position: relative;
   bottom:1rem;
   padding:0;
   margin-left:1rem;
+  margin-top:25%;
 }
 .nav-body ul li{
+  margin:10% 0;
   list-style: none;
   color:white;
   line-height: 3rem;
@@ -49,10 +58,6 @@
   margin-left:2rem;
   margin-right:1rem;
   pointer-events: none;
-}
-
-.home-btn:hover {
-  cursor: pointer;
 }
 
 .log-out{

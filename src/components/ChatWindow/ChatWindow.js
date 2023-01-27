@@ -20,6 +20,7 @@ export default function ChatWindow({ firebase, convoDocId, fsUser }) {
   useEffect(()=>{
     scrollHandle.current.scrollIntoView({ behavior: 'smooth' });
   },[messages])
+  //this scroll is causing weird layout issues between the dashboard body and the dashboard wrapper. lets find another trick to smooth scroll to the latest message. 
 
   function submitHandler(e) {
     e.preventDefault()
