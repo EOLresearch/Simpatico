@@ -1,40 +1,45 @@
 .chat-window-container {
-  /* height: 80%; */
   width: 80%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  border-radius: 3rem;
-  overflow: scroll;
+  overflow: hidden;
 }
 
 .chat-window-container form {
   position: fixed;
   bottom: 5%;
-  /* left:80%; */
   display: flex;
   width: 50%;
   margin-left: 2rem;
-
 }
 
 .chat-window-container form input {
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0.477);
+  border:none;
+  height:3rem;
+  padding-left:2rem;
+  /* border-radius: 1rem 0 0 1rem ; */
 }
 
 .chat-window-container form button {
-  height: 2rem;
   margin-right: 5%;
-
+  height: 3rem;
   border: none;
+  width:5rem;
+  background-color: rgba(8, 0, 255, 0.222);
+  color:white; 
+  /* border-radius: 0 1rem 1rem 0 ; */
+
 }
 
 .message-container {
   padding: 2rem;
+  overflow: auto;
+  
   
 }
 .scrollref{
-  height: 10rem;
-  border: 2px solid white;
-  width:100%;
+  height: 3rem;
+  /* border: 2px solid white; */
 }

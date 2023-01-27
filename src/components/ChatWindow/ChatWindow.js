@@ -1,6 +1,6 @@
 import './chatwindow.css';
 import ChatMessage from '../ChatMessage/ChatMessage'
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 
@@ -11,12 +11,15 @@ export default function ChatWindow({ firebase, convoDocId, fsUser }) {
 
   const conversationRef = firestore.collection('conversations').doc(convoDocId);
 
-  const messagesColOrderedRef = conversationRef.collection('messages').orderBy('createdAt')
+  const messagesColOrderedRef = conversationRef.collection('messages').orderBy('createdAt').limitToLast(25)
   const [messages = []] = useCollectionData(messagesColOrderedRef);
 
   const [messageBody, setMessageBody] = useState('')
   const scrollHandle = useRef()
-
+  
+  useEffect(()=>{
+    scrollHandle.current.scrollIntoView({ behavior: 'smooth' });
+  },[messages])
 
   function submitHandler(e) {
     e.preventDefault()
@@ -30,14 +33,13 @@ export default function ChatWindow({ firebase, convoDocId, fsUser }) {
       photoURL,
     })
     setMessageBody('')
-    scrollHandle.current.scrollIntoView({ behavior: 'smooth' });
   }
   return (
     <div className="chat-window-container">
       <div className='message-container'>
         {messages.map(msg => <ChatMessage key={msg.mid} auth={auth} mid={msg.mid} message={msg} photoURL={photoURL} />)}
-      </div>
         <div className='scrollref' ref={scrollHandle}></div>
+      </div>
       <form onSubmit={submitHandler}>
         <input value={messageBody} onChange={e => setMessageBody(e.target.value)} />
         <button type="submit">Send</button>
