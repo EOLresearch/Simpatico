@@ -27,9 +27,9 @@ export default function Nav({ fsUser, auth, navHandler }) {
             <li data-identifier="Conversations" onClick={e => navHandler(e)}><IoChatbubblesSharp />Conversations</li>
             <li data-identifier="My Details" onClick={e => navHandler(e)}><FaList />---</li>
             <li data-identifier="My Story" onClick={e => navHandler(e)}><FaBookOpen />---</li>
+            <li className='log-out' onClick={() => auth.signOut()}><FaArrowLeft size="1rem" /><span className='text'>logout</span></li>
           </ul>
         </div>
-        <div className='log-out' onClick={() => auth.signOut()}><FaArrowLeft size="1rem" /><span className='text'>logout</span></div>
       </div>
 
     </IconContext.Provider>

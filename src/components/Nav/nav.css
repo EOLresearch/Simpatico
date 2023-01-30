@@ -34,14 +34,11 @@
   margin-top:25%;
 }
 .nav-body ul li{
-  margin:10% 0;
+  margin:1.5rem 0;
   list-style: none;
   color:white;
   line-height: 3rem;
 }
-/* .nav-body ul li:first-child{
-  color: black;
-} */
 
 .nav-body ul li:hover{
   background-color: rgba(255, 255, 255, 0.533);
@@ -61,10 +58,8 @@
 }
 
 .log-out{
-  position: absolute;
-  top:90vh;
-  left:8vw;
-  line-height: 2rem;
+  
+  margin-top:1 rem;
 }
 .log-out span.text{
   position: relative;
