@@ -1,30 +1,28 @@
 import './dashboard.css';
 import Conversations from './Conversations/Conversations'
-import ChatWindow from './ChatWindow/ChatWindow'
 import Nav from './Nav/Nav'
 import MatchList from './MatchList/MatchList'
 import MatchDetails from './MatchDetails/MatchDetails'
+import MatchingSurvey from './MatchingSurvey/MatchingSurvey'
+
 //TODO: component import-index refactor
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 import { IconContext } from "react-icons";
-import { FaBookOpen, FaList, FaArrowLeft } from 'react-icons/fa';
-import { IoPeopleCircleOutline, IoChatbubblesSharp } from "react-icons/io5";
+// import { FaBookOpen, FaList, FaArrowLeft } from 'react-icons/fa';
+// import { IoPeopleCircleOutline, IoChatbubblesSharp } from "react-icons/io5";
 
 export default function Dashboard({ auth, firebase }) {
   const [showWelcomeMessage, setShowWelcomeMessage] = useState(true)
   const [showMatchList, setShowMatchList] = useState(false)
   const [showMatchDetails, setShowMatchDetails] = useState(false)
   const [showConversationWindow, setShowConversationWindow] = useState(false)
-  // const [showChatWindow, setShowChatWindow] = useState(false)
-
-  //TODO: these need to correspond with the nav styles for which button is clicked, so if welcomemessage is showing - we need appropriate styles for that button while that is true.
-
+  //TODO: Renaming: these above need to correspond with the nav styles for which button is clicked, so if welcomemessage is showing - we need appropriate styles for that button while that is true.
+  const [showSurvey, setShowSurvey] = useState(false)
   const [userToChatWith, setUserToChatWith] = useState({})
-  const [convoDocId, setConvoDocId] = useState([])
-  // const [convoRequestArr, setConvoRequestArr] = useState([])
+
 
   const { uid, email, photoURL } = auth.currentUser;
   const firestore = firebase.firestore();
@@ -41,6 +39,13 @@ export default function Dashboard({ auth, firebase }) {
   const myConvos = conversationsRef.where('users', 'array-contains', uid)
   const [convos = []] = useCollectionData(myConvos);
 
+
+  function surveyDataCheck(user){
+    if(user.cause === '' || user.deceased === ''){
+      setShowSurvey(true)
+    }
+  }
+
   function convoHandler(e, user) {
 
     //the click from the match list does NOT need to do any document reads
@@ -51,7 +56,6 @@ export default function Dashboard({ auth, firebase }) {
       setShowMatchDetails(false)
       return
     }
-    setConvoDocId('')
     setShowConversationWindow(false)
     setShowMatchDetails(false)
     setUserToChatWith(user)
@@ -65,7 +69,6 @@ export default function Dashboard({ auth, firebase }) {
     a.get().then((doc) => {
       if (doc.exists) {
         // console.log("Document data:", doc.data());
-        setConvoDocId(docId1)
         setShowConversationWindow(true)
         setShowMatchList(false)
       } else {
@@ -73,7 +76,6 @@ export default function Dashboard({ auth, firebase }) {
         b.get().then((doc) => {
           if (doc.exists) {
             // console.log("Document data:", doc.data());
-            setConvoDocId(docId2)
             setShowConversationWindow(true)
             setShowMatchList(false)
           } else {
@@ -99,7 +101,6 @@ export default function Dashboard({ auth, firebase }) {
       docId: docId,
       mutualConsent: false,
     })
-    setConvoDocId(docId)
     setShowConversationWindow(true)
     setShowMatchList(false)
     setShowMatchDetails(false)
@@ -107,16 +108,12 @@ export default function Dashboard({ auth, firebase }) {
 
   //TODO: nav is not responsive, need a hamburger menu to crash into
 
-  function navHandler(e, convoDocId) {
-    // console.log(e.target)
-    console.log(e.target)
-    switch (e.target.dataset.identifier)
-     {
+  function navHandler(e) {
+    switch (e.target.dataset.identifier) {
       case 'Conversations':
         setShowMatchList(false)
         setShowMatchDetails(false)
         setShowWelcomeMessage(false)
-        // setShowChatWindow(false)
         setShowConversationWindow(true)
         return
       case 'Matches':
@@ -124,13 +121,11 @@ export default function Dashboard({ auth, firebase }) {
         setShowMatchDetails(false)
         setShowWelcomeMessage(false)
         setShowConversationWindow(false)
-        // setShowChatWindow(false)
         return
       case 'Home':
         setShowMatchList(false)
         setShowMatchDetails(false)
         setShowWelcomeMessage(true)
-        // setShowChatWindow(false)
         setShowConversationWindow(false)
         return
       case 'My Story':
@@ -138,23 +133,13 @@ export default function Dashboard({ auth, firebase }) {
         setShowMatchDetails(false)
         setShowWelcomeMessage(false)
         setShowConversationWindow(false)
-        // setShowChatWindow(false)
         return
       case 'My Details':
         setShowMatchList(false)
         setShowMatchDetails(false)
         setShowWelcomeMessage(false)
         setShowConversationWindow(false)
-        // setShowChatWindow(false)
         return
-      // case 'openChat':
-      //   setConvoDocId(convoDocId)
-      //   setShowMatchList(false)
-      //   setShowMatchDetails(false)
-      //   setShowWelcomeMessage(false)
-      //   setShowConversationWindow(false)
-      //   setShowChatWindow(true)
-      //   return
       default:
         console.log('switch default NAV')
     }
@@ -183,10 +168,10 @@ export default function Dashboard({ auth, firebase }) {
           showMatchDetails === true ?
             <MatchDetails userToChatWith={userToChatWith} convoHandler={convoHandler} createConvo={createConvo} /> : null
         }
-        {/* {
-          showChatWindow === true ?
-            <ChatWindow firebase={firebase} convoDocId={convoDocId} /> : null
-        } */}
+        {
+          showSurvey === true ?
+            <MatchingSurvey firebase={firebase}/> : null
+        }
       </div>
     </div>
   );
@@ -194,29 +179,19 @@ export default function Dashboard({ auth, firebase }) {
 }
 
 function WelcomeMessage() {
-
+  //this, of course, needs massive overhaul and is not repsonsive at all
   return (
     <IconContext.Provider value={{ className: "react-icons-welcome" }}>
       <div className='welcome'>
         <div className='hero-image'> this is a pretty image that grabs peoples eyes and directs them downward</div>
         <div className='welcome-body'>
           <h1>Simpatico</h1>
-          <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. </p>
-
           <h3>Home Page Welcome Message</h3>
-          <p>perhaps with instructions or descriptions?</p>
           <div className='callouts'>
             <div>callout to center site?</div>
             <div>callout to weillcornell proper?</div>
             <div>callout to another resource?</div>
-
           </div>
-          {/* <ul>
-            <li><IoChatbubblesSharp />Conversations</li>
-            <li><IoPeopleCircleOutline />Matches</li>
-            <li><FaList />My Details</li>
-            <li><FaBookOpen />My Story</li>
-          </ul> */}
         </div>
       </div>
     </IconContext.Provider>
