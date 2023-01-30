@@ -1,6 +1,6 @@
 .wrapper {
   margin: 0 auto;
-  width: 100%;
+  width: 100vw;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -65,7 +65,7 @@ form input:focus {
 .col-right {
   position: relative;
   width: 50%;
-  padding: 2rem;
+  padding: 3rem;
   border-radius: 1rem;
   display: flex;
   flex-direction: column;

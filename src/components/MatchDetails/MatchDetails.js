@@ -8,7 +8,7 @@ export default function MatchDetails({ userToChatWith, convoHandler, createConvo
     <div className='match-details-BG'>
       <div className='match-details-container'>
         <h3>{userToChatWith.displayName}</h3>
-        <p>This is {userToChatWith.displayName}. {userToChatWith.displayName}, like you, has suffered the loss of thier {userToChatWith.deceased}. This happened on {userToChatWith.lossDate} </p>
+        <p>This is {userToChatWith.displayName}. Similarly to you, {userToChatWith.displayName} has suffered the loss of thier {userToChatWith.deceased} due to {userToChatWith.cause} causes. This happened on {userToChatWith.lossDate} </p>
         <p>would you like to start a conversation?</p>
         <div className='btn-container'>
           <button onClick={() => createConvo(userToChatWith)}>Yes</button>

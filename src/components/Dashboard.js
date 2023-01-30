@@ -1,4 +1,6 @@
 import './dashboard.css';
+import welcomeHeroImg from '../assets/bgbg.png';
+
 import Conversations from './Conversations/Conversations'
 import Nav from './Nav/Nav'
 import MatchList from './MatchList/MatchList'
@@ -115,30 +117,35 @@ export default function Dashboard({ auth, firebase }) {
         setShowMatchDetails(false)
         setShowWelcomeMessage(false)
         setShowConversationWindow(true)
+        setShowSurvey(false)
         return
       case 'Matches':
         setShowMatchList(true)
         setShowMatchDetails(false)
         setShowWelcomeMessage(false)
         setShowConversationWindow(false)
+        setShowSurvey(false)
         return
       case 'Home':
         setShowMatchList(false)
         setShowMatchDetails(false)
         setShowWelcomeMessage(true)
         setShowConversationWindow(false)
+        setShowSurvey(false)
         return
       case 'My Story':
         setShowMatchList(false)
         setShowMatchDetails(false)
         setShowWelcomeMessage(false)
         setShowConversationWindow(false)
+        setShowSurvey(false)
         return
-      case 'My Details':
+      case 'Matching Survey':
         setShowMatchList(false)
         setShowMatchDetails(false)
         setShowWelcomeMessage(false)
         setShowConversationWindow(false)
+        setShowSurvey(true)
         return
       default:
         console.log('switch default NAV')
@@ -183,10 +190,13 @@ function WelcomeMessage() {
   return (
     <IconContext.Provider value={{ className: "react-icons-welcome" }}>
       <div className='welcome'>
-        <div className='hero-image'> this is a pretty image that grabs peoples eyes and directs them downward</div>
+        <div className='hero-image'> 
+          <img src={welcomeHeroImg} />
+        </div>
         <div className='welcome-body'>
           <h1>Simpatico</h1>
           <h3>Home Page Welcome Message</h3>
+          <p>This is where we can introduce the study and details on how best to use this app.</p>
           <div className='callouts'>
             <div>callout to center site?</div>
             <div>callout to weillcornell proper?</div>

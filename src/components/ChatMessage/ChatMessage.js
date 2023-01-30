@@ -14,7 +14,7 @@ export default function ChatMessage({ auth, mid, message }) {
     if (message.createdAt === null) {
       return `${message.sentFromDisplayName} - --`
     } else {
-      const dateTime = new Date(message.createdAt.seconds).toLocaleString()
+      const dateTime = new Date(message.createdAt.seconds * 1000).toLocaleString()
       return `${message.sentFromDisplayName} - ${dateTime}`
     }
   }
