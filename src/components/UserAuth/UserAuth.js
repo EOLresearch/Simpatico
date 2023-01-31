@@ -1,8 +1,6 @@
 import './userauth.css';
 import { useState } from "react";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
-import defaultIcon from '../../assets/default.jpg';
-import jay from '../../assets/J.png';
 
 
 
@@ -30,8 +28,6 @@ export default function UserAuth({ firebase }) {
   const auth = firebase.auth();
   const firestore = firebase.firestore();
   const userRef = firestore.collection('users');
-
-  console.log(defaultIcon)
 
   const googleSignIn = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
@@ -110,7 +106,7 @@ export default function UserAuth({ firebase }) {
         email: email,
         displayName: displayName,
         birthDate: birthDate,
-        photoURL: defaultIcon,
+        photoURL: null,
         deceased: deceased,
         lossDate: lossDate,
         cause: cause,

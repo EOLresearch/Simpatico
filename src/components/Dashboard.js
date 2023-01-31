@@ -1,6 +1,4 @@
 import './dashboard.css';
-import welcomeHeroImg from '../assets/bgbg.png';
-
 import Conversations from './Conversations/Conversations'
 import Nav from './Nav/Nav'
 import MatchList from './MatchList/MatchList'
@@ -191,7 +189,7 @@ function WelcomeMessage() {
     <IconContext.Provider value={{ className: "react-icons-welcome" }}>
       <div className='welcome'>
         <div className='hero-image'> 
-          <img src={welcomeHeroImg} />
+          {/* <img src={welcomeHeroImg} /> */}
         </div>
         <div className='welcome-body'>
           <h1>Simpatico</h1>
