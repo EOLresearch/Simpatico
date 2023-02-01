@@ -1,6 +1,5 @@
 import './dashboard.css';
 import Conversations from './Conversations/Conversations'
-import Nav from './Nav/Nav'
 import MatchList from './MatchList/MatchList'
 import MatchDetails from './MatchDetails/MatchDetails'
 import MatchingSurvey from './MatchingSurvey/MatchingSurvey'
@@ -9,25 +8,16 @@ import MatchingSurvey from './MatchingSurvey/MatchingSurvey'
 
 import { useState } from "react";
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-
 import { IconContext } from "react-icons";
-// import { FaBookOpen, FaList, FaArrowLeft } from 'react-icons/fa';
-// import { IoPeopleCircleOutline, IoChatbubblesSharp } from "react-icons/io5";
 
 export default function Dashboard(props) {
-  
-  const { auth, firebase, showWelcomeMessage, showMatchList, showMatchDetails, showConversationWindow, showSurvey, navHandler } = props
-
+  const { firebase, user, showWelcomeMessage, showMatchList, showMatchDetails, showConversationWindow, showSurvey, navHandler } = props
+  const { uid, email, photoURL } = user;
+  const firestore = firebase.firestore();
   const [userToChatWith, setUserToChatWith] = useState({})
 
-
-  const { uid, email, photoURL } = auth.currentUser;
-  const firestore = firebase.firestore();
-
   const usersRef = firestore.collection('users');
-
   const [users] = useCollectionData(usersRef);
-  //TODO:Right now, this is ALL USERS that gets sent to the matchlist, we will need to be able to filter this by profile data when the time is right. 
 
   const userQuery = usersRef.where("email", "==", email)
   const [fsUser] = useCollectionData(userQuery);
@@ -36,13 +26,7 @@ export default function Dashboard(props) {
   const myConvos = conversationsRef.where('users', 'array-contains', uid)
   const [convos = []] = useCollectionData(myConvos);
 
-
-
   function convoHandler(e, user) {
-
-    //the click from the match list does NOT need to do any document reads
-    //lets get an exit clause here so the rest of the function doesnt have to run from match-list clicks where conversations have already been created and in the component tree. 
-
     e.preventDefault();
 
     navHandler("All Off")
@@ -90,13 +74,9 @@ export default function Dashboard(props) {
     navHandler("Conversations")
   }
 
-  //TODO: nav is not responsive, need a hamburger menu to crash into
-
-
 
   return (
     <div className='dashboard-wrapper'>
-      {/* <Nav fsUser={fsUser} auth={auth} navHandler={navHandler} /> */}
       <div className='dashboard-body'>
         {
           showWelcomeMessage === true ?

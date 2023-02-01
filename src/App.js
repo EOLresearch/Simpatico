@@ -33,9 +33,11 @@ function App() {
   const [showConversationWindow, setShowConversationWindow] = useState(false)
   const [showSurvey, setShowSurvey] = useState(false)
 
-  function navHandler(routeStr) {
+  function navHandler(renderCondition) {
 
-    switch (routeStr) {
+    // TODO:: need to doa check here for the user and redirect to login if not logged whenever any routing is attempted
+
+    switch (renderCondition) {
       case 'Conversations':
         setShowMatchList(false)
         setShowMatchDetails(false)
@@ -86,12 +88,12 @@ function App() {
 
   return (
     <div className="App">
-      <Nav auth={auth} navHandler={navHandler}/>
+      <Nav auth={auth} navHandler={navHandler} />
       {
         user ?
           <Dashboard
-            auth={auth}
             firebase={firebase}
+            user={user}
             showWelcomeMessage={showWelcomeMessage}
             showMatchList={showMatchList}
             showMatchDetails={showMatchDetails}
