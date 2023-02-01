@@ -1,14 +1,11 @@
 
 import UserAuth from './components/UserAuth/UserAuth'
 import Dashboard from './components/Dashboard'
-//-----------------------------------------------------
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import Nav from './components/Nav/Nav'
 import { useState } from "react";
-
-
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 firebase.initializeApp({
@@ -23,15 +20,13 @@ firebase.initializeApp({
 
 const auth = firebase.auth();
 
-
 function App() {
   const [user] = useAuthState(auth);
-
-  const [showWelcomeMessage, setShowWelcomeMessage] = useState(true)
-  const [showMatchList, setShowMatchList] = useState(false)
-  const [showMatchDetails, setShowMatchDetails] = useState(false)
-  const [showConversationWindow, setShowConversationWindow] = useState(false)
-  const [showSurvey, setShowSurvey] = useState(false)
+  const [welcomeMessage, setWelcomeMessage] = useState(true)
+  const [matchList, setMatchList] = useState(false)
+  const [matchDetails, setMatchDetails] = useState(false)
+  const [conversationsIndex, setConversationsIndex] = useState(false)
+  const [primarySurvey, setPrimarySurvey] = useState(false)
 
   function navHandler(renderCondition) {
 
@@ -39,46 +34,46 @@ function App() {
 
     switch (renderCondition) {
       case 'Conversations':
-        setShowMatchList(false)
-        setShowMatchDetails(false)
-        setShowWelcomeMessage(false)
-        setShowConversationWindow(true)
-        setShowSurvey(false)
+        setMatchList(false)
+        setMatchDetails(false)
+        setWelcomeMessage(false)
+        setConversationsIndex(true)
+        setPrimarySurvey(false)
         return
       case 'Matches':
-        setShowMatchList(true)
-        setShowMatchDetails(false)
-        setShowWelcomeMessage(false)
-        setShowConversationWindow(false)
-        setShowSurvey(false)
+        setMatchList(true)
+        setMatchDetails(false)
+        setWelcomeMessage(false)
+        setConversationsIndex(false)
+        setPrimarySurvey(false)
         return
       case 'Home':
-        setShowMatchList(false)
-        setShowMatchDetails(false)
-        setShowWelcomeMessage(true)
-        setShowConversationWindow(false)
-        setShowSurvey(false)
+        setMatchList(false)
+        setMatchDetails(false)
+        setWelcomeMessage(true)
+        setConversationsIndex(false)
+        setPrimarySurvey(false)
         return
       case 'My Story':
-        setShowMatchList(false)
-        setShowMatchDetails(false)
-        setShowWelcomeMessage(false)
-        setShowConversationWindow(false)
-        setShowSurvey(false)
+        setMatchList(false)
+        setMatchDetails(false)
+        setWelcomeMessage(false)
+        setConversationsIndex(false)
+        setPrimarySurvey(false)
         return
       case 'Matching Survey':
-        setShowMatchList(false)
-        setShowMatchDetails(false)
-        setShowWelcomeMessage(false)
-        setShowConversationWindow(false)
-        setShowSurvey(true)
+        setMatchList(false)
+        setMatchDetails(false)
+        setWelcomeMessage(false)
+        setConversationsIndex(false)
+        setPrimarySurvey(true)
         return
       case 'All Off':
-        setShowMatchList(false)
-        setShowMatchDetails(false)
-        setShowWelcomeMessage(false)
-        setShowConversationWindow(false)
-        setShowSurvey(false)
+        setMatchList(false)
+        setMatchDetails(false)
+        setWelcomeMessage(false)
+        setConversationsIndex(false)
+        setPrimarySurvey(false)
         return
       default:
         console.log('switch default NAV')
@@ -94,11 +89,11 @@ function App() {
           <Dashboard
             firebase={firebase}
             user={user}
-            showWelcomeMessage={showWelcomeMessage}
-            showMatchList={showMatchList}
-            showMatchDetails={showMatchDetails}
-            showConversationWindow={showConversationWindow}
-            showSurvey={showSurvey}
+            welcomeMessage={welcomeMessage}
+            matchList={matchList}
+            matchDetails={matchDetails}
+            conversationsIndex={conversationsIndex}
+            primarySurvey={primarySurvey}
             navHandler={navHandler}
           /> : <UserAuth auth={auth} firebase={firebase} />
       }

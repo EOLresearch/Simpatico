@@ -11,7 +11,7 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { IconContext } from "react-icons";
 
 export default function Dashboard(props) {
-  const { firebase, user, showWelcomeMessage, showMatchList, showMatchDetails, showConversationWindow, showSurvey, navHandler } = props
+  const { firebase, user, welcomeMessage, matchList, matchDetails, conversationsIndex, primarySurvey, navHandler } = props
   const { uid, email, photoURL } = user;
   const firestore = firebase.firestore();
   const [userToChatWith, setUserToChatWith] = useState({})
@@ -79,24 +79,24 @@ export default function Dashboard(props) {
     <div className='dashboard-wrapper'>
       <div className='dashboard-body'>
         {
-          showWelcomeMessage === true ?
+          welcomeMessage === true ?
             <WelcomeMessage /> : null
           //this component is in THIS FILE
         }
         {
-          showMatchList === true ?
+          matchList === true ?
             <MatchList currentUid={uid} users={users} convoHandler={convoHandler} /> : null
         }
         {
-          showConversationWindow === true ?
+          conversationsIndex === true ?
             <Conversations firebase={firebase} convos={convos} fsUser={fsUser[0]} /> : null
         }
         {
-          showMatchDetails === true ?
+          matchDetails === true ?
             <MatchDetails userToChatWith={userToChatWith} convoHandler={convoHandler} createConvo={createConvo} /> : null
         }
         {
-          showSurvey === true ?
+          primarySurvey === true ?
             <MatchingSurvey firebase={firebase}/> : null
         }
       </div>
