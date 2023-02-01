@@ -83,20 +83,24 @@ function App() {
 
   return (
     <div className="App">
-      <Nav auth={auth} navHandler={navHandler} />
-      {
-        user ?
-          <Dashboard
-            firebase={firebase}
-            user={user}
-            welcomeMessage={welcomeMessage}
-            matchList={matchList}
-            matchDetails={matchDetails}
-            conversationsIndex={conversationsIndex}
-            primarySurvey={primarySurvey}
-            navHandler={navHandler}
-          /> : <UserAuth auth={auth} firebase={firebase} />
-      }
+      <div className='render-wrapper'>
+        <Nav auth={auth} navHandler={navHandler} />
+        <div className='app-container'>
+          {
+            user ?
+              <Dashboard
+                firebase={firebase}
+                user={user}
+                welcomeMessage={welcomeMessage}
+                matchList={matchList}
+                matchDetails={matchDetails}
+                conversationsIndex={conversationsIndex}
+                primarySurvey={primarySurvey}
+                navHandler={navHandler}
+              /> : <UserAuth auth={auth} firebase={firebase} />
+          }
+        </div>
+      </div>
     </div>
   );
 }

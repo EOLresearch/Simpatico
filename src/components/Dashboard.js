@@ -76,7 +76,7 @@ export default function Dashboard(props) {
 
 
   return (
-    <div className='dashboard-wrapper'>
+    <div className='dashboard-container'>
       <div className='dashboard-body'>
         {
           welcomeMessage === true ?

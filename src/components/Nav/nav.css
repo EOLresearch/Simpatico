@@ -1,0 +1,26 @@
+.nav-container{
+  border: black solid 3px;
+  min-width: 15%;
+  color: white;
+  background-color: #31605b;
+}
+.logo-container{
+  height:10rem;
+  border: black solid 3px;
+
+
+}
+.nav-body ul{
+  margin-top:3rem;
+  margin-left:-15%;
+  list-style: none;
+
+}
+.nav-body ul li{
+  padding:1rem;
+  
+  /* border: black solid 3px; */
+}
+.nav-body ul li span{
+  margin-left:1rem;
+}

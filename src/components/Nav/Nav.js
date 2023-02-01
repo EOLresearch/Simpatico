@@ -8,26 +8,17 @@ export default function Nav({ fsUser, auth, navHandler }) {
   return (
     <IconContext.Provider value={{ className: "react-icons-nav" }}>
       <div className='nav-container'>
-        {/* {
-          fsUser ?
-          fsUser.map(user => {
-            return (
-              <div key={user.uid} className="profile" >
-                  <img src={user.photoURL} alt="profile" />
-                  <h4>Hi {user.displayName}</h4>
-                </div>
-              )
-            })
-            : null
-          } */}
+        <div className='logo-container'>
+
+        </div>
         <div className='nav-body'>
           <ul>
-            <li data-identifier="Home" className="home-btn" onClick={e => navHandler("Home")}><IoHome />Home</li>
-            <li data-identifier="Matches"  onClick={e => navHandler("Matches")}><IoPeopleCircleOutline />Matches</li>
-            <li data-identifier="Conversations" onClick={e => navHandler("Conversations")}><IoChatbubblesSharp />Conversations</li>
-            <li data-identifier="Matching Survey" onClick={e => navHandler("Matching Survey")}><FaList />Matching Survey</li>
+            <li data-identifier="Home" className="home-btn" onClick={e => navHandler("Home")}><IoHome /><span>Home</span></li>
+            <li data-identifier="Matches"  onClick={e => navHandler("Matches")}><IoPeopleCircleOutline /><span>Matches</span></li>
+            <li data-identifier="Conversations" onClick={e => navHandler("Conversations")}><IoChatbubblesSharp /><span>Conversations</span></li>
+            <li data-identifier="Matching Survey" onClick={e => navHandler("Matching Survey")}><FaList /><span>Matching Survey</span></li>
             {/* <li data-identifier="My Story" onClick={e => navHandler(e)}><FaBookOpen />---</li> */}
-            <li className='log-out' onClick={() => auth.signOut()}><FaArrowLeft size="1rem" /><span className='text'>logout</span></li>
+            <li className='log-out' onClick={() => auth.signOut()}><FaArrowLeft size="1rem" /><span>logout</span></li>
             {/* <li>#MAKE A DONATION?</li> */}
           </ul>
         </div>
