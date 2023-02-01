@@ -14,13 +14,10 @@ import { IconContext } from "react-icons";
 // import { FaBookOpen, FaList, FaArrowLeft } from 'react-icons/fa';
 // import { IoPeopleCircleOutline, IoChatbubblesSharp } from "react-icons/io5";
 
-export default function Dashboard({ auth, firebase }) {
-  const [showWelcomeMessage, setShowWelcomeMessage] = useState(true)
-  const [showMatchList, setShowMatchList] = useState(false)
-  const [showMatchDetails, setShowMatchDetails] = useState(false)
-  const [showConversationWindow, setShowConversationWindow] = useState(false)
-  //TODO: Renaming: these above need to correspond with the nav styles for which button is clicked, so if welcomemessage is showing - we need appropriate styles for that button while that is true.
-  const [showSurvey, setShowSurvey] = useState(false)
+export default function Dashboard(props) {
+  
+  const { auth, firebase, showWelcomeMessage, showMatchList, showMatchDetails, showConversationWindow, showSurvey, navHandler } = props
+
   const [userToChatWith, setUserToChatWith] = useState({})
 
 
@@ -40,11 +37,6 @@ export default function Dashboard({ auth, firebase }) {
   const [convos = []] = useCollectionData(myConvos);
 
 
-  function surveyDataCheck(user){
-    if(user.cause === '' || user.deceased === ''){
-      setShowSurvey(true)
-    }
-  }
 
   function convoHandler(e, user) {
 
@@ -52,12 +44,8 @@ export default function Dashboard({ auth, firebase }) {
     //lets get an exit clause here so the rest of the function doesnt have to run from match-list clicks where conversations have already been created and in the component tree. 
 
     e.preventDefault();
-    if (user === "no user") {
-      setShowMatchDetails(false)
-      return
-    }
-    setShowConversationWindow(false)
-    setShowMatchDetails(false)
+
+    navHandler("All Off")
     setUserToChatWith(user)
 
     const docId1 = `${uid} + ${user.uid}`
@@ -69,17 +57,15 @@ export default function Dashboard({ auth, firebase }) {
     a.get().then((doc) => {
       if (doc.exists) {
         // console.log("Document data:", doc.data());
-        setShowConversationWindow(true)
-        setShowMatchList(false)
+        navHandler("Conversations")
       } else {
         console.log('else, now run b')
         b.get().then((doc) => {
           if (doc.exists) {
             // console.log("Document data:", doc.data());
-            setShowConversationWindow(true)
-            setShowMatchList(false)
+            navHandler("Conversations")
           } else {
-            setShowMatchDetails(true)
+            navHandler("Matches")
           }
         }).catch((error) => {
           console.log("Error getting document:", error);
@@ -101,60 +87,16 @@ export default function Dashboard({ auth, firebase }) {
       docId: docId,
       mutualConsent: false,
     })
-    setShowConversationWindow(true)
-    setShowMatchList(false)
-    setShowMatchDetails(false)
+    navHandler("Conversations")
   }
 
   //TODO: nav is not responsive, need a hamburger menu to crash into
 
-  function navHandler(e) {
-    switch (e.target.dataset.identifier) {
-      case 'Conversations':
-        setShowMatchList(false)
-        setShowMatchDetails(false)
-        setShowWelcomeMessage(false)
-        setShowConversationWindow(true)
-        setShowSurvey(false)
-        return
-      case 'Matches':
-        setShowMatchList(true)
-        setShowMatchDetails(false)
-        setShowWelcomeMessage(false)
-        setShowConversationWindow(false)
-        setShowSurvey(false)
-        return
-      case 'Home':
-        setShowMatchList(false)
-        setShowMatchDetails(false)
-        setShowWelcomeMessage(true)
-        setShowConversationWindow(false)
-        setShowSurvey(false)
-        return
-      case 'My Story':
-        setShowMatchList(false)
-        setShowMatchDetails(false)
-        setShowWelcomeMessage(false)
-        setShowConversationWindow(false)
-        setShowSurvey(false)
-        return
-      case 'Matching Survey':
-        setShowMatchList(false)
-        setShowMatchDetails(false)
-        setShowWelcomeMessage(false)
-        setShowConversationWindow(false)
-        setShowSurvey(true)
-        return
-      default:
-        console.log('switch default NAV')
-    }
-
-  }
 
 
   return (
     <div className='dashboard-wrapper'>
-      <Nav fsUser={fsUser} auth={auth} navHandler={navHandler} />
+      {/* <Nav fsUser={fsUser} auth={auth} navHandler={navHandler} /> */}
       <div className='dashboard-body'>
         {
           showWelcomeMessage === true ?
