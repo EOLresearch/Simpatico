@@ -337,9 +337,9 @@ export default function UserAuth({ firebase }) {
   }
 
   return (
-    <div className="wrapper">
-      <div className="container">
-        <div className="col-left">
+    <div className="auth-wrapper">
+      <div className="auth-container">
+
           <div className="fields-container">
             <h2>Login</h2>
             {(anError !== "")
@@ -349,21 +349,21 @@ export default function UserAuth({ firebase }) {
             <form onSubmit={onSubmitReturningUser}>
               <input type="email" placeholder="Email" value={email} onChange={changeHandler} name="useremail" required />
               <input type="password" placeholder="Password" value={password} onChange={changeHandler} name="userpass" required />
-              <input className="btn" type="submit" value="Sign In" />
+              <input className="btn" type="submit" value="Login" />
               <div className='sub-container'>
                 <button className='btn btn-sub' onClick={registrationDisplaySwitch}>New User?</button>
                 <button className="btn btn-sub" onClick={forgotPassDisplaySwitch}>Forgot Password?</button>
               </div>
             </form>
           </div>
-        </div>
-        <div className="col-right">
+
+
           <div className="login-with-container">
             <h2>Login with</h2>
             <button className="btn btn-go" onClick={googleSignIn}>Google</button>
             <button className="btn btn-fb">Facebook</button>
           </div>
-        </div>
+
       </div>
     </div>
   )

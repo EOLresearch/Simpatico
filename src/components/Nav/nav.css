@@ -1,26 +1,33 @@
-.nav-container{
-  border: black solid 3px;
-  min-width: 15%;
+.nav-container {
+  min-width: 17%;
   color: white;
   background-color: #31605b;
 }
-.logo-container{
-  height:10rem;
-  border: black solid 3px;
+
+.logo-container {
+  height: 10rem;
+  border-bottom: white solid 1px;
 
 
 }
-.nav-body ul{
-  margin-top:3rem;
-  margin-left:-15%;
-  list-style: none;
 
+.nav-body ul {
+  all: unset;
+  margin:10%;
 }
-.nav-body ul li{
-  padding:1rem;
-  
-  /* border: black solid 3px; */
+
+.nav-body ul li {
+  padding: 1rem;
+  font-size: 1rem;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
-.nav-body ul li span{
-  margin-left:1rem;
+
+.nav-body ul li:hover {
+  cursor: pointer;
+  background-color: #2d5c57ae;
+  color: rgba(255, 255, 255, 0.722);
+}
+
+.nav-body ul li span {
+  margin-left: 1rem;
 }

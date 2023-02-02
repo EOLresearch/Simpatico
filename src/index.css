@@ -19,7 +19,7 @@ body {
   display:flex;
   height:100vh;
   width:100vw;
-  border: black solid 3px;
+  /* border: black solid 3px; */
 }
 .app-container{
   /* height: 80vh; */
@@ -27,6 +27,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: black solid 3px;
+  /* border: black solid 3px; */
 
 }

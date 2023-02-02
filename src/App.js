@@ -20,6 +20,8 @@ firebase.initializeApp({
 
 const auth = firebase.auth();
 
+//Conditional rendering vs React router?
+
 function App() {
   const [user] = useAuthState(auth);
   const [welcomeMessage, setWelcomeMessage] = useState(true)
@@ -37,22 +39,22 @@ function App() {
         setMatchList(false)
         setMatchDetails(false)
         setWelcomeMessage(false)
-        setConversationsIndex(true)
         setPrimarySurvey(false)
+        setConversationsIndex(true)
         return
       case 'Matches':
-        setMatchList(true)
         setMatchDetails(false)
         setWelcomeMessage(false)
         setConversationsIndex(false)
         setPrimarySurvey(false)
+        setMatchList(true)
         return
       case 'Home':
         setMatchList(false)
         setMatchDetails(false)
-        setWelcomeMessage(true)
         setConversationsIndex(false)
         setPrimarySurvey(false)
+        setWelcomeMessage(true)
         return
       case 'My Story':
         setMatchList(false)
