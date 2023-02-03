@@ -82,12 +82,12 @@ export default function UserAuth({ firebase }) {
       setAnError('nodeceased')
     } else if (cause === '') {
       setAnError('nocause')
-    } 
+    }
 
     // else if (residence === '') {
     //   setAnError('noresidence')
     // } 
-    
+
     else if (consent === false) {
       setAnError('consent')
     } else if (consent === true) {
@@ -113,10 +113,10 @@ export default function UserAuth({ firebase }) {
         // residence: residence,
       })
     } catch (error) {
-        const errorCode = error.code;
-        console.log(errorCode, error.message)
-        setAnError(errorCode)
-      }
+      const errorCode = error.code;
+      console.log(errorCode, error.message)
+      setAnError(errorCode)
+    }
   }
 
   const onSubmitReturningUser = (e) => {
@@ -338,31 +338,50 @@ export default function UserAuth({ firebase }) {
 
   return (
     <div className="auth-wrapper">
+      <div className='auth-header'>
+        <h1>SIMPATICO</h1>
+        <p>Connect with people who have experienced similar types of loss</p>
+      </div>
+      <div className='callout-container'>
+        <div className='callout auth-callout'></div>
+        <div className='callout auth-callout'></div>
+        <div className='callout auth-callout'></div>
+      </div>
+
       <div className="auth-container">
+        <div className="fields-container">
+          <h4>Login to your profile</h4>
+          {(anError !== "")
+            // this component is currently still in this document
+            ? <ErrorMessage error={anError} cancelError={cancelError} /> : null
+          }
+          <form onSubmit={onSubmitReturningUser}>
+            <label htmlFor='email'>* Email Address</label>
+            <div className='input-container'>
+              <i class="fas fa-envelope"></i>
+              <input id="email" type="email" placeholder="Your Email Address" value={email} onChange={changeHandler} name="useremail" required />
+            </div>
+            <label htmlFor='password'>* Password</label>
+            <div className='input-container'>
+              <i class="fas fa-lock"></i>
+              <input id="password" type="password" placeholder="Your Password" value={password} onChange={changeHandler} name="userpass" required />
+              <i class="fas fa-eye-slash"></i>
+            </div>
+            <button className="btn" type="submit">Login</button>
 
-          <div className="fields-container">
-            <h2>Login</h2>
-            {(anError !== "")
-              // this component is currently still in this document
-              ? <ErrorMessage error={anError} cancelError={cancelError} /> : null
-            }
-            <form onSubmit={onSubmitReturningUser}>
-              <input type="email" placeholder="Email" value={email} onChange={changeHandler} name="useremail" required />
-              <input type="password" placeholder="Password" value={password} onChange={changeHandler} name="userpass" required />
-              <input className="btn" type="submit" value="Login" />
-              <div className='sub-container'>
-                <button className='btn btn-sub' onClick={registrationDisplaySwitch}>New User?</button>
-                <button className="btn btn-sub" onClick={forgotPassDisplaySwitch}>Forgot Password?</button>
-              </div>
-            </form>
-          </div>
+            <div className='sub-container'>
+              <button className='btn btn-sub' onClick={registrationDisplaySwitch}>New User?</button>
+              <button className="btn btn-sub" onClick={forgotPassDisplaySwitch}>Forgot Password?</button>
+            </div>
+          </form>
+        </div>
 
 
-          <div className="login-with-container">
-            <h2>Login with</h2>
-            <button className="btn btn-go" onClick={googleSignIn}>Google</button>
-            <button className="btn btn-fb">Facebook</button>
-          </div>
+        <div className="login-with-container">
+          <h2>Login with</h2>
+          <button className="btn btn-go" onClick={googleSignIn}>Google</button>
+          <button className="btn btn-fb">Facebook</button>
+        </div>
 
       </div>
     </div>
