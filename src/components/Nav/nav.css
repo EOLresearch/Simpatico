@@ -2,13 +2,12 @@
   min-width: 17%;
   color: white;
   background-color: #31605b;
+  height: 100vh;
 }
 
 .logo-container {
   height: 10rem;
   border-bottom: white solid 1px;
-
-
 }
 
 .nav-body ul {

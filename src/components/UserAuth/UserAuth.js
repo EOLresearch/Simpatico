@@ -1,9 +1,7 @@
 import './userauth.css';
 import { useState } from "react";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
-
-
-
+import { FaGoogle } from 'react-icons/fa';
 import ErrorMessage from '../ErrorMessage'
 
 // ******problems with any email being allowed to sign up, thats a spam bots dream******************
@@ -367,21 +365,19 @@ export default function UserAuth({ firebase }) {
               <input id="password" type="password" placeholder="Your Password" value={password} onChange={changeHandler} name="userpass" required />
               <i class="fas fa-eye-slash"></i>
             </div>
-            <button className="btn" type="submit">Login</button>
 
-            <div className='sub-container'>
-              <button className='btn btn-sub' onClick={registrationDisplaySwitch}>New User?</button>
-              <button className="btn btn-sub" onClick={forgotPassDisplaySwitch}>Forgot Password?</button>
+            <div className='btn-container'>
+              <button className='login-btn' type="submit">Login</button>
+              <button onClick={forgotPassDisplaySwitch}>Forgot Password</button>
+              <p>
+                <button onClick={registrationDisplaySwitch}>Not a member? <strong>Join now</strong></button>
+              </p>
+               <br />use an existing account<button className="btn-go" onClick={googleSignIn}><FaGoogle size="2rem" /></button>
             </div>
+            
           </form>
         </div>
 
-
-        <div className="login-with-container">
-          <h2>Login with</h2>
-          <button className="btn btn-go" onClick={googleSignIn}>Google</button>
-          <button className="btn btn-fb">Facebook</button>
-        </div>
 
       </div>
     </div>
