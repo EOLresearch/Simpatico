@@ -222,114 +222,100 @@ export default function UserAuth({ firebase }) {
 
   if (regPanel === true) {
     return (
-      <div className="wrapper">
-        <div className="container">
-          <div className="col-left">
-            {(anError !== "")
-              // this component is currently still in this document
-              ? <ErrorMessage error={anError} cancelError={cancelError} /> : null
-            }
-            <button onClick={registrationDisplaySwitch} className='btn btn-back'><i className="fa-solid fa-arrow-left"></i> Back to Login</button>
-            <div className="col-left-container">
-              <form>
-                <input type="email" name="email" placeholder="Email" id="email" value={email} onChange={changeHandler} />
-                <input type="password" name="password" placeholder="Password" id="password" value={password} onChange={changeHandler} />
-                <input type="password" name="confirmPass" placeholder="Confirm Password" id="confirmPass" value={confirmPass} onChange={changeHandler} />
-                <input type="text" name="displayName" placeholder="Display Name" id="name" value={displayName} onChange={changeHandler} />
-                <label htmlFor="birthDate">Birthdate</label>
-                <input type="date" name="birthDate" id="birthDate" placeholder="Birth Date" value={birthDate} onChange={changeHandler} />
-              </form>
-            </div>
-          </div>
-          <div className="col-right">
+      <div className="auth-wrapper">
+        <h3>Register</h3>
+        <div className="auth-container">
+          {(anError !== "")
+            // this component is currently still in this document
+            ? <ErrorMessage error={anError} cancelError={cancelError} /> : null
+          }
+          <div className='fields-container'>
             <form>
-              <label htmlFor="lossDate">When did you experience your loss?</label>
-              <input type="date" name="lossDate" id="lossDate" placeholder="Loss Date" value={lossDate} onChange={changeHandler} />
-              <select name="deceased" id="deceased" value={deceased} onChange={changeHandler} >
-                <option>The deceased is my...</option>
-                <option>Partner</option>
-                <option>Grandparent</option>
-                <option>Parent</option>
-                <option>Offspring</option>
-                <option>Sibling</option>
-                <option>Cousin</option>
-                <option>Grandchild</option>
-                <option>Aunt</option>
-                <option>Uncle</option>
-                <option>Niece</option>
-                <option>Nephew</option>
-                <option>Friend</option>
-                <option>Other</option>
-                <option>I want to support others</option>
-              </select>
-              <select name="cause" id="cause" value={cause} onChange={changeHandler} >
-                <option>Cause of death</option>
-                <option>Natural</option>
-                <option>Unnatural</option>
-                {/* <option>Prefer not to disclose</option> */}
-              </select>
-              {/* <select name="residence" id="residence" value={residence} onChange={changeHandler} >
-                <option>What state do you live in?</option>
-                <option value="AL">Alabama</option>
-                <option value="AK">Alaska</option>
-                <option value="AZ">Arizona</option>
-                <option value="AR">Arkansas</option>
-                <option value="CA">California</option>
-                <option value="CO">Colorado</option>
-                <option value="CT">Connecticut</option>
-                <option value="DE">Delaware</option>
-                <option value="DC">District Of Columbia</option>
-                <option value="FL">Florida</option>
-                <option value="GA">Georgia</option>
-                <option value="HI">Hawaii</option>
-                <option value="ID">Idaho</option>
-                <option value="IL">Illinois</option>
-                <option value="IN">Indiana</option>
-                <option value="IA">Iowa</option>
-                <option value="KS">Kansas</option>
-                <option value="KY">Kentucky</option>
-                <option value="LA">Louisiana</option>
-                <option value="ME">Maine</option>
-                <option value="MD">Maryland</option>
-                <option value="MA">Massachusetts</option>
-                <option value="MI">Michigan</option>
-                <option value="MN">Minnesota</option>
-                <option value="MS">Mississippi</option>
-                <option value="MO">Missouri</option>
-                <option value="MT">Montana</option>
-                <option value="NE">Nebraska</option>
-                <option value="NV">Nevada</option>
-                <option value="NH">New Hampshire</option>
-                <option value="NJ">New Jersey</option>
-                <option value="NM">New Mexico</option>
-                <option value="NY">New York</option>
-                <option value="NC">North Carolina</option>
-                <option value="ND">North Dakota</option>
-                <option value="OH">Ohio</option>
-                <option value="OK">Oklahoma</option>
-                <option value="OR">Oregon</option>
-                <option value="PA">Pennsylvania</option>
-                <option value="RI">Rhode Island</option>
-                <option value="SC">South Carolina</option>
-                <option value="SD">South Dakota</option>
-                <option value="TN">Tennessee</option>
-                <option value="TX">Texas</option>
-                <option value="UT">Utah</option>
-                <option value="VT">Vermont</option>
-                <option value="VA">Virginia</option>
-                <option value="WA">Washington</option>
-                <option value="WV">West Virginia</option>
-                <option value="WI">Wisconsin</option>
-                <option value="WY">Wyoming</option>
-              </select> */}
+              <label htmlFor='email'>* Email Address</label>
+              <div className='input-container'>
+                <i class="fas fa-envelope"></i>
+                <input type="email" name="email" placeholder="Email" id="email" value={email} onChange={changeHandler} />
+              </div>
+
+              <label htmlFor='password'>* Password</label>
+              <div className='input-container'>
+                <i class="fas fa-lock"></i>
+                <input type="password" name="password" placeholder="Password" id="password" value={password} onChange={changeHandler} />
+              </div>
+
+              <label htmlFor='confirmpass'>* Confirm Password</label>
+              <div className='input-container'>
+                <i class="fas fa-lock"></i>
+                <input type="password" name="confirmPass" placeholder="Confirm Password" id="confirmPass" value={confirmPass} onChange={changeHandler} />
+              </div>
+
+                <label htmlFor='displayName'>* Your Display Name</label>
+              <div className='input-container'>
+                <i class="fas fa-user-alt"></i>
+                <input type="text" name="displayName" placeholder="Display Name" id="name" value={displayName} onChange={changeHandler} />
+
+              </div>
+
+              <label htmlFor="birthDate">* Your Birthdate</label>
+              <div className='input-container'>
+                <i class="fas fa-calendar-alt"></i>
+                <input type="text" name="birthDate" id="birthDate" placeholder="e.g. 01/01/1990" value={birthDate} onChange={changeHandler} />
+
+              </div>
+              <label htmlFor="lossDate">* When did you experience your loss?</label>
+              <div className='input-container'>
+                <i class="fas fa-calendar-alt"></i>
+                <input type="text" name="lossDate" id="lossDate" placeholder="e.g. 01/01/1990" value={lossDate} onChange={changeHandler} />
+              </div>
+
+              <label htmlFor="deceased">* Relationship to deceased: the deceased is my...</label>
+              <div className='input-container'>
+                <select name="deceased" id="deceased" value={deceased} onChange={changeHandler} >
+                  <option>The deceased is my...</option>
+                  <option>Partner</option>
+                  <option>Grandparent</option>
+                  <option>Parent</option>
+                  <option>Offspring</option>
+                  <option>Sibling</option>
+                  <option>Cousin</option>
+                  <option>Grandchild</option>
+                  <option>Aunt</option>
+                  <option>Uncle</option>
+                  <option>Niece</option>
+                  <option>Nephew</option>
+                  <option>Friend</option>
+                  <option>Other</option>
+                  <option>I want to support others</option>
+                </select>
+              </div>
+
+              <label htmlFor="cause">* How did you loss occur?</label>
+              <div className='input-container'>
+                <select name="cause" id="cause" value={cause} onChange={changeHandler} >
+                  <option>Cause of death</option>
+                  <option>Natural</option>
+                  <option>Unnatural</option>
+                  {/* <option>Prefer not to disclose</option> */}
+                </select>
+              </div>
+
               <div className='consent'>
                 <input type="checkbox" name="consent" id="consent" value={consent} onChange={changeHandler} ></input>
-                <label htmlFor="consent">By clicking this checkbox, I agree to share the above information and allow other users to view the information I shared.</label>
+                <div>
+                  <label htmlFor="consent">By clicking this checkbox, I agree to share the above information and allow other users to view the information I shared.</label>
+                </div>
               </div>
-              <input className="btn submit-form-btn" type="submit" value="Complete Registation" onClick={validateNewUser} />
+              <div className='btn-container'>
+
+              <input className="sub-btn" type="submit" value="Submit" onClick={validateNewUser} />
+              </div>
             </form>
           </div>
         </div>
+        
+
+            <button onClick={registrationDisplaySwitch} className='btn btn-back'> Already joined? <strong>Login now</strong></button>
+
       </div>
     )
   }
@@ -364,21 +350,19 @@ export default function UserAuth({ firebase }) {
               <i class="fas fa-lock"></i>
               <input id="password" type="password" placeholder="Your Password" value={password} onChange={changeHandler} name="userpass" required />
               <i class="fas fa-eye-slash"></i>
+              {/* TODO: functional password chracter reveal in place of this static logo */}
             </div>
 
             <div className='btn-container'>
-              <button className='login-btn' type="submit">Login</button>
-              <button onClick={forgotPassDisplaySwitch}>Forgot Password</button>
+              <button className='sub-btn' type="submit">Login</button>
+              <button className='forgot-pass-btn' onClick={forgotPassDisplaySwitch}>Forgot Password</button>
               <p>
                 <button onClick={registrationDisplaySwitch}>Not a member? <strong>Join now</strong></button>
               </p>
-               <br />use an existing account<button className="btn-go" onClick={googleSignIn}><FaGoogle size="2rem" /></button>
+              <br />or use an existing account<button className="btn-go" onClick={googleSignIn}><FaGoogle size="2rem" /></button>
             </div>
-            
           </form>
         </div>
-
-
       </div>
     </div>
   )

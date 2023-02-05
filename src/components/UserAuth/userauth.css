@@ -1,7 +1,17 @@
+select{
+  all:unset;
+  padding:0.5rem;
+ }
 .auth-wrapper {
   color: #31605b;
   text-align: center;
   width: 100%;
+}
+.auth-wrapper button{
+  border: none;
+  background-color: transparent;
+  font-size: 1rem;
+  color: #31605b;
 }
 
 .auth-header h1 {
@@ -60,7 +70,8 @@
 }
 
 .fields-container form input {
-  all: unset;
+  border: none;
+  font-size: 1rem;
   margin-bottom: 0.5rem;
   color: rgba(0, 0, 0, 0.842);
 }
@@ -86,6 +97,7 @@
   float: right;
 }
 
+
 .btn-container {
   display: flex;
   flex-direction: column;
@@ -93,7 +105,6 @@
   align-items: center;
   margin-top: 1rem;
   color: #31605b;
-
 }
 
 .btn-container button {
@@ -101,13 +112,14 @@
   background-color: transparent;
   font-size: 1.2rem;
   color: #31605b;
+  cursor: pointer;
 }
 
-.btn-container button:last-child{
-  margin-top:2rem;
+.btn-container button:last-child {
+  margin-top: 1.5rem;
 }
 
-.btn-container .login-btn {
+.btn-container .sub-btn {
   font-weight: 300;
   background-color: #31605b;
   color: #ffc107;
@@ -115,18 +127,34 @@
   border: none;
   padding: 0.7rem;
   min-width: 220px;
-  margin-bottom: 3rem;
   font-weight: 300;
 }
-
-.btn-container .btn-go{
-  margin-top:1rem !important;
-  border-radius: 1rem;
-  padding:0.5rem;
+.btn-container .forgot-pass-btn{
+  margin-top: 3rem;
 }
 
-.btn-container .btn-go:hover{
+.btn-container .btn-go {
+  margin-top: 1rem !important;
+  border-radius: 1rem;
+  padding: 0.5rem;
+}
+
+.btn-container .btn-go:hover {
   background-color: #31605b;
-  color:white;
-  cursor: pointer;
+  color: white;
+}
+
+.consent{
+  display: flex;
+  margin-bottom:2rem;
+}
+#consent {
+  height: 1.2rem;
+  width: 1.2rem;
+  margin-right:1rem;
+  display: flex;
+}
+
+#consent:checked {
+  color: black;
 }

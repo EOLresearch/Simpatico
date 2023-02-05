@@ -1,8 +1,7 @@
 .nav-container {
-  min-width: 17%;
+  min-width: 14rem;
   color: white;
   background-color: #31605b;
-  height: 100vh;
 }
 
 .logo-container {
