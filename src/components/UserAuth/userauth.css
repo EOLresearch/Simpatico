@@ -2,6 +2,9 @@ select{
   all:unset;
   padding:0.5rem;
  }
+ textarea{
+  all: unset;
+ }
 .auth-wrapper {
   color: #31605b;
   text-align: center;

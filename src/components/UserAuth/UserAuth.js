@@ -20,6 +20,8 @@ export default function UserAuth({ firebase }) {
   const [lossDate, setLossDate] = useState('')
   const [deceased, setDeceased] = useState('')
   const [cause, setCause] = useState('')
+  const [lossExp, setLossExp] = useState('')
+
   // const [residence, setResidence] = useState('')
   const [consent, setConsent] = useState(false)
 
@@ -297,6 +299,11 @@ export default function UserAuth({ firebase }) {
                   <option>Unnatural</option>
                   {/* <option>Prefer not to disclose</option> */}
                 </select>
+              </div>
+
+              <label htmlFor="lossExp">* Please use this space to describe your loss experience.</label>
+              <div className='input-container'>
+                <textarea name="lossExp" id="lossExp" value={lossExp} onChange={changeHandler} ></textarea>
               </div>
 
               <div className='consent'>
