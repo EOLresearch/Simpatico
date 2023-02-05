@@ -17,15 +17,6 @@ select{
   color: #31605b;
 }
 
-.auth-header h1 {
-  border-bottom: 1px solid black;
-  margin: 0;
-}
-
-.auth-header p {
-  margin: 0;
-}
-
 .callout-container {
   display: flex;
   justify-content: center;

@@ -20,7 +20,8 @@
   width:5rem;
   object-fit:cover;
   border:1px solid black;
-  border-radius: 50%;;
+  border-radius: 50%;
+  margin-right:2rem;
 }
 
 .sub-nav {
@@ -29,14 +30,19 @@
 }
 
 .sub-nav div{
-  padding:2rem 5rem;
-  /* border:solid black 1px; */
+  padding:1rem;
+  margin-bottom:1rem;
   display: flex;
-  /* justify-content: center; */
   flex-direction: column;
   align-items: center;
+  flex-grow:1;
+  transition: ease;
+  transition-duration:0.2s;
 }
 
 .sub-nav div:hover{
   background-color:#d7f1ee ;
+  border-left:1px rgba(0, 0, 0, 0.51) solid;
+  color:rgba(0, 0, 0, 0.402);
+  transform: scale(1.1);
 }

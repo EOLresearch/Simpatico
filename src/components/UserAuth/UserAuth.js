@@ -329,10 +329,10 @@ export default function UserAuth({ firebase }) {
 
   return (
     <div className="auth-wrapper">
-      <div className='auth-header'>
+      {/* <div className='auth-header'>
         <h1>SIMPATICO</h1>
         <p>Connect with people who have experienced similar types of loss</p>
-      </div>
+      </div> */}
       <div className='callout-container'>
         <div className='callout auth-callout'></div>
         <div className='callout auth-callout'></div>

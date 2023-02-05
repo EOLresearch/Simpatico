@@ -88,6 +88,10 @@ function App() {
       <div className='render-wrapper'>
         <Nav auth={auth} navHandler={navHandler} />
         <div className='app-container'>
+          <div className='app-header'>
+            <h1>SIMPATICO</h1>
+            <p>Connect with people who have experienced similar types of loss</p>
+          </div>
           {
             user ?
               <Dashboard
