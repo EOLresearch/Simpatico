@@ -22,10 +22,10 @@ function chatHandler(e, documentID){
 
 
   return (
-    <div className='conversations-wrapper'>
+    <div className='chatroom'>
+      
       <div className="conversations-container">
         <div className="conversations-inner-container">
-          {/* <h2>conversations</h2> */}
           {
           convos ? 
             convos.map(convo => <Convo key={convo.docId} firebase={firebase} convoDocId={convo.docId} convo={convo} chatHandler={chatHandler} />) 

@@ -6,6 +6,15 @@
   align-items: center;
 }
 
+.display-card {
+  padding: 3rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, .75);
+  display: flex;
+  width:70%;
+  justify-content: center;
+  margin:0 auto;
+}
 
 .sub-nav {
   display: flex;

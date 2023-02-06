@@ -1,13 +1,3 @@
-.display-card {
-  padding: 3rem;
-  border-radius: 1rem;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, .75);
-  display: flex;
-  width:70%;
-  justify-content: center;
-  margin:0 auto;
-}
-
 .profile-image {
   height: 5rem;
   width: 5rem;

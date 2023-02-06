@@ -1,0 +1,14 @@
+.chatroom{
+  /* width:70%; */
+  border: solid black 2px;
+  margin: 0 auto;
+  border-radius: 1rem;
+  display:flex;
+}
+.conversations-container{
+  background-color: #31605b;
+  width:25%;
+  border-radius: 1rem 0 0 1rem;
+
+  /* height:100%; */
+}

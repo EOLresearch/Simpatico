@@ -19,7 +19,6 @@ body {
   display:flex;
   height:100vh;
   width:100vw;
-  /* border: black solid 3px; */
 }
 .app-container{
   /* height: 80vh; */
@@ -35,6 +34,8 @@ body {
   height:8rem;
   text-align: center;
   margin-top:8rem;
+  margin-bottom:3rem;
+
 }
 
 .app-header h1 {
