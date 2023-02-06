@@ -3,16 +3,12 @@ import Conversations from './Conversations/Conversations'
 import MatchList from './MatchList/MatchList'
 import MatchDetails from './MatchDetails/MatchDetails'
 import MatchingSurvey from './MatchingSurvey/MatchingSurvey'
+import Profile from './Profile/Profile'
+
 
 //TODO: component import-index refactor
-
-import { RxPerson } from "react-icons/rx";
-import { FaBookOpen, FaList, FaArrowLeft } from 'react-icons/fa';
-import { IoPeopleCircleOutline, IoChatbubblesSharp, IoHome } from "react-icons/io5";
-
 import { useState } from "react";
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { IconContext } from "react-icons";
 
 export default function Dashboard(props) {
   const { firebase, user, welcomeMessage, matchList, matchDetails, conversationsIndex, primarySurvey, navHandler } = props
@@ -89,8 +85,7 @@ export default function Dashboard(props) {
 
         {
           welcomeMessage === true ? fsUser ?
-            <WelcomeMessage user={fsUser[0]} /> : null : null
-          //this component is in THIS FILE
+            <Profile user={fsUser[0]} /> : null : null
         }
         {
           matchList === true ?
@@ -112,40 +107,4 @@ export default function Dashboard(props) {
     </div>
   );
 
-}
-
-//TODO:: subnav is a component BRUH make it so
-
-function WelcomeMessage({ user }) {
-
-
-
-  return (
-    <IconContext.Provider value={{ className: "react-icons-welcome" }}>
-      <div className='profile-container'>
-
-        <div className='sub-nav'>
-          <div><RxPerson size="3rem" />My Profile</div>
-          <div><IoPeopleCircleOutline size="3rem" />Matches</div>
-          <div><IoChatbubblesSharp size="3rem" />Conversations</div>
-        </div>
-
-        {
-          user ?
-            <div className='profile-card'>
-              <div >
-                <img className='profile-image' src={user.photoURL} />
-              </div>
-              <div className='profile-body'>
-                <h1>Simpatico</h1>
-                <h3>Home Page Welcome Message</h3>
-                <p>This is where we can introduce the study and details on how best to use this app.</p>
-              </div>
-
-            </div> : null
-
-        }
-      </div>
-    </IconContext.Provider>
-  )
 }
