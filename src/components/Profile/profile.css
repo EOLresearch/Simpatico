@@ -1,0 +1,40 @@
+.display-card {
+  padding: 3rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, .75);
+  display: flex;
+  width:70%;
+  justify-content: center;
+  margin:0 auto;
+}
+
+.profile-image {
+  height: 5rem;
+  width: 5rem;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.image-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-body{
+  margin-left:2rem;
+}
+.profile-body .body{
+  margin-top:1rem;
+  padding-bottom:2rem;
+  border-bottom: 1px solid black;
+
+}
+
+.profile-body p, h4{
+  margin:0.5rem;
+}
+.profile-body p.details, p.story{
+  margin-left:2rem;
+}

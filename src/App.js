@@ -24,7 +24,7 @@ const auth = firebase.auth();
 
 function App() {
   const [user] = useAuthState(auth);
-  const [welcomeMessage, setWelcomeMessage] = useState(true)
+  const [profileView, setProfileView] = useState(true)
   const [matchList, setMatchList] = useState(false)
   const [matchDetails, setMatchDetails] = useState(false)
   const [conversationsIndex, setConversationsIndex] = useState(false)
@@ -38,13 +38,13 @@ function App() {
       case 'Conversations':
         setMatchList(false)
         setMatchDetails(false)
-        setWelcomeMessage(false)
+        setProfileView(false)
         setPrimarySurvey(false)
         setConversationsIndex(true)
         return
       case 'Matches':
         setMatchDetails(false)
-        setWelcomeMessage(false)
+        setProfileView(false)
         setConversationsIndex(false)
         setPrimarySurvey(false)
         setMatchList(true)
@@ -54,26 +54,26 @@ function App() {
         setMatchDetails(false)
         setConversationsIndex(false)
         setPrimarySurvey(false)
-        setWelcomeMessage(true)
+        setProfileView(true)
         return
       case 'My Story':
         setMatchList(false)
         setMatchDetails(false)
-        setWelcomeMessage(false)
+        setProfileView(false)
         setConversationsIndex(false)
         setPrimarySurvey(false)
         return
       case 'Matching Survey':
         setMatchList(false)
         setMatchDetails(false)
-        setWelcomeMessage(false)
+        setProfileView(false)
         setConversationsIndex(false)
         setPrimarySurvey(true)
         return
       case 'All Off':
         setMatchList(false)
         setMatchDetails(false)
-        setWelcomeMessage(false)
+        setProfileView(false)
         setConversationsIndex(false)
         setPrimarySurvey(false)
         return
@@ -97,7 +97,7 @@ function App() {
               <Dashboard
                 firebase={firebase}
                 user={user}
-                welcomeMessage={welcomeMessage}
+                profileView={profileView}
                 matchList={matchList}
                 matchDetails={matchDetails}
                 conversationsIndex={conversationsIndex}

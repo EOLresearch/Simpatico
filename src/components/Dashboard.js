@@ -7,11 +7,16 @@ import Profile from './Profile/Profile'
 
 
 //TODO: component import-index refactor
+
+import { RxPerson } from "react-icons/rx";
+import { IoPeopleCircleOutline, IoChatbubblesSharp, IoHome } from "react-icons/io5";
+
 import { useState } from "react";
 import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { IconContext } from "react-icons";
 
 export default function Dashboard(props) {
-  const { firebase, user, welcomeMessage, matchList, matchDetails, conversationsIndex, primarySurvey, navHandler } = props
+  const { firebase, user, profileView, matchList, matchDetails, conversationsIndex, primarySurvey, navHandler } = props
   const { uid, email, photoURL } = user;
   const firestore = firebase.firestore();
   const [userToChatWith, setUserToChatWith] = useState({})
@@ -74,37 +79,49 @@ export default function Dashboard(props) {
     navHandler("Conversations")
   }
 
+  const clickedProfile = profileView === true ? "clicked" : null
+  const clickedMatches = matchList === true ? "clicked" : null
+  const clickedConversations = conversationsIndex === true ? "clicked" : null
+
 
   return (
-    <div className='dashboard-container'>
-      {/* <div className='auth-header'>
+    <IconContext.Provider value={{ className: "react-icons-profile" }}>
+      <div className='dashboard-container'>
+        {/* <div className='auth-header'>
         <h1>SIMPATICO</h1>
         <p>Connect with people who have experienced similar types of loss</p>
       </div> */}
-      <div className='dashboard-body'>
+        <div className='dashboard-body'>
+          <div className='sub-nav'>
+            <div onClick={e => navHandler("Home")} className={clickedProfile}><RxPerson size="3rem" />My Profile</div>
+            <div onClick={e => navHandler("Matches")} className={clickedMatches}><IoPeopleCircleOutline size="3rem" />Matches</div>
+            <div onClick={e => navHandler("Conversations")} className={clickedConversations}><IoChatbubblesSharp size="3rem" />Conversations</div>
+            {/* this needs to be its own component? */}
+          </div>
 
-        {
-          welcomeMessage === true ? fsUser ?
-            <Profile user={fsUser[0]} /> : null : null
-        }
-        {
-          matchList === true ?
-            <MatchList currentUid={uid} users={users} convoHandler={convoHandler} /> : null
-        }
-        {
-          conversationsIndex === true ?
-            <Conversations firebase={firebase} convos={convos} fsUser={fsUser[0]} /> : null
-        }
-        {
-          matchDetails === true ?
-            <MatchDetails userToChatWith={userToChatWith} convoHandler={convoHandler} createConvo={createConvo} /> : null
-        }
-        {
-          primarySurvey === true ?
-            <MatchingSurvey firebase={firebase} /> : null
-        }
+          {
+            profileView === true ? fsUser ?
+              <Profile user={fsUser[0]} /> : null : null
+          }
+          {
+            matchList === true ?
+              <MatchList currentUid={uid} users={users} convoHandler={convoHandler} /> : null
+          }
+          {
+            conversationsIndex === true ?
+              <Conversations firebase={firebase} convos={convos} fsUser={fsUser[0]} /> : null
+          }
+          {
+            matchDetails === true ?
+              <MatchDetails userToChatWith={userToChatWith} convoHandler={convoHandler} createConvo={createConvo} /> : null
+          }
+          {
+            primarySurvey === true ?
+              <MatchingSurvey firebase={firebase} /> : null
+          }
+        </div>
       </div>
-    </div>
+    </IconContext.Provider>
   );
 
 }

@@ -7,6 +7,21 @@
 .logo-container {
   height: 10rem;
   border-bottom: white solid 1px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.logo-placeholder{
+  height:6rem;
+  width:6rem;
+  border-radius: 50%;
+  border:white solid 1px;
+  padding:0.5rem;
+}
+.logo-placeholder p{
+  position: relative;
+  top:0.5rem;
+  text-align: center;
 }
 
 .nav-body ul {

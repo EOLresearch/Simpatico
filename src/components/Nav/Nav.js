@@ -9,7 +9,7 @@ export default function Nav({ fsUser, auth, navHandler }) {
     <IconContext.Provider value={{ className: "react-icons-nav" }}>
       <div className='nav-container'>
         <div className='logo-container'>
-
+          <div className='logo-placeholder'><p>Logo Placeholder</p></div>
         </div>
         <div className='nav-body'>
           <ul>

@@ -7,33 +7,27 @@ import { IoPeopleCircleOutline, IoChatbubblesSharp, IoHome } from "react-icons/i
 
 export default function Profile({ user }) {
 
-
+  const firstName = user.displayName.split(" ")
 
   return (
-    <IconContext.Provider value={{ className: "react-icons-welcome" }}>
+    <IconContext.Provider value={{ className: "react-icons-profile" }}>
       <div className='profile-container'>
+        <div className='display-card'>
+          <div className='image-container'>
+            <img className='profile-image' src={user.photoURL} />
+            <p>{firstName[0]}</p>
+          </div>
 
-        <div className='sub-nav'>
-          <div><RxPerson size="3rem" />My Profile</div>
-          <div><IoPeopleCircleOutline size="3rem" />Matches</div>
-          <div><IoChatbubblesSharp size="3rem" />Conversations</div>
+          <div className='profile-body'>
+            <p><strong>Hello, {user.displayName}.</strong></p>
+            <p className='body'>You have been matched with 3 other users who have suffered a very similar loss. You can see their stories, and start a conversation in the "Matches" tab. </p>
+
+            <h4>My Details</h4>
+            <p className='details'>57, Male, NY<br />Lost Relationship: Partner</p>
+            <h4>My Story</h4>
+            <p className='story'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+          </div>
         </div>
-
-        {
-          user ?
-            <div className='profile-card'>
-              <div >
-                <img className='profile-image' src={user.photoURL} />
-              </div>
-              <div className='profile-body'>
-                <h1>Simpatico</h1>
-                <h3>Home Page Welcome Message</h3>
-                <p>This is where we can introduce the study and details on how best to use this app.</p>
-              </div>
-
-            </div> : null
-
-        }
       </div>
     </IconContext.Provider>
   )
