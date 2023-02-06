@@ -1,0 +1,28 @@
+.chat-window-container{
+  width:100%;
+  padding:1rem;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.message-container{
+  flex-grow: 2;
+  width: 100%;
+}
+.chat-window-container form{
+  /* position: fixed; */
+  width:100%;
+  border-bottom:1px solid black;
+  display: flex;
+}
+.chat-window-container form input{
+  width:90%;
+  border:none;
+  flex-grow:2;
+}
+.chat-window-container form button{
+  border: none;
+  background-color: transparent;
+  font-size: 1.5rem;
+  color:#31605b;
+}
