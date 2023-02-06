@@ -5,6 +5,7 @@
 .match{
   width:90%;
   margin-bottom:2rem;
+  display:block;
 }
 .match img{
   height: 5rem;
@@ -19,4 +20,44 @@
 }
 .right-col p{
   margin-left:2rem;
+}
+.input-container-match{
+  margin:0 auto;
+  background-color: rgba(0, 0, 0, 0.085);
+  padding:1rem;
+  border-radius: 1rem;
+  position: relative;
+  top:2rem;
+}
+.input-container-match input{
+  width:80%;
+  margin-left:4rem;
+  border: none;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: rgba(0, 0, 0, 0.842);
+  border-bottom: solid rgba(0, 0, 0, 0.327) 1px;
+
+}
+.match button{
+  border: none;
+  position: relative;
+  margin:0;
+  border-bottom: solid rgba(0, 0, 0, 0.327) 1px;
+
+  background-color: transparent;
+  color: #31605b;
+}
+.display-card-container{
+  display: flex;
+  /* border-bottom:1px solid black; */
+  /* margin-bottom:2rem; */
+}
+.match label {
+  font-size: 0.7rem;
+  color: rgba(0, 0, 0, 0.442);
+  margin-bottom: 0.5rem;
+  position: relative;
+  bottom:0.6rem;
+  left:0.5rem;
 }

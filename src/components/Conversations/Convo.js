@@ -14,7 +14,7 @@ export default function Convo({ firebase, convoDocId, convo, chatHandler }) {
     <div className='convo-container' onClick={e=>chatHandler(e, convoDocId)}>
       <div className='convo' >
         <img src={theOtherPerson.photoURL} ></img>
-        <h4 data-identifier="openChat">{theOtherPerson.displayName}</h4>
+        <p data-identifier="openChat">{theOtherPerson.displayName}</p>
       </div>
     </div>
   )

@@ -1,14 +1,51 @@
-.chatroom{
-  /* width:70%; */
-  border: solid black 2px;
+.chatroom {
+  width: 60rem;
+  /* border: solid black 2px; */
   margin: 0 auto;
   border-radius: 1rem;
-  display:flex;
+  display: flex;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, .75);
+  height: 60vh;
+
 }
-.conversations-container{
+
+.conversations-container {
   background-color: #31605b;
-  width:25%;
+  width: 25%;
   border-radius: 1rem 0 0 1rem;
+  font-family: "Asap", sans-serif;
+  font-weight: 300;
 
   /* height:100%; */
+}
+
+.conversations-container h3 {
+  color: white;
+  text-align: center;
+  font-weight: 300;
+
+}
+
+.convo {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  color: white;
+  font-family: "Asap", sans-serif;
+  font-weight: 300;
+}
+
+.convo img {
+  height: 3rem;
+  width: 3rem;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 1rem;
+}
+
+.convo:hover {
+  cursor: pointer;
+  background-color: #d7f1ee;
+  color: black;
+
 }

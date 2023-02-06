@@ -105,7 +105,7 @@ export default function Dashboard(props) {
           }
           {
             matchList === true ?
-              <MatchList currentUid={uid} users={users} convoHandler={convoHandler} /> : null
+              <MatchList currentUid={uid} users={users} createConvo={createConvo} /> : null
           }
           {
             conversationsIndex === true ?
