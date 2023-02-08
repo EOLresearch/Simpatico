@@ -3,13 +3,16 @@ import { IconContext } from "react-icons";
 import { FaBookOpen, FaList, FaArrowLeft } from 'react-icons/fa';
 import { IoPeopleCircleOutline, IoChatbubblesSharp, IoHome } from "react-icons/io5";
 
+import logo from '../../assets/simpaticologogreenbg.jpg'
+
 export default function Nav({ fsUser, auth, navHandler }) {
 
   return (
     <IconContext.Provider value={{ className: "react-icons-nav" }}>
       <div className='nav-container'>
         <div className='logo-container'>
-          <div className='logo-placeholder'><p>Logo Placeholder</p></div>
+          <img src={logo} />
+          <p>Simpatico</p>
         </div>
         <div className='nav-body'>
           <ul>

@@ -3,27 +3,28 @@
   color: white;
   background-color: #31605b;
   height:100%;
-
 }
 
 .logo-container {
   height: 10rem;
-  border-bottom: white solid 1px;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  margin-top:2rem;
 }
-.logo-placeholder{
-  height:6rem;
-  width:6rem;
+.logo-container img{
+  height:10rem;
+  width:10rem;
   border-radius: 50%;
-  border:white solid 1px;
-  padding:0.5rem;
+  object-fit: cover;
 }
-.logo-placeholder p{
-  position: relative;
-  top:0.5rem;
+
+.logo-container p{
+  border-bottom: white solid 1px;
+  width: 100%;
   text-align: center;
+
 }
 
 .nav-body ul {
