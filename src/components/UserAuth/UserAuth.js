@@ -349,14 +349,14 @@ export default function UserAuth({ firebase }) {
           <form onSubmit={onSubmitReturningUser}>
             <label htmlFor='email'>* Email Address</label>
             <div className='input-container'>
-              <i class="fas fa-envelope"></i>
+              <i className="fas fa-envelope"></i>
               <input id="email" type="email" placeholder="Your Email Address" value={email} onChange={changeHandler} name="useremail" required />
             </div>
             <label htmlFor='password'>* Password</label>
             <div className='input-container'>
-              <i class="fas fa-lock"></i>
+              <i className="fas fa-lock"></i>
               <input id="password" type="password" placeholder="Your Password" value={password} onChange={changeHandler} name="userpass" required />
-              <i class="fas fa-eye-slash"></i>
+              <i className="fas fa-eye-slash"></i>
               {/* TODO: functional password chracter reveal in place of this static logo */}
             </div>
 

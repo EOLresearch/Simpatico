@@ -31,7 +31,7 @@ export default function MatchList({ currentUid, users = [], createConvo }) {
               <div className="input-container-match">
                 <label htmlFor="inputer">Leave a supportive message for {user.displayName}</label>
                 <input id="inputer" type="text" placeholder="Start a Conversation"></input>
-                <button onClick={e => createConvo(user)} ><i class="fas fa-paper-plane"></i></button>
+                <button onClick={e => createConvo(user)} ><i className="fas fa-paper-plane"></i></button>
               </div>
             </div>
 

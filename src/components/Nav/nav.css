@@ -27,6 +27,14 @@
   border-bottom: white solid 1px;
   width: 100%;
   text-align: center;
+  margin:0;
+  padding:0 0.5rem;
+}
+.logo-container :nth-child(3){
+  border:none;
+}
+.nav-body{
+  margin-top:2rem;
 }
 
 .nav-body ul {

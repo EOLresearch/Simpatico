@@ -13,6 +13,7 @@ export default function Nav({ fsUser, auth, navHandler }) {
         <div className='logo-container'>
           <img src={logo} />
           <p>Simpatico</p>
+          <p>Lorem ipsum dolor sit amet</p>
         </div>
         <div className='nav-body'>
           <ul>

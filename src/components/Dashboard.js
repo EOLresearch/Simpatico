@@ -87,10 +87,6 @@ export default function Dashboard(props) {
   return (
     <IconContext.Provider value={{ className: "react-icons-profile" }}>
       <div className='dashboard-container'>
-        {/* <div className='auth-header'>
-        <h1>SIMPATICO</h1>
-        <p>Connect with people who have experienced similar types of loss</p>
-      </div> */}
         <div className='dashboard-body'>
           <div className='sub-nav'>
             <div onClick={e => navHandler("Home")} className={clickedProfile}><RxPerson size="3rem" />My Profile</div>
@@ -108,8 +104,8 @@ export default function Dashboard(props) {
               <MatchList currentUid={uid} users={users} createConvo={createConvo} /> : null
           }
           {
-            conversationsIndex === true ?
-              <Conversations firebase={firebase} convos={convos} fsUser={fsUser[0]} /> : null
+            conversationsIndex === true ? fsUser ?
+              <Conversations firebase={firebase} convos={convos} fsUser={fsUser[0]} /> : null : null
           }
           {
             matchDetails === true ?
