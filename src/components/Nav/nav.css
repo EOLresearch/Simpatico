@@ -102,3 +102,7 @@
 @media (max-width: 645px) {
 /* HAMBURGER MENU TIME */
 }
+
+.no-user-nav{
+  color:#39716b!important;
+}

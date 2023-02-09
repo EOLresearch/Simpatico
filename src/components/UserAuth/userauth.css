@@ -68,6 +68,11 @@ select{
   font-size: 1rem;
   margin-bottom: 0.5rem;
   color: rgba(0, 0, 0, 0.842);
+  width:fit-content;
+}
+
+.input-container input:focus{
+  outline:none;
 }
 
 .input-container {
@@ -91,7 +96,9 @@ select{
   float: right;
 }
 
-
+.btn:hover{
+  cursor: pointer;
+}
 .btn-container {
   display: flex;
   flex-direction: column;
@@ -122,6 +129,7 @@ select{
   padding: 0.7rem;
   min-width: 220px;
   font-weight: 300;
+  margin-bottom:1rem;
 }
 .btn-container .forgot-pass-btn{
   margin-top: 3rem;

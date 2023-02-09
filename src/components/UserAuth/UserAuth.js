@@ -235,38 +235,38 @@ export default function UserAuth({ firebase }) {
             <form>
               <label htmlFor='email'>* Email Address</label>
               <div className='input-container'>
-                <i class="fas fa-envelope"></i>
+                <i className="fas fa-envelope"></i>
                 <input type="email" name="email" placeholder="Email" id="email" value={email} onChange={changeHandler} />
               </div>
 
               <label htmlFor='password'>* Password</label>
               <div className='input-container'>
-                <i class="fas fa-lock"></i>
+                <i className="fas fa-lock"></i>
                 <input type="password" name="password" placeholder="Password" id="password" value={password} onChange={changeHandler} />
               </div>
 
               <label htmlFor='confirmpass'>* Confirm Password</label>
               <div className='input-container'>
-                <i class="fas fa-lock"></i>
+                <i className="fas fa-lock"></i>
                 <input type="password" name="confirmPass" placeholder="Confirm Password" id="confirmPass" value={confirmPass} onChange={changeHandler} />
               </div>
 
                 <label htmlFor='displayName'>* Your Display Name</label>
               <div className='input-container'>
-                <i class="fas fa-user-alt"></i>
+                <i className="fas fa-user-alt"></i>
                 <input type="text" name="displayName" placeholder="Display Name" id="name" value={displayName} onChange={changeHandler} />
 
               </div>
 
               <label htmlFor="birthDate">* Your Birthdate</label>
               <div className='input-container'>
-                <i class="fas fa-calendar-alt"></i>
+                <i className="fas fa-calendar-alt"></i>
                 <input type="text" name="birthDate" id="birthDate" placeholder="e.g. 01/01/1990" value={birthDate} onChange={changeHandler} />
 
               </div>
               <label htmlFor="lossDate">* When did you experience your loss?</label>
               <div className='input-container'>
-                <i class="fas fa-calendar-alt"></i>
+                <i className="fas fa-calendar-alt"></i>
                 <input type="text" name="lossDate" id="lossDate" placeholder="e.g. 01/01/1990" value={lossDate} onChange={changeHandler} />
               </div>
 
@@ -314,7 +314,7 @@ export default function UserAuth({ firebase }) {
               </div>
               <div className='btn-container'>
 
-              <input className="sub-btn" type="submit" value="Submit" onClick={validateNewUser} />
+              <input className="btn sub-btn" type="submit" value="Submit" onClick={validateNewUser} />
               </div>
             </form>
           </div>

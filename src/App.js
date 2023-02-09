@@ -82,11 +82,10 @@ function App() {
     }
   }
 
-
   return (
     <div className="App">
       <div className='render-wrapper'>
-        <Nav auth={auth} navHandler={navHandler} />
+        <Nav user={user} auth={auth} navHandler={navHandler} />
         <div className='nav-dummy'>
           {/* app inner container is not centered properly without this dummy so wdith in CSS must be the same as the nav container  */}
         </div>

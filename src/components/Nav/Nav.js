@@ -5,7 +5,9 @@ import { IoPeopleCircleOutline, IoChatbubblesSharp, IoHome } from "react-icons/i
 
 import logo from '../../assets/simpaticologogreenbg.jpg'
 
-export default function Nav({ fsUser, auth, navHandler }) {
+export default function Nav({ user, auth, navHandler }) {
+
+  const navStyles = user ? "" : "no-user-nav" ; 
 
   return (
     <IconContext.Provider value={{ className: "react-icons-nav" }}>
@@ -15,7 +17,7 @@ export default function Nav({ fsUser, auth, navHandler }) {
           <p>Simpatico</p>
           <p>Lorem ipsum dolor sit amet</p>
         </div>
-        <div className='nav-body'>
+        <div className={'nav-body ' + navStyles}>
           <ul>
             <li data-identifier="Home" className="home-btn" onClick={e => navHandler("Home")}><IoHome /><span>Home</span></li>
             <li data-identifier="Matches"  onClick={e => navHandler("Matches")}><IoPeopleCircleOutline /><span>Matches</span></li>
