@@ -1,10 +1,13 @@
 .nav-container {
-  min-width: 14rem;
+  width: 15vw;
   color: white;
   background-color: #31605b;
-  height:100%;
+  min-height:100%;
+  position: fixed;
 }
-
+.nav-dummy{
+  width:15vw;
+}
 .logo-container {
   height: 10rem;
   display: flex;
@@ -24,7 +27,6 @@
   border-bottom: white solid 1px;
   width: 100%;
   text-align: center;
-
 }
 
 .nav-body ul {
@@ -46,4 +48,49 @@
 
 .nav-body ul li span {
   margin-left: 1rem;
+}
+
+
+
+
+@media (max-width: 1115px) {
+  .nav-container span{
+    font-size: 0.7rem;
+  }
+  .logo-container img{
+    height:7rem;
+    width:7rem;
+  }
+}
+
+@media (max-width: 920px) {
+  .nav-container {
+    width: 10vw;
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+  }
+  .nav-dummy{
+    width:10vw;
+  }
+  .nav-body ul{
+    list-style: none;
+  }
+  .nav-container span{
+    display:none;
+  }
+  .logo-container{
+    margin:0;
+  }
+  .logo-container img{
+    height:4rem;
+    width:4rem;
+  }
+  .logo-container p{
+    display: none;
+  }
+}
+
+@media (max-width: 645px) {
+/* HAMBURGER MENU TIME */
 }

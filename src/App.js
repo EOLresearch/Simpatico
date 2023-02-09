@@ -87,7 +87,10 @@ function App() {
     <div className="App">
       <div className='render-wrapper'>
         <Nav auth={auth} navHandler={navHandler} />
-        <div className='app-container'>
+        <div className='nav-dummy'>
+          {/* app inner container is not centered properly without this dummy so wdith in CSS must be the same as the nav container  */}
+        </div>
+        <div className='app-inner-container'>
           <div className='app-header'>
             <h1>SIMPATICO</h1>
             <p>Connect with people who have experienced similar types of loss</p>
