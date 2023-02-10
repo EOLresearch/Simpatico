@@ -106,3 +106,8 @@
 .no-user-nav{
   color:#39716b!important;
 }
+.no-user-nav li:hover{
+  cursor:auto !important;
+  background-color: #31605b !important;
+  color: #31605b !important;
+}

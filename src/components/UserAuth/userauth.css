@@ -1,16 +1,19 @@
-select{
-  all:unset;
-  padding:0.5rem;
- }
- textarea{
+select {
   all: unset;
- }
+  padding: 0.5rem;
+}
+
+textarea {
+  all: unset;
+}
+
 .auth-wrapper {
   color: #31605b;
   text-align: center;
   width: 100%;
 }
-.auth-wrapper button{
+
+.auth-wrapper button {
   border: none;
   background-color: transparent;
   font-size: 1rem;
@@ -68,11 +71,11 @@ select{
   font-size: 1rem;
   margin-bottom: 0.5rem;
   color: rgba(0, 0, 0, 0.842);
-  width:fit-content;
+  width: fit-content;
 }
 
-.input-container input:focus{
-  outline:none;
+.input-container input:focus {
+  outline: none;
 }
 
 .input-container {
@@ -96,9 +99,10 @@ select{
   float: right;
 }
 
-.btn:hover{
+.btn:hover {
   cursor: pointer;
 }
+
 .btn-container {
   display: flex;
   flex-direction: column;
@@ -129,16 +133,17 @@ select{
   padding: 0.7rem;
   min-width: 220px;
   font-weight: 300;
-  margin-bottom:1rem;
+  margin-bottom: 1rem;
 }
-.btn-container .forgot-pass-btn{
+
+.btn-container .forgot-pass-btn {
   margin-top: 3rem;
 }
 
 .btn-container .btn-go {
   margin-top: 1rem !important;
   border-radius: 1rem;
-  padding: 0.5rem;
+  padding: 1rem;
 }
 
 .btn-container .btn-go:hover {
@@ -146,14 +151,15 @@ select{
   color: white;
 }
 
-.consent{
+.consent {
   display: flex;
-  margin-bottom:2rem;
+  margin-bottom: 2rem;
 }
+
 #consent {
   height: 1.2rem;
   width: 1.2rem;
-  margin-right:1rem;
+  margin-right: 1rem;
   display: flex;
 }
 
