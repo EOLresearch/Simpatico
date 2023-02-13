@@ -31,15 +31,24 @@ body {
   width:100%;
   height:8rem;
   text-align: center;
-  margin-top:3rem;
+  margin-top:5rem;
   margin-bottom:3rem;
+  font-weight: 400;
+  font-family: "Asap",sans-serif;
+  color: #31605b;
 }
 
 .app-header h1 {
   border-bottom: 1px solid black;
   margin: 0;
+  font-size:3rem;
+  letter-spacing: .5rem;
+  font-weight: 400;
+
 }
 
 .app-header p {
   margin: 0;
+  font-size: 1.5rem;
+  letter-spacing: .1rem;
 }
