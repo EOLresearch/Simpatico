@@ -74,6 +74,9 @@ textarea {
   width: fit-content;
 }
 
+::-webkit-calendar-picker-indicator{
+  display: none;
+}
 .input-container input:focus {
   outline: none;
 }
@@ -86,6 +89,9 @@ textarea {
 
 .input-container:hover {
   border-bottom: 2px solid black;
+}
+.input-container textarea{
+  width:100%;
 }
 
 .input-container i {

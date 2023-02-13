@@ -22,7 +22,7 @@ export default function UserAuth({ firebase }) {
   const [cause, setCause] = useState('')
   const [lossExp, setLossExp] = useState('')
 
-  // const [residence, setResidence] = useState('')
+  const [residence, setResidence] = useState('')
   const [consent, setConsent] = useState(false)
 
   const auth = firebase.auth();
@@ -52,7 +52,8 @@ export default function UserAuth({ firebase }) {
               lossDate: lossDate,
               deceased: deceased,
               cause: cause,
-              // residence: residence,
+              residence: residence,
+              lossExp: lossExp,
             })
           }
         })
@@ -74,6 +75,8 @@ export default function UserAuth({ firebase }) {
       setAnError('nopass')
     } else if (password !== confirmPass) {
       setAnError('nomatchpass')
+    } else if (residence === '') {
+      setAnError('noresidence')
     } else if (birthDate === '') {
       setAnError('nobirth')
     } else if (lossDate === '') {
@@ -82,13 +85,9 @@ export default function UserAuth({ firebase }) {
       setAnError('nodeceased')
     } else if (cause === '') {
       setAnError('nocause')
-    }
-
-    // else if (residence === '') {
-    //   setAnError('noresidence')
-    // } 
-
-    else if (consent === false) {
+    } else if (lossExp === '') {
+      setAnError('nolossexp')
+    } else if (consent === false) {
       setAnError('consent')
     } else if (consent === true) {
       setAnError('')
@@ -110,7 +109,8 @@ export default function UserAuth({ firebase }) {
         deceased: deceased,
         lossDate: lossDate,
         cause: cause,
-        // residence: residence,
+        residence: residence,
+        lossExp: lossExp,
       })
     } catch (error) {
       const errorCode = error.code;
@@ -147,6 +147,9 @@ export default function UserAuth({ firebase }) {
       case 'displayName':
         setDisplayName(e.target.value)
         break
+      case 'residence':
+        setResidence(e.target.value)
+        break
       case 'birthDate':
         setBirthDate(e.target.value)
         break
@@ -156,9 +159,6 @@ export default function UserAuth({ firebase }) {
       case 'deceased':
         setDeceased(e.target.value)
         break
-      // case 'residence':
-      //   setResidence(e.target.value)
-      //   break
       case 'consent':
         setConsent(!consent)
         break
@@ -170,6 +170,9 @@ export default function UserAuth({ firebase }) {
         break
       case 'cause':
         setCause(e.target.value)
+        break
+      case 'lossExp':
+        setLossExp(e.target.value)
         break
       default:
         console.log('default case')
@@ -251,23 +254,81 @@ export default function UserAuth({ firebase }) {
                 <input type="password" name="confirmPass" placeholder="Confirm Password" id="confirmPass" value={confirmPass} onChange={changeHandler} />
               </div>
 
-                <label htmlFor='displayName'>* Your Display Name</label>
+              <label htmlFor='displayName'>* Your Display Name</label>
               <div className='input-container'>
                 <i className="fas fa-user-alt"></i>
                 <input type="text" name="displayName" placeholder="Display Name" id="name" value={displayName} onChange={changeHandler} />
+              </div>
 
+              <label htmlFor='residence'>* Your Home State</label>
+              <div className='input-container'>
+                <i className="fas fa-map"></i>
+                <select type="text" name="residence" placeholder="Home State" id="residence" value={residence} onChange={changeHandler} >
+                  <option>Home State</option>
+                  <option value="AL">Alabama</option>
+                  <option value="AK">Alaska</option>
+                  <option value="AZ">Arizona</option>
+                  <option value="AR">Arkansas</option>
+                  <option value="CA">California</option>
+                  <option value="CO">Colorado</option>
+                  <option value="CT">Connecticut</option>
+                  <option value="DE">Delaware</option>
+                  <option value="DC">District Of Columbia</option>
+                  <option value="FL">Florida</option>
+                  <option value="GA">Georgia</option>
+                  <option value="HI">Hawaii</option>
+                  <option value="ID">Idaho</option>
+                  <option value="IL">Illinois</option>
+                  <option value="IN">Indiana</option>
+                  <option value="IA">Iowa</option>
+                  <option value="KS">Kansas</option>
+                  <option value="KY">Kentucky</option>
+                  <option value="LA">Louisiana</option>
+                  <option value="ME">Maine</option>
+                  <option value="MD">Maryland</option>
+                  <option value="MA">Massachusetts</option>
+                  <option value="MI">Michigan</option>
+                  <option value="MN">Minnesota</option>
+                  <option value="MS">Mississippi</option>
+                  <option value="MO">Missouri</option>
+                  <option value="MT">Montana</option>
+                  <option value="NE">Nebraska</option>
+                  <option value="NV">Nevada</option>
+                  <option value="NH">New Hampshire</option>
+                  <option value="NJ">New Jersey</option>
+                  <option value="NM">New Mexico</option>
+                  <option value="NY">New York</option>
+                  <option value="NC">North Carolina</option>
+                  <option value="ND">North Dakota</option>
+                  <option value="OH">Ohio</option>
+                  <option value="OK">Oklahoma</option>
+                  <option value="OR">Oregon</option>
+                  <option value="PA">Pennsylvania</option>
+                  <option value="RI">Rhode Island</option>
+                  <option value="SC">South Carolina</option>
+                  <option value="SD">South Dakota</option>
+                  <option value="TN">Tennessee</option>
+                  <option value="TX">Texas</option>
+                  <option value="UT">Utah</option>
+                  <option value="VT">Vermont</option>
+                  <option value="VA">Virginia</option>
+                  <option value="WA">Washington</option>
+                  <option value="WV">West Virginia</option>
+                  <option value="WI">Wisconsin</option>
+                  <option value="WY">Wyoming</option>
+                </select>
               </div>
 
               <label htmlFor="birthDate">* Your Birthdate</label>
               <div className='input-container'>
                 <i className="fas fa-calendar-alt"></i>
-                <input type="text" name="birthDate" id="birthDate" placeholder="e.g. 01/01/1990" value={birthDate} onChange={changeHandler} />
+                <input type="date" name="birthDate" id="birthDate" placeholder="e.g. 01/01/1990" value={birthDate} onChange={changeHandler} />
 
               </div>
               <label htmlFor="lossDate">* When did you experience your loss?</label>
               <div className='input-container'>
                 <i className="fas fa-calendar-alt"></i>
-                <input type="text" name="lossDate" id="lossDate" placeholder="e.g. 01/01/1990" value={lossDate} onChange={changeHandler} />
+                <input type="date" name="lossDate" id="lossDate" placeholder="e.g. 01/01/1990" value={lossDate} onChange={changeHandler} />
               </div>
 
               <label htmlFor="deceased">* Relationship to deceased: the deceased is my...</label>
@@ -314,15 +375,12 @@ export default function UserAuth({ firebase }) {
               </div>
               <div className='btn-container'>
 
-              <input className="btn sub-btn" type="submit" value="Submit" onClick={validateNewUser} />
+                <input className="btn sub-btn" type="submit" value="Submit" onClick={validateNewUser} />
               </div>
             </form>
           </div>
         </div>
-        
-
-            <button onClick={registrationDisplaySwitch} className='btn btn-back'> Already joined? <strong>Login now</strong></button>
-
+        <button onClick={registrationDisplaySwitch} className='btn btn-back'> Already joined? <strong>Login now</strong></button>
       </div>
     )
   }

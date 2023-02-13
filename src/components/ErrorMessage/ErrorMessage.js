@@ -19,6 +19,8 @@ export default function ErrorMessage({ error, cancelError }) {
         return "Please enter a password"
       case 'nomatchpass':
         return "Passwords do not match"
+      case 'noresidence':
+        return "Please enter your home state"
       case 'nobirth':
         return "Please enter your birthday"
       case 'nolossdate':
@@ -27,10 +29,10 @@ export default function ErrorMessage({ error, cancelError }) {
         return "Please enter kinship to the deceased"
       case 'nocause':
         return "Please enter cause of death"
-      case 'noresidence':
-        return "Please enter your home state"
       case 'consent':
         return "You must consent to share your information"
+      case 'nolossexp':
+        return "Please share something about your loss experience"
       default:
         console.log('switch default' + error)
     }
