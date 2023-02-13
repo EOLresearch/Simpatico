@@ -43,7 +43,7 @@ export default function Dashboard(props) {
     const a = conversationsRef.doc(docId1)
     const b = conversationsRef.doc(docId2)
 
-    a.get().then((doc) => {
+    a.get().then((doc) => { 
       if (doc.exists) {
         // console.log("Document data:", doc.data());
         navHandler("Conversations")

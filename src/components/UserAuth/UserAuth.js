@@ -2,7 +2,7 @@ import './userauth.css';
 import { useState } from "react";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 import { FaGoogle } from 'react-icons/fa';
-import ErrorMessage from '../ErrorMessage'
+import ErrorMessage from '../ErrorMessage/ErrorMessage'
 
 // ******problems with any email being allowed to sign up, thats a spam bots dream******************
 
@@ -362,11 +362,9 @@ export default function UserAuth({ firebase }) {
 
             <div className='btn-container'>
               <button className='sub-btn' type="submit">Login</button>
-              <button className='forgot-pass-btn' onClick={forgotPassDisplaySwitch}>Forgot Password</button>
-              <p>
-                <button onClick={registrationDisplaySwitch}>Not a member? <strong>Join now</strong></button>
-              </p>
-              <br />or use an existing account<button className="btn-go" onClick={googleSignIn}><FaGoogle size="2rem" /></button>
+              <button className="btn-go" onClick={googleSignIn}><FaGoogle size="2rem" /> <span>Sign in with Google</span></button>
+              <button className='forgot-pass-btn' onClick={forgotPassDisplaySwitch}>Forgot Password?</button>
+              <button onClick={registrationDisplaySwitch}>Not a member? <strong>Join now</strong></button>
             </div>
           </form>
         </div>
