@@ -1,3 +1,5 @@
+import './errormessage.css';
+
 export default function ErrorMessage({ error, cancelError }) {
   //can refactor this to using lookupobj with {lookUpOBJ[error]} in the JSX. but not needed now
 

@@ -374,7 +374,6 @@ export default function UserAuth({ firebase }) {
                 </div>
               </div>
               <div className='btn-container'>
-
                 <input className="btn sub-btn" type="submit" value="Submit" onClick={validateNewUser} />
               </div>
             </form>
