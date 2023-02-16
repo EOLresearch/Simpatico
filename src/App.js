@@ -92,7 +92,7 @@ function App() {
         <div className='app-inner-container'>
           <div className='app-header'>
             <h1>SIMPATICO</h1>
-            <p>Connect with people who have experienced similar types of loss</p>
+            <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis </p>
           </div>
           {
             user ?
