@@ -4,6 +4,8 @@ import MatchList from './MatchList/MatchList'
 import MatchDetails from './MatchDetails/MatchDetails'
 import MatchingSurvey from './MatchingSurvey/MatchingSurvey'
 import Profile from './Profile/Profile'
+import RegistrationPanel from './UserAuth//RegistrationPanel';
+
 
 
 //TODO: component import-index refactor
@@ -11,7 +13,7 @@ import Profile from './Profile/Profile'
 import { RxPerson } from "react-icons/rx";
 import { IoPeopleCircleOutline, IoChatbubblesSharp, IoHome } from "react-icons/io5";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { IconContext } from "react-icons";
 
@@ -20,6 +22,7 @@ export default function Dashboard(props) {
   const { uid, email, photoURL } = user;
   const firestore = firebase.firestore();
   const [userToChatWith, setUserToChatWith] = useState({})
+  const [regPanel, setRegPanel] = useState(false)
 
   const usersRef = firestore.collection('users');
   const [users] = useCollectionData(usersRef);
@@ -30,6 +33,20 @@ export default function Dashboard(props) {
   const conversationsRef = firestore.collection('conversations');
   const myConvos = conversationsRef.where('users', 'array-contains', uid)
   const [convos = []] = useCollectionData(myConvos);
+
+  const auth = firebase.auth();
+
+
+  useEffect(()=>{
+  
+    if ( fsUser ) {
+      const user = fsUser[0]
+      if (user.cause == "") {
+        setRegPanel(true)
+      }
+    }
+
+  }, [fsUser])
 
   function convoHandler(e, user) {
     e.preventDefault();
@@ -94,6 +111,10 @@ export default function Dashboard(props) {
             <div onClick={e => navHandler("Conversations")} className={clickedConversations}><IoChatbubblesSharp size="3rem" />Conversations</div>
             {/* this needs to be its own component? */}
           </div>
+          {
+            regPanel === true ? fsUser ?
+              <RegistrationPanel auth={auth} firestore={firestore} user={fsUser[0]} registrationDisplaySwitch={null}/> : null : null
+          }
 
           {
             profileView === true ? fsUser ?

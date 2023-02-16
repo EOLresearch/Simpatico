@@ -1,13 +1,15 @@
 
 // import './regpanel.css';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
 import ErrorMessage from '../ErrorMessage/ErrorMessage'
 
 
-export default function RegistrationPanel({ auth, userRef, registrationDisplaySwitch  }) {
+export default function RegistrationPanel({ auth, firestore, userRef, registrationDisplaySwitch, user  }) {
   const [anError, setAnError] = useState('')
+  const [uRef, setURef] = useState()
+
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -18,9 +20,15 @@ export default function RegistrationPanel({ auth, userRef, registrationDisplaySw
   const [deceased, setDeceased] = useState('')
   const [cause, setCause] = useState('')
   const [lossExp, setLossExp] = useState('')
-
   const [residence, setResidence] = useState('')
   const [consent, setConsent] = useState(false)
+
+  useEffect(()=>{
+    if (userRef){
+      setURef(userRef)
+    }
+
+  }, [userRef])
 
   const cancelError = () => {
     setAnError('')
@@ -104,7 +112,7 @@ export default function RegistrationPanel({ auth, userRef, registrationDisplaySw
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-      userRef.doc(user.uid).set({
+      uRef.doc(user.uid).set({
         uid: user.uid,
         email: email,
         displayName: displayName,
