@@ -16,13 +16,13 @@ export default function UserAuth({ firebase }) {
 
   const auth = firebase.auth();
   const firestore = firebase.firestore();
-  const userRef = firestore.collection('users');
+  const usersRef = firestore.collection('users');
 
   const googleSignIn = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider)
       .then(result => {
-        const userQuery = userRef.where("email", "==", result.user.email)
+        const userQuery = usersRef.where("email", "==", result.user.email)
         userQuery.get().then(snapShot => {
           //check if user coming back from Google is in Firestore
           if (snapShot.docs.length > 0) {
@@ -32,12 +32,12 @@ export default function UserAuth({ firebase }) {
             })
           } else {
             console.log("no firestore record, one is now being created")
-            userRef.doc(result.user.uid).set({
+            usersRef.doc(result.user.uid).set({
               uid: result.user.uid,
               email: result.user.email,
               displayName: result.user.displayName,
               photoURL: result.user.photoURL,
-              birthDate: birthDate,
+              birthDate: '',
               lossDate: '',
               deceased: '',
               cause: '',
@@ -131,7 +131,7 @@ export default function UserAuth({ firebase }) {
   }
 
   if (regPanel === true) {
-    return <RegistrationPanel auth={auth} userRef={userRef} registrationDisplaySwitch={registrationDisplaySwitch}/>
+    return <RegistrationPanel auth={auth} usersRef={usersRef} registrationDisplaySwitch={registrationDisplaySwitch}/>
   }
 
   return (
@@ -152,12 +152,12 @@ export default function UserAuth({ firebase }) {
             <label htmlFor='email'>* Email Address</label>
             <div className='input-container'>
               <i className="fas fa-envelope"></i>
-              <input id="email" type="email" placeholder="Your Email Address" value={email} onChange={changeHandler} name="useremail" required />
+              <input id="email" type="email" placeholder="Your Email Address" value={email} onChange={changeHandler} name="email" required />
             </div>
             <label htmlFor='password'>* Password</label>
             <div className='input-container'>
               <i className="fas fa-lock"></i>
-              <input id="password" type="password" placeholder="Your Password" value={password} onChange={changeHandler} name="userpass" required />
+              <input id="password" type="password" placeholder="Your Password" value={password} onChange={changeHandler} name="password" required />
               <i className="fas fa-eye-slash"></i>
               {/* TODO: functional password chracter reveal in place of this static logo */}
             </div>

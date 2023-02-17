@@ -20,10 +20,11 @@ import { IconContext } from "react-icons";
 export default function Dashboard(props) {
   const { firebase, user, profileView, matchList, matchDetails, conversationsIndex, primarySurvey, navHandler } = props
   const { uid, email, photoURL } = user;
-  const firestore = firebase.firestore();
+
   const [userToChatWith, setUserToChatWith] = useState({})
   const [regPanel, setRegPanel] = useState(false)
-
+  
+  const firestore = firebase.firestore();
   const usersRef = firestore.collection('users');
   const [users] = useCollectionData(usersRef);
 
@@ -43,6 +44,7 @@ export default function Dashboard(props) {
       const user = fsUser[0]
       if (user.cause == "") {
         setRegPanel(true)
+        navHandler("All Off")
       }
     }
 
@@ -96,6 +98,8 @@ export default function Dashboard(props) {
     navHandler("Conversations")
   }
 
+
+
   const clickedProfile = profileView === true ? "clicked" : null
   const clickedMatches = matchList === true ? "clicked" : null
   const clickedConversations = conversationsIndex === true ? "clicked" : null
@@ -113,7 +117,7 @@ export default function Dashboard(props) {
           </div>
           {
             regPanel === true ? fsUser ?
-              <RegistrationPanel auth={auth} firestore={firestore} user={fsUser[0]} registrationDisplaySwitch={null}/> : null : null
+              <RegistrationPanel auth={auth} usersRef={usersRef} fsUser={fsUser[0]} registrationDisplaySwitch={null}/> : null : null
           }
 
           {

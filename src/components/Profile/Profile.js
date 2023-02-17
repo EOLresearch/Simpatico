@@ -31,7 +31,7 @@ export default function Profile({ user }) {
 
           <div className='profile-body'>
             <p><strong>Hello, {user.displayName}.</strong></p>
-            <p className='body'>You have been matched with ::number of:: other users who have suffered a similar loss. You can see their stories, and start a conversation in the "Matches" tab. </p>
+            <p className='body'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  </p>
 
             <h4>My Details</h4>
             <p className='details'>{getAge(user.birthDate)}, Male, NY<br />Lost Relationship: </p>

@@ -6,10 +6,8 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import ErrorMessage from '../ErrorMessage/ErrorMessage'
 
 
-export default function RegistrationPanel({ auth, firestore, userRef, registrationDisplaySwitch, user  }) {
+export default function RegistrationPanel({ auth, usersRef, registrationDisplaySwitch, fsUser }) {
   const [anError, setAnError] = useState('')
-  const [uRef, setURef] = useState()
-
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -23,12 +21,9 @@ export default function RegistrationPanel({ auth, firestore, userRef, registrati
   const [residence, setResidence] = useState('')
   const [consent, setConsent] = useState(false)
 
-  useEffect(()=>{
-    if (userRef){
-      setURef(userRef)
-    }
+  // const userRef = firestore.collection('users');
 
-  }, [userRef])
+
 
   const cancelError = () => {
     setAnError('')
@@ -90,12 +85,6 @@ export default function RegistrationPanel({ auth, firestore, userRef, registrati
       case 'consent':
         setConsent(!consent)
         break
-      case 'useremail':
-        setEmail(e.target.value)
-        break
-      case 'userpass':
-        setPassword(e.target.value)
-        break
       case 'cause':
         setCause(e.target.value)
         break
@@ -112,7 +101,7 @@ export default function RegistrationPanel({ auth, firestore, userRef, registrati
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-      uRef.doc(user.uid).set({
+      usersRef.doc(user.uid).set({
         uid: user.uid,
         email: email,
         displayName: displayName,
@@ -130,9 +119,14 @@ export default function RegistrationPanel({ auth, firestore, userRef, registrati
       setAnError(errorCode)
     }
   }
+  const weDontNeedTheseInThisCase = fsUser ? "display-none" : "";
+  const modalBG = fsUser ? "BG" : "";
+  //todo:/// currently in process of making this registrationpanel work for both cases with and without an fsUser. With the fsUser, it should be aMODAL with a dimmed BG.
+
 
   return (
     <div className="auth-wrapper">
+      <div className={modalBG}></div>
       <h3>Register</h3>
       <div className="auth-container">
         {(anError !== "")
@@ -140,31 +134,35 @@ export default function RegistrationPanel({ auth, firestore, userRef, registrati
           ? <ErrorMessage error={anError} cancelError={cancelError} /> : null
         }
         <div className='fields-container'>
+
+          {/* TO DO:: There is a spacing issue with the margin on the labels within this displayhandler div, they dont match the rest of the form.  */}
           <form>
-            <label htmlFor='email'>* Email Address</label>
-            <div className='input-container'>
-              <i className="fas fa-envelope"></i>
-              <input type="email" name="email" placeholder="Email" id="email" value={email} onChange={changeHandler} />
+            <div className={weDontNeedTheseInThisCase}>
+              <label htmlFor='email'>* Email Address</label>
+              <div className='input-container'>
+                <i className="fas fa-envelope"></i>
+                <input type="email" name="email" placeholder="Email" id="email" value={email} onChange={changeHandler} />
+              </div>
+
+              <label htmlFor='password'>* Password</label>
+              <div className='input-container'>
+                <i className="fas fa-lock"></i>
+                <input type="password" name="password" placeholder="Password" id="password" value={password} onChange={changeHandler} />
+              </div>
+
+              <label htmlFor='confirmpass'>* Confirm Password</label>
+              <div className='input-container'>
+                <i className="fas fa-lock"></i>
+                <input type="password" name="confirmPass" placeholder="Confirm Password" id="confirmPass" value={confirmPass} onChange={changeHandler} />
+              </div>
             </div>
-  
-            <label htmlFor='password'>* Password</label>
-            <div className='input-container'>
-              <i className="fas fa-lock"></i>
-              <input type="password" name="password" placeholder="Password" id="password" value={password} onChange={changeHandler} />
-            </div>
-  
-            <label htmlFor='confirmpass'>* Confirm Password</label>
-            <div className='input-container'>
-              <i className="fas fa-lock"></i>
-              <input type="password" name="confirmPass" placeholder="Confirm Password" id="confirmPass" value={confirmPass} onChange={changeHandler} />
-            </div>
-  
+
             <label htmlFor='displayName'>* Your Display Name</label>
             <div className='input-container'>
               <i className="fas fa-user-alt"></i>
               <input type="text" name="displayName" placeholder="Display Name" id="name" value={displayName} onChange={changeHandler} />
             </div>
-  
+
             <label htmlFor='residence'>* Your Home State</label>
             <div className='input-container'>
               <i className="fas fa-map"></i>
@@ -223,19 +221,19 @@ export default function RegistrationPanel({ auth, firestore, userRef, registrati
                 <option value="WY">Wyoming</option>
               </select>
             </div>
-  
+
             <label htmlFor="birthDate">* Your Birthdate</label>
             <div className='input-container'>
               <i className="fas fa-calendar-alt"></i>
               <input type="date" name="birthDate" id="birthDate" placeholder="e.g. 01/01/1990" value={birthDate} onChange={changeHandler} />
-  
+
             </div>
             <label htmlFor="lossDate">* When did you experience your loss?</label>
             <div className='input-container'>
               <i className="fas fa-calendar-alt"></i>
               <input type="date" name="lossDate" id="lossDate" placeholder="e.g. 01/01/1990" value={lossDate} onChange={changeHandler} />
             </div>
-  
+
             <label htmlFor="deceased">* Relationship to deceased: the deceased is my...</label>
             <div className='input-container'>
               <select name="deceased" id="deceased" value={deceased} onChange={changeHandler} >
@@ -256,7 +254,7 @@ export default function RegistrationPanel({ auth, firestore, userRef, registrati
                 <option>I want to support others</option>
               </select>
             </div>
-  
+
             <label htmlFor="cause">* How did you loss occur?</label>
             <div className='input-container'>
               <select name="cause" id="cause" value={cause} onChange={changeHandler} >
@@ -266,12 +264,12 @@ export default function RegistrationPanel({ auth, firestore, userRef, registrati
                 {/* <option>Prefer not to disclose</option> */}
               </select>
             </div>
-  
+
             <label htmlFor="lossExp">* Please use this space to describe your loss experience.</label>
             <div className='input-container'>
               <textarea name="lossExp" id="lossExp" value={lossExp} onChange={changeHandler} ></textarea>
             </div>
-  
+
             <div className='consent'>
               <input type="checkbox" name="consent" id="consent" value={consent} onChange={changeHandler} ></input>
               <div>
