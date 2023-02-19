@@ -23,7 +23,7 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
 
   // const userRef = firestore.collection('users');
 
-
+  //TODO:: THOSE FLIPPIN BORDERS ON HOVER ARE DRIVING ME NUTS> THEY MOVE THE DOC FLOW
 
   const cancelError = () => {
     setAnError('')
