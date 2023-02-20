@@ -12,6 +12,7 @@
   animation: dropDownFadeInOut 1s;
   position: absolute;
   border-radius: 2rem;;
+  z-index:999;
 }
 .error-message p{
   flex-grow: 1;

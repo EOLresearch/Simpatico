@@ -18,6 +18,7 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { IconContext } from "react-icons";
 
 export default function Dashboard(props) {
+  //TODO: TRY AND LIMIT THE AMOUNT OF TIMES YOU PASS FIREBASE DOWN
   const { firebase, user, profileView, matchList, matchDetails, conversationsIndex, primarySurvey, navHandler } = props
   const { uid, email, photoURL } = user;
 
@@ -42,13 +43,13 @@ export default function Dashboard(props) {
   
     if ( fsUser ) {
       const user = fsUser[0]
-      if (user.cause == "") {
+      if (user.cause === "") {
         setRegPanel(true)
         navHandler("All Off")
       }
     }
 
-  }, [fsUser])
+  }, [navHandler, fsUser])
 
   function convoHandler(e, user) {
     e.preventDefault();

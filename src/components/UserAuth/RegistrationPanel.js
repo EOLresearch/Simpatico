@@ -30,29 +30,52 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
   }
   const validateNewUser = (e) => {
     e.preventDefault()
-    if (email === "") {
-      setAnError('auth/missing-email')
-    } else if (password === '') {
-      setAnError('nopass')
-    } else if (password !== confirmPass) {
-      setAnError('nomatchpass')
-    } else if (residence === '') {
-      setAnError('noresidence')
-    } else if (birthDate === '') {
-      setAnError('nobirth')
-    } else if (lossDate === '') {
-      setAnError('nolossdate')
-    } else if (deceased === '') {
-      setAnError('nodeceased')
-    } else if (cause === '') {
-      setAnError('nocause')
-    } else if (lossExp === '') {
-      setAnError('nolossexp')
-    } else if (consent === false) {
-      setAnError('consent')
-    } else if (consent === true) {
-      setAnError('')
-      createNewUser()
+    //we have to skip the email and password checks based on the condition of fsUser being available.
+
+    if (!fsUser) {
+      if (email === "") {
+        setAnError('auth/missing-email')
+      } else if (password === '') {
+        setAnError('nopass')
+      } else if (password !== confirmPass) {
+        setAnError('nomatchpass')
+      } else if (residence === '') {
+        setAnError('noresidence')
+      } else if (birthDate === '') {
+        setAnError('nobirth')
+      } else if (lossDate === '') {
+        setAnError('nolossdate')
+      } else if (deceased === '') {
+        setAnError('nodeceased')
+      } else if (cause === '') {
+        setAnError('nocause')
+      } else if (lossExp === '') {
+        setAnError('nolossexp')
+      } else if (consent === false) {
+        setAnError('consent')
+      } else if (consent === true) {
+        setAnError('')
+        createNewUser()
+      }
+    } else {
+      if (residence === '') {
+        setAnError('noresidence')
+      } else if (birthDate === '') {
+        setAnError('nobirth')
+      } else if (lossDate === '') {
+        setAnError('nolossdate')
+      } else if (deceased === '') {
+        setAnError('nodeceased')
+      } else if (cause === '') {
+        setAnError('nocause')
+      } else if (lossExp === '') {
+        setAnError('nolossexp')
+      } else if (consent === false) {
+        setAnError('consent')
+      } else if (consent === true) {
+        setAnError('')
+        updateUser()
+      }
     }
   }
 
@@ -119,20 +142,39 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
       setAnError(errorCode)
     }
   }
+
+  const updateUser = async () => {
+    try {
+
+      usersRef.doc(fsUser.uid).set({
+        uid: fsUser.uid,
+        displayName: displayName,
+        birthDate: birthDate,
+        photoURL: null,
+        deceased: deceased,
+        lossDate: lossDate,
+        cause: cause,
+        residence: residence,
+        lossExp: lossExp,
+      })
+    } catch (error) {
+      const errorCode = error.code;
+      console.log(errorCode, error.message)
+      setAnError(errorCode)
+    }
+  }
   const weDontNeedTheseInThisCase = fsUser ? "display-none" : "";
-  const modalBG = fsUser ? "BG" : "";
-  //todo:/// currently in process of making this registrationpanel work for both cases with and without an fsUser. With the fsUser, it should be aMODAL with a dimmed BG.
 
 
   return (
     <div className="auth-wrapper">
-      <div className={modalBG}></div>
-      <h3>Register</h3>
+      <h3>Please complete this form</h3>
       <div className="auth-container">
         {(anError !== "")
           // this component is currently still in this document
           ? <ErrorMessage error={anError} cancelError={cancelError} /> : null
         }
+
         <div className='fields-container'>
 
           {/* TO DO:: There is a spacing issue with the margin on the labels within this displayhandler div, they dont match the rest of the form.  */}
