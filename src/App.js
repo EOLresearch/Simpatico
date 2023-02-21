@@ -5,7 +5,7 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import Nav from './components/Nav/Nav'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
@@ -30,9 +30,21 @@ function App() {
   const [matchDetails, setMatchDetails] = useState(false)
   const [conversationsIndex, setConversationsIndex] = useState(false)
   const [primarySurvey, setPrimarySurvey] = useState(false)
+  // const [fsUser, setFsUser] = useState()
+
   const firestore = firebase.firestore();
 
-  const usersRef = firestore.collection('users');
+  // useEffect(()=>{
+  //   if (user) {
+  //     usersRef.doc(user.uid).get().then((doc)=>{
+  //       if (doc.exists){
+  //         setFsUser(doc.data())
+  //       }
+  //     })
+  //   }
+  // },[])
+
+  // const usersRef = firestore.collection('users');
   // const userQuery = usersRef.where("email", "==", user.email)
   // const [fsUser] = useCollectionData(userQuery);
 
@@ -111,13 +123,15 @@ function App() {
                 conversationsIndex={conversationsIndex}
                 primarySurvey={primarySurvey}
                 navHandler={navHandler}
-              /> : <UserAuth auth={auth} firebase={firebase} />
+                // fsUser={fsUser}
+              />
+
+              : <UserAuth auth={auth} firebase={firebase} />
           }
         </div>
       </div>
     </div>
   );
 }
-
-
 export default App;
+

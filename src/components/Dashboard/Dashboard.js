@@ -4,7 +4,7 @@ import MatchList from './MatchList/MatchList'
 import MatchDetails from './MatchDetails/MatchDetails'
 import MatchingSurvey from './MatchingSurvey/MatchingSurvey'
 import Profile from './Profile/Profile'
-// import RegistrationPanel from './UserAuth/RegistrationPanel';
+import RegistrationPanel from '../UserAuth/RegistrationPanel';
 
 //TODO: component import-index refactor
 
@@ -40,10 +40,11 @@ export default function Dashboard(props) {
   // useEffect(()=>{
   
   //   if ( fsUser ) {
-  //     const user = fsUser[0]
-  //     if (user.cause === "") {
+  //     if (fsUser.cause === "") {
   //       setRegPanel(true)
   //       navHandler("All Off")
+  //     } else {
+  //       return
   //     }
   //   }
 
@@ -87,7 +88,7 @@ export default function Dashboard(props) {
     await conversationsRef.doc(docId).set({
       users: [uid, user.uid],
       userData: {
-        sender: fsUser[0],
+        sender: fsUser,
         receiver: user,
       },
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -114,10 +115,10 @@ export default function Dashboard(props) {
             <div onClick={e => navHandler("Conversations")} className={clickedConversations}><IoChatbubblesSharp size="3rem" />Conversations</div>
             {/* this needs to be its own component? */}
           </div>
-          {/* {
+          {
             regPanel === true ? fsUser ?
               <RegistrationPanel auth={auth} usersRef={usersRef} fsUser={fsUser[0]} registrationDisplaySwitch={null}/> : null : null
-          } */}
+          }
 
           {
             profileView === true ? fsUser ?
