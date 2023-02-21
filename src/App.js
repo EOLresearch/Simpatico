@@ -1,6 +1,6 @@
 
 import UserAuth from './components/UserAuth/UserAuth'
-import Dashboard from './components/Dashboard'
+import Dashboard from './components/Dashboard/Dashboard'
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
@@ -90,7 +90,7 @@ function App() {
 
   return (
     <div className="App">
-      <div className='render-wrapper'>
+      <div className='app-container'>
         <Nav user={user} auth={auth} navHandler={navHandler} />
         <div className='nav-dummy'>
           {/* app inner container is not centered properly without this dummy so wdith in CSS must be the same as the nav container  */}
