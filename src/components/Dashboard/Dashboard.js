@@ -22,6 +22,8 @@ export default function Dashboard(props) {
 
   const [userToChatWith, setUserToChatWith] = useState({})
   const [regPanel, setRegPanel] = useState(false)
+  // const [fsUser, setFsUser] = useState()
+
   
   const firestore = firebase.firestore();
   const usersRef = firestore.collection('users');
@@ -29,6 +31,10 @@ export default function Dashboard(props) {
 
   const userQuery = usersRef.where("email", "==", email)
   const [fsUser] = useCollectionData(userQuery);
+
+  // useEffect(()=>{
+  // }, [])
+
 
   const conversationsRef = firestore.collection('conversations');
   const myConvos = conversationsRef.where('users', 'array-contains', uid)
@@ -38,17 +44,14 @@ export default function Dashboard(props) {
 
 
   // useEffect(()=>{
-  
-  //   if ( fsUser ) {
-  //     if (fsUser.cause === "") {
+  //   if (fsUser) {
+  //     if(fsUser[0].cause === "") {
   //       setRegPanel(true)
   //       navHandler("All Off")
-  //     } else {
-  //       return
   //     }
   //   }
-
   // }, [navHandler, fsUser])
+
 
   function convoHandler(e, user) {
     e.preventDefault();
@@ -119,7 +122,6 @@ export default function Dashboard(props) {
             regPanel === true ? fsUser ?
               <RegistrationPanel auth={auth} usersRef={usersRef} fsUser={fsUser[0]} registrationDisplaySwitch={null}/> : null : null
           }
-
           {
             profileView === true ? fsUser ?
               <Profile user={fsUser[0]} /> : null : null
@@ -144,5 +146,4 @@ export default function Dashboard(props) {
       </div>
     </IconContext.Provider>
   );
-
 }

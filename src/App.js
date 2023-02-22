@@ -2,7 +2,7 @@
 import UserAuth from './components/UserAuth/UserAuth'
 import Dashboard from './components/Dashboard/Dashboard'
 import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
+import 'firebase/compat/auth';    
 import 'firebase/compat/firestore';
 import Nav from './components/Nav/Nav'
 import { useEffect, useState } from "react";

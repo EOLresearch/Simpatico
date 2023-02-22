@@ -1,12 +1,8 @@
 import './profile.css';
 import { useState } from "react";
-
 import { IconContext } from "react-icons";
-import { RxPerson } from "react-icons/rx";
-import { IoPeopleCircleOutline, IoChatbubblesSharp, IoHome } from "react-icons/io5";
 
 export default function Profile({ user }) {
-
 
   function getAge(date) {
     const today = new Date();
@@ -29,11 +25,9 @@ export default function Profile({ user }) {
                 <img className='profile-image' src={user.photoURL} />
                 <p>{user.displayName.split(" ")[0]}</p>
               </div>
-
               <div className='profile-body'>
                 <p><strong>Hello, {user.displayName}.</strong></p>
                 <p className='body'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  </p>
-
                 <h4>My Details</h4>
                 <p className='details'>{getAge(user.birthDate)}, Male, NY<br />Lost Relationship: </p>
                 <h4>My Story</h4>
@@ -43,7 +37,6 @@ export default function Profile({ user }) {
           </div>
           : null
       }
-
     </IconContext.Provider>
   )
 }

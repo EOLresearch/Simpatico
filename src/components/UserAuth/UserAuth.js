@@ -4,8 +4,9 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswor
 import { FaGoogle } from 'react-icons/fa';
 import ErrorMessage from '../ErrorMessage/ErrorMessage'
 import RegistrationPanel from './RegistrationPanel';
+//need more checks on email sign up
 
-// ******problems with any email being allowed to sign up, thats a spam bots dream******************
+import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 export default function UserAuth({ firebase }) {
   const [regPanel, setRegPanel] = useState(false)
@@ -18,36 +19,39 @@ export default function UserAuth({ firebase }) {
   const firestore = firebase.firestore();
   const usersRef = firestore.collection('users');
 
-  const googleSignIn = () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(provider)
-      .then(result => {
-        const userQuery = usersRef.where("email", "==", result.user.email)
-        userQuery.get().then(snapShot => {
-          //check if user coming back from Google is in Firestore
-          if (snapShot.docs.length > 0) {
-            snapShot.forEach(doc => {
-              const userData = doc.data()
-              console.log(userData)
-            })
-          } else {
-            console.log("no firestore record, one is now being created")
-            usersRef.doc(result.user.uid).set({
-              uid: result.user.uid,
-              email: result.user.email,
-              displayName: result.user.displayName,
-              photoURL: result.user.photoURL,
-              birthDate: '',
-              lossDate: '',
-              deceased: '',
-              cause: '',
-              residence: '',
-              lossExp: '',
-            })
-          }
-        })
-      });
-  }
+  //googlesignin is creating toooooo many issues right now. moving on to MVP before coming back to google/facebook signin
+
+  // const googleSignIn = () => {
+
+  //   const provider = new firebase.auth.GoogleAuthProvider();
+  //   firebase.auth().signInWithPopup(provider)
+  //     .then(result => {
+  //       const userQuery = usersRef.where("email", "==", result.user.email)
+  //       userQuery.get().then(snapShot => {
+  //         //check if user coming back from Google is in Firestore
+  //         if (snapShot.docs.length > 0) {
+  //           snapShot.forEach(doc => {
+  //             const userData = doc.data()
+  //             console.log(userData)
+  //           })
+  //         } else {
+  //           console.log("no firestore record, one is now being created")
+  //           usersRef.doc(result.user.uid).set({
+  //             uid: result.user.uid,
+  //             email: result.user.email,
+  //             displayName: result.user.displayName,
+  //             photoURL: result.user.photoURL,
+  //             birthDate: '',
+  //             lossDate: '',
+  //             deceased: '',
+  //             cause: '',
+  //             residence: '',
+  //             lossExp: '',
+  //           })
+  //         }
+  //       })
+  //     });
+  // }
 
   const sendResetEmail = async (e) => {
     e.preventDefault()
@@ -121,7 +125,7 @@ export default function UserAuth({ firebase }) {
           <div className="col-right">
             <div className="login-with-container">
               <h2>Login with</h2>
-              <button className="btn btn-go" onClick={googleSignIn}>Google</button>
+              {/* <button className="btn btn-go" onClick={googleSignIn}>Google</button> */}
               <button className="btn btn-fb">Facebook</button>
             </div>
           </div>
@@ -131,7 +135,7 @@ export default function UserAuth({ firebase }) {
   }
 
   if (regPanel === true) {
-    return <RegistrationPanel auth={auth} usersRef={usersRef} registrationDisplaySwitch={registrationDisplaySwitch}/>
+    return <RegistrationPanel auth={auth} usersRef={usersRef} fsUser={null} registrationDisplaySwitch={registrationDisplaySwitch}/>
   }
 
   return (
@@ -164,7 +168,7 @@ export default function UserAuth({ firebase }) {
 
             <div className='btn-container'>
               <button className='sub-btn' type="submit">Login</button>
-              <button className="btn-go" onClick={googleSignIn}><FaGoogle size="2rem" /> <span>Sign in with Google</span></button>
+              {/* <button className="btn-go" onClick={googleSignIn}><FaGoogle size="2rem" /> <span>Sign in with Google</span></button> */}
               <button className='forgot-pass-btn' onClick={forgotPassDisplaySwitch}>Forgot Password?</button>
               <button onClick={registrationDisplaySwitch}>Not a member? <strong>Join now</strong></button>
             </div>

@@ -145,12 +145,12 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
 
   const updateUser = async () => {
     try {
-
       usersRef.doc(fsUser.uid).set({
+        email: fsUser.email,
         uid: fsUser.uid,
-        displayName: displayName,
+        displayName: displayName ? displayName : fsUser.displayName,
         birthDate: birthDate,
-        photoURL: null,
+        photoURL: fsUser.photoURL,
         deceased: deceased,
         lossDate: lossDate,
         cause: cause,
