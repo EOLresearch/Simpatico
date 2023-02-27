@@ -15,15 +15,12 @@ export default function Conversations({ firebase, convos, fsUser }) {
 
 
 function chatHandler(e, documentID){
-  console.log(e.target)
+  // console.log(e.target)
   setDocId(documentID)
   setShowChatWindow(true)
 }
-
-
   return (
     <div className='chatroom'>
-      
       <div className="conversations-container">
         <div className="conversations-inner-container">
           <h3>YOUR CONNECTIONS</h3>
@@ -32,7 +29,6 @@ function chatHandler(e, documentID){
             convos.map(convo => <Convo key={convo.docId} firebase={firebase} convoDocId={convo.docId} convo={convo} chatHandler={chatHandler} />) 
             : null
           }
-
         </div>
       </div>
           {

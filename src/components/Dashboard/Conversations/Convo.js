@@ -10,11 +10,13 @@ export default function Convo({ firebase, convoDocId, convo, chatHandler }) {
   const { uid, photoURL } = auth.currentUser;
 
   const theOtherPerson = uid === convo.userData.sender.uid ? convo.userData.receiver : convo.userData.sender
+
+  // console.log(theOtherPerson[0])
   return (
     <div className='convo-container' onClick={e=>chatHandler(e, convoDocId)}>
       <div className='convo' >
-        <img src={theOtherPerson.photoURL} ></img>
-        <p data-identifier="openChat">{theOtherPerson.displayName}</p>
+        <img src={theOtherPerson[0].photoURL} ></img>
+        <p data-identifier="openChat">{theOtherPerson[0].displayName}</p>
       </div>
     </div>
   )

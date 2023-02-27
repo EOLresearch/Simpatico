@@ -43,7 +43,7 @@ export default function ChatWindow({ firebase, convoDocId, fsUser }) {
       </div>
       <form onSubmit={submitHandler}>
         <input value={messageBody} onChange={e => setMessageBody(e.target.value)} />
-        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+        <button type="submit"><i className="fas fa-paper-plane"></i></button>
       </form>
     </div>
   )

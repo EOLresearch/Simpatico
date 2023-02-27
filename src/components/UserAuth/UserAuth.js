@@ -20,6 +20,7 @@ export default function UserAuth({ firebase }) {
   const usersRef = firestore.collection('users');
 
   //googlesignin is creating toooooo many issues right now. moving on to MVP before coming back to google/facebook signin
+  // lets not call GoogleAuthProvider() until we have the information we need, that elliminates the issues here for the most part, but thats after MVP now. that AND FACEBOOK
 
   // const googleSignIn = () => {
 
@@ -74,7 +75,6 @@ export default function UserAuth({ firebase }) {
         setAnError(errorCode)
       });
   }
-
   const changeHandler = (e) => {
     switch (e.target.name) {
       case 'email':

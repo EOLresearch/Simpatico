@@ -22,35 +22,18 @@ export default function Dashboard(props) {
 
   const [userToChatWith, setUserToChatWith] = useState({})
   const [regPanel, setRegPanel] = useState(false)
-  // const [fsUser, setFsUser] = useState()
 
-  
   const firestore = firebase.firestore();
   const usersRef = firestore.collection('users');
   const [users] = useCollectionData(usersRef);
 
   const userQuery = usersRef.where("email", "==", email)
   const [fsUser] = useCollectionData(userQuery);
-
-  // useEffect(()=>{
-  // }, [])
-
-
   const conversationsRef = firestore.collection('conversations');
   const myConvos = conversationsRef.where('users', 'array-contains', uid)
   const [convos = []] = useCollectionData(myConvos);
 
   const auth = firebase.auth();
-
-
-  // useEffect(()=>{
-  //   if (fsUser) {
-  //     if(fsUser[0].cause === "") {
-  //       setRegPanel(true)
-  //       navHandler("All Off")
-  //     }
-  //   }
-  // }, [navHandler, fsUser])
 
 
   function convoHandler(e, user) {
