@@ -34,20 +34,6 @@ function App() {
 
   const firestore = firebase.firestore();
 
-  // useEffect(()=>{
-  //   if (user) {
-  //     usersRef.doc(user.uid).get().then((doc)=>{
-  //       if (doc.exists){
-  //         setFsUser(doc.data())
-  //       }
-  //     })
-  //   }
-  // },[])
-
-  // const usersRef = firestore.collection('users');
-  // const userQuery = usersRef.where("email", "==", user.email)
-  // const [fsUser] = useCollectionData(userQuery);
-
   function navHandler(renderCondition) {
 
     // TODO:: need to doa check here for the user and redirect to login if not logged whenever any routing is attempted

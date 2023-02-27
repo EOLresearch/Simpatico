@@ -21,19 +21,60 @@ export default function Dashboard(props) {
   const { uid, email, photoURL } = user;
 
   const [userToChatWith, setUserToChatWith] = useState({})
+  const [fsUser, setFsUser] = useState({})
+  const [matches, setMatches] = useState([])
+
+
   const [regPanel, setRegPanel] = useState(false)
+
 
   const firestore = firebase.firestore();
   const usersRef = firestore.collection('users');
-  const [users] = useCollectionData(usersRef);
+
+  // const [users] = useCollectionData(usersRef);
+
 
   const userQuery = usersRef.where("email", "==", email)
-  const [fsUser] = useCollectionData(userQuery);
+  // const [fsUser] = useCollectionData(userQuery);
   const conversationsRef = firestore.collection('conversations');
   const myConvos = conversationsRef.where('users', 'array-contains', uid)
   const [convos = []] = useCollectionData(myConvos);
 
   const auth = firebase.auth();
+
+
+  useEffect(() => {
+    userQuery.get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          console.log(doc.id, " => ", doc.data());
+          setFsUser(doc.data())
+        });
+      })
+      .catch((error) => {
+        console.log("Error getting documents: ", error);
+      });
+
+
+      
+    }, [])
+    
+    // const usersRef = firestore.collection('users');
+  //   const matchQuery = usersRef.where("cause", "==", fsUser.cause)
+  //   useEffect(()=>{
+
+  //     matchQuery.get()
+  //       .then((querySnapshot) => {
+  //         querySnapshot.forEach((doc)=>{
+  //           console.log(doc.id, " => ", doc.data());
+  //         })
+  //       })
+
+  // }, [])
+
+  // const matchQuery = usersRef.where("cause", "==", fsUser.cause).where("deceased", "==", fsUser.deceased)
+  // const [matches] = useCollectionData(matchQuery);
 
 
   function convoHandler(e, user) {
@@ -48,7 +89,7 @@ export default function Dashboard(props) {
     const a = conversationsRef.doc(docId1)
     const b = conversationsRef.doc(docId2)
 
-    a.get().then((doc) => { 
+    a.get().then((doc) => {
       if (doc.exists) {
         // console.log("Document data:", doc.data());
         navHandler("Conversations")
@@ -103,19 +144,19 @@ export default function Dashboard(props) {
           </div>
           {
             regPanel === true ? fsUser ?
-              <RegistrationPanel auth={auth} usersRef={usersRef} fsUser={fsUser[0]} registrationDisplaySwitch={null}/> : null : null
+              <RegistrationPanel auth={auth} usersRef={usersRef} fsUser={fsUser} registrationDisplaySwitch={null} /> : null : null
           }
           {
             profileView === true ? fsUser ?
-              <Profile user={fsUser[0]} /> : null : null
+              <Profile user={fsUser} /> : null : null
           }
           {
             matchList === true ?
-              <MatchList currentUid={uid} users={users} createConvo={createConvo} /> : null
+              <MatchList currentUid={uid} users={matches} createConvo={createConvo} /> : null
           }
           {
             conversationsIndex === true ? fsUser ?
-              <Conversations firebase={firebase} convos={convos} fsUser={fsUser[0]} /> : null : null
+              <Conversations firebase={firebase} convos={convos} fsUser={fsUser} /> : null : null
           }
           {
             matchDetails === true ?

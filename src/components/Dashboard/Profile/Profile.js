@@ -23,15 +23,15 @@ export default function Profile({ user }) {
             <div className='display-card'>
               <div className='image-container'>
                 <img className='profile-image' src={user.photoURL} />
-                <p>{user.displayName.split(" ")[0]}</p>
+                {/* <p>{user.displayName.split(" ")[0]}</p> */}
               </div>
               <div className='profile-body'>
                 <p><strong>Hello, {user.displayName}.</strong></p>
                 <p className='body'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  </p>
                 <h4>My Details</h4>
-                <p className='details'>{getAge(user.birthDate)}, Male, NY<br />Lost Relationship: </p>
+                <p className='details'>{getAge(user.birthDate)}, {user.residence}<br />Lost Relationship: {user.deceased}, {user.cause}</p>
                 <h4>My Story</h4>
-                <p className='story'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                <p className='story'>{user.lossExp}</p>
               </div>
             </div>
           </div>
