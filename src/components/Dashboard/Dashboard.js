@@ -59,35 +59,33 @@ export default function Dashboard(props) {
 
 
   useEffect(() => {
-    if (!fsUser) return 
+    if (!fsUser) return
     const causeQuery = usersRef.where("cause", "==", fsUser.cause)
 
     causeQuery.get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc)=>{
-          console.log(doc.id, " => ", doc.data());
-          // setCauseMatches([...causeMatches, doc.data()])
+    .then((querySnapshot) => {
+      const matchArr = []
+        querySnapshot.forEach((doc) => {
+          // console.log(doc.id, " => ", doc.data());
+          matchArr.push(doc.data())
         })
+        setCauseMatches(matchArr)
       })
 
-  }, [fsUser])
-
-  useEffect(() => {
-    if (!fsUser) return 
-    console.log(fsUser)
     const deceasedQuery = usersRef.where("deceased", "==", fsUser.deceased)
 
     deceasedQuery.get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc)=>{
-          console.log(doc.id, " => ", doc.data());
-          // setDeceasedMatches([doc.data(), ...deceasedMatches])
+    .then((querySnapshot) => {
+      const matchArr = []
+        querySnapshot.forEach((doc) => {
+          // console.log(doc.id, " => ", doc.data());
+          matchArr.push(doc.data())
         })
+        setDeceasedMatches(matchArr)
       })
 
   }, [fsUser])
 
-// adding to existing state without overiding is the next step here
 
 
   // const usersRef = firestore.collection('users');
@@ -175,7 +173,7 @@ export default function Dashboard(props) {
           }
           {
             matchList === true ?
-              <MatchList currentUid={uid} users={causeMatches} createConvo={createConvo} /> : null
+              <MatchList currentUid={uid} deceasedMatches={deceasedMatches} causeMatches={causeMatches} createConvo={createConvo} /> : null
           }
           {
             conversationsIndex === true ? fsUser ?

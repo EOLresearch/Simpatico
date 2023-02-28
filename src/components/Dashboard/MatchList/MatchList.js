@@ -1,8 +1,22 @@
 import './matchlist.css';
 
-export default function MatchList({ currentUid, users = [], createConvo }) {
+export default function MatchList({ currentUid, deceasedMatches, causeMatches, createConvo }) {
 
-  const matches = users.filter(u => u.uid === currentUid ? null : u)
+  const combineMatches = [...deceasedMatches, ...causeMatches]
+
+  const matchOnEither = removeDuplicates(combineMatches.filter(u => u.uid === currentUid ? null : u))
+
+  function removeDuplicates(array) {
+    var a = array.concat();
+    for(var i=0; i<a.length; ++i) {
+        for(var j=i+1; j<a.length; ++j) {
+            if(a[i] === a[j])
+                a.splice(j--, 1);
+        }
+    }
+
+    return a;
+}
 
   return (
     <div className='match-list-container'>
@@ -12,7 +26,7 @@ export default function MatchList({ currentUid, users = [], createConvo }) {
 
       </div>
       {
-        matches.map(user => {
+        matchOnEither.map(user => {
           return (
 
             <div key={user.uid} className='display-card match'>
