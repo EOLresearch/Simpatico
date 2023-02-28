@@ -21,8 +21,10 @@ export default function Dashboard(props) {
   const { uid, email, photoURL } = user;
 
   const [userToChatWith, setUserToChatWith] = useState({})
-  const [fsUser, setFsUser] = useState({})
-  const [matches, setMatches] = useState([])
+  const [fsUser, setFsUser] = useState()
+  const [causeMatches, setCauseMatches] = useState([])
+  const [deceasedMatches, setDeceasedMatches] = useState([])
+
 
 
   const [regPanel, setRegPanel] = useState(false)
@@ -33,9 +35,7 @@ export default function Dashboard(props) {
 
   // const [users] = useCollectionData(usersRef);
 
-
   const userQuery = usersRef.where("email", "==", email)
-  // const [fsUser] = useCollectionData(userQuery);
   const conversationsRef = firestore.collection('conversations');
   const myConvos = conversationsRef.where('users', 'array-contains', uid)
   const [convos = []] = useCollectionData(myConvos);
@@ -47,31 +47,54 @@ export default function Dashboard(props) {
     userQuery.get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-          // doc.data() is never undefined for query doc snapshots
           console.log(doc.id, " => ", doc.data());
           setFsUser(doc.data())
         });
       })
+
       .catch((error) => {
         console.log("Error getting documents: ", error);
       });
+  }, [])
 
 
-      
-    }, [])
-    
-    // const usersRef = firestore.collection('users');
-  //   const matchQuery = usersRef.where("cause", "==", fsUser.cause)
-  //   useEffect(()=>{
+  useEffect(() => {
+    if (!fsUser) return 
+    const causeQuery = usersRef.where("cause", "==", fsUser.cause)
 
-  //     matchQuery.get()
-  //       .then((querySnapshot) => {
-  //         querySnapshot.forEach((doc)=>{
-  //           console.log(doc.id, " => ", doc.data());
-  //         })
-  //       })
+    causeQuery.get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc)=>{
+          console.log(doc.id, " => ", doc.data());
+          // setCauseMatches([...causeMatches, doc.data()])
+        })
+      })
 
-  // }, [])
+  }, [fsUser])
+
+  useEffect(() => {
+    if (!fsUser) return 
+    console.log(fsUser)
+    const deceasedQuery = usersRef.where("deceased", "==", fsUser.deceased)
+
+    deceasedQuery.get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc)=>{
+          console.log(doc.id, " => ", doc.data());
+          // setDeceasedMatches([doc.data(), ...deceasedMatches])
+        })
+      })
+
+  }, [fsUser])
+
+// adding to existing state without overiding is the next step here
+
+
+  // const usersRef = firestore.collection('users');
+
+
+
+
 
   // const matchQuery = usersRef.where("cause", "==", fsUser.cause).where("deceased", "==", fsUser.deceased)
   // const [matches] = useCollectionData(matchQuery);
@@ -152,7 +175,7 @@ export default function Dashboard(props) {
           }
           {
             matchList === true ?
-              <MatchList currentUid={uid} users={matches} createConvo={createConvo} /> : null
+              <MatchList currentUid={uid} users={causeMatches} createConvo={createConvo} /> : null
           }
           {
             conversationsIndex === true ? fsUser ?
