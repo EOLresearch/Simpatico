@@ -30,7 +30,6 @@ function App() {
   const [matchDetails, setMatchDetails] = useState(false)
   const [conversationsIndex, setConversationsIndex] = useState(false)
   const [primarySurvey, setPrimarySurvey] = useState(false)
-  // const [fsUser, setFsUser] = useState()
 
   const firestore = firebase.firestore();
 
@@ -109,7 +108,6 @@ function App() {
                 conversationsIndex={conversationsIndex}
                 primarySurvey={primarySurvey}
                 navHandler={navHandler}
-                // fsUser={fsUser}
               />
 
               : <UserAuth auth={auth} firebase={firebase} />

@@ -10,7 +10,6 @@ import RegistrationPanel from '../UserAuth/RegistrationPanel';
 
 import { RxPerson } from "react-icons/rx";
 import { IoPeopleCircleOutline, IoChatbubblesSharp, IoHome } from "react-icons/io5";
-
 import { useState, useEffect } from "react";
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { IconContext } from "react-icons";
@@ -19,6 +18,7 @@ export default function Dashboard(props) {
   //TODO: TRY AND LIMIT THE AMOUNT OF TIMES YOU PASS FIREBASE DOWN
   const { firebase, user, profileView, matchList, matchDetails, conversationsIndex, primarySurvey, navHandler } = props
   const { uid, email, photoURL } = user;
+  const firestore = firebase.firestore();
 
   const [userToChatWith, setUserToChatWith] = useState({})
   const [fsUser, setFsUser] = useState()
@@ -26,32 +26,20 @@ export default function Dashboard(props) {
   const [deceasedMatches, setDeceasedMatches] = useState([])
 
 
-
-  const [regPanel, setRegPanel] = useState(false)
-
-
-  const firestore = firebase.firestore();
-  const usersRef = firestore.collection('users');
-
-  // const [users] = useCollectionData(usersRef);
-
-  const userQuery = usersRef.where("email", "==", email)
   const conversationsRef = firestore.collection('conversations');
   const myConvos = conversationsRef.where('users', 'array-contains', uid)
   const [convos = []] = useCollectionData(myConvos);
 
-  const auth = firebase.auth();
-
+  const usersRef = firestore.collection('users');
+  const userQuery = usersRef.where("email", "==", email)
 
   useEffect(() => {
     userQuery.get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-          console.log(doc.id, " => ", doc.data());
           setFsUser(doc.data())
         });
       })
-
       .catch((error) => {
         console.log("Error getting documents: ", error);
       });
@@ -60,65 +48,45 @@ export default function Dashboard(props) {
 
   useEffect(() => {
     if (!fsUser) return
-    const causeQuery = usersRef.where("cause", "==", fsUser.cause)
 
-    causeQuery.get()
-    .then((querySnapshot) => {
-      const matchArr = []
-        querySnapshot.forEach((doc) => {
-          // console.log(doc.id, " => ", doc.data());
-          matchArr.push(doc.data())
-        })
-        setCauseMatches(matchArr)
-      })
+    const causeQuery = usersRef.where("cause", "==", fsUser.cause)
+    getMatchData(causeQuery, setCauseMatches)
 
     const deceasedQuery = usersRef.where("deceased", "==", fsUser.deceased)
-
-    deceasedQuery.get()
-    .then((querySnapshot) => {
-      const matchArr = []
-        querySnapshot.forEach((doc) => {
-          // console.log(doc.id, " => ", doc.data());
-          matchArr.push(doc.data())
-        })
-        setDeceasedMatches(matchArr)
-      })
+    getMatchData(deceasedQuery, setDeceasedMatches)
 
   }, [fsUser])
 
-
-
-  // const usersRef = firestore.collection('users');
-
-
-
-
-
-  // const matchQuery = usersRef.where("cause", "==", fsUser.cause).where("deceased", "==", fsUser.deceased)
-  // const [matches] = useCollectionData(matchQuery);
+  function getMatchData(query, setFunc) {
+    query.get()
+    .then((querySnapshot) => {
+      const dataArr = []
+      querySnapshot.forEach((doc) => {
+        dataArr.push(doc.data())
+      })
+      setFunc(dataArr)
+    })
+  }
 
 
   function convoHandler(e, user) {
     e.preventDefault();
-
     navHandler("All Off")
     setUserToChatWith(user)
 
     const docId1 = `${uid} + ${user.uid}`
     const docId2 = `${user.uid} + ${uid}`
-
+    
     const a = conversationsRef.doc(docId1)
     const b = conversationsRef.doc(docId2)
 
     a.get().then((doc) => {
       if (doc.exists) {
-        // console.log("Document data:", doc.data());
         navHandler("Conversations")
       } else {
         console.log('else, now run b')
         b.get().then((doc) => {
           if (doc.exists) {
-            // console.log("Document data:", doc.data());
             navHandler("Conversations")
           } else {
             navHandler("Matches")
@@ -146,12 +114,9 @@ export default function Dashboard(props) {
     navHandler("Conversations")
   }
 
-
-
   const clickedProfile = profileView === true ? "clicked" : null
   const clickedMatches = matchList === true ? "clicked" : null
   const clickedConversations = conversationsIndex === true ? "clicked" : null
-
 
   return (
     <IconContext.Provider value={{ className: "react-icons-profile" }}>
@@ -164,20 +129,16 @@ export default function Dashboard(props) {
             {/* this needs to be its own component? */}
           </div>
           {
-            regPanel === true ? fsUser ?
-              <RegistrationPanel auth={auth} usersRef={usersRef} fsUser={fsUser} registrationDisplaySwitch={null} /> : null : null
-          }
-          {
             profileView === true ? fsUser ?
               <Profile user={fsUser} /> : null : null
           }
           {
-            matchList === true ?
-              <MatchList currentUid={uid} deceasedMatches={deceasedMatches} causeMatches={causeMatches} createConvo={createConvo} /> : null
-          }
-          {
             conversationsIndex === true ? fsUser ?
               <Conversations firebase={firebase} convos={convos} fsUser={fsUser} /> : null : null
+          }
+          {
+            matchList === true ?
+              <MatchList currentUid={uid} deceasedMatches={deceasedMatches} causeMatches={causeMatches} createConvo={createConvo} /> : null
           }
           {
             matchDetails === true ?
