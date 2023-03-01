@@ -4,7 +4,6 @@ import MatchList from './MatchList/MatchList'
 import MatchDetails from './MatchDetails/MatchDetails'
 import MatchingSurvey from './MatchingSurvey/MatchingSurvey'
 import Profile from './Profile/Profile'
-import RegistrationPanel from '../UserAuth/RegistrationPanel';
 
 //TODO: component import-index refactor
 
@@ -24,7 +23,6 @@ export default function Dashboard(props) {
   const [fsUser, setFsUser] = useState()
   const [causeMatches, setCauseMatches] = useState([])
   const [deceasedMatches, setDeceasedMatches] = useState([])
-
 
   const conversationsRef = firestore.collection('conversations');
   const myConvos = conversationsRef.where('users', 'array-contains', uid)
@@ -76,7 +74,7 @@ export default function Dashboard(props) {
 
     const docId1 = `${uid} + ${user.uid}`
     const docId2 = `${user.uid} + ${uid}`
-    
+
     const a = conversationsRef.doc(docId1)
     const b = conversationsRef.doc(docId2)
 
