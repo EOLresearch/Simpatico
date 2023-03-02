@@ -1,10 +1,6 @@
-
-
-
 import './matchlist.css';
 
 export default function Match({ user, createConvo }) {
-
 
   function getAge(date) {
     const today = new Date();
@@ -16,7 +12,7 @@ export default function Match({ user, createConvo }) {
     }
     return age;
   }
-  //heres a canidate for a ulility functionm in a separate file, it is also in Profile.js
+  //heres a candidate for a ulility function in a separate file, it is also in Profile.js
 
   return (
 

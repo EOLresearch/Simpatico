@@ -21,8 +21,8 @@ export default function Dashboard(props) {
 
   const [userToChatWith, setUserToChatWith] = useState({})
   const [fsUser, setFsUser] = useState()
-  const [causeMatches, setCauseMatches] = useState([])
-  const [deceasedMatches, setDeceasedMatches] = useState([])
+  const [matches, setMatches] = useState([])
+  // const [deceasedMatches, setDeceasedMatches] = useState([])
 
   const conversationsRef = firestore.collection('conversations');
   const myConvos = conversationsRef.where('users', 'array-contains', uid)
@@ -47,24 +47,18 @@ export default function Dashboard(props) {
   useEffect(() => {
     if (!fsUser) return
 
-    const causeQuery = usersRef.where("cause", "==", fsUser.cause)
-    getMatchData(causeQuery, setCauseMatches)
-
-    const deceasedQuery = usersRef.where("deceased", "==", fsUser.deceased)
-    getMatchData(deceasedQuery, setDeceasedMatches)
+    const matchQuery = usersRef.where("cause", "==", fsUser.cause).where("deceased", "==", fsUser.deceased)
+    matchQuery.get()
+      .then((querySnapshot) => {
+        let dataArr = []
+        querySnapshot.forEach((doc) => {
+          dataArr.push(doc.data())
+        })
+        setMatches(dataArr)
+      })
 
   }, [fsUser])
 
-  function getMatchData(query, setFunc) {
-    query.get()
-    .then((querySnapshot) => {
-      const dataArr = []
-      querySnapshot.forEach((doc) => {
-        dataArr.push(doc.data())
-      })
-      setFunc(dataArr)
-    })
-  }
 
 
   function convoHandler(e, user) {
@@ -136,7 +130,7 @@ export default function Dashboard(props) {
           }
           {
             matchList === true ?
-              <MatchList currentUid={uid} deceasedMatches={deceasedMatches} causeMatches={causeMatches} createConvo={createConvo} /> : null
+              <MatchList fsUser={fsUser} matches={matches} createConvo={createConvo} /> : null
           }
           {
             matchDetails === true ?
