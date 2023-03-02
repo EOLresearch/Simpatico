@@ -29,9 +29,9 @@ body {
 }
 .app-header{
   width:100%;
-  min-height:8rem;
+  min-height:6rem;
   text-align: center;
-  margin-top:5rem;
+  margin-top:2rem;
   font-weight: 400;
   font-family: "Asap",sans-serif;
   color: #31605b;

@@ -21,11 +21,12 @@
   justify-content: center;
   margin:0 auto;
   width:70%;
+  margin-bottom:1rem;
 }
 
 .sub-nav div{
   padding:1rem;
-  margin-bottom:1rem;
+  margin:0.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;

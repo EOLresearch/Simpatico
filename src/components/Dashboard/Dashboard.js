@@ -15,6 +15,9 @@ import { IconContext } from "react-icons";
 
 export default function Dashboard(props) {
   //TODO: TRY AND LIMIT THE AMOUNT OF TIMES YOU PASS FIREBASE DOWN
+  //TODO: USERS SHOLD BE ABLE TO CHANGE THIER DETAILS
+  //TODO: Create a user who us the super admin and is added to everyones match list for testing. this might mean querying tthe db for this admin user and passing it around the entire app
+
   const { firebase, user, profileView, matchList, matchDetails, conversationsIndex, primarySurvey, navHandler } = props
   const { uid, email, photoURL } = user;
   const firestore = firebase.firestore();
@@ -117,7 +120,6 @@ export default function Dashboard(props) {
             <div onClick={e => navHandler("Home")} className={clickedProfile}><RxPerson size="3rem" />My Profile</div>
             <div onClick={e => navHandler("Matches")} className={clickedMatches}><IoPeopleCircleOutline size="3rem" />Matches</div>
             <div onClick={e => navHandler("Conversations")} className={clickedConversations}><IoChatbubblesSharp size="3rem" />Conversations</div>
-            {/* this needs to be its own component? */}
           </div>
           {
             profileView === true ? fsUser ?
