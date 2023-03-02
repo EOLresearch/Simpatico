@@ -1,17 +1,17 @@
 .chatroom {
-  width: 60rem;
+  width: 80%;
   /* border: solid black 2px; */
   margin: 0 auto;
   border-radius: 1rem;
   display: flex;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, .75);
-  height: 50vh;
+  height: 60vh;
 
 }
 
 .conversations-container {
   background-color: #31605b;
-  width: 25%;
+  min-width: 20%;
   border-radius: 1rem 0 0 1rem;
   font-family: "Asap", sans-serif;
   font-weight: 300;

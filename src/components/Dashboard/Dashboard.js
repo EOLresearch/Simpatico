@@ -22,7 +22,6 @@ export default function Dashboard(props) {
   const [userToChatWith, setUserToChatWith] = useState({})
   const [fsUser, setFsUser] = useState()
   const [matches, setMatches] = useState([])
-  // const [deceasedMatches, setDeceasedMatches] = useState([])
 
   const conversationsRef = firestore.collection('conversations');
   const myConvos = conversationsRef.where('users', 'array-contains', uid)
