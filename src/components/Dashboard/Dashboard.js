@@ -91,11 +91,15 @@ export default function Dashboard(props) {
       }
     })
   }
+  
 
-  async function createConvo(user) {
-    // need more checks here to make sure conversations dont get erroneously made
+  function createConvo(e, message, user) {
+    e.preventDefault()
+
     const docId = `${uid} + ${user.uid}`
-    await conversationsRef.doc(docId).set({
+    const conversationRef = conversationsRef.doc(docId);
+
+    conversationRef.set({
       users: [uid, user.uid],
       userData: {
         sender: fsUser,
@@ -105,6 +109,18 @@ export default function Dashboard(props) {
       docId: docId,
       mutualConsent: false,
     })
+    
+    const msgDocRef = conversationRef.collection('messages').doc()
+
+    msgDocRef.set({
+      mid: msgDocRef.id,
+      body: message,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      sentFromUid: uid,
+      sentFromDisplayName: fsUser.displayName,
+      photoURL,
+    })
+
     navHandler("Conversations")
   }
 

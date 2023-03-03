@@ -1,6 +1,10 @@
 import './matchlist.css';
+import { useState } from "react";
+
 
 export default function Match({ user, createConvo }) {
+  const [message, setMessage] = useState('')
+
 
   function getAge(date) {
     const today = new Date();
@@ -13,6 +17,7 @@ export default function Match({ user, createConvo }) {
     return age;
   }
   //heres a candidate for a ulility function in a separate file, it is also in Profile.js
+  //if already matched, this component should know
 
 
   return (
@@ -31,11 +36,11 @@ export default function Match({ user, createConvo }) {
           <p>{user.lossExp}</p>
         </div>
       </div>
-      <div className="input-container-match">
+      <form onSubmit={e => createConvo(e, message, user)} className="input-container-match">
         <label htmlFor="inputer">Leave a supportive message for {user.displayName}</label>
-        <input id="inputer" type="text" placeholder="Start a Conversation"></input>
-        <button onClick={e => createConvo(user)} ><i className="fas fa-paper-plane"></i></button>
-      </div>
+        <input value={message} onChange={e => setMessage(e.target.value)} id="inputer" type="text" placeholder="Start a Conversation"></input>
+        <button type='submit' ><i className="fas fa-paper-plane"></i></button>
+      </form>
     </div>
   )
 

@@ -2,7 +2,6 @@ import { useState } from "react";
 import './conversations.css';
 import Convo from './Convo'
 import ChatWindow from '../ChatWindow/ChatWindow'
-import { doc } from "firebase/firestore";
 
 export default function Conversations({ firebase, convos, fsUser }) {
   const [showChatWindow, setShowChatWindow] = useState(false)
