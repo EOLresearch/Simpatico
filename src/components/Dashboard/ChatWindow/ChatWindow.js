@@ -7,7 +7,6 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 export default function ChatWindow({ firebase, convoDocId, fsUser }) {
   const auth = firebase.auth();
   const firestore = firebase.firestore()
-  const { uid, photoURL } = auth.currentUser;
 
   const conversationRef = firestore.collection('conversations').doc(convoDocId);
 
@@ -20,7 +19,6 @@ export default function ChatWindow({ firebase, convoDocId, fsUser }) {
   useEffect(()=>{
     scrollHandle.current.scrollIntoView({ behavior: 'smooth' });
   },[messages])
-  //this scroll is causing weird layout issues between the dashboard body and the dashboard wrapper. lets find another trick to smooth scroll to the latest message. 
 
   function submitHandler(e) {
     e.preventDefault()
@@ -29,9 +27,10 @@ export default function ChatWindow({ firebase, convoDocId, fsUser }) {
       mid: msgDocRef.id,
       body: messageBody,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      sentFromUid: uid,
+      sentFromUid: fsUser.uid,
       sentFromDisplayName: fsUser.displayName,
-      photoURL,
+      photoURL: fsUser.photoURL,
+      //this was the last change if bugs when you return
     })
     setMessageBody('')
   }
