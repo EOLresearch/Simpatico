@@ -29,15 +29,16 @@ export default function ChatWindow({ firebase, convoDocId, fsUser }) {
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       sentFromUid: fsUser.uid,
       sentFromDisplayName: fsUser.displayName,
-      photoURL: fsUser.photoURL,
+      // photoURL: fsUser.photoURL,
       //this was the last change if bugs when you return
+      //currently working on solving the default avatar issue
     })
     setMessageBody('')
   }
   return (
     <div className="chat-window-container">
       <div className='message-container'>
-        {messages.map(msg => <ChatMessage key={msg.mid} auth={auth} mid={msg.mid} message={msg} photoURL={photoURL} />)}
+        {messages.map(msg => <ChatMessage key={msg.mid} auth={auth} mid={msg.mid} message={msg}  />)}
         <div className='scrollref' ref={scrollHandle}></div>
       </div>
       <form onSubmit={submitHandler}>

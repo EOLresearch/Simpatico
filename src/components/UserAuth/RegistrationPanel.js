@@ -2,13 +2,12 @@
 // import './regpanel.css';
 import { useState, useEffect } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-
 import ErrorMessage from '../ErrorMessage/ErrorMessage'
+import AvatarGenerator from './AvatarGenerator'
 
 
 export default function RegistrationPanel({ auth, usersRef, registrationDisplaySwitch, fsUser }) {
   const [anError, setAnError] = useState('')
-
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPass, setConfirmPass] = useState('')
@@ -170,8 +169,8 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
     <div className="auth-wrapper">
       <h3>Please complete this form</h3>
       <div className="auth-container">
+
         {(anError !== "")
-          // this component is currently still in this document
           ? <ErrorMessage error={anError} cancelError={cancelError} /> : null
         }
 
