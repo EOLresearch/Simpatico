@@ -1,10 +1,8 @@
 
-// import './regpanel.css';
-import { useState, useEffect } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import ErrorMessage from '../ErrorMessage/ErrorMessage'
-import AvatarGenerator from './AvatarGenerator'
-
+// import AvatarGenerator from './AvatarGenerator'
 
 export default function RegistrationPanel({ auth, usersRef, registrationDisplaySwitch, fsUser }) {
   const [anError, setAnError] = useState('')
@@ -19,17 +17,27 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
   const [lossExp, setLossExp] = useState('')
   const [residence, setResidence] = useState('')
   const [consent, setConsent] = useState(false)
-
-  // const userRef = firestore.collection('users');
+  const [photoURL, setPhotoURL] = useState('')
 
   //TODO:: THOSE FLIPPIN BORDERS ON HOVER ARE DRIVING ME NUTS> THEY MOVE THE DOC FLOW
+
+  useEffect(()=>{
+    const randomNumber = Math.floor(Math.random() * (14 - 0 + 1) + 0)
+    const avatarOptions = ["Bubba", "Chloe", "Bob", "Casper", "Boo", "Boots", "Abby", "Chester", "Charlie", "Cuddles", "Bandit", "Angel", "Baby", "Cookie", "Daisy"]
+
+    const srcURL = `https://api.dicebear.com/5.x/thumbs/svg?seed=${avatarOptions[randomNumber]}`
+
+    setPhotoURL(srcURL)
+  }, [])
 
   const cancelError = () => {
     setAnError('')
   }
+
+
   const validateNewUser = (e) => {
     e.preventDefault()
-    //we have to skip the email and password checks based on the condition of fsUser being available.
+    //there is some outdated code here, the if else statemnet is not needed without google signin.
 
     if (!fsUser) {
       if (email === "") {
@@ -128,12 +136,12 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
         email: email,
         displayName: displayName,
         birthDate: birthDate,
-        photoURL: null,
         deceased: deceased,
         lossDate: lossDate,
         cause: cause,
         residence: residence,
         lossExp: lossExp,
+        photoURL: photoURL
       })
     } catch (error) {
       const errorCode = error.code;
@@ -175,9 +183,7 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
         }
 
         <div className='fields-container'>
-
-          {/* TO DO:: There is a spacing issue with the margin on the labels within this displayhandler div, they dont match the rest of the form.  */}
-          <form>
+          <form onSubmit={validateNewUser}>
             <div className={weDontNeedTheseInThisCase}>
               <label htmlFor='email'>* Email Address</label>
               <div className='input-container'>
@@ -302,7 +308,6 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
                 <option>Cause of death</option>
                 <option>Natural</option>
                 <option>Unnatural</option>
-                {/* <option>Prefer not to disclose</option> */}
               </select>
             </div>
 
@@ -318,7 +323,7 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
               </div>
             </div>
             <div className='btn-container'>
-              <input className="btn sub-btn" type="submit" value="Submit" onClick={validateNewUser} />
+              <input className="btn sub-btn" type="submit" value="Submit" />
             </div>
           </form>
         </div>
