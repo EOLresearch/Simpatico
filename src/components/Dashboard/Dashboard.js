@@ -29,8 +29,6 @@ export default function Dashboard(props) {
   const [showChatWindow, setShowChatWindow] = useState(false)
   const [docID, setDocID] = useState()
 
-
-
   const conversationsRef = firestore.collection('conversations');
   const myConvos = conversationsRef.where('users', 'array-contains', uid)
   const [convos = []] = useCollectionData(myConvos);

@@ -20,7 +20,7 @@ export default function Conversations({ chatHandler, docID, showChatWindow, fire
       </div>
           {
             showChatWindow === true ?
-              <ChatWindow firebase={firebase} convoDocId={docID} fsUser={fsUser}/> : <div className="no-convos">No conversation selected</div>
+              <ChatWindow firebase={firebase} convoDocId={docID} fsUser={fsUser}/> : <div className="no-convos"><p>NO CONVERSATION SELECTED</p></div>
           }
     </div>
   )
