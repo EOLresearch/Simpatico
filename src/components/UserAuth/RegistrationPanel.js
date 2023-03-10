@@ -34,7 +34,6 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
     setAnError('')
   }
 
-
   const validateNewUser = (e) => {
     e.preventDefault()
     //there is some outdated code here, the if else statemnet is not needed without google signin.

@@ -26,6 +26,11 @@ export default function Dashboard(props) {
   const [fsUser, setFsUser] = useState()
   const [matches, setMatches] = useState([])
 
+  const [showChatWindow, setShowChatWindow] = useState(false)
+  const [docID, setDocID] = useState()
+
+
+
   const conversationsRef = firestore.collection('conversations');
   const myConvos = conversationsRef.where('users', 'array-contains', uid)
   const [convos = []] = useCollectionData(myConvos);
@@ -61,7 +66,11 @@ export default function Dashboard(props) {
 
   }, [fsUser])
 
-
+  function chatHandler(e, documentID){
+    // console.log(e.target)
+    setDocID(documentID)
+    setShowChatWindow(true)
+  }
 
   function convoHandler(e, user) {
     e.preventDefault();
@@ -96,8 +105,9 @@ export default function Dashboard(props) {
   function createConvo(e, message, user) {
     e.preventDefault()
 
-    const docId = `${uid} + ${user.uid}`
-    const conversationRef = conversationsRef.doc(docId);
+    const documentID = `${uid} + ${user.uid}`
+    setDocID(documentID)
+    const conversationRef = conversationsRef.doc(documentID);
 
     conversationRef.set({
       users: [uid, user.uid],
@@ -106,7 +116,7 @@ export default function Dashboard(props) {
         receiver: user,
       },
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      docId: docId,
+      docID: docID,
       mutualConsent: false,
     })
     
@@ -122,6 +132,8 @@ export default function Dashboard(props) {
     })
 
     navHandler("Conversations")
+    setShowChatWindow(true)
+
   }
 
   const clickedProfile = profileView === true ? "clicked" : null
@@ -143,7 +155,7 @@ export default function Dashboard(props) {
           }
           {
             conversationsIndex === true ? fsUser ?
-              <Conversations firebase={firebase} convos={convos} fsUser={fsUser} /> : null : null
+              <Conversations chatHandler={chatHandler} docID={docID} showChatWindow={showChatWindow} firebase={firebase} convos={convos} fsUser={fsUser} /> : null : null
           }
           {
             matchList === true ?

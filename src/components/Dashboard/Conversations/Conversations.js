@@ -3,21 +3,9 @@ import './conversations.css';
 import Convo from './Convo'
 import ChatWindow from '../ChatWindow/ChatWindow'
 
-export default function Conversations({ firebase, convos, fsUser }) {
-  const [showChatWindow, setShowChatWindow] = useState(false)
-  const [docID, setDocId] = useState()
-  
-
-  const auth = firebase.auth();
-  const firestore = firebase.firestore()
-  const { uid, photoURL } = auth.currentUser;
+export default function Conversations({ chatHandler, docID, showChatWindow, firebase, convos, fsUser }) {
 
 
-function chatHandler(e, documentID){
-  // console.log(e.target)
-  setDocId(documentID)
-  setShowChatWindow(true)
-}
   return (
     <div className='chatroom'>
       <div className="conversations-container">
@@ -25,7 +13,7 @@ function chatHandler(e, documentID){
           <h3>YOUR CONNECTIONS</h3>
           {
           convos ? 
-            convos.map(convo => <Convo key={convo.docId} firebase={firebase} convoDocId={convo.docId} convo={convo} chatHandler={chatHandler} />) 
+            convos.map(convo => <Convo key={convo.docID} firebase={firebase} convoDocId={convo.docID} convo={convo} chatHandler={chatHandler} />) 
             : null
           }
         </div>
