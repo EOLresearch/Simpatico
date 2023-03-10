@@ -22,7 +22,6 @@ export default function Dashboard(props) {
   const { uid, email, photoURL } = user;
   const firestore = firebase.firestore();
 
-  const [userToChatWith, setUserToChatWith] = useState({})
   const [fsUser, setFsUser] = useState()
   const [matches, setMatches] = useState([])
 
@@ -32,6 +31,8 @@ export default function Dashboard(props) {
   const conversationsRef = firestore.collection('conversations');
   const myConvos = conversationsRef.where('users', 'array-contains', uid)
   const [convos = []] = useCollectionData(myConvos);
+
+  console.log(convos)
 
   const usersRef = firestore.collection('users');
   const userQuery = usersRef.where("email", "==", email)
@@ -65,39 +66,38 @@ export default function Dashboard(props) {
   }, [fsUser])
 
   function chatHandler(e, documentID){
-    // console.log(e.target)
     setDocID(documentID)
     setShowChatWindow(true)
   }
 
-  function convoHandler(e, user) {
-    e.preventDefault();
-    navHandler("All Off")
-    setUserToChatWith(user)
+  // function convoHandler(e, user) {
+  //   e.preventDefault();
+  //   navHandler("All Off")
+  //   setUserToChatWith(user)
 
-    const docId1 = `${uid} + ${user.uid}`
-    const docId2 = `${user.uid} + ${uid}`
+  //   const docId1 = `${uid} + ${user.uid}`
+  //   const docId2 = `${user.uid} + ${uid}`
 
-    const a = conversationsRef.doc(docId1)
-    const b = conversationsRef.doc(docId2)
+  //   const a = conversationsRef.doc(docId1)
+  //   const b = conversationsRef.doc(docId2)
 
-    a.get().then((doc) => {
-      if (doc.exists) {
-        navHandler("Conversations")
-      } else {
-        console.log('else, now run b')
-        b.get().then((doc) => {
-          if (doc.exists) {
-            navHandler("Conversations")
-          } else {
-            navHandler("Matches")
-          }
-        }).catch((error) => {
-          console.log("Error getting document:", error);
-        });
-      }
-    })
-  }
+  //   a.get().then((doc) => {
+  //     if (doc.exists) {
+  //       navHandler("Conversations")
+  //     } else {
+  //       console.log('else, now run b')
+  //       b.get().then((doc) => {
+  //         if (doc.exists) {
+  //           navHandler("Conversations")
+  //         } else {
+  //           navHandler("Matches")
+  //         }
+  //       }).catch((error) => {
+  //         console.log("Error getting document:", error);
+  //       });
+  //     }
+  //   })
+  // }
   
 
   function createConvo(e, message, user) {
@@ -114,7 +114,7 @@ export default function Dashboard(props) {
         receiver: user,
       },
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      docID: docID,
+      docID: documentID,
       mutualConsent: false,
     })
     
@@ -158,10 +158,6 @@ export default function Dashboard(props) {
           {
             matchList === true ?
               <MatchList fsUser={fsUser} matches={matches} createConvo={createConvo} /> : null
-          }
-          {
-            matchDetails === true ?
-              <MatchDetails userToChatWith={userToChatWith} convoHandler={convoHandler} createConvo={createConvo} /> : null
           }
           {
             primarySurvey === true ?
