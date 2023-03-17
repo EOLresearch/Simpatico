@@ -1,7 +1,6 @@
 import './dashboard.css';
 import Conversations from './Conversations/Conversations'
 import MatchList from './MatchList/MatchList'
-import MatchDetails from './MatchDetails/MatchDetails'
 import MatchingSurvey from './MatchingSurvey/MatchingSurvey'
 import Profile from './Profile/Profile'
 
@@ -67,6 +66,11 @@ export default function Dashboard(props) {
     setDocID(documentID)
     setShowChatWindow(true)
   }
+
+
+
+  //the two useEffects above are PROBLEMS
+
 
   // function convoHandler(e, user) {
   //   e.preventDefault();

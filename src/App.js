@@ -27,7 +27,6 @@ function App() {
   const [user] = useAuthState(auth);
   const [profileView, setProfileView] = useState(true)
   const [matchList, setMatchList] = useState(false)
-  const [matchDetails, setMatchDetails] = useState(false)
   const [conversationsIndex, setConversationsIndex] = useState(false)
   const [primarySurvey, setPrimarySurvey] = useState(false)
 
@@ -40,13 +39,11 @@ function App() {
     switch (renderCondition) {
       case 'Conversations':
         setMatchList(false)
-        setMatchDetails(false)
         setProfileView(false)
         setPrimarySurvey(false)
         setConversationsIndex(true)
         return
       case 'Matches':
-        setMatchDetails(false)
         setProfileView(false)
         setConversationsIndex(false)
         setPrimarySurvey(false)
@@ -54,28 +51,24 @@ function App() {
         return
       case 'Home':
         setMatchList(false)
-        setMatchDetails(false)
         setConversationsIndex(false)
         setPrimarySurvey(false)
         setProfileView(true)
         return
       case 'My Story':
         setMatchList(false)
-        setMatchDetails(false)
         setProfileView(false)
         setConversationsIndex(false)
         setPrimarySurvey(false)
         return
       case 'Matching Survey':
         setMatchList(false)
-        setMatchDetails(false)
         setProfileView(false)
         setConversationsIndex(false)
         setPrimarySurvey(true)
         return
       case 'All Off':
         setMatchList(false)
-        setMatchDetails(false)
         setProfileView(false)
         setConversationsIndex(false)
         setPrimarySurvey(false)
@@ -104,7 +97,6 @@ function App() {
                 user={user}
                 profileView={profileView}
                 matchList={matchList}
-                matchDetails={matchDetails}
                 conversationsIndex={conversationsIndex}
                 primarySurvey={primarySurvey}
                 navHandler={navHandler}
