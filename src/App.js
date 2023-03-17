@@ -77,7 +77,6 @@ function App() {
         console.log('switch default NAV')
     }
   }
-
   return (
     <div className="App">
       <div className='app-container'>
