@@ -110,7 +110,7 @@ export default function UserAuth({ firebase }) {
         <div className="container">
           <div className="col-left">
             <div className="fields-container">
-              <h2>Login</h2>
+              <h2>Log in</h2>
               <form onSubmit={sendResetEmail}>
                 <p>Please submit the email address associated with your account</p>
                 <input type="email" placeholder="Email" value={email} onChange={changeHandler} name="useremail" required />
@@ -124,7 +124,7 @@ export default function UserAuth({ firebase }) {
           </div>
           <div className="col-right">
             <div className="login-with-container">
-              <h2>Login with</h2>
+              <h2>Log in with</h2>
               {/* <button className="btn btn-go" onClick={googleSignIn}>Google</button> */}
               <button className="btn btn-fb">Facebook</button>
             </div>
@@ -148,7 +148,7 @@ export default function UserAuth({ firebase }) {
 
       <div className="auth-container">
         <div className="fields-container">
-          <h4>Login to your profile</h4>
+          <h4>Log in to your profile</h4>
           {(anError !== "")
             ? <ErrorMessage error={anError} cancelError={cancelError} /> : null
           }

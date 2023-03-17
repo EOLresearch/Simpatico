@@ -32,8 +32,6 @@ export default function Dashboard(props) {
   const myConvos = conversationsRef.where('users', 'array-contains', uid)
   const [convos = []] = useCollectionData(myConvos);
 
-  console.log(convos)
-
   const usersRef = firestore.collection('users');
   const userQuery = usersRef.where("email", "==", email)
 
@@ -47,7 +45,7 @@ export default function Dashboard(props) {
       .catch((error) => {
         console.log("Error getting documents: ", error);
       });
-  }, [])
+  }, [ ])
 
 
   useEffect(() => {
@@ -126,7 +124,7 @@ export default function Dashboard(props) {
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       sentFromUid: uid,
       sentFromDisplayName: fsUser.displayName,
-      photoURL,
+      photoURL: fsUser.photoURL,
     })
 
     navHandler("Conversations")
@@ -157,7 +155,7 @@ export default function Dashboard(props) {
           }
           {
             matchList === true ?
-              <MatchList fsUser={fsUser} matches={matches} createConvo={createConvo} /> : null
+              <MatchList fsUser={fsUser} matches={matches} createConvo={createConvo} convos={convos}/> : null
           }
           {
             primarySurvey === true ?
