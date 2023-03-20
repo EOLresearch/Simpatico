@@ -5,8 +5,8 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';    
 import 'firebase/compat/firestore';
 import Nav from './components/Nav/Nav'
-import { useEffect, useState } from "react";
-import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { useState } from "react";
+// import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 firebase.initializeApp({
@@ -25,58 +25,45 @@ const auth = firebase.auth();
 
 function App() {
   const [user] = useAuthState(auth);
-  const [profileView, setProfileView] = useState(true)
-  const [matchList, setMatchList] = useState(false)
-  const [conversationsIndex, setConversationsIndex] = useState(false)
-  const [primarySurvey, setPrimarySurvey] = useState(false)
+  const [profileTab, setProfileTab] = useState(true)
+  const [matchListTab, setMatchListTab] = useState(false)
+  const [conversationsTab, setConversationsTab] = useState(false)
 
   const firestore = firebase.firestore();
 
   function navHandler(renderCondition) {
 
-    // TODO:: need to doa check here for the user and redirect to login if not logged whenever any routing is attempted
-
     switch (renderCondition) {
       case 'Conversations':
-        setMatchList(false)
-        setProfileView(false)
-        setPrimarySurvey(false)
-        setConversationsIndex(true)
+        setMatchListTab(false)
+        setProfileTab(false)
+        setConversationsTab(true)
         return
       case 'Matches':
-        setProfileView(false)
-        setConversationsIndex(false)
-        setPrimarySurvey(false)
-        setMatchList(true)
+        setProfileTab(false)
+        setConversationsTab(false)
+        setMatchListTab(true)
         return
       case 'Home':
-        setMatchList(false)
-        setConversationsIndex(false)
-        setPrimarySurvey(false)
-        setProfileView(true)
+        setMatchListTab(false)
+        setConversationsTab(false)
+        setProfileTab(true)
         return
       case 'My Story':
-        setMatchList(false)
-        setProfileView(false)
-        setConversationsIndex(false)
-        setPrimarySurvey(false)
-        return
-      case 'Matching Survey':
-        setMatchList(false)
-        setProfileView(false)
-        setConversationsIndex(false)
-        setPrimarySurvey(true)
+        setMatchListTab(false)
+        setProfileTab(false)
+        setConversationsTab(false)
         return
       case 'All Off':
-        setMatchList(false)
-        setProfileView(false)
-        setConversationsIndex(false)
-        setPrimarySurvey(false)
+        setMatchListTab(false)
+        setProfileTab(false)
+        setConversationsTab(false)
         return
       default:
         console.log('switch default NAV')
     }
   }
+
   return (
     <div className="App">
       <div className='app-container'>
@@ -94,10 +81,9 @@ function App() {
               <Dashboard
                 firebase={firebase}
                 user={user}
-                profileView={profileView}
-                matchList={matchList}
-                conversationsIndex={conversationsIndex}
-                primarySurvey={primarySurvey}
+                profileTab={profileTab}
+                matchListTab={matchListTab}
+                conversationsTab={conversationsTab}
                 navHandler={navHandler}
               />
 

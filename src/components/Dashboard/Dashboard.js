@@ -17,7 +17,7 @@ export default function Dashboard(props) {
   //TODO: USERS SHOLD BE ABLE TO CHANGE THIER DETAILS
   //TODO: Create a user who us the super admin and is added to everyones match list for testing. this might mean querying tthe db for this admin user and passing it around the entire app
 
-  const { firebase, user, profileView, matchList, matchDetails, conversationsIndex, primarySurvey, navHandler } = props
+  const { firebase, user, profileTab, matchListTab, conversationsTab, navHandler } = props
   const { uid, email, photoURL } = user;
   const firestore = firebase.firestore();
 
@@ -136,9 +136,9 @@ export default function Dashboard(props) {
 
   }
 
-  const clickedProfile = profileView === true ? "clicked" : null
-  const clickedMatches = matchList === true ? "clicked" : null
-  const clickedConversations = conversationsIndex === true ? "clicked" : null
+  const clickedProfile = profileTab === true ? "clicked" : null
+  const clickedMatches = matchListTab === true ? "clicked" : null
+  const clickedConversations = conversationsTab === true ? "clicked" : null
 
   return (
     <IconContext.Provider value={{ className: "react-icons-profile" }}>
@@ -149,21 +149,18 @@ export default function Dashboard(props) {
             <div onClick={e => navHandler("Matches")} className={clickedMatches}><IoPeopleCircleOutline size="3rem" />Matches</div>
             <div onClick={e => navHandler("Conversations")} className={clickedConversations}><IoChatbubblesSharp size="3rem" />Conversations</div>
           </div>
+          {/* <Profile user={fsUser}/> */}
           {
-            profileView === true ? fsUser ?
-              <Profile user={fsUser} /> : null : null
+            profileTab === true ?
+              <Profile user={fsUser} /> : null 
           }
           {
-            conversationsIndex === true ? fsUser ?
+            conversationsTab === true ? fsUser ?
               <Conversations chatHandler={chatHandler} docID={docID} showChatWindow={showChatWindow} firebase={firebase} convos={convos} fsUser={fsUser} /> : null : null
           }
           {
-            matchList === true ?
+            matchListTab === true ?
               <MatchList fsUser={fsUser} matches={matches} createConvo={createConvo} convos={convos}/> : null
-          }
-          {
-            primarySurvey === true ?
-              <MatchingSurvey firebase={firebase} /> : null
           }
         </div>
       </div>
