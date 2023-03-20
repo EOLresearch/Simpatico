@@ -1,13 +1,12 @@
 import './dashboard.css';
 import Conversations from './Conversations/Conversations'
 import MatchList from './MatchList/MatchList'
-import MatchingSurvey from './MatchingSurvey/MatchingSurvey'
 import Profile from './Profile/Profile'
 
 //TODO: component import-index refactor
 
 import { RxPerson } from "react-icons/rx";
-import { IoPeopleCircleOutline, IoChatbubblesSharp, IoHome } from "react-icons/io5";
+import { IoPeopleCircleOutline, IoChatbubblesSharp } from "react-icons/io5";
 import { useState, useEffect } from "react";
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { IconContext } from "react-icons";
@@ -18,7 +17,7 @@ export default function Dashboard(props) {
   //TODO: Create a user who us the super admin and is added to everyones match list for testing. this might mean querying tthe db for this admin user and passing it around the entire app
 
   const { firebase, user, profileTab, matchListTab, conversationsTab, navHandler } = props
-  const { uid, email, photoURL } = user;
+  const { uid, email } = user;
   const firestore = firebase.firestore();
 
   const [fsUser, setFsUser] = useState()
@@ -31,10 +30,15 @@ export default function Dashboard(props) {
   const myConvos = conversationsRef.where('users', 'array-contains', uid)
   const [convos = []] = useCollectionData(myConvos);
 
-  const usersRef = firestore.collection('users');
-  const userQuery = usersRef.where("email", "==", email)
+  // const usersRef = firestore.collection('users');
+
+  //firestore in a dependencey array? lets looks this shit up, seems fine? shouldnt change ever? but is it costly or less performant??
 
   useEffect(() => {
+    console.log('running FsUser useeffect')
+
+    const usersRef = firestore.collection('users');
+    const userQuery = usersRef.where("email", "==", email)
     userQuery.get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
@@ -44,12 +48,15 @@ export default function Dashboard(props) {
       .catch((error) => {
         console.log("Error getting documents: ", error);
       });
-  }, [ ])
+  }, [firestore, email])
 
 
   useEffect(() => {
-    if (!fsUser) return
+    console.log('running matches useeffect')
 
+    if (!fsUser) return
+    
+    const usersRef = firestore.collection('users');
     const matchQuery = usersRef.where("cause", "==", fsUser.cause).where("deceased", "==", fsUser.deceased)
     matchQuery.get()
       .then((querySnapshot) => {
@@ -60,16 +67,17 @@ export default function Dashboard(props) {
         setMatches(dataArr)
       })
 
-  }, [fsUser])
+  }, [firestore, fsUser])
 
-  function chatHandler(e, documentID){
+
+  function chatHandler(e, documentID) {
     setDocID(documentID)
     setShowChatWindow(true)
   }
 
 
 
-  //the two useEffects above are PROBLEMS
+  //the two useEffects above need to happen here for the FsUser and MAtches, FSUSER coming from the APP has been problematic
 
 
   // function convoHandler(e, user) {
@@ -100,7 +108,7 @@ export default function Dashboard(props) {
   //     }
   //   })
   // }
-  
+
 
   function createConvo(e, message, user) {
     e.preventDefault()
@@ -119,7 +127,7 @@ export default function Dashboard(props) {
       docID: documentID,
       mutualConsent: false,
     })
-    
+
     const msgDocRef = conversationRef.collection('messages').doc()
 
     msgDocRef.set({
@@ -149,18 +157,17 @@ export default function Dashboard(props) {
             <div onClick={e => navHandler("Matches")} className={clickedMatches}><IoPeopleCircleOutline size="3rem" />Matches</div>
             <div onClick={e => navHandler("Conversations")} className={clickedConversations}><IoChatbubblesSharp size="3rem" />Conversations</div>
           </div>
-          {/* <Profile user={fsUser}/> */}
           {
             profileTab === true ?
-              <Profile user={fsUser} /> : null 
+              <Profile user={fsUser} /> : null
           }
           {
-            conversationsTab === true ? fsUser ?
-              <Conversations chatHandler={chatHandler} docID={docID} showChatWindow={showChatWindow} firebase={firebase} convos={convos} fsUser={fsUser} /> : null : null
+            conversationsTab === true ?
+              <Conversations chatHandler={chatHandler} docID={docID} showChatWindow={showChatWindow} firebase={firebase} convos={convos} fsUser={fsUser} /> : null
           }
           {
             matchListTab === true ?
-              <MatchList fsUser={fsUser} matches={matches} createConvo={createConvo} convos={convos}/> : null
+              <MatchList fsUser={fsUser} matches={matches} createConvo={createConvo} convos={convos} /> : null
           }
         </div>
       </div>

@@ -2,7 +2,7 @@
 import UserAuth from './components/UserAuth/UserAuth'
 import Dashboard from './components/Dashboard/Dashboard'
 import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';    
+import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import Nav from './components/Nav/Nav'
 import { useState } from "react";
@@ -25,11 +25,12 @@ const auth = firebase.auth();
 
 function App() {
   const [user] = useAuthState(auth);
+  // const [fsUser, setFsUser] = useState()
   const [profileTab, setProfileTab] = useState(true)
   const [matchListTab, setMatchListTab] = useState(false)
   const [conversationsTab, setConversationsTab] = useState(false)
 
-  const firestore = firebase.firestore();
+  // const firestore = firebase.firestore();
 
   function navHandler(renderCondition) {
 
@@ -64,6 +65,11 @@ function App() {
     }
   }
 
+  function getFireStoreUser(user) {
+    // setFsUser(user)
+    console.log("get firestore user")
+  }
+
   return (
     <div className="App">
       <div className='app-container'>
@@ -79,6 +85,7 @@ function App() {
           {
             user ?
               <Dashboard
+                // fsUser={fsUser}
                 firebase={firebase}
                 user={user}
                 profileTab={profileTab}
@@ -87,7 +94,7 @@ function App() {
                 navHandler={navHandler}
               />
 
-              : <UserAuth auth={auth} firebase={firebase} />
+              : <UserAuth auth={auth} firebase={firebase} getFireStoreUser={getFireStoreUser}/>
           }
         </div>
       </div>

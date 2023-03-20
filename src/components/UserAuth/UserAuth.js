@@ -1,14 +1,11 @@
 import './userauth.css';
 import { useState } from "react";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
-import { FaGoogle } from 'react-icons/fa';
+import { signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
+// import { FaGoogle } from 'react-icons/fa';
 import ErrorMessage from '../ErrorMessage/ErrorMessage'
 import RegistrationPanel from './RegistrationPanel';
-//need more checks on email sign up
 
-import { useCollectionData } from 'react-firebase-hooks/firestore';
-
-export default function UserAuth({ firebase }) {
+export default function UserAuth({ firebase, getFireStoreUser }) {
   const [regPanel, setRegPanel] = useState(false)
   const [resetPass, setResetPass] = useState(false)
   const [anError, setAnError] = useState('')
@@ -67,8 +64,19 @@ export default function UserAuth({ firebase }) {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in 
-        // const user = userCredential.user;
-        // ...
+        const user = userCredential.user;
+        const userQuery = usersRef.where("email", "==", user.email)
+        userQuery.get()
+          .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+              console.log("FSUSER FOUND")
+              getFireStoreUser(doc.data())
+            });
+          })
+          .catch((error) => {
+            console.log("FSUSER Error getting documents: ", error);
+          });
+
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -135,7 +143,7 @@ export default function UserAuth({ firebase }) {
   }
 
   if (regPanel === true) {
-    return <RegistrationPanel auth={auth} usersRef={usersRef} fsUser={null} registrationDisplaySwitch={registrationDisplaySwitch}/>
+    return <RegistrationPanel auth={auth} usersRef={usersRef} fsUser={null} registrationDisplaySwitch={registrationDisplaySwitch} />
   }
 
   return (
