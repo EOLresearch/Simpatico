@@ -29,9 +29,7 @@ export default function ChatWindow({ firebase, convoDocId, fsUser }) {
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       sentFromUid: fsUser.uid,
       sentFromDisplayName: fsUser.displayName,
-      photoURL: fsUser.photoURL,
-      //this was the last change if bugs when you return
-      //currently working on solving the default avatar issue
+      photoURL: fsUser.photoURL
     })
     setMessageBody('')
   }

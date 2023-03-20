@@ -35,13 +35,15 @@ export default function Dashboard(props) {
   //firestore in a dependencey array? lets looks this shit up, seems fine? shouldnt change ever? but is it costly or less performant??
 
   useEffect(() => {
-    console.log('running FsUser useeffect')
+
+    console.log('running FsUser useeffect document reads')
 
     const usersRef = firestore.collection('users');
     const userQuery = usersRef.where("email", "==", email)
     userQuery.get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
+          console.log("1 Doc Read")
           setFsUser(doc.data())
         });
       })
@@ -55,13 +57,15 @@ export default function Dashboard(props) {
     console.log('running matches useeffect')
 
     if (!fsUser) return
-    
+
     const usersRef = firestore.collection('users');
     const matchQuery = usersRef.where("cause", "==", fsUser.cause).where("deceased", "==", fsUser.deceased)
     matchQuery.get()
       .then((querySnapshot) => {
         let dataArr = []
         querySnapshot.forEach((doc) => {
+          console.log("1 Doc Read")
+
           dataArr.push(doc.data())
         })
         setMatches(dataArr)

@@ -64,18 +64,18 @@ export default function UserAuth({ firebase, getFireStoreUser }) {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in 
-        const user = userCredential.user;
-        const userQuery = usersRef.where("email", "==", user.email)
-        userQuery.get()
-          .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-              console.log("FSUSER FOUND")
-              getFireStoreUser(doc.data())
-            });
-          })
-          .catch((error) => {
-            console.log("FSUSER Error getting documents: ", error);
-          });
+        // const user = userCredential.user;
+        // const userQuery = usersRef.where("email", "==", user.email)
+        // userQuery.get()
+        //   .then((querySnapshot) => {
+        //     querySnapshot.forEach((doc) => {
+        //       console.log("FSUSER FOUND")
+        //       getFireStoreUser(doc.data())
+        //     });
+        //   })
+        //   .catch((error) => {
+        //     console.log("FSUSER Error getting documents: ", error);
+        //   });
 
       })
       .catch((error) => {
@@ -83,6 +83,7 @@ export default function UserAuth({ firebase, getFireStoreUser }) {
         setAnError(errorCode)
       });
   }
+  
   const changeHandler = (e) => {
     switch (e.target.name) {
       case 'email':
