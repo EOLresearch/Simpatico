@@ -25,15 +25,12 @@ const auth = firebase.auth();
 
 function App() {
   const [user] = useAuthState(auth);
-  // const [fsUser, setFsUser] = useState()
   const [profileTab, setProfileTab] = useState(true)
   const [matchListTab, setMatchListTab] = useState(false)
   const [conversationsTab, setConversationsTab] = useState(false)
 
-  // const firestore = firebase.firestore();
 
   function navHandler(renderCondition) {
-
     switch (renderCondition) {
       case 'Conversations':
         setMatchListTab(false)
@@ -65,10 +62,6 @@ function App() {
     }
   }
 
-  function getFireStoreUser(user) {
-    // setFsUser(user)
-    console.log("get firestore user")
-  }
 
   return (
     <div className="App">
@@ -85,7 +78,6 @@ function App() {
           {
             user ?
               <Dashboard
-                // fsUser={fsUser}
                 firebase={firebase}
                 user={user}
                 profileTab={profileTab}
@@ -94,7 +86,7 @@ function App() {
                 navHandler={navHandler}
               />
 
-              : <UserAuth auth={auth} firebase={firebase} getFireStoreUser={getFireStoreUser}/>
+              : <UserAuth auth={auth} firebase={firebase} />
           }
         </div>
       </div>
