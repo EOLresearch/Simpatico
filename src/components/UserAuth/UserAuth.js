@@ -5,7 +5,7 @@ import { signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/aut
 import ErrorMessage from '../ErrorMessage/ErrorMessage'
 import RegistrationPanel from './RegistrationPanel';
 
-export default function UserAuth({ firebase, getFireStoreUser }) {
+export default function UserAuth({ user, firebase, getFireStoreUser }) {
   const [regPanel, setRegPanel] = useState(false)
   const [resetPass, setResetPass] = useState(false)
   const [anError, setAnError] = useState('')
@@ -61,6 +61,15 @@ export default function UserAuth({ firebase, getFireStoreUser }) {
 
   const onSubmitReturningUser = (e) => {
     e.preventDefault()
+    //this is going to have to get my user - then check if they are verified before letting them hit the signInWithEmailAndPAssword function
+    //doc read everytime somsone hits that submit button?
+
+    //change regpanel state back lololol
+
+
+    // if (user.emailVerfied == false) {
+    //   console.log('not verified')
+    // }
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in 

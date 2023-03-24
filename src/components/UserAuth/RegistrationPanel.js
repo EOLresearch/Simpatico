@@ -126,10 +126,17 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
   }
 
   const createNewUser = async () => {
+    
     //TODO: EMAIL ACTIVATION FLOW - once user is signed in they should get an email to create thier account - they will not be able to send any messages until this has been completed.
+    
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
+      auth.currentUser.sendEmailVerification()
+        .then(() => {
+            // Email verification sent!
+            // ...
+        });
       usersRef.doc(user.uid).set({
         uid: user.uid,
         email: email,

@@ -30,6 +30,7 @@ function App() {
   const [conversationsTab, setConversationsTab] = useState(false)
 
 
+
   function navHandler(renderCondition) {
     switch (renderCondition) {
       case 'Conversations':
@@ -77,16 +78,17 @@ function App() {
           </div>
           {
             user ?
-              <Dashboard
-                firebase={firebase}
-                user={user}
-                profileTab={profileTab}
-                matchListTab={matchListTab}
-                conversationsTab={conversationsTab}
-                navHandler={navHandler}
-              />
+              user.emailVerified === true ? 
+                <Dashboard
+                  firebase={firebase}
+                  user={user}
+                  profileTab={profileTab}
+                  matchListTab={matchListTab}
+                  conversationsTab={conversationsTab}
+                  navHandler={navHandler}
+                />
 
-              : <UserAuth auth={auth} firebase={firebase} />
+              : <UserAuth auth={auth} firebase={firebase} /> : <UserAuth user={user} auth={auth} firebase={firebase} />
           }
         </div>
       </div>
