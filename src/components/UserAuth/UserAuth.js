@@ -161,12 +161,12 @@ export default function UserAuth({ user, firebase }) {
           }
           {user ? user.emailVerified === false ?
               <div className='user-verify'> 
-                Please check your email to verify your account
+                <p>Please check your email to verify your account</p>
                 <button onClick={sendVerificationEmail}>Resend Verification Email</button>
-                <button onClick={() => auth.signOut()}>X</button>
+                <button onClick={() => auth.signOut()}>close</button>
               </div> : null : null
           }
-          
+
           <form onSubmit={onSubmitReturningUser}>
             <label htmlFor='email'>* Email Address</label>
             <div className='input-container'>
