@@ -9,7 +9,6 @@ export default function UserAuth({ user, firebase }) {
   const [regPanel, setRegPanel] = useState(false)
   const [resetPass, setResetPass] = useState(false)
   const [anError, setAnError] = useState('')
-  const [isVerfied, setIsVerified] = useState(true)
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -17,6 +16,10 @@ export default function UserAuth({ user, firebase }) {
   const auth = firebase.auth();
   const firestore = firebase.firestore();
   const usersRef = firestore.collection('users');
+  
+  // useEffect(() => {
+  //   console.log('running userauth useeffect')
+  // }, [user.emailVerified])
 
   //googlesignin is creating toooooo many issues right now. moving on to MVP before coming back to google/facebook signin
   // lets not call GoogleAuthProvider() until we have the information we need, that elliminates the issues here for the most part, but thats after MVP now. that AND FACEBOOK
@@ -53,14 +56,6 @@ export default function UserAuth({ user, firebase }) {
   //     });
   // }
 
-  useEffect(() => {
-    if(!user) return
-    if (user.emailVerified === true) {
-      setIsVerified(true)
-    } else if (user.emailVerified === false){
-      setIsVerified(false)
-    }
-  }, [user])
 
   const sendResetEmail = async (e) => {
     e.preventDefault()
@@ -164,12 +159,14 @@ export default function UserAuth({ user, firebase }) {
           {(anError !== "")
             ? <ErrorMessage error={anError} cancelError={cancelError} /> : null
           }
-          {isVerfied === false ? 
+          {user ? user.emailVerified === false ?
               <div className='user-verify'> 
                 Please check your email to verify your account
-                <a href="#" onClick={sendVerificationEmail}>Resend Verification Email</a>
-              </div> : null
+                <button onClick={sendVerificationEmail}>Resend Verification Email</button>
+                <button onClick={() => auth.signOut()}>X</button>
+              </div> : null : null
           }
+          
           <form onSubmit={onSubmitReturningUser}>
             <label htmlFor='email'>* Email Address</label>
             <div className='input-container'>
