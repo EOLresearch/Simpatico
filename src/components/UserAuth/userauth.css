@@ -195,11 +195,26 @@ textarea {
   align-items: flex-end;
   padding: 1rem 2rem;
   width:max-content;
+  height: max-content;
   margin: auto;
-  z-index: 9;
+  z-index: 3;
   background-color: #000000c9;
   border-radius: 1rem;
   color:white;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+.modal-bg{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #000000c9;
+  z-index: 2;
 }
 .user-verify button{
   color:white;

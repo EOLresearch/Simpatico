@@ -16,7 +16,7 @@ export default function UserAuth({ user, firebase }) {
   const auth = firebase.auth();
   const firestore = firebase.firestore();
   const usersRef = firestore.collection('users');
-  
+
   // useEffect(() => {
   //   console.log('running userauth useeffect')
   // }, [user.emailVerified])
@@ -160,11 +160,13 @@ export default function UserAuth({ user, firebase }) {
             ? <ErrorMessage error={anError} cancelError={cancelError} /> : null
           }
           {user ? user.emailVerified === false ?
-              <div className='user-verify'> 
+            <div className='modal-bg'>
+              <div className='user-verify'>
                 <p>Please check your email to verify your account</p>
                 <button onClick={sendVerificationEmail}>Resend Verification Email</button>
                 <button onClick={() => auth.signOut()}>close</button>
-              </div> : null : null
+              </div>
+            </div> : null : null
           }
 
           <form onSubmit={onSubmitReturningUser}>
