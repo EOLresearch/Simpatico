@@ -7,7 +7,7 @@ import logo from '../../assets/simpaticologogreenbg.jpg'
 
 export default function Nav({ user, auth, navHandler }) {
 
-  const navStyles = user ? "" : "no-user-nav" ; 
+  const navStyles = user ? user.emailVerified ? "" : "no-user-nav" : null ; 
 
   return (
     <IconContext.Provider value={{ className: "react-icons-nav" }}>

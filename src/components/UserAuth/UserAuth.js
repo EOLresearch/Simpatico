@@ -1,14 +1,16 @@
 import './userauth.css';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 // import { FaGoogle } from 'react-icons/fa';
 import ErrorMessage from '../ErrorMessage/ErrorMessage'
 import RegistrationPanel from './RegistrationPanel';
 
-export default function UserAuth({ user, firebase, getFireStoreUser }) {
+export default function UserAuth({ user, firebase }) {
   const [regPanel, setRegPanel] = useState(false)
   const [resetPass, setResetPass] = useState(false)
   const [anError, setAnError] = useState('')
+  const [isVerfied, setIsVerified] = useState(true)
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
@@ -51,6 +53,15 @@ export default function UserAuth({ user, firebase, getFireStoreUser }) {
   //     });
   // }
 
+  useEffect(() => {
+    if(!user) return
+    if (user.emailVerified === true) {
+      setIsVerified(true)
+    } else if (user.emailVerified === false){
+      setIsVerified(false)
+    }
+  }, [user])
+
   const sendResetEmail = async (e) => {
     e.preventDefault()
     await sendPasswordResetEmail(auth, email)
@@ -61,15 +72,7 @@ export default function UserAuth({ user, firebase, getFireStoreUser }) {
 
   const onSubmitReturningUser = (e) => {
     e.preventDefault()
-    //this is going to have to get my user - then check if they are verified before letting them hit the signInWithEmailAndPAssword function
-    //doc read everytime somsone hits that submit button?
 
-    //change regpanel state back lololol
-
-
-    // if (user.emailVerfied == false) {
-    //   console.log('not verified')
-    // }
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in 
@@ -108,6 +111,9 @@ export default function UserAuth({ user, firebase, getFireStoreUser }) {
     e.preventDefault()
     setRegPanel(false)
     setResetPass(!resetPass)
+  }
+  const sendVerificationEmail = () => {
+    user.sendEmailVerification()
   }
 
   if (resetPass === true) {
@@ -157,6 +163,12 @@ export default function UserAuth({ user, firebase, getFireStoreUser }) {
           <h4>Log in to your profile</h4>
           {(anError !== "")
             ? <ErrorMessage error={anError} cancelError={cancelError} /> : null
+          }
+          {isVerfied === false ? 
+              <div className='user-verify'> 
+                Please check your email to verify your account
+                <a href="#" onClick={sendVerificationEmail}>Resend Verification Email</a>
+              </div> : null
           }
           <form onSubmit={onSubmitReturningUser}>
             <label htmlFor='email'>* Email Address</label>
