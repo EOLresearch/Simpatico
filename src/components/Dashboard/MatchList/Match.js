@@ -17,6 +17,18 @@ export default function Match({ user, createConvo, convo }) {
     return age;
   }
 
+  function dynamicMessage() {
+    if (!convo) return `Leave a supportive message for ${user.displayName}`
+    if (convo.userData.receiver.uid === user.uid) {
+      return `You have received a message from ${convo.userData.sender.displayName}, check the Conversations tab to respond.`
+    } else if (convo.userData.sender.uid === user.uid) {
+      return `You have already started a conversation with ${user.displayName}, check the Conversations tab`
+    } else {
+      return `Leave a supportive message for ${user.displayName}`
+    }
+  }
+
+  console.log(user)
 
   const matchStyles = convo ? 'display-card match has-convo' : 'display-card match'
 
@@ -36,7 +48,7 @@ export default function Match({ user, createConvo, convo }) {
         </div>
       </div>
       <form onSubmit={e => createConvo(e, message, user)} className="input-container-match">
-        <label htmlFor="inputer">{convo ? `You have already started a conversation with ${user.displayName}, check the Conversations tab` : `Leave a supportive message for ${user.displayName}`}</label>
+        <label htmlFor="inputer">{dynamicMessage()}</label>
         <input value={message} onChange={e => setMessage(e.target.value)} id="inputer" type="text" placeholder="Start a Conversation"></input>
         <button type='submit' ><i className="fas fa-paper-plane"></i></button>
       </form>

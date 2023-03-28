@@ -13,6 +13,9 @@ export default function MatchList({ fsUser, matches, createConvo, convos }) {
       </div>
       {
         simpaticoMatches.map(user => {
+          if (convos.length === 0) {
+            return <Match key={user.uid} createConvo={createConvo} user={user} />
+          }
           return convos.map(convo => {
             if (convo.users.includes(user.uid)) {
               return <Match key={user.uid} createConvo={createConvo} user={user} convo={convo} />
