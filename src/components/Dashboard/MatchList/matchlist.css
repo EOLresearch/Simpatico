@@ -61,3 +61,17 @@
   bottom:0.6rem;
   left:0.5rem;
 }
+
+.has-convo {
+  background-color: rgb(158, 156, 167);
+  color: rgb(94, 93, 99);
+}
+.has-convo form{
+  pointer-events: none;
+}
+.has-convo .input-container-match input{
+  background-color: rgb(158, 156, 167);
+}
+.has-convo .input-container-match label{
+  color: rgb(255, 255, 255);
+}

@@ -30,14 +30,8 @@ export default function Dashboard(props) {
   const myConvos = conversationsRef.where('users', 'array-contains', uid)
   const [convos = []] = useCollectionData(myConvos);
 
-  // const usersRef = firestore.collection('users');
-
-  //firestore in a dependencey array? lets looks this shit up, seems fine? shouldnt change ever? but is it costly or less performant??
 
   useEffect(() => {
-
-    console.log('running FsUser useeffect document reads')
-
     const usersRef = firestore.collection('users');
     const userQuery = usersRef.where("email", "==", email)
     userQuery.get()
@@ -54,10 +48,7 @@ export default function Dashboard(props) {
 
 
   useEffect(() => {
-    console.log('running matches useeffect')
-
     if (!fsUser) return
-
     const usersRef = firestore.collection('users');
     const matchQuery = usersRef.where("cause", "==", fsUser.cause).where("deceased", "==", fsUser.deceased)
     matchQuery.get()
@@ -78,41 +69,6 @@ export default function Dashboard(props) {
     setDocID(documentID)
     setShowChatWindow(true)
   }
-
-
-
-  //the two useEffects above need to happen here for the FsUser and MAtches, FSUSER coming from the APP has been problematic
-
-
-  // function convoHandler(e, user) {
-  //   e.preventDefault();
-  //   navHandler("All Off")
-  //   setUserToChatWith(user)
-
-  //   const docId1 = `${uid} + ${user.uid}`
-  //   const docId2 = `${user.uid} + ${uid}`
-
-  //   const a = conversationsRef.doc(docId1)
-  //   const b = conversationsRef.doc(docId2)
-
-  //   a.get().then((doc) => {
-  //     if (doc.exists) {
-  //       navHandler("Conversations")
-  //     } else {
-  //       console.log('else, now run b')
-  //       b.get().then((doc) => {
-  //         if (doc.exists) {
-  //           navHandler("Conversations")
-  //         } else {
-  //           navHandler("Matches")
-  //         }
-  //       }).catch((error) => {
-  //         console.log("Error getting document:", error);
-  //       });
-  //     }
-  //   })
-  // }
-
 
   function createConvo(e, message, user) {
     e.preventDefault()

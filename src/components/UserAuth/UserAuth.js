@@ -1,5 +1,5 @@
 import './userauth.css';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 // import { FaGoogle } from 'react-icons/fa';
 import ErrorMessage from '../ErrorMessage/ErrorMessage'
@@ -9,17 +9,12 @@ export default function UserAuth({ user, firebase }) {
   const [regPanel, setRegPanel] = useState(false)
   const [resetPass, setResetPass] = useState(false)
   const [anError, setAnError] = useState('')
-
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
   const auth = firebase.auth();
   const firestore = firebase.firestore();
   const usersRef = firestore.collection('users');
-
-  // useEffect(() => {
-  //   console.log('running userauth useeffect')
-  // }, [user.emailVerified])
 
   //googlesignin is creating toooooo many issues right now. moving on to MVP before coming back to google/facebook signin
   // lets not call GoogleAuthProvider() until we have the information we need, that elliminates the issues here for the most part, but thats after MVP now. that AND FACEBOOK
@@ -56,14 +51,12 @@ export default function UserAuth({ user, firebase }) {
   //     });
   // }
 
-
   const sendResetEmail = async (e) => {
     e.preventDefault()
     await sendPasswordResetEmail(auth, email)
     console.log("Password reset email sent")
     //TODO: this forgot password flow is nice out of the box but not awesome. Lets rework this find out a way to overwrite the default firebase behvior for this action.
   }
-
 
   const onSubmitReturningUser = (e) => {
     e.preventDefault()
@@ -159,8 +152,9 @@ export default function UserAuth({ user, firebase }) {
           {(anError !== "")
             ? <ErrorMessage error={anError} cancelError={cancelError} /> : null
           }
+
           {user ? user.emailVerified === false ?
-            <div className='modal-bg'>
+            <div onClick={() => auth.signOut()} className='modal-bg'>
               <div className='user-verify'>
                 <p>Please check your email to verify your account</p>
                 <button onClick={sendVerificationEmail}>Resend Verification Email</button>

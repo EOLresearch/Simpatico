@@ -2,12 +2,9 @@ import Match from './Match';
 import './matchlist.css';
 import { useState } from "react";
 
-export default function MatchList({ fsUser, matches, createConvo }) {
+export default function MatchList({ fsUser, matches, createConvo, convos }) {
 
   const simpaticoMatches = matches.filter(u => u.uid === fsUser.uid ? null : u)
-
-
-  //if already matched, this component should know
 
   return (
     <div className='match-list-container'>
@@ -16,9 +13,13 @@ export default function MatchList({ fsUser, matches, createConvo }) {
       </div>
       {
         simpaticoMatches.map(user => {
-          return (
-            <Match key={user.uid} createConvo={createConvo} user={user} />
-          )
+          return convos.map(convo => {
+            if (convo.users.includes(user.uid)) {
+              return <Match key={user.uid} createConvo={createConvo} user={user} convo={convo} />
+            } else {
+              return <Match key={user.uid} createConvo={createConvo} user={user} />
+            }
+          })
         })
       }
     </div>

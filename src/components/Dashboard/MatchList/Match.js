@@ -2,7 +2,7 @@ import './matchlist.css';
 import { useState } from "react";
 
 
-export default function Match({ user, createConvo }) {
+export default function Match({ user, createConvo, convo }) {
   const [message, setMessage] = useState('')
 
 
@@ -16,13 +16,12 @@ export default function Match({ user, createConvo }) {
     }
     return age;
   }
-  //heres a candidate for a ulility function in a separate file, it is also in Profile.js
-  //if already matched, this component should know
 
+
+  const matchStyles = convo ? 'display-card match has-convo' : 'display-card match'
 
   return (
-
-    <div key={user.uid} className='display-card match'>
+    <div key={user.uid} className={matchStyles}>
       <div className="display-card-container">
         <div className='left-col'>
           <img src={user.photoURL}></img>
@@ -37,7 +36,7 @@ export default function Match({ user, createConvo }) {
         </div>
       </div>
       <form onSubmit={e => createConvo(e, message, user)} className="input-container-match">
-        <label htmlFor="inputer">Leave a supportive message for {user.displayName}</label>
+        <label htmlFor="inputer">{convo ? `You have already started a conversation with ${user.displayName}, check the Conversations tab` : `Leave a supportive message for ${user.displayName}`}</label>
         <input value={message} onChange={e => setMessage(e.target.value)} id="inputer" type="text" placeholder="Start a Conversation"></input>
         <button type='submit' ><i className="fas fa-paper-plane"></i></button>
       </form>
