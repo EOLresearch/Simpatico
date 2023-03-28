@@ -101,7 +101,8 @@ export default function UserAuth({ user, firebase }) {
     setResetPass(!resetPass)
   }
   const sendVerificationEmail = () => {
-    user.sendEmailVerification()
+    console.log('verification email sent')
+    auth.currentUser.sendEmailVerification()
   }
 
   if (resetPass === true) {
