@@ -19,16 +19,10 @@ export default function Match({ user, createConvo, convo }) {
 
   function dynamicMessage() {
     if (!convo) return `Leave a supportive message for ${user.displayName}`
-    if (convo.userData.receiver.uid === user.uid) {
-      return `You have received a message from ${convo.userData.sender.displayName}, check the Conversations tab to respond.`
-    } else if (convo.userData.sender.uid === user.uid) {
-      return `You have already started a conversation with ${user.displayName}, check the Conversations tab`
-    } else {
-      return `Leave a supportive message for ${user.displayName}`
-    }
+    if (convo.mutualConsent === true) return `You have an ongoing conversation with ${user.displayName}, check the Conversations tab to respond.`
+    if (convo.userData.sender.uid === user.uid) return `You have received a message from ${convo.userData.sender.displayName}, check the Conversations tab to approve or decline.`
+    if (convo.userData.receiver.uid === user.uid) return `You have started a conversation with ${user.displayName}, to send messages, check the Conversations tab`
   }
-
-  console.log(user)
 
   const matchStyles = convo ? 'display-card match has-convo' : 'display-card match'
 
