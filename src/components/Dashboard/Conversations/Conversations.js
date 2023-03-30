@@ -1,7 +1,7 @@
 import { useState } from "react";
 import './conversations.css';
 import Convo from './Convo'
-import ChatWindow from '../ChatWindow/ChatWindow'
+import ChatWindow from './ChatWindow/ChatWindow'
 
 export default function Conversations({ chatHandler, docID, showChatWindow, firebase, convos, fsUser }) {
 

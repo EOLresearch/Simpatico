@@ -1,5 +1,5 @@
 import './chatwindow.css';
-import ChatMessage from '../ChatMessage/ChatMessage'
+import ChatMessage from '../../ChatMessage/ChatMessage'
 import { useRef, useState, useEffect } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
