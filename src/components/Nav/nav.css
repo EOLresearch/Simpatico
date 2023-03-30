@@ -1,36 +1,38 @@
 .nav-container {
-  width: 15vw;
+  width: 16vw;
   color: white;
   background-color: #31605b;
   min-height:100%;
   position: fixed;
 }
 .nav-dummy{
-  width:15vw;
+  width:16vw;
 }
 .logo-container {
-  height: 10rem;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-top:2rem;
 }
 .logo-container img{
   height:10rem;
   width:10rem;
   border-radius: 50%;
   object-fit: cover;
-  margin:0;
-
 }
 
 .logo-container p{
   border-bottom: white solid 1px;
   width: 100%;
   text-align: center;
+  padding:0.5rem;
   margin:0;
 }
+.logo-container :nth-child(2){
+  font-weight: 900;
+  font-size: 2rem;
+}
+
 .logo-container :nth-child(3){
   border:none;
 }
@@ -41,12 +43,14 @@
 .nav-body ul {
   all: unset;
   margin:10%;
+  list-style: none;
 }
 
 .nav-body ul li {
   padding: 1rem;
-  font-size: 1rem;
+  font-size: 1.3rem;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  margin-left:1rem;
 }
 
 .nav-body ul li:hover {

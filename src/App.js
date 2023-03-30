@@ -29,7 +29,6 @@ function App() {
   const [matchListTab, setMatchListTab] = useState(false)
   const [conversationsTab, setConversationsTab] = useState(false)
 
-
   function navHandler(renderCondition) {
     switch (renderCondition) {
       case 'Conversations':
@@ -62,7 +61,6 @@ function App() {
     }
   }
      
-
   return (
     <div className="App">
       <div className='app-container'>
@@ -73,7 +71,7 @@ function App() {
         <div className='app-inner-container'>
           <div className='app-header'>
             <h1>SIMPATICO</h1>
-            <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis </p>
+            <p>Connecting with Others Who Have Experienced Loss</p>
           </div>
           {
             user ?

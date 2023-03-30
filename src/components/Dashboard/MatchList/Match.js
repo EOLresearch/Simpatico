@@ -5,7 +5,6 @@ import { useState } from "react";
 export default function Match({ user, createConvo, convo }) {
   const [message, setMessage] = useState('')
 
-
   function getAge(date) {
     const today = new Date();
     const bday = new Date(date);
@@ -30,7 +29,7 @@ export default function Match({ user, createConvo, convo }) {
     <div key={user.uid} className={matchStyles}>
       <div className="display-card-container">
         <div className='left-col'>
-          <img src={user.photoURL}></img>
+          <img src={user.photoURL} alt="profile-avatar"></img>
           <p>{user.displayName}<br />{user.email}</p>
         </div>
         <div className='right-col'>
@@ -48,5 +47,4 @@ export default function Match({ user, createConvo, convo }) {
       </form>
     </div>
   )
-  
 }

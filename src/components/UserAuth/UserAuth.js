@@ -151,8 +151,7 @@ export default function UserAuth({ user, firebase }) {
         <div className="fields-container">
           <h4>Log in to your profile</h4>
           {(anError !== "")
-            ? <ErrorMessage error={anError} cancelError={cancelError} /> : null
-          }
+            ? <ErrorMessage error={anError} cancelError={cancelError} /> : null}
 
           {user ? user.emailVerified === false ?
             <div onClick={() => auth.signOut()} className='modal-bg'>
@@ -161,8 +160,7 @@ export default function UserAuth({ user, firebase }) {
                 <button onClick={sendVerificationEmail}>Resend Verification Email</button>
                 <button onClick={() => auth.signOut()}>close</button>
               </div>
-            </div> : null : null
-          }
+            </div> : null : null}
 
           <form onSubmit={onSubmitReturningUser}>
             <label htmlFor='email'>* Email Address</label>
@@ -170,6 +168,7 @@ export default function UserAuth({ user, firebase }) {
               <i className="fas fa-envelope"></i>
               <input id="email" type="email" placeholder="Your Email Address" value={email} onChange={changeHandler} name="email" required />
             </div>
+            
             <label htmlFor='password'>* Password</label>
             <div className='input-container'>
               <i className="fas fa-lock"></i>
