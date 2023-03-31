@@ -1,4 +1,4 @@
-import { useState } from "react";
+// import { useState } from "react";
 import './conversations.css';
 import Convo from './Convo'
 import ChatWindow from './ChatWindow/ChatWindow'
@@ -13,7 +13,7 @@ export default function Conversations({ chatHandler, docID, showChatWindow, fire
           <h3>YOUR CONNECTIONS</h3>
           {
           convos ? 
-            convos.map(convo => <Convo key={convo.docID} firebase={firebase} convoDocId={convo.docID} convo={convo} chatHandler={chatHandler} />) 
+            convos.map(convo => <Convo key={convo.docID} firebase={firebase} convoDocId={docID} convo={convo} chatHandler={chatHandler} />) 
             : null
           }
         </div>

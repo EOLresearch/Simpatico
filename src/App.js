@@ -5,7 +5,7 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import Nav from './components/Nav/Nav'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
@@ -28,6 +28,48 @@ function App() {
   const [profileTab, setProfileTab] = useState(true)
   const [matchListTab, setMatchListTab] = useState(false)
   const [conversationsTab, setConversationsTab] = useState(false)
+
+  const [fsUser, setFsUser] = useState()
+  const [matches, setMatches] = useState([])
+
+  const firestore = firebase.firestore();
+
+  useEffect(() => {
+    if (!user) return
+    const usersRef = firestore.collection('users');
+    const userQuery = usersRef.where("email", "==", user.email)
+    userQuery.get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          console.log("1 Doc Read")
+          setFsUser(doc.data())
+        });
+      })
+      .catch((error) => {
+        console.log("Error getting documents: ", error);
+      });
+  }, [firestore, user])
+
+
+  useEffect(() => {
+    if (!fsUser) return
+    const usersRef = firestore.collection('users');
+    const matchQuery = usersRef.where("cause", "==", fsUser.cause).where("deceased", "==", fsUser.deceased)
+    matchQuery.get()
+      .then((querySnapshot) => {
+        let dataArr = []
+        querySnapshot.forEach((doc) => {
+          console.log("1 Doc Read")
+
+          dataArr.push(doc.data())
+        })
+        setMatches(dataArr)
+      })
+
+  }, [firestore, fsUser])
+
+  //things are getting a bit messy in the refactor. 
+  //this is where you left off - right here anove
 
   function navHandler(renderCondition) {
     switch (renderCondition) {
@@ -60,7 +102,7 @@ function App() {
         console.log('switch default NAV')
     }
   }
-     
+
   return (
     <div className="App">
       <div className='app-container'>
@@ -79,6 +121,8 @@ function App() {
                 <Dashboard
                   firebase={firebase}
                   user={user}
+                  fsUser={fsUser}
+                  matches={matches}
                   profileTab={profileTab}
                   matchListTab={matchListTab}
                   conversationsTab={conversationsTab}

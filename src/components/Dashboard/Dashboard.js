@@ -16,12 +16,14 @@ export default function Dashboard(props) {
   //TODO: USERS SHOLD BE ABLE TO CHANGE THIER DETAILS
   //TODO: Create a user who us the super admin and is added to everyones match list for testing. this might mean querying tthe db for this admin user and passing it around the entire app
 
-  const { firebase, user, profileTab, matchListTab, conversationsTab, navHandler } = props
+  const { firebase, user, fsUser, matches, profileTab, matchListTab, conversationsTab, navHandler } = props
   const { uid, email } = user;
   const firestore = firebase.firestore();
 
-  const [fsUser, setFsUser] = useState()
-  const [matches, setMatches] = useState([])
+  // const [fsUser, setFsUser] = useState()
+  // const [matches, setMatches] = useState([])
+
+  const [convoRequest, setConvoRequest] = useState([])
 
   const [showChatWindow, setShowChatWindow] = useState(false)
   const [docID, setDocID] = useState()
@@ -30,40 +32,20 @@ export default function Dashboard(props) {
   const myConvos = conversationsRef.where('users', 'array-contains', uid)
   const [convos = []] = useCollectionData(myConvos);
 
+  console.log(convos)
 
-  useEffect(() => {
-    const usersRef = firestore.collection('users');
-    const userQuery = usersRef.where("email", "==", email)
-    userQuery.get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          console.log("1 Doc Read")
-          setFsUser(doc.data())
-        });
-      })
-      .catch((error) => {
-        console.log("Error getting documents: ", error);
-      });
-  }, [firestore, email])
+  const usersRef = firestore.collection('users');
+  const userQuery = usersRef.where("email", "==", email)
+  const [fireUser = []] = useCollectionData(userQuery);
 
+  console.log(fireUser)
+  // console.log(fsUser)
 
-  useEffect(() => {
-    if (!fsUser) return
-    const usersRef = firestore.collection('users');
-    const matchQuery = usersRef.where("cause", "==", fsUser.cause).where("deceased", "==", fsUser.deceased)
-    matchQuery.get()
-      .then((querySnapshot) => {
-        let dataArr = []
-        querySnapshot.forEach((doc) => {
-          console.log("1 Doc Read")
+  // const matchQuery = usersRef.where("cause", "==", fsUser.cause).where("deceased", "==", fsUser.deceased)
+  // const [testMatches = []] = useCollectionData(matchQuery);
 
-          dataArr.push(doc.data())
-        })
-        setMatches(dataArr)
-      })
-
-  }, [firestore, fsUser])
-
+  // console.log(testMatches)
+  // console.log(matches)
 
   function chatHandler(e, documentID) {
     setDocID(documentID)

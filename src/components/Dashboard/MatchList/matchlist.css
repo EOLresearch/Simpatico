@@ -18,6 +18,10 @@
   display:flex;
   margin-right:2rem;
 }
+.right-col{
+  flex-grow: 2;
+
+}
 .right-col p{
   margin-left:2rem;
 }
@@ -44,15 +48,13 @@
   position: relative;
   margin:0;
   border-bottom: solid rgba(0, 0, 0, 0.327) 1px;
-
   background-color: transparent;
   color: #31605b;
 }
 .display-card-container{
   display: flex;
-  /* border-bottom:1px solid black; */
-  /* margin-bottom:2rem; */
 }
+
 .match label {
   font-size: 0.7rem;
   color: rgba(0, 0, 0, 0.442);

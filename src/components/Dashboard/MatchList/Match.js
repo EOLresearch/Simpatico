@@ -30,7 +30,7 @@ export default function Match({ user, createConvo, convo }) {
       <div className="display-card-container">
         <div className='left-col'>
           <img src={user.photoURL} alt="profile-avatar"></img>
-          <p>{user.displayName}<br />{user.email}</p>
+          <p>{user.displayName}</p>
         </div>
         <div className='right-col'>
           <h4>Details</h4>
