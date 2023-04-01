@@ -16,13 +16,9 @@ export default function Dashboard(props) {
   //TODO: USERS SHOLD BE ABLE TO CHANGE THIER DETAILS
   //TODO: Create a user who us the super admin and is added to everyones match list for testing. this might mean querying tthe db for this admin user and passing it around the entire app
 
-  const { firebase, user, fsUser, matches, profileTab, matchListTab, conversationsTab, navHandler } = props
+  const { firebase, user, fsUser = {}, profileTab, matchListTab, conversationsTab, navHandler } = props
   const { uid, email } = user;
   const firestore = firebase.firestore();
-
-  // const [fsUser, setFsUser] = useState()
-  // const [matches, setMatches] = useState([])
-
   const [convoRequest, setConvoRequest] = useState([])
 
   const [showChatWindow, setShowChatWindow] = useState(false)
@@ -32,20 +28,11 @@ export default function Dashboard(props) {
   const myConvos = conversationsRef.where('users', 'array-contains', uid)
   const [convos = []] = useCollectionData(myConvos);
 
-  console.log(convos)
-
   const usersRef = firestore.collection('users');
-  const userQuery = usersRef.where("email", "==", email)
-  const [fireUser = []] = useCollectionData(userQuery);
+  const matchQuery = usersRef.where("cause", "==", fsUser.cause).where("deceased", "==", fsUser.deceased)
+  const [matches = []] = useCollectionData(matchQuery);
 
-  console.log(fireUser)
-  // console.log(fsUser)
-
-  // const matchQuery = usersRef.where("cause", "==", fsUser.cause).where("deceased", "==", fsUser.deceased)
-  // const [testMatches = []] = useCollectionData(matchQuery);
-
-  // console.log(testMatches)
-  // console.log(matches)
+  console.log(matches)
 
   function chatHandler(e, documentID) {
     setDocID(documentID)

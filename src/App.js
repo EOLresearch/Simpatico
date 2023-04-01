@@ -6,7 +6,7 @@ import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import Nav from './components/Nav/Nav'
 import { useState, useEffect } from "react";
-// import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 firebase.initializeApp({
@@ -28,10 +28,7 @@ function App() {
   const [profileTab, setProfileTab] = useState(true)
   const [matchListTab, setMatchListTab] = useState(false)
   const [conversationsTab, setConversationsTab] = useState(false)
-
   const [fsUser, setFsUser] = useState()
-  const [matches, setMatches] = useState([])
-
   const firestore = firebase.firestore();
 
   useEffect(() => {
@@ -50,26 +47,6 @@ function App() {
       });
   }, [firestore, user])
 
-
-  useEffect(() => {
-    if (!fsUser) return
-    const usersRef = firestore.collection('users');
-    const matchQuery = usersRef.where("cause", "==", fsUser.cause).where("deceased", "==", fsUser.deceased)
-    matchQuery.get()
-      .then((querySnapshot) => {
-        let dataArr = []
-        querySnapshot.forEach((doc) => {
-          console.log("1 Doc Read")
-
-          dataArr.push(doc.data())
-        })
-        setMatches(dataArr)
-      })
-
-  }, [firestore, fsUser])
-
-  //things are getting a bit messy in the refactor. 
-  //this is where you left off - right here anove
 
   function navHandler(renderCondition) {
     switch (renderCondition) {
@@ -122,7 +99,6 @@ function App() {
                   firebase={firebase}
                   user={user}
                   fsUser={fsUser}
-                  matches={matches}
                   profileTab={profileTab}
                   matchListTab={matchListTab}
                   conversationsTab={conversationsTab}
