@@ -6,7 +6,6 @@ import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import Nav from './components/Nav/Nav'
 import { useState, useEffect } from "react";
-import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 firebase.initializeApp({
@@ -29,6 +28,8 @@ function App() {
   const [matchListTab, setMatchListTab] = useState(false)
   const [conversationsTab, setConversationsTab] = useState(false)
   const [fsUser, setFsUser] = useState()
+  const [matches, setMatches] = useState([])
+  const [convos, setConvos] = useState([])
   const firestore = firebase.firestore();
 
   useEffect(() => {
@@ -46,6 +47,40 @@ function App() {
         console.log("Error getting documents: ", error);
       });
   }, [firestore, user])
+
+  useEffect(() => { 
+    if (!fsUser) return
+    const usersRef = firestore.collection('users');
+    const matchQuery = usersRef.where("cause", "==", fsUser.cause).where("deceased", "==", fsUser.deceased)
+    matchQuery.get()
+    // going to need to limit the amount of matches returned at some point to limit doc reads
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          console.log("1 Doc Read")
+          setMatches(prevState => [...prevState, doc.data()])
+        });
+      })
+      .catch((error) => {
+        console.log("Error getting documents: ", error);
+      });
+  }, [firestore, fsUser])
+
+  useEffect(() => {
+    if (!fsUser) return
+    const conversationsRef = firestore.collection('conversations');
+    const myConvos = conversationsRef.where('users', 'array-contains', fsUser.uid)
+    myConvos.get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          console.log("1 Doc Read")
+          setConvos(prevState => [...prevState, doc.data()])
+        });
+      })
+      .catch((error) => {
+        console.log("Error getting documents: ", error);
+      });
+  }, [firestore, fsUser])
+
 
 
   function navHandler(renderCondition) {
@@ -81,7 +116,7 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className="App"> 
       <div className='app-container'>
         <Nav user={user} auth={auth} navHandler={navHandler} />
         <div className='nav-dummy'>
@@ -99,6 +134,8 @@ function App() {
                   firebase={firebase}
                   user={user}
                   fsUser={fsUser}
+                  matches={matches}
+                  convos={convos}
                   profileTab={profileTab}
                   matchListTab={matchListTab}
                   conversationsTab={conversationsTab}

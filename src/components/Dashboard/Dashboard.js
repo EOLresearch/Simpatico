@@ -16,7 +16,7 @@ export default function Dashboard(props) {
   //TODO: USERS SHOLD BE ABLE TO CHANGE THIER DETAILS
   //TODO: Create a user who us the super admin and is added to everyones match list for testing. this might mean querying tthe db for this admin user and passing it around the entire app
 
-  const { firebase, user, fsUser = {}, profileTab, matchListTab, conversationsTab, navHandler } = props
+  const { firebase, user, matches, convos, fsUser, profileTab, matchListTab, conversationsTab, navHandler } = props
   const { uid, email } = user;
   const firestore = firebase.firestore();
   const [convoRequest, setConvoRequest] = useState([])
@@ -24,15 +24,16 @@ export default function Dashboard(props) {
   const [showChatWindow, setShowChatWindow] = useState(false)
   const [docID, setDocID] = useState()
 
-  const conversationsRef = firestore.collection('conversations');
-  const myConvos = conversationsRef.where('users', 'array-contains', uid)
-  const [convos = []] = useCollectionData(myConvos);
+  useEffect(() => {
+    if (!convos) return
+    const requestArray = convos.filter(c => c.mutualConsent === false)
+    setConvoRequest(requestArray)
+  }, [convos])
 
-  const usersRef = firestore.collection('users');
-  const matchQuery = usersRef.where("cause", "==", fsUser.cause).where("deceased", "==", fsUser.deceased)
-  const [matches = []] = useCollectionData(matchQuery);
+  //convos, fsUser, and Matches are all the doc reads here. 
+  //with convos we can do notifcations
 
-  console.log(matches)
+//lets get one doc that gets created for each user with a finite list of matches, that way we can do 1 doc read with all matches. thats one way to ge tthese down. 
 
   function chatHandler(e, documentID) {
     setDocID(documentID)
@@ -44,6 +45,7 @@ export default function Dashboard(props) {
 
     const documentID = `${uid} + ${user.uid}`
     setDocID(documentID)
+    const conversationsRef = firestore.collection('conversations');
     const conversationRef = conversationsRef.doc(documentID);
 
     conversationRef.set({
