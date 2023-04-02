@@ -19,7 +19,8 @@ export default function Dashboard(props) {
   const { firebase, user, matches, convos, fsUser, profileTab, matchListTab, conversationsTab, navHandler } = props
   const { uid, email } = user;
   const firestore = firebase.firestore();
-  const [convoRequest, setConvoRequest] = useState([])
+  const [convoRequests, setConvoRequests] = useState([])
+  const [showNotification, setShowNotification] = useState(false)
 
   const [showChatWindow, setShowChatWindow] = useState(false)
   const [docID, setDocID] = useState()
@@ -27,8 +28,15 @@ export default function Dashboard(props) {
   useEffect(() => {
     if (!convos) return
     const requestArray = convos.filter(c => c.mutualConsent === false)
-    setConvoRequest(requestArray)
+    setConvoRequests(requestArray)
+    if (requestArray.length > 0) {
+      setShowNotification(true)
+    } else {
+      setShowNotification(false)
+    }
   }, [convos])
+
+  console.log('convoRequests', convoRequests.length)
 
   //convos, fsUser, and Matches are all the doc reads here. 
   //with convos we can do notifcations
@@ -86,6 +94,10 @@ export default function Dashboard(props) {
           <div className='sub-nav'>
             <div onClick={e => navHandler("Home")} className={clickedProfile}><RxPerson size="3rem" />My Profile</div>
             <div onClick={e => navHandler("Matches")} className={clickedMatches}><IoPeopleCircleOutline size="3rem" />Matches</div>
+            {
+              showNotification === true ?
+                <div className="notification">{convoRequests.length}</div> : null
+            }
             <div onClick={e => navHandler("Conversations")} className={clickedConversations}><IoChatbubblesSharp size="3rem" />Conversations</div>
           </div>
           {
