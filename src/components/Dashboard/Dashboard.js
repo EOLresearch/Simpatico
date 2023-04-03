@@ -36,13 +36,6 @@ export default function Dashboard(props) {
     }
   }, [convos])
 
-  console.log('convoRequests', convoRequests.length)
-
-  //convos, fsUser, and Matches are all the doc reads here. 
-  //with convos we can do notifcations
-
-//lets get one doc that gets created for each user with a finite list of matches, that way we can do 1 doc read with all matches. thats one way to ge tthese down. 
-
   function chatHandler(e, documentID) {
     setDocID(documentID)
     setShowChatWindow(true)
@@ -80,7 +73,6 @@ export default function Dashboard(props) {
 
     navHandler("Conversations")
     setShowChatWindow(true)
-
   }
 
   const clickedProfile = profileTab === true ? "clicked" : null
@@ -94,11 +86,11 @@ export default function Dashboard(props) {
           <div className='sub-nav'>
             <div onClick={e => navHandler("Home")} className={clickedProfile}><RxPerson size="3rem" />My Profile</div>
             <div onClick={e => navHandler("Matches")} className={clickedMatches}><IoPeopleCircleOutline size="3rem" />Matches</div>
+            <div onClick={e => navHandler("Conversations")} className={clickedConversations}><IoChatbubblesSharp size="3rem" />Conversations</div>
             {
               showNotification === true ?
-                <div className="notification">{convoRequests.length}</div> : null
+                <span className="notification">{convoRequests.length}</span> : null
             }
-            <div onClick={e => navHandler("Conversations")} className={clickedConversations}><IoChatbubblesSharp size="3rem" />Conversations</div>
           </div>
           {
             profileTab === true ?

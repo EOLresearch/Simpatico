@@ -50,3 +50,16 @@
   transform: scale(1.05);
   cursor: pointer; 
 }
+
+.sub-nav .notification{
+  position: relative;
+  top:1rem;
+  left:-5rem;
+  height: min-content;
+  width: max-content;
+  background-color: #ff0000;
+  color: white;
+  border-radius: 40%;
+  padding: 0.5rem;
+  font-size: 0.8rem;
+}
