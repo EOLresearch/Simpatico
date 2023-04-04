@@ -15,8 +15,6 @@ export default function MatchList({ fsUser, matches, createConvo, convos }) {
   }, [fsUser, matches])
 
 
-
-
   return (
     <div className='match-list-container'>
       <div className='intro-details'>
@@ -29,7 +27,7 @@ export default function MatchList({ fsUser, matches, createConvo, convos }) {
             return (
               <Match
                 key={index}
-                user={match}
+                match={match}
                 createConvo={createConvo}
                 convo={convo}
               />
