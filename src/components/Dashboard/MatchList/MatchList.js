@@ -1,10 +1,16 @@
 import Match from './Match';
 import './matchlist.css';
 import { useState, useEffect } from "react";
-import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 export default function MatchList({ fsUser, matches, createConvo, convos, convoMutualConsent }) {
-  // matches need to know if they have a convo already and if it has mutualConsent ticked
+
+  const [simpaticoMatches, setSimpaticoMatches] = useState([])
+
+
+  useEffect(() => {
+    const filterMeOut = matches.filter(match => match.uid !== fsUser.uid)
+    setSimpaticoMatches(filterMeOut)
+  }, [matches, fsUser.uid])
 
   return (
     <div className='match-list-container'>
@@ -13,7 +19,7 @@ export default function MatchList({ fsUser, matches, createConvo, convos, convoM
       </div>
       <div className='match-list'>
         {
-          matches.map((match, index) => {
+          simpaticoMatches.map((match, index) => {
             const convo = convos.find(c => c.docID === `${fsUser.uid} + ${match.uid}` || c.docID === `${match.uid} + ${fsUser.uid}`)
             return (
               <Match

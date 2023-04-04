@@ -19,15 +19,13 @@ export default function Dashboard(props) {
   const { firebase, user, fsUser, profileTab, matchListTab, conversationsTab, navHandler } = props
   const { uid, email } = user;
   const firestore = firebase.firestore();
+  const [docID, setDocID] = useState()
   const [convos, setConvos] = useState([])
   const [convoRequests, setConvoRequests] = useState([])
-  const [showNotification, setShowNotification] = useState(false)
-
-  const [showChatWindow, setShowChatWindow] = useState(false)
-  const [docID, setDocID] = useState()
-
   const [matches, setMatches] = useState([])
 
+  const [showNotification, setShowNotification] = useState(false)
+  const [showChatWindow, setShowChatWindow] = useState(false)
 
   useEffect(() => {
     if (!fsUser) return
@@ -44,7 +42,6 @@ export default function Dashboard(props) {
         console.log("Error getting documents: ", error);
       });
   }, [firestore, fsUser])
-
 
   useEffect(() => {
     if (!convos) return
@@ -120,7 +117,6 @@ export default function Dashboard(props) {
       mutualConsent: boolean,
     })
     .then(() => {
-      //update convos in state
       const updatedConvos = convos.map(c => {
         if (c.docID === docID) {
           return {...c, mutualConsent: boolean}
@@ -129,7 +125,6 @@ export default function Dashboard(props) {
         }
       })
       setConvos(updatedConvos)
-
       console.log("Document successfully updated!");
     })
   }
@@ -161,7 +156,7 @@ export default function Dashboard(props) {
           }
           {
             matchListTab === true ?
-              <MatchList fsUser={fsUser} matches={matches}  createConvo={createConvo} convos={convos} convoMutualConsent={convoMutualConsent} /> : null
+              <MatchList fsUser={fsUser} matches={matches} createConvo={createConvo} convos={convos} convoMutualConsent={convoMutualConsent} /> : null
           }
         </div>
       </div>
