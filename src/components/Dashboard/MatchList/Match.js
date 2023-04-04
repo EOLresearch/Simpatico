@@ -2,7 +2,7 @@ import './matchlist.css';
 import { useState } from "react";
 
 
-export default function Match({ user, createConvo, convo }) {
+export default function Match({ user, createConvo, convo, convoMutualConsent }) {
   const [message, setMessage] = useState('')
 
   function getAge(date) {
@@ -82,11 +82,17 @@ export default function Match({ user, createConvo, convo }) {
             <p>{user.lossExp}</p>
           </div>
         </div>
-        <form onSubmit={e => createConvo(e, message, user)} className="input-container-match">
-          <label htmlFor="inputer">You have received a message from {convo.userData.sender.displayName}, check the Conversations tab to approve or decline.</label>
+        <div className="convo-invitation">
+          <p>{convo.userData.sender.displayName} has sent you a message, you can see their details above.</p>
+          <p>Would you like to start a conversation?</p>
+          <button onClick={() => convoMutualConsent(convo.docID, true)} className="accept-btn">Accept</button>
+          <button onClick={() => convoMutualConsent(convo.docID, false)} className="decline-btn">Decline</button>
+        </div>
+        {/* <form onSubmit={e => createConvo(e, message, user)} className="input-container-match">
+          <label htmlFor="inputer">You have received a message from {convo.userData.sender.displayName} </label>
           <input value={message} onChange={e => setMessage(e.target.value)} id="inputer" type="text" placeholder="Start a Conversation"></input>
           <button type='submit' ><i className="fas fa-paper-plane"></i></button>
-        </form>
+        </form> */}
       </div>
     )
   }

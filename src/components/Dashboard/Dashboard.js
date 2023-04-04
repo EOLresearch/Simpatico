@@ -75,6 +75,14 @@ export default function Dashboard(props) {
     setShowChatWindow(true)
   }
 
+  function convoMutualConsent(docID, boolean){
+    const conversationsRef = firestore.collection('conversations');
+    const conversationRef = conversationsRef.doc(docID);
+    conversationRef.update({
+      mutualConsent: boolean,
+    })
+  }
+
   const clickedProfile = profileTab === true ? "clicked" : null
   const clickedMatches = matchListTab === true ? "clicked" : null
   const clickedConversations = conversationsTab === true ? "clicked" : null
@@ -102,7 +110,7 @@ export default function Dashboard(props) {
           }
           {
             matchListTab === true ?
-              <MatchList fsUser={fsUser} matches={matches} createConvo={createConvo} convos={convos} /> : null
+              <MatchList fsUser={fsUser} matches={matches} createConvo={createConvo} convos={convos} convoMutualConsent={convoMutualConsent} /> : null
           }
         </div>
       </div>

@@ -2,7 +2,7 @@ import Match from './Match';
 import './matchlist.css';
 import { useState, useEffect } from "react";
 
-export default function MatchList({ fsUser, matches, createConvo, convos }) {
+export default function MatchList({ fsUser, matches, createConvo, convos, convoMutualConsent }) {
   // matches need to know if they have a convo already and if it has mutualConsent ticked
 
   const [simpaticoMatches, setSimpaticoMatches] = useState([])
@@ -30,6 +30,7 @@ export default function MatchList({ fsUser, matches, createConvo, convos }) {
                 user={match}
                 createConvo={createConvo}
                 convo={convo}
+                convoMutualConsent={convoMutualConsent}
               />
             )
           })
