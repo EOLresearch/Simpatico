@@ -3,12 +3,18 @@ import './matchlist.css';
 import { useState, useEffect } from "react";
 
 export default function MatchList({ fsUser, matches, createConvo, convos }) {
-  
+  // matches need to know if they have a convo already and if it has mutualConsent ticked
 
-  const simpaticoMatches = matches.filter(u => u.uid === fsUser.uid ? null : u)
+  const [simpaticoMatches, setSimpaticoMatches] = useState([])
 
-  // matches with convos with mutual consent do not even need to show up here
-  // matches with convos without mutual consent should trigger a notification in the dashboard
+  useEffect(() => {
+    if (!fsUser) return
+    const causeNDeceased = matches.filter(match => match.cause === fsUser.cause && match.deceased === fsUser.deceased)
+    const filterMeOut = causeNDeceased.filter(match => match.uid !== fsUser.uid)
+    setSimpaticoMatches(filterMeOut)
+  }, [fsUser, matches])
+
+
 
 
   return (
@@ -18,7 +24,17 @@ export default function MatchList({ fsUser, matches, createConvo, convos }) {
       </div>
       <div className='match-list'>
         {
-          simpaticoMatches.map(match => <Match key={match.uid} user={match} createConvo={createConvo} convos={convos} />)
+          simpaticoMatches.map((match, index) => {
+            const convo = convos.find(c => c.docID === `${fsUser.uid} + ${match.uid}` || c.docID === `${match.uid} + ${fsUser.uid}`)
+            return (
+              <Match
+                key={index}
+                user={match}
+                createConvo={createConvo}
+                convo={convo}
+              />
+            )
+          })
         }
       </div>
     </div>
