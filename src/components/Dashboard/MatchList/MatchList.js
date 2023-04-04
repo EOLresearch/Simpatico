@@ -27,7 +27,7 @@ export default function MatchList({ fsUser, matches, createConvo, convos }) {
             return (
               <Match
                 key={index}
-                match={match}
+                user={match}
                 createConvo={createConvo}
                 convo={convo}
               />
