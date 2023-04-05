@@ -15,14 +15,34 @@ export default function Dashboard(props) {
   //TODO: USERS SHOLD BE ABLE TO CHANGE THIER DETAILS
   //TODO: Create a user who us the super admin and is added to everyones match list for testing. this might mean querying tthe db for this admin user and passing it around the entire app
 
-  const { firebase, convoMutualConsentToggle, convos, matches, user, fsUser, profileTab, matchListTab, conversationsTab, navHandler } = props
+  const { firebase, matches, user, fsUser, profileTab, matchListTab, conversationsTab, navHandler } = props
   const { uid } = user;
   const firestore = firebase.firestore();
   const [docID, setDocID] = useState()
+  const [convos, setConvos] = useState([])
   const [convoRequests, setConvoRequests] = useState([])
 
   const [showNotification, setShowNotification] = useState(false)
   const [showChatWindow, setShowChatWindow] = useState(false)
+
+  useEffect(() => {
+    if (!fsUser) return
+    const conversationsRef = firestore.collection('conversations');
+    const convoQuery = conversationsRef.where("users", "array-contains", fsUser.uid)
+    convoQuery.get()
+      .then((querySnapshot) => {
+        let dataArr = []
+        querySnapshot.forEach((doc) => {
+          console.log("1 Doc Read")
+          dataArr.push(doc.data())
+        });
+        setConvos(dataArr)
+      })
+      .catch((error) => {
+        console.log("Error getting documents: ", error);
+      });
+  }, [firestore, fsUser])
+  //CONVO query
 
   useEffect(() => {
     if (!convos) return
@@ -36,11 +56,6 @@ export default function Dashboard(props) {
   }, [convos])
   //CONVO REQUESTS
 
-  function chatHandler(e, documentID) {
-    setDocID(documentID)
-    setShowChatWindow(true)
-  }
-
   function createConvo(e, message, user) {
     e.preventDefault()
 
@@ -49,7 +64,7 @@ export default function Dashboard(props) {
     const conversationsRef = firestore.collection('conversations');
     const conversationRef = conversationsRef.doc(documentID);
 
-    conversationRef.set({
+    const newConvo = {
       users: [uid, user.uid],
       userData: {
         sender: fsUser,
@@ -59,10 +74,11 @@ export default function Dashboard(props) {
       docID: documentID,
       mutualConsent: false,
       firstMessage: message,
-    })
-
+    }
+    conversationRef.set(newConvo)
+    setConvos([...convos, newConvo])
+    
     const msgDocRef = conversationRef.collection('messages').doc()
-
     msgDocRef.set({
       mid: msgDocRef.id,
       body: message,
@@ -76,9 +92,35 @@ export default function Dashboard(props) {
     setShowChatWindow(true)
   }
 
+  function convoMutualConsentToggle(docID, boolean){
+    setDocID(docID)
+    const conversationsRef = firestore.collection('conversations');
+    const conversationRef = conversationsRef.doc(docID);
+    conversationRef.update({
+      mutualConsent: boolean,
+    })
+    .then(() => {
+      const updatedConvos = convos.map(c => {
+        if (c.docID === docID) {
+          return {...c, mutualConsent: boolean}
+        } else {
+          return c
+        }
+      })
+      setConvos(updatedConvos)
+      navHandler("Conversations")
+      setShowChatWindow(true)
+      console.log("Document successfully updated!");
+    })
+  }
+
   const clickedProfile = profileTab === true ? "clicked" : null
   const clickedMatches = matchListTab === true ? "clicked" : null
   const clickedConversations = conversationsTab === true ? "clicked" : null
+  function chatHandler(e, documentID) {
+    setDocID(documentID)
+    setShowChatWindow(true)
+  }
 
   return (
     <IconContext.Provider value={{ className: "react-icons-profile" }}>

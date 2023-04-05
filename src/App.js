@@ -27,7 +27,6 @@ function App() {
   const [conversationsTab, setConversationsTab] = useState(false)
   const [fsUser, setFsUser] = useState()
   const [matches, setMatches] = useState([])
-  const [convos, setConvos] = useState([])
   const firestore = firebase.firestore();
 
   useEffect(() => {
@@ -52,7 +51,6 @@ function App() {
     const usersRef = firestore.collection('users');
     const matchQuery = usersRef.where("cause", "==", fsUser.cause).where("deceased", "==", fsUser.deceased)
     matchQuery.get()
-    // going to need to limit the amount of matches returned at some point to limit doc reads
       .then((querySnapshot) => {
         let dataArr = []
         querySnapshot.forEach((doc) => {
@@ -60,51 +58,12 @@ function App() {
           dataArr.push(doc.data())
         });
         setMatches(dataArr)
-
       })
       .catch((error) => {
         console.log("Error getting documents: ", error);
       });
   }, [firestore, fsUser])
   //MATCH query
-
-  useEffect(() => {
-    if (!fsUser) return
-    const conversationsRef = firestore.collection('conversations');
-    const convoQuery = conversationsRef.where("users", "array-contains", fsUser.uid)
-    convoQuery.get()
-      .then((querySnapshot) => {
-        let dataArr = []
-        querySnapshot.forEach((doc) => {
-          console.log("1 Doc Read")
-          dataArr.push(doc.data())
-        });
-        setConvos(dataArr)
-      })
-      .catch((error) => {
-        console.log("Error getting documents: ", error);
-      });
-  }, [firestore, fsUser])
-  //CONVO query
-
-  function convoMutualConsentToggle(docID, boolean){
-    const conversationsRef = firestore.collection('conversations');
-    const conversationRef = conversationsRef.doc(docID);
-    conversationRef.update({
-      mutualConsent: boolean,
-    })
-    .then(() => {
-      const updatedConvos = convos.map(c => {
-        if (c.docID === docID) {
-          return {...c, mutualConsent: boolean}
-        } else {
-          return c
-        }
-      })
-      setConvos(updatedConvos)
-      console.log("Document successfully updated!");
-    })
-  }
 
   function navHandler(renderCondition) {
     switch (renderCondition) {
@@ -137,7 +96,7 @@ function App() {
         console.log('switch default NAV')
     }
   }
-  
+
   return (
     <div className="App"> 
       <div className='app-container'>
@@ -155,11 +114,9 @@ function App() {
               user.emailVerified === true ?
                 <Dashboard
                   firebase={firebase}
-                  convoMutualConsentToggle={convoMutualConsentToggle}
                   user={user}
                   fsUser={fsUser}
                   matches={matches}
-                  convos={convos}
                   profileTab={profileTab}
                   matchListTab={matchListTab}
                   conversationsTab={conversationsTab}
