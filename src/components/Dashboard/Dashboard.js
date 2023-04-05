@@ -46,14 +46,14 @@ export default function Dashboard(props) {
 
   useEffect(() => {
     if (!convos) return
-    const requestArray = convos.filter(c => c.mutualConsent === false)
+    const requestArray = convos.filter(c => c.mutualConsent === false && c.userData.receiver.uid === fsUser.uid)
     setConvoRequests(requestArray)
     if (requestArray.length > 0) {
       setShowNotification(true)
     } else {
       setShowNotification(false)
     }
-  }, [convos])
+  }, [convos, fsUser])
   //CONVO REQUESTS
 
   function createConvo(e, message, user) {
@@ -108,8 +108,9 @@ export default function Dashboard(props) {
         }
       })
       setConvos(updatedConvos)
-      navHandler("Conversations")
       setShowChatWindow(true)
+      navHandler("Conversations")
+
       console.log("Document successfully updated!");
     })
   }

@@ -65,10 +65,32 @@ export default function Match({ user, createConvo, convo, convoMutualConsentTogg
     )
   }
 
+  // THEY are the sender
   if (convo.mutualConsent === false && convo.userData.sender.uid === user.uid) {
+    const msgDate = new Date(convo.createdAt.seconds * 1000).toLocaleString().split(',')[0]
     return (
       <div key={user.uid} className="display-card match ">
         <div className="display-card-container">
+
+          
+              <div className="convo-invitation">
+                <div className="convo-invitation-container">
+
+                  <h4>Invitation to chat</h4>
+
+                  <div className='convo-invitation-body'>
+                    <p>{convo.userData.sender.displayName} has sent you a message</p>
+                    <p><em>"{convo.firstMessage}"</em></p>
+                      <p>Would you like to accept this invitation to chat? </p>
+                    <div className='convo-invitation-buttons'>
+                      <button onClick={() => convoMutualConsentToggle(convo.docID, true)} className="accept-btn">Accept</button>
+                      <button onClick={() => convoMutualConsentToggle(convo.docID, false)} className="decline-btn">Decline</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
           <div className='left-col'>
             <img src={user.photoURL} alt="profile-avatar"></img>
             <p>{user.displayName}</p>
@@ -78,15 +100,6 @@ export default function Match({ user, createConvo, convo, convoMutualConsentTogg
             <div className="details">
               <p>{user.displayName}</p>
               <p>{getAge(user.birthDate)}, {user.residence}</p>
-              <div className="convo-invitation">
-                <div className="convo-invitation-container">
-                  <p>{convo.userData.sender.displayName} sent you a message at {convo.createdAt.toDate().toString()}</p>
-                  <p>{convo.firstMessage}</p>
-                  <p>Would you like to accept this invitation to chat? </p>
-                  <button onClick={() => convoMutualConsentToggle(convo.docID, true)} className="accept-btn">Accept</button>
-                  <button onClick={() => convoMutualConsentToggle(convo.docID, false)} className="decline-btn">Decline</button>
-                </div>
-              </div>
             </div>
             <h4>Story</h4>
             <p>{user.lossExp}</p>
@@ -96,6 +109,7 @@ export default function Match({ user, createConvo, convo, convoMutualConsentTogg
     )
   }
 
+  //THEY are the receiver
   if (convo.mutualConsent === false && convo.userData.receiver.uid === user.uid) {
     return (
       <div key={user.uid} className="display-card match ">
@@ -112,7 +126,7 @@ export default function Match({ user, createConvo, convo, convoMutualConsentTogg
               <div className="convo-invitation">
                 <div className="convo-invitation-container">
                   <p>You have sent {convo.userData.receiver.displayName} a message request</p>
-                  {/* <p>You can see thier responses in the Conversations tab</p> */}
+                  <p>See the Conversations tab for more.</p>
                 </div>
               </div>
             </div>
