@@ -8,7 +8,6 @@ import Profile from './Profile/Profile'
 import { RxPerson } from "react-icons/rx";
 import { IoPeopleCircleOutline, IoChatbubblesSharp } from "react-icons/io5";
 import { useState, useEffect } from "react";
-import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { IconContext } from "react-icons";
 
 export default function Dashboard(props) {
@@ -16,32 +15,14 @@ export default function Dashboard(props) {
   //TODO: USERS SHOLD BE ABLE TO CHANGE THIER DETAILS
   //TODO: Create a user who us the super admin and is added to everyones match list for testing. this might mean querying tthe db for this admin user and passing it around the entire app
 
-  const { firebase, user, fsUser, profileTab, matchListTab, conversationsTab, navHandler } = props
-  const { uid, email } = user;
+  const { firebase, convoMutualConsentToggle, convos, matches, user, fsUser, profileTab, matchListTab, conversationsTab, navHandler } = props
+  const { uid } = user;
   const firestore = firebase.firestore();
   const [docID, setDocID] = useState()
-  const [convos, setConvos] = useState([])
   const [convoRequests, setConvoRequests] = useState([])
-  const [matches, setMatches] = useState([])
 
   const [showNotification, setShowNotification] = useState(false)
   const [showChatWindow, setShowChatWindow] = useState(false)
-
-  useEffect(() => {
-    if (!fsUser) return
-    const conversationsRef = firestore.collection('conversations');
-    const myConvos = conversationsRef.where('users', 'array-contains', fsUser.uid)
-    myConvos.get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          console.log("1 Doc Read")
-          setConvos(prevState => [...prevState, doc.data()])
-        });
-      })
-      .catch((error) => {
-        console.log("Error getting documents: ", error);
-      });
-  }, [firestore, fsUser])
 
   useEffect(() => {
     if (!convos) return
@@ -53,23 +34,7 @@ export default function Dashboard(props) {
       setShowNotification(false)
     }
   }, [convos])
-
-  useEffect(() => { 
-    if (!fsUser) return
-    const usersRef = firestore.collection('users');
-    const matchQuery = usersRef.where("cause", "==", fsUser.cause).where("deceased", "==", fsUser.deceased)
-    matchQuery.get()
-    // going to need to limit the amount of matches returned at some point to limit doc reads
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          console.log("1 Doc Read")
-          setMatches(prevState => [...prevState, doc.data()])
-        });
-      })
-      .catch((error) => {
-        console.log("Error getting documents: ", error);
-      });
-  }, [firestore, fsUser])
+  //CONVO REQUESTS
 
   function chatHandler(e, documentID) {
     setDocID(documentID)
@@ -93,6 +58,7 @@ export default function Dashboard(props) {
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       docID: documentID,
       mutualConsent: false,
+      firstMessage: message,
     })
 
     const msgDocRef = conversationRef.collection('messages').doc()
@@ -108,25 +74,6 @@ export default function Dashboard(props) {
 
     navHandler("Conversations")
     setShowChatWindow(true)
-  }
-
-  function convoMutualConsent(docID, boolean){
-    const conversationsRef = firestore.collection('conversations');
-    const conversationRef = conversationsRef.doc(docID);
-    conversationRef.update({
-      mutualConsent: boolean,
-    })
-    .then(() => {
-      const updatedConvos = convos.map(c => {
-        if (c.docID === docID) {
-          return {...c, mutualConsent: boolean}
-        } else {
-          return c
-        }
-      })
-      setConvos(updatedConvos)
-      console.log("Document successfully updated!");
-    })
   }
 
   const clickedProfile = profileTab === true ? "clicked" : null
@@ -156,7 +103,7 @@ export default function Dashboard(props) {
           }
           {
             matchListTab === true ?
-              <MatchList fsUser={fsUser} matches={matches} createConvo={createConvo} convos={convos} convoMutualConsent={convoMutualConsent} /> : null
+              <MatchList fsUser={fsUser} matches={matches} createConvo={createConvo} convos={convos} convoMutualConsentToggle={convoMutualConsentToggle} /> : null
           }
         </div>
       </div>
