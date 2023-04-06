@@ -48,7 +48,10 @@ export default function ChatWindow({ firebase, convoDocId, convo, fsUser, convoM
   if (convo.mutualConsent === false && convo.userData.sender.uid === fsUser.uid) {
     return (
       <div className="chat-window-container">
-        mutualConsent youre the sender
+        <p className='sent-request'>
+          You have sent a chat request to {convo.userData.receiver.displayName} <br />  <br/>
+          You will see your message appear here when they have responded to your request.
+        </p>
         <div className='scrollref' ref={scrollHandle}></div>
       </div>
     )

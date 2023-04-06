@@ -1,3 +1,13 @@
+.chatroom {
+  width: 80%;
+  background: rgb(224, 224, 224);
+  margin: 0 auto;
+  border-radius: 1rem;
+  display: flex;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, .75);
+  height: 60vh;
+
+}
 .chat-window-container{
   width:100%;
   padding:1rem;
@@ -23,7 +33,13 @@
 }
 .chat-window-container form button{
   border: none;
-  background-color: transparent;
+  background-color: white;
   font-size: 1.5rem;
   color:#31605b;
+}
+.chat-window-container form button:hover{
+  cursor: pointer;
+}
+.chat-window-container form button:active{
+  transform: scale(0.9);
 }
