@@ -2,8 +2,11 @@
 import './conversations.css';
 import Convo from './Convo'
 import ChatWindow from './ChatWindow/ChatWindow'
+import { useEffect, useState } from 'react';
 
 export default function Conversations({ chatHandler, docID, showChatWindow, firebase, convos, fsUser }) {
+
+
 
 
   return (
@@ -13,7 +16,7 @@ export default function Conversations({ chatHandler, docID, showChatWindow, fire
           <h3>YOUR CONNECTIONS</h3>
           {
           convos ? 
-            convos.map(convo => <Convo key={convo.docID} firebase={firebase} convoDocId={docID} convo={convo} chatHandler={chatHandler} />) 
+            convos.map(convo => <Convo key={convo.docID} firebase={firebase} selectedDocID={docID} convo={convo} chatHandler={chatHandler} />) 
             : null
           }
         </div>

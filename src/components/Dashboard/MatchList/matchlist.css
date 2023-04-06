@@ -28,7 +28,8 @@
   display:flex;
 }
 .convo-invitation{
-  /* position: absolute; */
+  position: absolute;
+  left:60%;
   flex-grow: 2;
   display:flex;
   justify-content: center;

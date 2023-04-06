@@ -70,14 +70,9 @@ export default function Match({ user, createConvo, convo, convoMutualConsentTogg
     const msgDate = new Date(convo.createdAt.seconds * 1000).toLocaleString().split(',')[0]
     return (
       <div key={user.uid} className="display-card match ">
-        <div className="display-card-container">
-
-          
-              <div className="convo-invitation">
+        <div className="convo-invitation">
                 <div className="convo-invitation-container">
-
                   <h4>Invitation to chat</h4>
-
                   <div className='convo-invitation-body'>
                     <p>{convo.userData.sender.displayName} has sent you a message</p>
                     <p><em>"{convo.firstMessage}"</em></p>
@@ -89,21 +84,28 @@ export default function Match({ user, createConvo, convo, convoMutualConsentTogg
                   </div>
                 </div>
               </div>
+        <div className="display-card-container">
+
 
 
           <div className='left-col'>
             <img src={user.photoURL} alt="profile-avatar"></img>
             <p>{user.displayName}</p>
           </div>
+
           <div className='right-col'>
             <h4>Details</h4>
+
             <div className="details">
               <p>{user.displayName}</p>
               <p>{getAge(user.birthDate)}, {user.residence}</p>
             </div>
+
             <h4>Story</h4>
             <p>{user.lossExp}</p>
           </div>
+
+
         </div>
       </div>
     )
