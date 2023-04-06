@@ -1,10 +1,11 @@
 import './chatwindow.css';
 import ChatMessage from '../../ChatMessage/ChatMessage'
+import ConvoInvite from '../../ConvoInvite/ConvoInvite'
 import { useRef, useState, useEffect } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 
-export default function ChatWindow({ firebase, convoDocId, convo, fsUser }) {
+export default function ChatWindow({ firebase, convoDocId, convo, fsUser, convoMutualConsentToggle }) {
   const auth = firebase.auth();
   const firestore = firebase.firestore()
 
@@ -56,7 +57,7 @@ export default function ChatWindow({ firebase, convoDocId, convo, fsUser }) {
   if (convo.mutualConsent === false && convo.userData.receiver.uid === fsUser.uid) {
     return (
       <div className="chat-window-container">
-          invitation to chat
+          <ConvoInvite convo={convo} convoMutualConsentToggle={convoMutualConsentToggle}/>
         <div className='scrollref' ref={scrollHandle}></div>
       </div>
     )

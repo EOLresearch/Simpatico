@@ -142,7 +142,7 @@ export default function Dashboard(props) {
           }
           {
             conversationsTab === true ?
-              <Conversations chatHandler={chatHandler} docID={docID} showChatWindow={showChatWindow} firebase={firebase} convos={convos} fsUser={fsUser} /> : null
+              <Conversations chatHandler={chatHandler} docID={docID} showChatWindow={showChatWindow} firebase={firebase} convos={convos} fsUser={fsUser} convoMutualConsentToggle={convoMutualConsentToggle}/> : null
           }
           {
             matchListTab === true ?

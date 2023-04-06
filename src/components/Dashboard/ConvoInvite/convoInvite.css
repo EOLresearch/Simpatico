@@ -1,25 +1,21 @@
 .convo-invitation{
-  position: absolute;
-  left:60%;
-  flex-grow: 2;
   display:flex;
   justify-content: center;
-  /* padding:0.5rem; */
 }
 .convo-invitation-header{
-  margin-bottom:0.5rem;
-}
-.convo-invitation h4{
   background-color: gray;
   color: white;
   margin: 0;
-  padding:0.5rem 1rem;
+  padding:0.3rem;
   border-radius: 1rem 1rem 0 0 ;
+  display: flex;
+
 }
 .convo-invitation-body{
   background-color: rgb(226, 226, 226);
   padding: 0.5rem;
   border-radius: 0 0 1rem 1rem;
+  border: #828282 solid 5px;
 }
 .convo-invitation p{
   margin: 1rem ;

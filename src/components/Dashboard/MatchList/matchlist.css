@@ -17,9 +17,10 @@
 .left-col{
   display:flex;
   margin-right:2rem;
+  flex-direction: column;
 }
 .right-col{
-  flex-grow: 2;
+  
 }
 .right-col p{
   margin-left:2rem;
@@ -65,4 +66,25 @@
   position: relative;
   bottom:0.6rem;
   left:0.5rem;
+}
+
+.match-footer{
+  background-color: #7e7e7e;
+  padding:0.5rem;
+  border-radius: 0.5rem;
+  color: white;
+}
+
+.match-footer-buttons button{
+  border: none;
+  background-color: #828282 ;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  margin-left:2rem;
+}
+
+.match-footer-buttons button:hover{
+  cursor: pointer;
+  background-color: #989898;
 }
