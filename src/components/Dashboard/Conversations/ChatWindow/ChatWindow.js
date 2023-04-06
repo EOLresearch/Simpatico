@@ -4,7 +4,7 @@ import { useRef, useState, useEffect } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 
-export default function ChatWindow({ firebase, convoDocId, fsUser }) {
+export default function ChatWindow({ firebase, convoDocId, convo, fsUser }) {
   const auth = firebase.auth();
   const firestore = firebase.firestore()
 
@@ -15,10 +15,10 @@ export default function ChatWindow({ firebase, convoDocId, fsUser }) {
 
   const [messageBody, setMessageBody] = useState('')
   const scrollHandle = useRef()
-  
-  useEffect(()=>{
+
+  useEffect(() => {
     scrollHandle.current.scrollIntoView({ behavior: 'smooth' });
-  },[messages])
+  }, [messages])
 
   function submitHandler(e) {
     e.preventDefault()
@@ -33,16 +33,48 @@ export default function ChatWindow({ firebase, convoDocId, fsUser }) {
     })
     setMessageBody('')
   }
-  return (
-    <div className="chat-window-container">
-      <div className='message-container'>
-        {messages.map(msg => <ChatMessage key={msg.mid} auth={auth} mid={msg.mid} message={msg}  />)}
+
+
+  if (!convo) {
+    return (
+      <div className="chat-window-container">
         <div className='scrollref' ref={scrollHandle}></div>
       </div>
-      <form onSubmit={submitHandler}>
-        <input value={messageBody} onChange={e => setMessageBody(e.target.value)} />
-        <button type="submit"><i className="fas fa-paper-plane"></i></button>
-      </form>
-    </div>
-  )
+    )
+  }
+
+
+  if (convo.mutualConsent === false && convo.userData.sender.uid === fsUser.uid) {
+    return (
+      <div className="chat-window-container">
+        mutualConsent youre the sender
+        <div className='scrollref' ref={scrollHandle}></div>
+      </div>
+    )
+  }
+
+  if (convo.mutualConsent === false && convo.userData.receiver.uid === fsUser.uid) {
+    return (
+      <div className="chat-window-container">
+          invitation to chat
+        <div className='scrollref' ref={scrollHandle}></div>
+      </div>
+    )
+  }
+
+  if (convo.mutualConsent === true) {
+    return (
+      <div className="chat-window-container">
+        <div className='message-container'>
+          {messages.map(msg => <ChatMessage key={msg.mid} auth={auth} mid={msg.mid} message={msg} />)}
+          <div className='scrollref' ref={scrollHandle}></div>
+        </div>
+        <form onSubmit={submitHandler}>
+          <input value={messageBody} onChange={e => setMessageBody(e.target.value)} />
+          <button type="submit"><i className="fas fa-paper-plane"></i></button>
+        </form>
+      </div>
+    )
+  }
+
 }

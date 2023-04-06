@@ -6,6 +6,15 @@ import { useEffect, useState } from 'react';
 
 export default function Conversations({ chatHandler, docID, showChatWindow, firebase, convos, fsUser }) {
 
+  const [selectedConvo, setSelectedConvo] = useState(null)
+
+  useEffect(() => {
+    if (convos) {
+      const convo = convos.find(c => c.docID === docID)
+      setSelectedConvo(convo)
+    }
+  }, [convos, docID])
+
 
 
 
@@ -23,7 +32,7 @@ export default function Conversations({ chatHandler, docID, showChatWindow, fire
       </div>
           {
             showChatWindow === true ?
-              <ChatWindow firebase={firebase} convoDocId={docID} fsUser={fsUser}/> : <div className="no-convos"><p>NO CONVERSATION SELECTED</p></div>
+              <ChatWindow firebase={firebase} convoDocId={docID} convo={selectedConvo} fsUser={fsUser}/> : <div className="no-convos"><p>NO CONVERSATION SELECTED</p></div>
           }
     </div>
   )

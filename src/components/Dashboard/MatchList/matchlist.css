@@ -27,53 +27,6 @@
 .right-col .details{
   display:flex;
 }
-.convo-invitation{
-  position: absolute;
-  left:60%;
-  flex-grow: 2;
-  display:flex;
-  justify-content: center;
-  /* padding:0.5rem; */
-}
-.convo-invitation-header{
-  margin-bottom:0.5rem;
-}
-.convo-invitation h4{
-  background-color: gray;
-  color: white;
-  margin: 0;
-  padding:0.5rem 1rem;
-  border-radius: 1rem 1rem 0 0 ;
-}
-.convo-invitation-body{
-  background-color: rgb(226, 226, 226);
-  padding: 0.5rem;
-  border-radius: 0 0 1rem 1rem;
-}
-.convo-invitation p{
-  margin: 1rem ;
-}
-.convo-invitation p em{
-  margin-left:2rem;
-}
-
-.convo-invitation-buttons{
-  display:flex;
-  justify-content: space-evenly;
-  margin-bottom:1rem;
-}
-.convo-invitation .convo-invitation-buttons button{
-  border: none;
-  background-color: #828282 ;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 1rem;
-}
-
-.convo-invitation button:hover{
-  cursor: pointer;
-  background-color: #989898;
-}
 
 .input-container-match{
   margin:0 auto;
