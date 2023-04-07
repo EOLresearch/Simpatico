@@ -1,13 +1,4 @@
-.chatroom {
-  width: 80%;
-  background: rgb(224, 224, 224);
-  margin: 0 auto;
-  border-radius: 1rem;
-  display: flex;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, .75);
-  height: 60vh;
 
-}
 
 .conversations-container {
   background-color: #31605b;

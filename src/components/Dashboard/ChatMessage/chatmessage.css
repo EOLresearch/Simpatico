@@ -18,7 +18,7 @@
 
 .msg-inner-container {
   display: flex;
-  background-color: rgba(0, 0, 0, 0.408);
+  background-color: #31605b8c;
   padding: 0.5rem 1.5rem;
   margin: 0.5rem;
   border-radius: 0.5rem;
@@ -30,7 +30,7 @@
 }
 
 .sent .msg-inner-container {
-  background-color: rgba(39, 39, 101, 0.247);
+  background-color: rgba(0, 0, 0, 0.408);
 
 }
 

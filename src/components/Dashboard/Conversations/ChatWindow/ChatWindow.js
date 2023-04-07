@@ -23,6 +23,7 @@ export default function ChatWindow({ firebase, convoDocId, convo, fsUser, convoM
 
   function submitHandler(e) {
     e.preventDefault()
+    if (messageBody === '') return
     const msgDocRef = conversationRef.collection('messages').doc()
     msgDocRef.set({
       mid: msgDocRef.id,
