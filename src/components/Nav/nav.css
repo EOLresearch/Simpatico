@@ -1,12 +1,16 @@
 .nav-container {
-  width: 16vw;
+  width: 20%;
   color: white;
   background-color: #31605b;
   min-height:100%;
   position: fixed;
 }
 .nav-dummy{
-  width:16vw;
+  width: 22%;
+  color: white;
+  background-color: #31605b;
+  min-height:100%;
+  /* position: fixed; */
 }
 .logo-container {
   display: flex;
