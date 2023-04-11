@@ -4,13 +4,13 @@
   background-color: #31605b;
   min-height:100%;
   position: fixed;
+  padding:0 0.5rem;
 }
 .nav-dummy{
   width: 17%;
   color: white;
   background-color: #31605b;
   min-height:100%;
-  /* position: fixed; */
 }
 .logo-container {
   display: flex;

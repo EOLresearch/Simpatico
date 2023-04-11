@@ -1,83 +1,109 @@
-.match-list-container{
-  width:70%;
+.match-list-container {
+  width: 70%;
   margin: 0 auto;
 }
-.match{
-  width:90%;
-  margin-bottom:2rem;
-  display:block;
+
+.match {
+  width: 90%;
+  margin-bottom: 2rem;
+  display: block;
 }
-.match img{
+
+.match img {
   height: 5rem;
   width: 5rem;
   object-fit: cover;
   border-radius: 50%;
-  margin-right:1rem;
+  margin-right: 1rem;
 }
-.left-col{
-  display:flex;
-  margin-right:2rem;
+
+.left-col {
+  display: flex;
+  margin-right: 2rem;
   flex-direction: column;
 }
-.right-col p{
-  margin-left:2rem;
+
+.right-col p {
+  margin-left: 2rem;
 }
-.right-col .details{
-  display:flex;
+
+.right-col .details {
+  display: flex;
 }
-.input-container-match{
-  margin:0 auto;
+
+.input-container-match {
+  margin: 0 auto;
   background-color: rgba(0, 0, 0, 0.085);
-  padding:1rem;
+  padding: 1rem;
   border-radius: 1rem;
   position: relative;
-  top:2rem;
-  width:90%;
-  margin-bottom:2rem;
+  top: 2rem;
+  width: 90%;
+  margin-bottom: 2rem;
 }
-.input-container-match input{
-  width:80%;
-  margin-left:4rem;
+
+.input-container-match input {
+  width: 80%;
+  margin-left: 4rem;
   border: none;
-  font-size: 1rem;
+  font-size: 1.3rem;
   margin-bottom: 0.5rem;
   color: rgba(0, 0, 0, 0.842);
+  background-color: transparent;
   border-bottom: solid rgba(0, 0, 0, 0.327) 1px;
 }
-.match button{
+.input-container-match input:focus {
+  outline: none;
+}
+
+.match button {
   border: none;
+  font-size: 1.3rem;
   position: relative;
-  margin:0;
+  margin: 0;
   border-bottom: solid rgba(0, 0, 0, 0.327) 1px;
   background-color: transparent;
   color: #31605b;
 }
-.display-card-container{
+
+.display-card-container {
   display: flex;
 }
+
 .match label {
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   color: rgba(0, 0, 0, 0.442);
   margin-bottom: 0.5rem;
   position: relative;
-  bottom:0.6rem;
-  left:0.5rem;
+  bottom: 0.6rem;
+  left: 0.5rem;
 }
-.match-footer{
+
+.match-footer {
   background-color: #7e7e7e;
-  padding:0.5rem;
+  padding: 0.5rem;
   border-radius: 0.5rem;
   color: white;
 }
-.match-footer-buttons button{
+
+.match-footer-buttons button {
   border: none;
-  background-color: #828282 ;
+  background-color: #828282;
   color: white;
   padding: 0.5rem 1rem;
   border-radius: 1rem;
-  margin-left:2rem;
+  margin-left: 2rem;
 }
-.match-footer-buttons button:hover{
+
+.match-footer-buttons button:hover {
   cursor: pointer;
   background-color: #989898;
+}
+
+.sent-request {
+  background-color: #d7f1ee;
+  border-radius: 1rem;
+  padding: 0.5rem 1rem;
+  color: #31605b;
+  font-size: 1.3rem;
 }

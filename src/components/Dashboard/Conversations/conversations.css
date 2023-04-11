@@ -1,15 +1,10 @@
-
-
 .conversations-container {
   background-color: #31605b;
   min-width: 20%;
   border-radius: 1rem 0 0 1rem;
   font-family: "Asap", sans-serif;
   font-weight: 300;
-
-  /* height:100%; */
 }
-
 .no-convos{
   width:80%;
   display: flex;
@@ -21,14 +16,13 @@
   font-size: 2rem;
   letter-spacing: 0.1rem;
   font-family:Arial, Helvetica, sans-serif;
-
 }
 
 .conversations-container h3 {
   color: white;
   text-align: center;
-  font-weight: 300;
-
+  font-weight: 500;
+  padding: 0 0.1rem;
 }
 
 .convo {

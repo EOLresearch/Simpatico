@@ -25,11 +25,9 @@ export default function Match({ user, createConvo, convo, convoMutualConsentTogg
             <p>{user.displayName}, {getAge(user.birthDate)}, {user.residence} </p>
           </div>
           <div className='right-col'>
-
             <h4>Story</h4>
             <p>{user.lossExp}</p>
           </div>
-
         </div>
         <form onSubmit={e => createConvo(e, message, user)} className="input-container-match">
           <label htmlFor="inputer">Send a supportive message to {user.displayName}</label>
@@ -49,10 +47,13 @@ export default function Match({ user, createConvo, convo, convoMutualConsentTogg
             <p>{user.displayName}, {getAge(user.birthDate)}, {user.residence} </p>
           </div>
           <div className='right-col'>
-
             <h4>Story</h4>
             <p>{user.lossExp}</p>
           </div>
+        </div>
+        <div className='sent-request'>
+          <p>You have an active conversation with {user.displayName}.</p>
+          <p>See the conversations tab for the latest messages.</p>
         </div>
       </div>
     )
@@ -88,15 +89,18 @@ export default function Match({ user, createConvo, convo, convoMutualConsentTogg
             <p>{user.displayName}, {getAge(user.birthDate)}, {user.residence} </p>
           </div>
           <div className='right-col'>
-
             <h4>Story</h4>
             <p>{user.lossExp}</p>
           </div>
         </div>
-        <p className='sent-request'>
-          You have sent a chat request to {convo.userData.receiver.displayName} <br />  <br/>
-          You will see your message appear in the conversations tab when they have responded to your request.
-        </p>
+        <div className='sent-request'>
+          <p>
+            You have sent a chat request to {convo.userData.receiver.displayName} on {new Date(convo.createdAt.seconds * 1000).toLocaleString().split(',')[0]}
+          </p>
+          <p>
+            Check the conversations tab to see if they have responded.
+          </p>
+        </div>
       </div>
     )
   }
