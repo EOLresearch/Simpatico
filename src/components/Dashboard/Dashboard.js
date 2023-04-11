@@ -10,6 +10,8 @@ import { IoPeopleCircleOutline, IoChatbubblesSharp } from "react-icons/io5";
 import { useState, useEffect } from "react";
 import { IconContext } from "react-icons";
 
+import { useCollectionData } from 'react-firebase-hooks/firestore';
+
 export default function Dashboard(props) {
   //TODO: TRY AND LIMIT THE AMOUNT OF TIMES YOU PASS FIREBASE DOWN
   //TODO: USERS SHOLD BE ABLE TO CHANGE THIER DETAILS
@@ -19,30 +21,34 @@ export default function Dashboard(props) {
   const { uid } = user;
   const firestore = firebase.firestore();
   const [docID, setDocID] = useState()
-  const [convos, setConvos] = useState([])
+  // const [convos, setConvos] = useState([])
   const [convoRequests, setConvoRequests] = useState([])
 
   const [showNotification, setShowNotification] = useState(false)
   const [showChatWindow, setShowChatWindow] = useState(false)
 
-  useEffect(() => {
-    if (!fsUser) return
-    const conversationsRef = firestore.collection('conversations');
-    const convoQuery = conversationsRef.where("users", "array-contains", fsUser.uid)
-    convoQuery.get()
-      .then((querySnapshot) => {
-        let dataArr = []
-        querySnapshot.forEach((doc) => {
-          console.log("1 Doc Read")
-          dataArr.push(doc.data())
-        });
-        setConvos(dataArr)
-      })
-      .catch((error) => {
-        console.log("Error getting documents: ", error);
-      });
-  }, [firestore, fsUser])
+  // useEffect(() => {
+  //   if (!fsUser) return
+  // const conversationsRef = firestore.collection('conversations');
+  // const convoQuery = conversationsRef.where("users", "array-contains", fsUser.uid)
+  //   convoQuery.get()
+  //     .then((querySnapshot) => {
+  //       let dataArr = []
+  //       querySnapshot.forEach((doc) => {
+  //         console.log("1 Doc Read")
+  //         dataArr.push(doc.data())
+  //       });
+  //       setConvos(dataArr)
+  //     })
+  //     .catch((error) => {
+  //       console.log("Error getting documents: ", error);
+  //     });
+  // }, [firestore, fsUser])
   //CONVO query
+
+  const conversationsRef = firestore.collection('conversations');
+  const convoQuery = conversationsRef.where("users", "array-contains", uid)
+  const [convos] = useCollectionData(convoQuery, { idField: 'id' });
 
   useEffect(() => {
     if (!convos) return
@@ -76,8 +82,8 @@ export default function Dashboard(props) {
       firstMessage: message,
     }
     conversationRef.set(newConvo)
-    setConvos([...convos, newConvo])
-    
+    // setConvos([...convos, newConvo])
+
     const msgDocRef = conversationRef.collection('messages').doc()
     msgDocRef.set({
       mid: msgDocRef.id,
@@ -92,27 +98,27 @@ export default function Dashboard(props) {
     setShowChatWindow(true)
   }
 
-  function convoMutualConsentToggle(docID, boolean){
+  function convoMutualConsentToggle(docID, boolean) {
     setDocID(docID)
     const conversationsRef = firestore.collection('conversations');
     const conversationRef = conversationsRef.doc(docID);
     conversationRef.update({
       mutualConsent: boolean,
     })
-    .then(() => {
-      const updatedConvos = convos.map(c => {
-        if (c.docID === docID) {
-          return {...c, mutualConsent: boolean}
-        } else {
-          return c
-        }
-      })
-      setConvos(updatedConvos)
-      setShowChatWindow(true)
-      navHandler("Conversations")
+      .then(() => {
+        const updatedConvos = convos.map(c => {
+          if (c.docID === docID) {
+            return { ...c, mutualConsent: boolean }
+          } else {
+            return c
+          }
+        })
+        // setConvos(updatedConvos)
+        setShowChatWindow(true)
+        navHandler("Conversations")
 
-      console.log("Document successfully updated!");
-    })
+        console.log("Document successfully updated!");
+      })
   }
 
   const clickedProfile = profileTab === true ? "clicked" : null
@@ -142,7 +148,7 @@ export default function Dashboard(props) {
           }
           {
             conversationsTab === true ?
-              <Conversations chatHandler={chatHandler} docID={docID} showChatWindow={showChatWindow} firebase={firebase} convos={convos} fsUser={fsUser} convoMutualConsentToggle={convoMutualConsentToggle}/> : null
+              <Conversations chatHandler={chatHandler} docID={docID} showChatWindow={showChatWindow} firebase={firebase} convos={convos} fsUser={fsUser} convoMutualConsentToggle={convoMutualConsentToggle} /> : null
           }
           {
             matchListTab === true ?

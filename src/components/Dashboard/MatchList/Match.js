@@ -29,7 +29,13 @@ export default function Match({ user, createConvo, convo, convoMutualConsentTogg
             <h4>Story</h4>
             <p>{user.lossExp}</p>
           </div>
+
         </div>
+        <form onSubmit={e => createConvo(e, message, user)} className="input-container-match">
+          <label htmlFor="inputer">Send a supportive message to {user.displayName}</label>
+          <input value={message} onChange={e => setMessage(e.target.value)} id="inputer" type="text" placeholder="Start a Conversation"></input>
+          <button type='submit' ><i className="fas fa-paper-plane"></i></button>
+        </form>
       </div>
     )
   }
@@ -67,7 +73,7 @@ export default function Match({ user, createConvo, convo, convoMutualConsentTogg
             <p>{user.lossExp}</p>
           </div>
         </div>
-       <ConvoInvite fsUser={user} convo={convo} convoMutualConsentToggle={convoMutualConsentToggle} createConvo={createConvo} />
+        <ConvoInvite fsUser={user} convo={convo} convoMutualConsentToggle={convoMutualConsentToggle} createConvo={createConvo} />
       </div>
     )
   }
@@ -87,6 +93,10 @@ export default function Match({ user, createConvo, convo, convoMutualConsentTogg
             <p>{user.lossExp}</p>
           </div>
         </div>
+        <p className='sent-request'>
+          You have sent a chat request to {convo.userData.receiver.displayName} <br />  <br/>
+          You will see your message appear in the conversations tab when they have responded to your request.
+        </p>
       </div>
     )
   }

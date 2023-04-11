@@ -16,8 +16,6 @@ export default function Conversations({ chatHandler, docID, showChatWindow, fire
   }, [convos, docID])
 
 
-
-
   return (
     <div className='chatroom'>
       <div className="conversations-container">
