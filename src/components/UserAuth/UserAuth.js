@@ -54,8 +54,16 @@ export default function UserAuth({ user, firebase }) {
   const sendResetEmail = async (e) => {
     e.preventDefault()
     await sendPasswordResetEmail(auth, email)
-    console.log("Password reset email sent")
-    //TODO: this forgot password flow is nice out of the box but not awesome. Lets rework this find out a way to overwrite the default firebase behvior for this action.
+    .then(() => {
+      // Email sent.
+      console.log("Password reset email sent")
+      setEmail('Password reset email sent, check your email.')
+    })
+    .catch((error) => {
+      // An error occurred
+      console.log(error)
+      setAnError(error)
+    });
   }
 
   const onSubmitReturningUser = (e) => {
@@ -107,31 +115,17 @@ export default function UserAuth({ user, firebase }) {
 
   if (resetPass === true) {
     return (
-      <div className="wrapper">
-        <div className="container">
-          <div className="col-left">
-            <div className="fields-container">
-              <h2>Log in</h2>
-              <form onSubmit={sendResetEmail}>
-                <p>Please submit the email address associated with your account</p>
-                <input type="email" placeholder="Email" value={email} onChange={changeHandler} name="useremail" required />
-                <input className="btn" type="submit" value="Send Password Reset" />
-                <div className='sub-container'>
-                  <button className='btn btn-sub' onClick={registrationDisplaySwitch}>New User?</button>
-                  <button onClick={forgotPassDisplaySwitch} className='btn btn-back'><i className="fa-solid fa-arrow-left"></i> Back to Login</button>
-                </div>
-              </form>
-            </div>
-          </div>
-          <div className="col-right">
-            <div className="login-with-container">
-              <h2>Log in with</h2>
-              {/* <button className="btn btn-go" onClick={googleSignIn}>Google</button> */}
-              <button className="btn btn-fb">Facebook</button>
-            </div>
-          </div>
+      <form  className="forgotPassForm" onSubmit={sendResetEmail}>
+        {(anError !== "")
+          ? <ErrorMessage error={anError} cancelError={cancelError} /> : null}
+        <p>Please submit the email address associated with your account</p>
+        <input type="email" placeholder="Email" value={email} onChange={changeHandler} name="email" />
+        <div className='btn-container'>
+          <button  type="submit" value="Send Password Reset" >Send Password Reset</button>
+          <button onClick={registrationDisplaySwitch}>New User?</button>
+          <button onClick={forgotPassDisplaySwitch} ><i className="fa-solid fa-arrow-left"></i> Back to Login</button>
         </div>
-      </div>
+      </form>
     )
   }
 
@@ -168,7 +162,7 @@ export default function UserAuth({ user, firebase }) {
               <i className="fas fa-envelope"></i>
               <input id="email" type="email" placeholder="Your Email Address" value={email} onChange={changeHandler} name="email" required />
             </div>
-            
+
             <label htmlFor='password'>* Password</label>
             <div className='input-container'>
               <i className="fas fa-lock"></i>

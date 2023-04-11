@@ -75,7 +75,7 @@ export default function ChatWindow({ firebase, convoDocId, convo, fsUser, convoM
           <div className='scrollref' ref={scrollHandle}></div>
         </div>
         <form onSubmit={submitHandler}>
-          <input value={messageBody} onChange={e => setMessageBody(e.target.value)} />
+          <input value={messageBody} placeholder="Send a message..."onChange={e => setMessageBody(e.target.value)} />
           <button type="submit"><i className="fas fa-paper-plane"></i></button>
         </form>
       </div>

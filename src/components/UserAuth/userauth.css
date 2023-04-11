@@ -69,11 +69,11 @@ textarea {
 }
 
 .fields-container form input {
+  width: 80%;  
   border: none;
   font-size: 1rem;
   /* margin-bottom: 0.5rem; */
   color: rgba(0, 0, 0, 0.842);
-  width: fit-content;
 }
 
 ::-webkit-calendar-picker-indicator{
@@ -89,9 +89,6 @@ textarea {
   border-bottom: solid black 1px;
 }
 
-.input-container:hover {
-  /* border-bottom: 2px solid black; */
-}
 .input-container textarea{
   width:100%;
 }
@@ -190,6 +187,7 @@ textarea {
   color: black;
 }
 .user-verify{
+  font-size: 1.8rem;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -221,9 +219,51 @@ textarea {
   text-decoration: underline;
   font-size: 0.8rem;
   cursor: pointer;
+  font-size: 1rem;
 
 }
 
 .display-none{
   display:none;
 }
+
+.forgotPassForm{
+  color: black;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  max-width: 45%;
+  position: relative;
+}
+
+.forgotPassForm input{
+  border: none;
+  border-bottom: black 2px solid;
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  color: rgba(0, 0, 0, 0.842);
+  width: 100%;
+} 
+
+.forgotPassForm input:focus{
+  outline: none;
+}
+
+.forgotPassForm button{
+  width: 100%;
+  margin-bottom: 1rem;
+  border-bottom: solid black 1px;
+  background-color: #31605b;
+  color: #ffc107;
+  border-radius: 5px;
+  border: none;
+  padding: 0.7rem;
+  font-weight: 300;
+}
+
+.forgotPassForm button:hover{
+  background-color: #31605ba6;
+  transform: translateY(-0.3rem);
+}
+

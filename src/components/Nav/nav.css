@@ -1,53 +1,56 @@
 .nav-container {
-  width: 15%;
+  max-width: 15%;
   color: white;
   background-color: #31605b;
-  min-height:100%;
+  min-height: 100%;
   position: fixed;
-  padding:0 0.5rem;
+  padding: 0 0.5rem;
 }
-.nav-dummy{
+
+.nav-dummy {
   width: 17%;
-  color: white;
-  background-color: #31605b;
-  min-height:100%;
+  padding: 0 0.5rem;
 }
+
 .logo-container {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-top:2rem;
+  margin-top: 2rem;
 }
-.logo-container img{
-  height:10rem;
-  width:10rem;
+
+.logo-container img {
+  height: 10rem;
+  width: 10rem;
   border-radius: 50%;
   object-fit: cover;
 }
 
-.logo-container p{
+.logo-container p {
   border-bottom: white solid 1px;
   width: 100%;
   text-align: center;
-  padding:0.5rem;
-  margin:0;
+  padding: 0.5rem;
+  margin: 0;
 }
-.logo-container :nth-child(2){
+
+.logo-container :nth-child(2) {
   font-weight: 900;
   font-size: 2rem;
 }
 
-.logo-container :nth-child(3){
-  border:none;
+.logo-container :nth-child(3) {
+  border: none;
 }
-.nav-body{
-  margin-top:2rem;
+
+.nav-body {
+  margin-top: 2rem;
 }
 
 .nav-body ul {
   all: unset;
-  margin:10%;
+  margin: 10%;
   list-style: none;
 }
 
@@ -55,7 +58,6 @@
   padding: 1rem;
   font-size: 1.3rem;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  margin-left:1rem;
 }
 
 .nav-body ul li:hover {
@@ -70,12 +72,13 @@
 
 
 @media (max-width: 1115px) {
-  .nav-container span{
+  .nav-container span {
     font-size: 0.7rem;
   }
-  .logo-container img{
-    height:7rem;
-    width:7rem;
+
+  .logo-container img {
+    height: 7rem;
+    width: 7rem;
   }
 }
 
@@ -83,39 +86,46 @@
   .nav-container {
     width: 10vw;
     display: flex;
-    flex-direction:column;
+    flex-direction: column;
     align-items: center;
   }
-  .nav-dummy{
-    width:10vw;
+
+  .nav-dummy {
+    width: 10vw;
   }
-  .nav-body ul{
+
+  .nav-body ul {
     list-style: none;
   }
-  .nav-container span{
-    display:none;
+
+  .nav-container span {
+    display: none;
   }
-  .logo-container{
-    margin:0;
+
+  .logo-container {
+    margin: 0;
   }
-  .logo-container img{
-    height:4rem;
-    width:4rem;
+
+  .logo-container img {
+    height: 4rem;
+    width: 4rem;
   }
-  .logo-container p{
+
+  .logo-container p {
     display: none;
   }
 }
 
 @media (max-width: 645px) {
-/* HAMBURGER MENU TIME */
+  /* HAMBURGER MENU TIME */
 }
 
-.no-user-nav{
-  color:#39716b!important;
+.no-user-nav {
+  color: #39716b !important;
 }
-.no-user-nav li:hover{
-  cursor:auto !important;
+
+.no-user-nav li:hover {
+  cursor: auto !important;
   background-color: #31605b !important;
   color: #31605b !important;
 }
