@@ -60,6 +60,7 @@ textarea {
   text-align: left;
   max-width: 45%;
   position: relative;
+  margin-top: 2rem;
 }
 
 .fields-container form label {

@@ -140,12 +140,10 @@ export default function UserAuth({ user, firebase }) {
         <div className='callout auth-callout'></div>
         <div className='callout auth-callout'></div>
       </div>
-
+      {(anError !== "") ? <ErrorMessage error={anError} cancelError={cancelError} /> : null}
       <div className="auth-container">
         <div className="fields-container">
           <h4>Log in to your profile</h4>
-          {(anError !== "")
-            ? <ErrorMessage error={anError} cancelError={cancelError} /> : null}
 
           {user ? user.emailVerified === false ?
             <div onClick={() => auth.signOut()} className='modal-bg'>
