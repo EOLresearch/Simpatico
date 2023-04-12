@@ -1,5 +1,5 @@
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import ErrorMessage from '../ErrorMessage/ErrorMessage'
 // import AvatarGenerator from './AvatarGenerator'
@@ -175,8 +175,6 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
       setAnError(errorCode)
     }
   }
-  const weDontNeedTheseInThisCase = fsUser ? "display-none" : "";
-
 
   return (
     <div className="auth-wrapper">
@@ -187,35 +185,35 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
           ? <ErrorMessage error={anError} cancelError={cancelError} /> : null
         }
 
-        <div className='fields-container'>
+        <div className='fields-container register'>
           <form onSubmit={validateNewUser}>
-            <div className={weDontNeedTheseInThisCase}>
-              <label htmlFor='email'>* Email Address</label>
+
+              {/* <label htmlFor='email'>* Email Address</label> */}
               <div className='input-container'>
                 <i className="fas fa-envelope"></i>
                 <input type="email" name="email" placeholder="Email" id="email" value={email} onChange={changeHandler} />
               </div>
 
-              <label htmlFor='password'>* Password</label>
+              {/* <label htmlFor='password'>* Password</label> */}
               <div className='input-container'>
                 <i className="fas fa-lock"></i>
                 <input type="password" name="password" placeholder="Password" id="password" value={password} onChange={changeHandler} />
               </div>
 
-              <label htmlFor='confirmpass'>* Confirm Password</label>
+              {/* <label htmlFor='confirmpass'>* Confirm Password</label> */}
               <div className='input-container'>
                 <i className="fas fa-lock"></i>
                 <input type="password" name="confirmPass" placeholder="Confirm Password" id="confirmPass" value={confirmPass} onChange={changeHandler} />
               </div>
-            </div>
 
-            <label htmlFor='displayName'>* Your Display Name</label>
+
+            {/* <label htmlFor='displayName'>* Your Display Name</label> */}
             <div className='input-container'>
               <i className="fas fa-user-alt"></i>
               <input type="text" name="displayName" placeholder="Display Name" id="name" value={displayName} onChange={changeHandler} />
             </div>
 
-            <label htmlFor='residence'>* Your Home State</label>
+            {/* <label htmlFor='residence'>* Your Home State</label> */}
             <div className='input-container'>
               <i className="fas fa-map"></i>
               <select type="text" name="residence" placeholder="Home State" id="residence" value={residence} onChange={changeHandler} >
@@ -274,19 +272,19 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
               </select>
             </div>
 
-            <label htmlFor="birthDate">* Your Birthdate</label>
+            <label htmlFor="birthDate">Birthdate</label>
             <div className='input-container'>
-              <i className="fas fa-calendar-alt"></i>
+              {/* <i className="fas fa-calendar-alt"></i> */}
               <input type="date" name="birthDate" id="birthDate" placeholder="e.g. 01/01/1990" value={birthDate} onChange={changeHandler} />
 
             </div>
-            <label htmlFor="lossDate">* When did you experience your loss?</label>
+            <label htmlFor="lossDate">When did you experience your loss?</label>
             <div className='input-container'>
-              <i className="fas fa-calendar-alt"></i>
+              {/* <i className="fas fa-calendar-alt"></i> */}
               <input type="date" name="lossDate" id="lossDate" placeholder="e.g. 01/01/1990" value={lossDate} onChange={changeHandler} />
             </div>
 
-            <label htmlFor="deceased">* Relationship to deceased: the deceased is my...</label>
+            <label htmlFor="deceased">Relationship to deceased: the deceased is my...</label>
             <div className='input-container'>
               <select name="deceased" id="deceased" value={deceased} onChange={changeHandler} >
                 <option>The deceased is my...</option>
@@ -307,7 +305,7 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
               </select>
             </div>
 
-            <label htmlFor="cause">* How did you loss occur?</label>
+            <label htmlFor="cause">How did you loss occur?</label>
             <div className='input-container'>
               <select name="cause" id="cause" value={cause} onChange={changeHandler} >
                 <option>Cause of death</option>
@@ -316,7 +314,7 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
               </select>
             </div>
 
-            <label htmlFor="lossExp">* Please use this space to describe your loss experience.</label>
+            <label htmlFor="lossExp">Please use this space to describe your loss experience.</label>
             <div className='input-container'>
               <textarea name="lossExp" id="lossExp" value={lossExp} onChange={changeHandler} ></textarea>
             </div>

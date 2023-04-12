@@ -11,8 +11,8 @@ textarea {
   color: #31605b;
   text-align: center;
   width: 100%;
-  padding-top:1rem;
-  padding-bottom:3rem;
+  padding-top: 1rem;
+  padding-bottom: 3rem;
 }
 
 .auth-wrapper button {
@@ -26,7 +26,7 @@ textarea {
   display: flex;
   justify-content: center;
   /* background-color: #00000034; */
-  margin-bottom:1rem;
+  margin-bottom: 1rem;
 }
 
 .auth-callout {
@@ -63,22 +63,32 @@ textarea {
 }
 
 .fields-container form label {
-  font-size: 0.7rem;
+  font-size: 1rem;
   color: rgba(0, 0, 0, 0.442);
   margin-bottom: 0.5rem;
+  padding: 0.5rem;;
 }
 
 .fields-container form input {
-  width: 80%;  
   border: none;
-  font-size: 1rem;
-  /* margin-bottom: 0.5rem; */
+  font-size: 1.3rem;
   color: rgba(0, 0, 0, 0.842);
 }
 
-::-webkit-calendar-picker-indicator{
-  display: none;
+/* REGISTER PANEL */
+
+.register form input {
+  font-size: 1.3rem;
+  padding: 0.5rem;
 }
+.register form label {
+  font-size: 1.3rem;
+  padding: 0.5rem;
+  color: #31605b;
+  font-weight: 600;
+  background-color: #31605b2f;
+}
+
 .input-container input:focus {
   outline: none;
 }
@@ -89,8 +99,8 @@ textarea {
   border-bottom: solid black 1px;
 }
 
-.input-container textarea{
-  width:100%;
+.input-container textarea {
+  width: 100%;
 }
 
 .input-container i {
@@ -142,27 +152,28 @@ textarea {
   margin-top: 5rem;
 }
 
-.btn-back:hover{
+.btn-back:hover {
   color: #588984;
 }
 
-.btn-container .sub-btn:hover{
+.btn-container .sub-btn:hover {
   background-color: #31605ba6;
   transform: translateY(-0.3rem);
 }
 
 .btn-container .btn-go {
   border: solid rgba(0, 0, 0, 0.144) 1px;
-  padding:1rem 2rem 1rem 1rem ;
+  padding: 1rem 2rem 1rem 1rem;
   display: flex;
   align-items: center;
 
-  color:#31605b;
+  color: #31605b;
   border-radius: 0.5rem;
-  margin-top:5rem;
+  margin-top: 5rem;
 }
-.btn-container .btn-go span{
-  margin-left:2rem;
+
+.btn-container .btn-go span {
+  margin-left: 2rem;
 }
 
 .btn-container .btn-go:hover {
@@ -176,6 +187,10 @@ textarea {
   margin-bottom: 2rem;
 }
 
+.consent div label{
+  background-color: transparent;
+}
+
 #consent {
   height: 1.2rem;
   width: 1.2rem;
@@ -186,26 +201,28 @@ textarea {
 #consent:checked {
   color: black;
 }
-.user-verify{
+
+.user-verify {
   font-size: 1.8rem;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   padding: 1rem 2rem;
-  width:max-content;
+  width: max-content;
   height: max-content;
   margin: auto;
   z-index: 3;
   background-color: #000000c9;
   border-radius: 1rem;
-  color:white;
+  color: white;
   position: absolute;
   top: 0;
   right: 0;
   left: 0;
   bottom: 0;
 }
-.modal-bg{
+
+.modal-bg {
   position: fixed;
   top: 0;
   left: 0;
@@ -214,8 +231,9 @@ textarea {
   background-color: #000000c9;
   z-index: 2;
 }
-.user-verify button{
-  color:white;
+
+.user-verify button {
+  color: white;
   text-decoration: underline;
   font-size: 0.8rem;
   cursor: pointer;
@@ -223,11 +241,7 @@ textarea {
 
 }
 
-.display-none{
-  display:none;
-}
-
-.forgotPassForm{
+.forgotPassForm {
   color: black;
   margin: 0 auto;
   display: flex;
@@ -237,20 +251,20 @@ textarea {
   position: relative;
 }
 
-.forgotPassForm input{
+.forgotPassForm input {
   border: none;
   border-bottom: black 2px solid;
   font-size: 1.4rem;
   margin-bottom: 0.5rem;
   color: rgba(0, 0, 0, 0.842);
   width: 100%;
-} 
+}
 
-.forgotPassForm input:focus{
+.forgotPassForm input:focus {
   outline: none;
 }
 
-.forgotPassForm button{
+.forgotPassForm button {
   width: 100%;
   margin-bottom: 1rem;
   border-bottom: solid black 1px;
@@ -262,8 +276,7 @@ textarea {
   font-weight: 300;
 }
 
-.forgotPassForm button:hover{
+.forgotPassForm button:hover {
   background-color: #31605ba6;
   transform: translateY(-0.3rem);
 }
-
