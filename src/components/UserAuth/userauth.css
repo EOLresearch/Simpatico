@@ -11,7 +11,7 @@ textarea {
   color: #31605b;
   text-align: center;
   width: 100%;
-  padding-top:3rem;
+  padding-top:1rem;
   padding-bottom:3rem;
 }
 
@@ -25,13 +25,12 @@ textarea {
 .callout-container {
   display: flex;
   justify-content: center;
+  /* background-color: #00000034; */
+  margin-bottom:1rem;
 }
 
 .auth-callout {
   margin: 3rem;
-  width: 13rem;
-  height: 13rem;
-  /* border: solid black 2px; */
   box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
   border-radius: 0.5rem;
   transition: all .2s ease-in-out;

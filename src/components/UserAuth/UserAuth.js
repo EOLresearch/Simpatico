@@ -165,8 +165,6 @@ export default function UserAuth({ user, firebase }) {
             <div className='input-container'>
               <i className="fas fa-lock"></i>
               <input id="password" type="password" placeholder="Your Password" value={password} onChange={changeHandler} name="password" required />
-              <i className="fas fa-eye-slash"></i>
-              {/* TODO: functional password chracter reveal in place of this static logo */}
             </div>
 
             <div className='btn-container'>
