@@ -21,30 +21,10 @@ export default function Dashboard(props) {
   const { uid } = user;
   const firestore = firebase.firestore();
   const [docID, setDocID] = useState()
-  // const [convos, setConvos] = useState([])
   const [convoRequests, setConvoRequests] = useState([])
 
   const [showNotification, setShowNotification] = useState(false)
   const [showChatWindow, setShowChatWindow] = useState(false)
-
-  // useEffect(() => {
-  //   if (!fsUser) return
-  // const conversationsRef = firestore.collection('conversations');
-  // const convoQuery = conversationsRef.where("users", "array-contains", fsUser.uid)
-  //   convoQuery.get()
-  //     .then((querySnapshot) => {
-  //       let dataArr = []
-  //       querySnapshot.forEach((doc) => {
-  //         console.log("1 Doc Read")
-  //         dataArr.push(doc.data())
-  //       });
-  //       setConvos(dataArr)
-  //     })
-  //     .catch((error) => {
-  //       console.log("Error getting documents: ", error);
-  //     });
-  // }, [firestore, fsUser])
-  //CONVO query
 
   const conversationsRef = firestore.collection('conversations');
   const convoQuery = conversationsRef.where("users", "array-contains", uid)
@@ -82,7 +62,6 @@ export default function Dashboard(props) {
       firstMessage: message,
     }
     conversationRef.set(newConvo)
-    // setConvos([...convos, newConvo])
 
     const msgDocRef = conversationRef.collection('messages').doc()
     msgDocRef.set({
@@ -113,7 +92,6 @@ export default function Dashboard(props) {
             return c
           }
         })
-        // setConvos(updatedConvos)
         setShowChatWindow(true)
         navHandler("Conversations")
 
