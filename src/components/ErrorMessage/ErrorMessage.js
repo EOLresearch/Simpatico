@@ -4,6 +4,8 @@ export default function ErrorMessage({ error, cancelError }) {
   //can refactor this to using lookupobj with {lookUpOBJ[error]} in the JSX. but not needed now
 
   const errorMaker = (err) => {
+
+
     switch (err) {
       case 'auth/user-not-found':
         return "User not found."
@@ -35,8 +37,11 @@ export default function ErrorMessage({ error, cancelError }) {
         return "You must consent to share your information"
       case 'nolossexp':
         return "Please share something about your loss experience"
+      case 'passwordreset':
+        return "Password reset email sent, check your email."
       default:
         console.log('switch default' + error)
+        return "Something went wrong. Please try again."
     }
   }
   return (
