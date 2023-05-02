@@ -57,7 +57,7 @@ export default function UserAuth({ user, firebase }) {
     .then(() => {
       // Email sent.
       console.log("Password reset email sent")
-      setEmail('Password reset email sent, check your email.')
+      setAnError("passwordreset")
     })
     .catch((error) => {
       // An error occurred
