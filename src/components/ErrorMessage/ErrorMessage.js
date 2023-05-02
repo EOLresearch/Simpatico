@@ -39,6 +39,8 @@ export default function ErrorMessage({ error, cancelError }) {
         return "Please share something about your loss experience"
       case 'passwordreset':
         return "Password reset email sent, check your email."
+      case 'auth/wrong-password':
+        return "Incorrect password"
       default:
         console.log('switch default' + error)
         return "Something went wrong. Please try again."
