@@ -36,6 +36,7 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
 
   const validateNewUser = (e) => {
     e.preventDefault()
+    setEmail(email.trim())
     //there is some outdated code here, the if else statemnet is not needed without google signin.
 
     if (!fsUser) {
@@ -88,7 +89,7 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
   const changeHandler = (e) => {
     switch (e.target.name) {
       case 'email':
-        setEmail(e.target.value)
+        setEmail(e.target.value.trim())
         break
       case 'password':
         setPassword(e.target.value)

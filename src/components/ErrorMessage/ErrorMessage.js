@@ -5,7 +5,6 @@ export default function ErrorMessage({ error, cancelError }) {
 
   const errorMaker = (err) => {
 
-
     switch (err) {
       case 'auth/user-not-found':
         return "User not found."
