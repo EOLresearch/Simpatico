@@ -182,10 +182,6 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
       <h3>Please complete this form</h3>
       <div className="auth-container">
 
-        {(anError !== "")
-          ? <ErrorMessage error={anError} cancelError={cancelError} /> : null
-        }
-
         <div className='fields-container register'>
           <form onSubmit={validateNewUser}>
 
@@ -326,6 +322,9 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
                 <label htmlFor="consent">By clicking this checkbox, I agree to share the above information and allow other users to view the information I shared.</label>
               </div>
             </div>
+            {(anError !== "")
+          ? <ErrorMessage error={anError} cancelError={cancelError} /> : null
+        }
             <div className='btn-container'>
               <input className="btn sub-btn" type="submit" value="Submit" />
             </div>

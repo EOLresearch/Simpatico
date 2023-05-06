@@ -3,8 +3,8 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  position: absolute;
-  left:40%;
+  position: relative;
+  /* left:40%; */
   padding: 1rem;
   border-radius: 5px;
   margin: 1rem 0;
@@ -12,6 +12,7 @@
   background-color: rgb(0, 0, 0);
   color: white;
   z-index: 3;
+  transition: ease-in-out;
 }
 .error-message p{
   flex-grow: 1;
