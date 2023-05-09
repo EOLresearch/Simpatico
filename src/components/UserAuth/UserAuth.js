@@ -54,16 +54,16 @@ export default function UserAuth({ user, firebase }) {
   const sendResetEmail = async (e) => {
     e.preventDefault()
     await sendPasswordResetEmail(auth, email)
-    .then(() => {
-      // Email sent.
-      console.log("Password reset email sent")
-      setAnError("passwordreset")
-    })
-    .catch((error) => {
-      // An error occurred
-      console.log(error)
-      setAnError(error)
-    });
+      .then(() => {
+        // Email sent.
+        console.log("Password reset email sent")
+        setAnError("passwordreset")
+      })
+      .catch((error) => {
+        // An error occurred
+        console.log(error)
+        setAnError(error)
+      });
   }
 
   const onSubmitReturningUser = (e) => {
@@ -115,13 +115,13 @@ export default function UserAuth({ user, firebase }) {
 
   if (resetPass === true) {
     return (
-      <form  className="forgotPassForm" onSubmit={sendResetEmail}>
+      <form className="forgotPassForm" onSubmit={sendResetEmail}>
         {(anError !== "")
           ? <ErrorMessage error={anError} cancelError={cancelError} /> : null}
         <p>Please submit the email address associated with your account</p>
         <input type="email" placeholder="Email" value={email} onChange={changeHandler} name="email" />
         <div className='btn-container'>
-          <button  type="submit" value="Send Password Reset" >Send Password Reset</button>
+          <button type="submit" value="Send Password Reset" >Send Password Reset</button>
           <button onClick={registrationDisplaySwitch}>New User?</button>
           <button onClick={forgotPassDisplaySwitch} ><i className="fa-solid fa-arrow-left"></i> Back to Login</button>
         </div>
@@ -140,7 +140,9 @@ export default function UserAuth({ user, firebase }) {
         <div className='callout auth-callout'></div>
         <div className='callout auth-callout'></div>
       </div>
-      {(anError !== "") ? <ErrorMessage error={anError} cancelError={cancelError} /> : null}
+      <div className='error-container'>
+        {(anError !== "") ? <ErrorMessage error={anError} cancelError={cancelError} /> : null}
+      </div>
       <div className="auth-container">
         <div className="fields-container">
           <h4>Log in to your profile</h4>

@@ -21,7 +21,7 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
 
   //TODO:: THOSE FLIPPIN BORDERS ON HOVER ARE DRIVING ME NUTS> THEY MOVE THE DOC FLOW
 
-  useEffect(()=>{
+  useEffect(() => {
     const randomNumber = Math.floor(Math.random() * (14 - 0 + 1) + 0)
     const avatarOptions = ["Bubba", "Chloe", "Bob", "Casper", "Boo", "Boots", "Abby", "Chester", "Charlie", "Cuddles", "Bandit", "Angel", "Baby", "Cookie", "Daisy"]
 
@@ -127,7 +127,7 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
   }
 
   const createNewUser = async (e) => {
-        
+
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
@@ -145,10 +145,10 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
       })
       auth.currentUser.sendEmailVerification()
         .then(() => {
-            // Email verification sent!
-            // ...
-            registrationDisplaySwitch(e);
-          });
+          // Email verification sent!
+          // ...
+          registrationDisplaySwitch(e);
+        });
     } catch (error) {
       const errorCode = error.code;
       console.log(errorCode, error.message)
@@ -185,23 +185,23 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
         <div className='fields-container register'>
           <form onSubmit={validateNewUser}>
 
-              {/* <label htmlFor='email'>* Email Address</label> */}
-              <div className='input-container'>
-                <i className="fas fa-envelope"></i>
-                <input type="email" name="email" placeholder="Email" id="email" value={email} onChange={changeHandler} />
-              </div>
+            {/* <label htmlFor='email'>* Email Address</label> */}
+            <div className='input-container'>
+              <i className="fas fa-envelope"></i>
+              <input type="email" name="email" placeholder="Email" id="email" value={email} onChange={changeHandler} />
+            </div>
 
-              {/* <label htmlFor='password'>* Password</label> */}
-              <div className='input-container'>
-                <i className="fas fa-lock"></i>
-                <input type="password" name="password" placeholder="Password" id="password" value={password} onChange={changeHandler} />
-              </div>
+            {/* <label htmlFor='password'>* Password</label> */}
+            <div className='input-container'>
+              <i className="fas fa-lock"></i>
+              <input type="password" name="password" placeholder="Password" id="password" value={password} onChange={changeHandler} />
+            </div>
 
-              {/* <label htmlFor='confirmpass'>* Confirm Password</label> */}
-              <div className='input-container'>
-                <i className="fas fa-lock"></i>
-                <input type="password" name="confirmPass" placeholder="Confirm Password" id="confirmPass" value={confirmPass} onChange={changeHandler} />
-              </div>
+            {/* <label htmlFor='confirmpass'>* Confirm Password</label> */}
+            <div className='input-container'>
+              <i className="fas fa-lock"></i>
+              <input type="password" name="confirmPass" placeholder="Confirm Password" id="confirmPass" value={confirmPass} onChange={changeHandler} />
+            </div>
 
 
             {/* <label htmlFor='displayName'>* Your Display Name</label> */}
@@ -323,8 +323,8 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
               </div>
             </div>
             {(anError !== "")
-          ? <ErrorMessage error={anError} cancelError={cancelError} /> : null
-        }
+              ? <ErrorMessage error={anError} cancelError={cancelError} /> : null
+            }
             <div className='btn-container'>
               <input className="btn sub-btn" type="submit" value="Submit" />
             </div>
