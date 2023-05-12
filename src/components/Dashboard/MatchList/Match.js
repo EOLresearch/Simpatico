@@ -95,7 +95,8 @@ export default function Match({ user, createConvo, convo, convoMutualConsentTogg
         </div>
         <div className='sent-request'>
           <p>
-            You have sent a chat request to {convo.userData.receiver.displayName} on {new Date(convo.createdAt.seconds * 1000).toLocaleString().split(',')[0]}
+            You have sent a chat request to {convo.userData.receiver.displayName}
+            {/* on {new Date(convo.createdAt.seconds * 1000).toLocaleString().split(',')[0] */}
           </p>
           <p>
             Check the conversations tab to see if they have responded.

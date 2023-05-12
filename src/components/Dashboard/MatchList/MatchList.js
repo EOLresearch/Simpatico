@@ -18,7 +18,12 @@ export default function MatchList({ fsUser, matches, createConvo, convos, convoM
         <h3>Matched users</h3>
       </div>
       <div className='match-list'>
-        {
+        { 
+          matches.length === 1 ?
+          <div className='no-matches'>
+            <h3>Sorry, no matches yet</h3>
+          </div>
+          :
           simpaticoMatches.map((match, index) => {
             const convo = convos.find(c => c.docID === `${fsUser.uid} + ${match.uid}` || c.docID === `${match.uid} + ${fsUser.uid}`)
             return (
