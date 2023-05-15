@@ -6,21 +6,6 @@ export default function MatchList({ fsUser, matches = [], createConvo, convos = 
 
   const [simpaticoMatches, setSimpaticoMatches] = useState([])
 
-  // if (fsUser === null) {
-  //   return (
-  //     <div className='match-list-container'>
-  //       <div className='intro-details'>
-  //         <h3>Matched users</h3>
-  //       </div>
-  //       <div className='match-list'>
-  //         <div className='no-matches'>
-  //           <h3>Sorry, no matches yet</h3>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   )
-  // }
-
   useEffect(() => {
     if (fsUser === null) return
     const filterMeOut = matches.filter(match => match.uid !== fsUser.uid)
