@@ -34,6 +34,7 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
     setAnError('')
   }
 
+
   const validateNewUser = (e) => {
     e.preventDefault()
     setEmail(email.trim())
@@ -50,6 +51,8 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
         setAnError('noresidence')
       } else if (birthDate === '') {
         setAnError('nobirth')
+      } else if (over18Bouncer(birthDate) === false) {
+        setAnError('under18')
       } else if (lossDate === '') {
         setAnError('nolossdate')
       } else if (deceased === '') {
@@ -126,6 +129,7 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
     }
   }
 
+
   const createNewUser = async (e) => {
 
     try {
@@ -153,6 +157,29 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
       const errorCode = error.code;
       console.log(errorCode, error.message)
       setAnError(errorCode)
+    }
+  }
+
+  const over18Bouncer = (bdayString) => {
+    console.log(bdayString)
+    const today = new Date()
+    const birthDate = new Date(bdayString)
+    const age = today.getFullYear() - birthDate.getFullYear()
+    const month = today.getMonth() - birthDate.getMonth()
+    let realAge = 0
+
+    if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+      realAge = age - 1
+      console.log(realAge)
+    } else {
+      realAge = age
+      console.log(realAge)
+    }
+
+    if (realAge < 18) {
+      return false
+    } else {
+      return true
     }
   }
 
