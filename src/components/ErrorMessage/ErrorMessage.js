@@ -26,6 +26,8 @@ export default function ErrorMessage({ error, cancelError }) {
         return "Please enter your home state"
       case 'nobirth':
         return "Please enter your birthday"
+      case 'under18':
+        return "You must be 18 or older to register"
       case 'nolossdate':
         return "Please enter a date of loss"
       case 'nodeceased':
