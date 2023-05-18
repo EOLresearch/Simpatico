@@ -19,21 +19,16 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
   const [consent, setConsent] = useState(false)
   const [photoURL, setPhotoURL] = useState('')
 
-  //TODO:: THOSE FLIPPIN BORDERS ON HOVER ARE DRIVING ME NUTS> THEY MOVE THE DOC FLOW
-
   useEffect(() => {
     const randomNumber = Math.floor(Math.random() * (14 - 0 + 1) + 0)
     const avatarOptions = ["Bubba", "Chloe", "Bob", "Casper", "Boo", "Boots", "Abby", "Chester", "Charlie", "Cuddles", "Bandit", "Angel", "Baby", "Cookie", "Daisy"]
-
     const srcURL = `https://api.dicebear.com/5.x/thumbs/svg?seed=${avatarOptions[randomNumber]}`
-
     setPhotoURL(srcURL)
   }, [])
 
   const cancelError = () => {
     setAnError('')
   }
-
 
   const validateNewUser = (e) => {
     e.preventDefault()
