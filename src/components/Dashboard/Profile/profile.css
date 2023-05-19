@@ -1,3 +1,7 @@
+.react-icons-profile {
+  font-size: 2rem;
+}
+
 .profile-image {
   height: 5rem;
   width: 5rem;
@@ -8,7 +12,7 @@
 .image-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
 }
 
@@ -27,4 +31,29 @@
 }
 .profile-body p.details, p.story{
   margin-left:2rem;
+}
+
+.edit-user-details{
+  display: flex;
+  margin-top:1rem;
+}
+
+.edit-user-details p{
+  background-color: #31605b;
+  color:white;
+  padding:1rem;
+  border-radius:0.5rem;
+  margin-top:1rem;
+  display: flex;
+  align-items: center;
+  width: max-content;
+}
+.edit-user-details p span{
+  margin-left:1rem;
+}
+
+.profile-btn:hover{
+  background-color: #31605b76;
+  color: white;
+  cursor: pointer;
 }

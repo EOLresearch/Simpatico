@@ -202,6 +202,7 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
   return (
     <div className="auth-wrapper">
       <h3>Please complete this form</h3>
+      <h5>You will be able to edit these details later</h5>
       <div className="auth-container">
 
         <div className='fields-container register'>

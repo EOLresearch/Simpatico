@@ -7,6 +7,10 @@ textarea {
   all: unset;
 }
 
+h3, h5{
+  margin:0.3rem;
+}
+
 .auth-wrapper {
   color: #31605b;
   text-align: center;

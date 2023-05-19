@@ -1,6 +1,7 @@
 import './profile.css';
 import { useState } from "react";
 import { IconContext } from "react-icons";
+import { IoPersonAddSharp, IoBookSharp } from "react-icons/io5";
 
 export default function Profile({ user }) {
 
@@ -27,7 +28,24 @@ export default function Profile({ user }) {
               </div>
               <div className='profile-body'>
                 <p><strong>Hello, {user.displayName}.</strong></p>
-                <p className='body'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  </p>
+                <div className='body'>
+
+                  <p>Thank you for joining <strong>SIMPATICO</strong>.</p>
+                  <p>This application is designed for you to create positive social interactions with others who have experienced a similar loss. We ask that you log in at least once a day to chat with your SIMPATICO match. You can see your personal details below and edit them as you wish.</p>
+                  <p>Our goal is to help you find someone who can relate to your loss. We hope that you will find comfort in sharing your story and listening to the stories of others. We are here to help you through your grief journey.</p>
+
+                  <div className='edit-user-details'>
+                    <p className='profile-btn'><IoPersonAddSharp /> <span>Complete the Background Questionaire</span></p>
+                    <p className='profile-btn'><IoBookSharp /> <span>Edit your user details</span> </p>
+
+                  </div>
+
+
+
+                  
+
+                </div>
+
                 <h4>My Details</h4>
                 <p className='details'>{getAge(user.birthDate)}, {user.residence}<br />Lost Relationship: {user.deceased}, {user.cause}</p>
                 <h4>My Story</h4>
