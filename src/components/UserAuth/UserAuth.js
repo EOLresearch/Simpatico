@@ -157,13 +157,13 @@ export default function UserAuth({ user, firebase }) {
             </div> : null : null}
 
           <form onSubmit={onSubmitReturningUser}>
-            <label htmlFor='email'>* Email Address</label>
+            {/* <label htmlFor='email'>* Email Address</label> */}
             <div className='input-container'>
               <i className="fas fa-envelope"></i>
               <input id="email" type="email" placeholder="Your Email Address" value={email} onChange={changeHandler} name="email" required />
             </div>
 
-            <label htmlFor='password'>* Password</label>
+            {/* <label htmlFor='password'>* Password</label> */}
             <div className='input-container'>
               <i className="fas fa-lock"></i>
               <input id="password" type="password" placeholder="Your Password" value={password} onChange={changeHandler} name="password" required />

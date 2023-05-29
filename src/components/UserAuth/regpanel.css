@@ -1,0 +1,245 @@
+.register form{
+  max-width:60%;
+}
+.account-info{
+  padding:2rem;
+  margin-bottom:1rem;
+  border: solid rgba(0, 0, 0, 0.082) 1px;
+  background-color: #3f7d7714;
+}
+.account-info input{
+  background-color: transparent;
+}
+
+.personal-info{
+  padding:2rem;
+  margin-bottom:1rem;
+  border: solid rgba(0, 0, 0, 0.082) 1px;
+  background-color: #3f7d7714;
+}
+.personal-info input{
+  background-color: transparent;
+}
+.personal-info h4{
+  margin-bottom:1rem;
+}
+
+.register form input {
+  font-size: 1.3rem;
+  padding: 0.5rem;
+}
+
+.register form .dateType{
+  width:max-content;
+}
+
+.register form label {
+  font-size: 1.3rem;
+  padding: 0.5rem;
+  color: #31605b;
+  font-weight: 600;
+  background-color: #31605b2f;
+  width:100%;
+  display: inline-block;
+  margin-top: 0.5rem;
+}
+
+.input-container input:focus {
+  outline: none;
+}
+
+.input-container {
+  /* width: 100%; */
+  margin: 1rem;
+  border-bottom: solid black 1px;
+}
+
+.input-container textarea {
+  width: 100%;
+}
+
+.input-container i {
+  margin-right: 0.5rem;
+}
+
+.input-container i:last-child {
+  justify-content: flex-end;
+  font-size: 1.2rem;
+  color: #31605b;
+  float: right;
+}
+
+.personal-info input:hover{
+  cursor: pointer;
+}
+.personal-info select:hover{
+  cursor: pointer;
+}
+
+.btn:hover {
+  cursor: pointer;
+}
+
+.btn-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  color: #31605b;
+}
+
+.btn-container button {
+  border: none;
+  background-color: transparent;
+  font-size: 1.2rem;
+  color: #31605b;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: .6s;
+}
+
+.btn-container .sub-btn {
+  font-weight: 300;
+  background-color: #31605b;
+  color: #ffc107;
+  border-radius: 5px;
+  border: none;
+  padding: 0.7rem;
+  min-width: 220px;
+  font-weight: 300;
+}
+
+.btn-back {
+  margin-top: 5rem;
+}
+
+.btn-back:hover {
+  color: #588984;
+}
+
+.btn-container .sub-btn:hover {
+  background-color: #31605ba6;
+  transform: translateY(-0.3rem);
+}
+
+.btn-container .btn-go {
+  border: solid rgba(0, 0, 0, 0.144) 1px;
+  padding: 1rem 2rem 1rem 1rem;
+  display: flex;
+  align-items: center;
+
+  color: #31605b;
+  border-radius: 0.5rem;
+  margin-top: 5rem;
+}
+
+.btn-container .btn-go span {
+  margin-left: 2rem;
+}
+
+.btn-container .btn-go:hover {
+  background-color: #31605b76;
+  color: white;
+
+}
+
+.consent {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.consent div label{
+  background-color: transparent;
+}
+
+#consent {
+  height: 1.2rem;
+  width: 1.2rem;
+  margin-right: 1rem;
+  display: flex;
+}
+
+#consent:checked {
+  color: black;
+}
+
+.user-verify {
+  font-size: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 1rem 2rem;
+  width: max-content;
+  height: max-content;
+  margin: auto;
+  z-index: 3;
+  background-color: #000000c9;
+  border-radius: 1rem;
+  color: white;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+
+.modal-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #000000c9;
+  z-index: 2;
+}
+
+.user-verify button {
+  color: white;
+  text-decoration: underline;
+  font-size: 0.8rem;
+  cursor: pointer;
+  font-size: 1rem;
+
+}
+
+.forgotPassForm {
+  color: black;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  max-width: 45%;
+  position: relative;
+}
+
+.forgotPassForm input {
+  border: none;
+  border-bottom: black 2px solid;
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  color: rgba(0, 0, 0, 0.842);
+  width: 100%;
+}
+
+.forgotPassForm input:focus {
+  outline: none;
+}
+
+.forgotPassForm button {
+  width: 100%;
+  margin-bottom: 1rem;
+  border-bottom: solid black 1px;
+  background-color: #31605b;
+  color: #ffc107;
+  border-radius: 5px;
+  border: none;
+  padding: 0.7rem;
+  font-weight: 300;
+}
+
+.forgotPassForm button:hover {
+  background-color: #31605ba6;
+  transform: translateY(-0.3rem);
+}

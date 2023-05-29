@@ -1,4 +1,4 @@
-
+import './regpanel.css';
 import { useState, useEffect } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import ErrorMessage from '../ErrorMessage/ErrorMessage'
@@ -208,135 +208,142 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
         <div className='fields-container register'>
           <form onSubmit={validateNewUser}>
 
-            {/* <label htmlFor='email'>* Email Address</label> */}
-            <div className='input-container'>
-              <i className="fas fa-envelope"></i>
-              <input type="email" name="email" placeholder="Email" id="email" value={email} onChange={changeHandler} />
+            <div className="account-info">
+              <h4>Account Info</h4>
+              {/* <label htmlFor='email'>* Email Address</label> */}
+              <div className='input-container'>
+                <i className="fas fa-envelope"></i>
+                <input type="email" name="email" placeholder="Email" id="email" value={email} onChange={changeHandler} />
+              </div>
+
+              {/* <label htmlFor='password'>* Password</label> */}
+              <div className='input-container'>
+                <i className="fas fa-lock"></i>
+                <input type="password" name="password" placeholder="Password" id="password" value={password} onChange={changeHandler} />
+              </div>
+
+              {/* <label htmlFor='confirmpass'>* Confirm Password</label> */}
+              <div className='input-container'>
+                <i className="fas fa-lock"></i>
+                <input type="password" name="confirmPass" placeholder="Confirm Password" id="confirmPass" value={confirmPass} onChange={changeHandler} />
+              </div>
+
+
+              {/* <label htmlFor='displayName'>* Your Display Name</label> */}
+              <div className='input-container'>
+                <i className="fas fa-user-alt"></i>
+                <input type="text" name="displayName" placeholder="Display Name" id="name" value={displayName} onChange={changeHandler} />
+              </div>
             </div>
 
-            {/* <label htmlFor='password'>* Password</label> */}
-            <div className='input-container'>
-              <i className="fas fa-lock"></i>
-              <input type="password" name="password" placeholder="Password" id="password" value={password} onChange={changeHandler} />
-            </div>
+            <div className="personal-info">
+              <h4>Personal Info</h4>
 
-            {/* <label htmlFor='confirmpass'>* Confirm Password</label> */}
-            <div className='input-container'>
-              <i className="fas fa-lock"></i>
-              <input type="password" name="confirmPass" placeholder="Confirm Password" id="confirmPass" value={confirmPass} onChange={changeHandler} />
-            </div>
+              <label htmlFor='residence'>Home State</label>
+              <div className='input-container'>
+                {/* <i className="fas fa-map"></i> */}
+                <select type="text" name="residence" placeholder="Home State" id="residence" value={residence} onChange={changeHandler} >
+                  <option>Home State</option>
+                  <option value="AL">Alabama</option>
+                  <option value="AK">Alaska</option>
+                  <option value="AZ">Arizona</option>
+                  <option value="AR">Arkansas</option>
+                  <option value="CA">California</option>
+                  <option value="CO">Colorado</option>
+                  <option value="CT">Connecticut</option>
+                  <option value="DE">Delaware</option>
+                  <option value="DC">District Of Columbia</option>
+                  <option value="FL">Florida</option>
+                  <option value="GA">Georgia</option>
+                  <option value="HI">Hawaii</option>
+                  <option value="ID">Idaho</option>
+                  <option value="IL">Illinois</option>
+                  <option value="IN">Indiana</option>
+                  <option value="IA">Iowa</option>
+                  <option value="KS">Kansas</option>
+                  <option value="KY">Kentucky</option>
+                  <option value="LA">Louisiana</option>
+                  <option value="ME">Maine</option>
+                  <option value="MD">Maryland</option>
+                  <option value="MA">Massachusetts</option>
+                  <option value="MI">Michigan</option>
+                  <option value="MN">Minnesota</option>
+                  <option value="MS">Mississippi</option>
+                  <option value="MO">Missouri</option>
+                  <option value="MT">Montana</option>
+                  <option value="NE">Nebraska</option>
+                  <option value="NV">Nevada</option>
+                  <option value="NH">New Hampshire</option>
+                  <option value="NJ">New Jersey</option>
+                  <option value="NM">New Mexico</option>
+                  <option value="NY">New York</option>
+                  <option value="NC">North Carolina</option>
+                  <option value="ND">North Dakota</option>
+                  <option value="OH">Ohio</option>
+                  <option value="OK">Oklahoma</option>
+                  <option value="OR">Oregon</option>
+                  <option value="PA">Pennsylvania</option>
+                  <option value="RI">Rhode Island</option>
+                  <option value="SC">South Carolina</option>
+                  <option value="SD">South Dakota</option>
+                  <option value="TN">Tennessee</option>
+                  <option value="TX">Texas</option>
+                  <option value="UT">Utah</option>
+                  <option value="VT">Vermont</option>
+                  <option value="VA">Virginia</option>
+                  <option value="WA">Washington</option>
+                  <option value="WV">West Virginia</option>
+                  <option value="WI">Wisconsin</option>
+                  <option value="WY">Wyoming</option>
+                </select>
+              </div>
 
+              <label htmlFor="birthDate">Birthdate</label>
+              <div className='input-container'>
+                {/* <i className="fas fa-calendar-alt"></i> */}
+                <input type="date" name="birthDate" id="birthDate" className="dateType" placeholder="e.g. 01/01/1990" value={birthDate} onChange={changeHandler} />
 
-            {/* <label htmlFor='displayName'>* Your Display Name</label> */}
-            <div className='input-container'>
-              <i className="fas fa-user-alt"></i>
-              <input type="text" name="displayName" placeholder="Display Name" id="name" value={displayName} onChange={changeHandler} />
-            </div>
+              </div>
+              <label htmlFor="lossDate">When did you experience your loss?</label>
+              <div className='input-container'>
+                {/* <i className="fas fa-calendar-alt"></i> */}
+                <input type="date" name="lossDate" id="lossDate" className="dateType" placeholder="e.g. 01/01/1990" value={lossDate} onChange={changeHandler} />
+              </div>
 
-            {/* <label htmlFor='residence'>* Your Home State</label> */}
-            <div className='input-container'>
-              <i className="fas fa-map"></i>
-              <select type="text" name="residence" placeholder="Home State" id="residence" value={residence} onChange={changeHandler} >
-                <option>Home State</option>
-                <option value="AL">Alabama</option>
-                <option value="AK">Alaska</option>
-                <option value="AZ">Arizona</option>
-                <option value="AR">Arkansas</option>
-                <option value="CA">California</option>
-                <option value="CO">Colorado</option>
-                <option value="CT">Connecticut</option>
-                <option value="DE">Delaware</option>
-                <option value="DC">District Of Columbia</option>
-                <option value="FL">Florida</option>
-                <option value="GA">Georgia</option>
-                <option value="HI">Hawaii</option>
-                <option value="ID">Idaho</option>
-                <option value="IL">Illinois</option>
-                <option value="IN">Indiana</option>
-                <option value="IA">Iowa</option>
-                <option value="KS">Kansas</option>
-                <option value="KY">Kentucky</option>
-                <option value="LA">Louisiana</option>
-                <option value="ME">Maine</option>
-                <option value="MD">Maryland</option>
-                <option value="MA">Massachusetts</option>
-                <option value="MI">Michigan</option>
-                <option value="MN">Minnesota</option>
-                <option value="MS">Mississippi</option>
-                <option value="MO">Missouri</option>
-                <option value="MT">Montana</option>
-                <option value="NE">Nebraska</option>
-                <option value="NV">Nevada</option>
-                <option value="NH">New Hampshire</option>
-                <option value="NJ">New Jersey</option>
-                <option value="NM">New Mexico</option>
-                <option value="NY">New York</option>
-                <option value="NC">North Carolina</option>
-                <option value="ND">North Dakota</option>
-                <option value="OH">Ohio</option>
-                <option value="OK">Oklahoma</option>
-                <option value="OR">Oregon</option>
-                <option value="PA">Pennsylvania</option>
-                <option value="RI">Rhode Island</option>
-                <option value="SC">South Carolina</option>
-                <option value="SD">South Dakota</option>
-                <option value="TN">Tennessee</option>
-                <option value="TX">Texas</option>
-                <option value="UT">Utah</option>
-                <option value="VT">Vermont</option>
-                <option value="VA">Virginia</option>
-                <option value="WA">Washington</option>
-                <option value="WV">West Virginia</option>
-                <option value="WI">Wisconsin</option>
-                <option value="WY">Wyoming</option>
-              </select>
-            </div>
+              <label htmlFor="deceased">Relationship to deceased: the deceased is my...</label>
+              <div className='input-container'>
+                <select name="deceased" id="deceased" value={deceased} onChange={changeHandler} >
+                  <option>The deceased is my...</option>
+                  <option>Partner</option>
+                  <option>Grandparent</option>
+                  <option>Parent</option>
+                  <option>Offspring</option>
+                  <option>Sibling</option>
+                  <option>Cousin</option>
+                  <option>Grandchild</option>
+                  <option>Aunt</option>
+                  <option>Uncle</option>
+                  <option>Niece</option>
+                  <option>Nephew</option>
+                  <option>Friend</option>
+                  <option>Other</option>
+                  <option>I want to support others</option>
+                </select>
+              </div>
 
-            <label htmlFor="birthDate">Birthdate</label>
-            <div className='input-container'>
-              {/* <i className="fas fa-calendar-alt"></i> */}
-              <input type="date" name="birthDate" id="birthDate" placeholder="e.g. 01/01/1990" value={birthDate} onChange={changeHandler} />
+              <label htmlFor="cause">How did you loss occur?</label>
+              <div className='input-container'>
+                <select name="cause" id="cause" value={cause} onChange={changeHandler} >
+                  <option>Cause of death</option>
+                  <option>Natural</option>
+                  <option>Unnatural</option>
+                </select>
+              </div>
 
-            </div>
-            <label htmlFor="lossDate">When did you experience your loss?</label>
-            <div className='input-container'>
-              {/* <i className="fas fa-calendar-alt"></i> */}
-              <input type="date" name="lossDate" id="lossDate" placeholder="e.g. 01/01/1990" value={lossDate} onChange={changeHandler} />
-            </div>
-
-            <label htmlFor="deceased">Relationship to deceased: the deceased is my...</label>
-            <div className='input-container'>
-              <select name="deceased" id="deceased" value={deceased} onChange={changeHandler} >
-                <option>The deceased is my...</option>
-                <option>Partner</option>
-                <option>Grandparent</option>
-                <option>Parent</option>
-                <option>Offspring</option>
-                <option>Sibling</option>
-                <option>Cousin</option>
-                <option>Grandchild</option>
-                <option>Aunt</option>
-                <option>Uncle</option>
-                <option>Niece</option>
-                <option>Nephew</option>
-                <option>Friend</option>
-                <option>Other</option>
-                <option>I want to support others</option>
-              </select>
-            </div>
-
-            <label htmlFor="cause">How did you loss occur?</label>
-            <div className='input-container'>
-              <select name="cause" id="cause" value={cause} onChange={changeHandler} >
-                <option>Cause of death</option>
-                <option>Natural</option>
-                <option>Unnatural</option>
-              </select>
-            </div>
-
-            <label htmlFor="lossExp">Please use this space to describe your loss experience.</label>
-            <div className='input-container'>
-              <textarea name="lossExp" id="lossExp" value={lossExp} onChange={changeHandler} ></textarea>
+              <label htmlFor="lossExp">Please use this space to describe your loss experience.</label>
+              <div className='input-container'>
+                <textarea name="lossExp" id="lossExp" value={lossExp} onChange={changeHandler} ></textarea>
+              </div>
             </div>
 
             <div className='consent'>
