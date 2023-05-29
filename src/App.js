@@ -1,4 +1,3 @@
-
 import UserAuth from './components/UserAuth/UserAuth'
 import Dashboard from './components/Dashboard/Dashboard'
 import firebase from 'firebase/compat/app';

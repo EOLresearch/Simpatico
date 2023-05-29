@@ -15,7 +15,7 @@ export default function Profile({ user }) {
     }
     return age;
   }
-
+console.log(user)
   return (
     <IconContext.Provider value={{ className: "react-icons-profile" }}>
       {
@@ -36,20 +36,16 @@ export default function Profile({ user }) {
 
                   <div className='edit-user-details'>
                     <p className='profile-btn'><IoPersonAddSharp /> <span>Complete the Background Questionaire</span></p>
-                    <p className='profile-btn'><IoBookSharp /> <span>Edit your user details</span> </p>
+                    <p className='profile-btn'><IoBookSharp /> <span>View and Edit user details</span> </p>
 
                   </div>
 
-
-
-                  
-
                 </div>
 
-                <h4>My Details</h4>
+                {/* <h4>My Details</h4>
                 <p className='details'>{getAge(user.birthDate)}, {user.residence}<br />Lost Relationship: {user.deceased}, {user.cause}</p>
                 <h4>My Story</h4>
-                <p className='story'>{user.lossExp}</p>
+                <p className='story'>{user.lossExp}</p> */}
               </div>
             </div>
           </div>

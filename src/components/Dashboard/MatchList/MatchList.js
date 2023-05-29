@@ -15,13 +15,13 @@ export default function MatchList({ fsUser, matches = [], createConvo, convos = 
   return (
     <div className='match-list-container'>
       <div className='intro-details'>
-        <h3>Matched users</h3>
+        <h3>Your SIMPATICO Match</h3>
       </div>
       <div className='match-list'>
         { 
-          matches.length === 1 ?
+          matches.length === 1 || matches.length === 0 ?
           <div className='no-matches'>
-            <h3>Sorry, no matches yet</h3>
+            <h3>Sorry, you have not been matched yet</h3>
           </div>
           :
           simpaticoMatches.map((match, index) => {
