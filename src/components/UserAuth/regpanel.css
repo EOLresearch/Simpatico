@@ -1,26 +1,22 @@
 .register form{
   max-width:60%;
 }
-.account-info{
-  padding:2rem;
-  margin-bottom:1rem;
-  border: solid rgba(0, 0, 0, 0.082) 1px;
-  background-color: #3f7d7714;
-}
+
 .account-info input{
   background-color: transparent;
 }
 
-.personal-info{
+.reg-section{
   padding:2rem;
   margin-bottom:1rem;
   border: solid rgba(0, 0, 0, 0.082) 1px;
   background-color: #3f7d7714;
 }
-.personal-info input{
+
+.reg-section input{
   background-color: transparent;
 }
-.personal-info h4{
+.reg-section h4{
   margin-bottom:1rem;
 }
 
@@ -69,10 +65,10 @@
   float: right;
 }
 
-.personal-info input:hover{
+.reg-section input:hover{
   cursor: pointer;
 }
-.personal-info select:hover{
+.reg-section select:hover{
   cursor: pointer;
 }
 
