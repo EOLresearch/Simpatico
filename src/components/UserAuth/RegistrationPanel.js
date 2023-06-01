@@ -19,7 +19,7 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
   const [residence, setResidence] = useState('')
   const [lossDate, setLossDate] = useState('')
   const [raceEnthnicity, setRaceEnthnicity] = useState('')
-  const [bioSex, setBioSex] = useState('')
+  const [bioSex, setBioSex] = useState('Prefer not to disclose')
   const [education, setEducation] = useState('')
   const [household, setHousehold] = useState('')
   const [hobbies, setHobbies] = useState('')
