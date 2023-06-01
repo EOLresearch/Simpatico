@@ -21,6 +21,7 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
   const [education, setEducation] = useState('')
   const [household, setHousehold] = useState('')
   const [hobbies, setHobbies] = useState('')
+  const [deceasedAge, setDeceasedAge] = useState('')
 
   const [consent, setConsent] = useState(false)
   const [photoURL, setPhotoURL] = useState('')
@@ -353,58 +354,64 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
                   <option>Live with roommates</option>
                   <option>Prefer not to disclose</option>
                 </select>
-
-                <label htmlFor="hobbies">What are yout hobbies?</label>
-                <div className='input-container'>
-                  <textarea name="hobbies" id="hobbies" value={hobbies} onChange={changeHandler} ></textarea>
-                </div>
               </div>
+
+              <label htmlFor="hobbies">What are your hobbies?</label>
+              <div className='input-container'>
+                <textarea name="hobbies" id="hobbies" value={hobbies} onChange={changeHandler} ></textarea>
+              </div>
+
             </div>
 
-              <div className='reg-section your-story'>
-                <h4>Your Story</h4>
-                <label htmlFor="lossDate">When did you experience your loss?</label>
-                <div className='input-container'>
-                  {/* <i className="fas fa-calendar-alt"></i> */}
-                  <input type="date" name="lossDate" id="lossDate" className="dateType" placeholder="e.g. 01/01/1990" value={lossDate} onChange={changeHandler} />
-                </div>
-
-                <label htmlFor="deceased">Relationship to deceased: the deceased is my...</label>
-                <div className='input-container'>
-                  <select name="deceased" id="deceased" value={deceased} onChange={changeHandler} >
-                    <option>The deceased is my...</option>
-                    <option>Partner</option>
-                    <option>Grandparent</option>
-                    <option>Parent</option>
-                    <option>Offspring</option>
-                    <option>Sibling</option>
-                    <option>Cousin</option>
-                    <option>Grandchild</option>
-                    <option>Aunt</option>
-                    <option>Uncle</option>
-                    <option>Niece</option>
-                    <option>Nephew</option>
-                    <option>Friend</option>
-                    <option>Other</option>
-                    <option>I want to support others</option>
-                  </select>
-                </div>
-
-                <label htmlFor="cause">How did you loss occur?</label>
-                <div className='input-container'>
-                  <select name="cause" id="cause" value={cause} onChange={changeHandler} >
-                    <option>Cause of death</option>
-                    <option>Natural</option>
-                    <option>Unnatural</option>
-                  </select>
-                </div>
-
-                <label htmlFor="lossExp">Please use this space to describe your loss experience.</label>
-                <div className='input-container'>
-                  <textarea name="lossExp" id="lossExp" value={lossExp} onChange={changeHandler} ></textarea>
-                </div>
-
+            <div className='reg-section your-story'>
+              <h4>Your Story</h4>
+              <label htmlFor="lossDate">When did you experience your loss?</label>
+              <div className='input-container'>
+                {/* <i className="fas fa-calendar-alt"></i> */}
+                <input type="date" name="lossDate" id="lossDate" className="dateType" placeholder="e.g. 01/01/1990" value={lossDate} onChange={changeHandler} />
               </div>
+
+              <label htmlFor="deceased">Relationship to deceased: the deceased is my...</label>
+              <div className='input-container'>
+                <select name="deceased" id="deceased" value={deceased} onChange={changeHandler} >
+                  <option>The deceased is my...</option>
+                  <option>Partner</option>
+                  <option>Grandparent</option>
+                  <option>Parent</option>
+                  <option>Offspring</option>
+                  <option>Sibling</option>
+                  <option>Cousin</option>
+                  <option>Grandchild</option>
+                  <option>Aunt</option>
+                  <option>Uncle</option>
+                  <option>Niece</option>
+                  <option>Nephew</option>
+                  <option>Friend</option>
+                  <option>Other</option>
+                  <option>I want to support others</option>
+                </select>
+              </div>
+
+              <label htmlFor="deceasedAge">How old were they?</label>
+              <div className='input-container'>
+                <input type="number" name="deceasedAge" id="deceasedAge" placeholder="age" value={deceasedAge} onChange={changeHandler} />
+              </div>
+
+              <label htmlFor="cause">How did your loss occur?</label>
+              <div className='input-container'>
+                <select name="cause" id="cause" value={cause} onChange={changeHandler} >
+                  <option>Cause of death</option>
+                  <option>Natural</option>
+                  <option>Unnatural</option>
+                </select>
+              </div>
+
+              <label htmlFor="lossExp">Please use this space to describe your loss experience.</label>
+              <div className='input-container'>
+                <textarea name="lossExp" id="lossExp" value={lossExp} onChange={changeHandler} ></textarea>
+              </div>
+
+            </div>
 
             <div className='consent'>
               <input type="checkbox" name="consent" id="consent" value={consent} onChange={changeHandler} ></input>
