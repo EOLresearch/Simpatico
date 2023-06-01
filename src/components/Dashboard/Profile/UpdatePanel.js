@@ -1,11 +1,14 @@
-import './regpanel.css';
+import '../../UserAuth/userauth.css';
+import '../../UserAuth/regpanel.css';
+import './updatepanel.css'
+
 import { useState, useEffect } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import ErrorMessage from '../ErrorMessage/ErrorMessage'
+import ErrorMessage from '../../ErrorMessage/ErrorMessage'
 // import { FaInfo } from 'react-icons/fa';
 // import AvatarGenerator from './AvatarGenerator'
 
-export default function RegistrationPanel({ auth, usersRef, registrationDisplaySwitch, fsUser }) {
+export default function UpdatePanel({ fsUser, userDetailsHandler }) {
   const [anError, setAnError] = useState('')
 
   // Account  Info----------
@@ -13,32 +16,28 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPass, setConfirmPass] = useState('')
-  const [displayName, setDisplayName] = useState('')
+  const [displayName, setDisplayName] = useState(fsUser.displayName)
 
   // User Info----------
-  const [residence, setResidence] = useState('')
-  const [lossDate, setLossDate] = useState('')
-  const [raceEnthnicity, setRaceEnthnicity] = useState('')
-  const [bioSex, setBioSex] = useState('Prefer not to disclose')
-  const [education, setEducation] = useState('')
-  const [household, setHousehold] = useState('')
-  const [hobbies, setHobbies] = useState('')
+  const [residence, setResidence] = useState(fsUser.residence)
+  const [lossDate, setLossDate] = useState(fsUser.lossDate)
+  const [raceEnthnicity, setRaceEnthnicity] = useState(fsUser.raceEnthnicity)
+  const [bioSex, setBioSex] = useState(fsUser.bioSex)
+  const [education, setEducation] = useState(fsUser.education)
+  const [household, setHousehold] = useState(fsUser.household)
+  const [hobbies, setHobbies] = useState(fsUser.hobbies)
 
   // Deceased Info----------
-  const [birthDate, setBirthDate] = useState('')
-  const [deceased, setDeceased] = useState('')
-  const [cause, setCause] = useState('')
-  const [deceasedAge, setDeceasedAge] = useState('')
-  const [lossExp, setLossExp] = useState('')
+  const [birthDate, setBirthDate] = useState(fsUser.birthDate)
+  ///should we be able to change these below?
+  const [deceased, setDeceased] = useState(fsUser.deceased)
+  const [cause, setCause] = useState(fsUser.cause)
+  const [deceasedAge, setDeceasedAge] = useState(fsUser.deceasedAge)
+
+  ///we should keep a record of all these changes
+  const [lossExp, setLossExp] = useState(fsUser.lossExp)
 
   const [consent, setConsent] = useState(false)
-
-  useEffect(() => {
-    const randomNumber = Math.floor(Math.random() * (14 - 0 + 1) + 0)
-    const avatarOptions = ["Bubba", "Chloe", "Bob", "Casper", "Boo", "Boots", "Abby", "Chester", "Charlie", "Cuddles", "Bandit", "Angel", "Baby", "Cookie", "Daisy"]
-    const srcURL = `https://api.dicebear.com/5.x/thumbs/svg?seed=${avatarOptions[randomNumber]}`
-    setPhotoURL(srcURL)
-  }, [])
 
   const cancelError = () => {
     setAnError('')
@@ -74,7 +73,7 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
         setAnError('consent')
       } else if (consent === true) {
         setAnError('')
-        createNewUser(e)
+        // createNewUser(e)
       }
     } else {
       if (residence === '') {
@@ -93,7 +92,6 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
         setAnError('consent')
       } else if (consent === true) {
         setAnError('')
-        updateUser()
       }
     }
   }
@@ -156,46 +154,45 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
     }
   }
 
-  const createNewUser = async (e) => {
+  // const createNewUser = async (e) => {
+  //   try {
+  //     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+  //     const user = userCredential.user;
+  //     usersRef.doc(user.uid).set({
+  //       // Account  Info----------
+  //       uid: user.uid,
+  //       photoURL: photoURL,
+  //       email: email,
+  //       displayName: displayName,
 
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-      usersRef.doc(user.uid).set({
-        // Account  Info----------
-        uid: user.uid,
-        photoURL: photoURL,
-        email: email,
-        displayName: displayName,
+  //       // User Info----------
+  //       residence: residence,
+  //       birthDate: birthDate,
+  //       raceEnthnicity: raceEnthnicity,
+  //       bioSex: bioSex,
+  //       education: education,
+  //       household: household,
+  //       hobbies: hobbies,
 
-        // User Info----------
-        residence: residence,
-        birthDate: birthDate,
-        raceEnthnicity: raceEnthnicity,
-        bioSex: bioSex,
-        education: education,
-        household: household,
-        hobbies: hobbies,
-
-        // Deceased Info----------
-        lossDate: lossDate,
-        deceased: deceased,
-        cause: cause,
-        deceasedAge: deceasedAge,
-        lossExp: lossExp,
-      })
-      auth.currentUser.sendEmailVerification()
-        .then(() => {
-          // Email verification sent!
-          // ...
-          registrationDisplaySwitch(e);
-        });
-    } catch (error) {
-      const errorCode = error.code;
-      console.log(errorCode, error.message)
-      setAnError(errorCode)
-    }
-  }
+  //       // Deceased Info----------
+  //       lossDate: lossDate,
+  //       deceased: deceased,
+  //       cause: cause,
+  //       deceasedAge: deceasedAge,
+  //       lossExp: lossExp,
+  //     })
+  //     auth.currentUser.sendEmailVerification()
+  //       .then(() => {
+  //         // Email verification sent!
+  //         // ...
+  //         registrationDisplaySwitch(e);
+  //       });
+  //   } catch (error) {
+  //     const errorCode = error.code;
+  //     console.log(errorCode, error.message)
+  //     setAnError(errorCode)
+  //   }
+  // }
 
   const over18Bouncer = (bdayString) => {
     const today = new Date()
@@ -219,31 +216,14 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
     }
   }
 
-  const updateUser = async () => {
-    try {
-      usersRef.doc(fsUser.uid).set({
-        email: fsUser.email,
-        uid: fsUser.uid,
-        displayName: displayName ? displayName : fsUser.displayName,
-        birthDate: birthDate,
-        photoURL: fsUser.photoURL,
-        deceased: deceased,
-        lossDate: lossDate,
-        cause: cause,
-        residence: residence,
-        lossExp: lossExp,
-      })
-    } catch (error) {
-      const errorCode = error.code;
-      console.log(errorCode, error.message)
-      setAnError(errorCode)
-    }
-  }
-
   return (
     <div className="auth-wrapper">
-      <h3>Please complete this form</h3>
-      <h5>You will be able to edit these details later</h5>
+      <h5>Please use this form to update your data as you wish</h5>
+      <h5>Any unanswered questions will default back to your original answer from registration.</h5>
+      <button className="back-btn" onClick={e => userDetailsHandler(e, false)} >back</button>
+
+      
+
       <div className="auth-container">
 
         <div className='fields-container register'>
@@ -276,6 +256,9 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
                 <input type="text" name="displayName" placeholder="Display Name" id="name" value={displayName} onChange={changeHandler} />
               </div>
             </div>
+
+
+
 
             <div className="reg-section personal-info">
               <h4>Personal Info</h4>
@@ -462,7 +445,6 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
           </form>
         </div>
       </div>
-      <button onClick={registrationDisplaySwitch} className='btn btn-back'> Already joined? <strong>Login now</strong></button>
     </div>
   )
 }

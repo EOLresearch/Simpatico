@@ -102,6 +102,7 @@ export default function Dashboard(props) {
   const clickedProfile = profileTab === true ? "clicked" : null
   const clickedMatches = matchListTab === true ? "clicked" : null
   const clickedConversations = conversationsTab === true ? "clicked" : null
+  
   function chatHandler(e, documentID) {
     setDocID(documentID)
     setShowChatWindow(true)

@@ -2,8 +2,11 @@ import './profile.css';
 import { useState } from "react";
 import { IconContext } from "react-icons";
 import { IoPersonAddSharp, IoBookSharp } from "react-icons/io5";
+import UpdatePanel from "./UpdatePanel"
+
 
 export default function Profile({ user }) {
+  const [editUserDetails, setEditUserDetails] = useState(false)
 
   function getAge(date) {
     const today = new Date();
@@ -15,7 +18,15 @@ export default function Profile({ user }) {
     }
     return age;
   }
-console.log(user)
+
+  function userDetailsHandler(e, boolean) {
+    setEditUserDetails(boolean)
+  }
+
+  if (editUserDetails === true) {
+    return <UpdatePanel fsUser={user} userDetailsHandler={userDetailsHandler} />
+  }
+
   return (
     <IconContext.Provider value={{ className: "react-icons-profile" }}>
       {
@@ -34,10 +45,8 @@ console.log(user)
                   <p>This application is designed for you to create positive social interactions with others who have experienced a similar loss. We ask that you log in at least once a day to chat with your SIMPATICO match. You can see your personal details below and edit them as you wish.</p>
                   <p>Our goal is to help you find someone who can relate to your loss. We hope that you will find comfort in sharing your story and listening to the stories of others. We are here to help you through your grief journey.</p>
 
-                  <div className='edit-user-details'>
-                    <p className='profile-btn'><IoPersonAddSharp /> <span>Complete the Background Questionaire</span></p>
+                  <div className='edit-user-details' onClick={e => userDetailsHandler(e, true)}>
                     <p className='profile-btn'><IoBookSharp /> <span>View and Edit user details</span> </p>
-
                   </div>
 
                 </div>
