@@ -127,6 +127,24 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
       case 'lossExp':
         setLossExp(e.target.value)
         break
+      case 'raceEnthnicity':
+        setRaceEnthnicity(e.target.value)
+        break
+      case 'bioSex':
+        setBioSex(e.target.value)
+        break
+      case 'education':
+        setEducation(e.target.value)
+        break
+      case 'household':
+        setHousehold(e.target.value)
+        break
+      case 'hobbies':
+        setHobbies(e.target.value)
+        break
+      case 'deceasedAge':
+        setDeceasedAge(e.target.value)
+        break
       default:
         console.log('default case')
     }
@@ -309,7 +327,7 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
               <label htmlFor="birthDate">Birthdate</label>
               <div className='input-container'>
                 {/* <i className="fas fa-calendar-alt"></i> */}
-                <input type="date" name="birthDate" id="birthDate" className="dateType" placeholder="e.g. 01/01/1990" value={birthDate} onChange={changeHandler} />
+                <input type="date" name="birthDate" id="birthDate" className="widthAdjust" placeholder="e.g. 01/01/1990" value={birthDate} onChange={changeHandler} />
               </div>
 
               <label htmlFor="raceEnthnicity">What race/ethnicity best describes you?</label>
@@ -368,7 +386,7 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
               <label htmlFor="lossDate">When did you experience your loss?</label>
               <div className='input-container'>
                 {/* <i className="fas fa-calendar-alt"></i> */}
-                <input type="date" name="lossDate" id="lossDate" className="dateType" placeholder="e.g. 01/01/1990" value={lossDate} onChange={changeHandler} />
+                <input type="date" name="lossDate" id="lossDate" className="widthAdjust" placeholder="e.g. 01/01/1990" value={lossDate} onChange={changeHandler} />
               </div>
 
               <label htmlFor="deceased">Relationship to deceased: the deceased is my...</label>
@@ -394,7 +412,7 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
 
               <label htmlFor="deceasedAge">How old were they?</label>
               <div className='input-container'>
-                <input type="number" name="deceasedAge" id="deceasedAge" placeholder="age" value={deceasedAge} onChange={changeHandler} />
+                <input type="number" name="deceasedAge" id="deceasedAge" placeholder="age" className="widthAdjust" value={deceasedAge} onChange={changeHandler} />
               </div>
 
               <label htmlFor="cause">How did your loss occur?</label>
