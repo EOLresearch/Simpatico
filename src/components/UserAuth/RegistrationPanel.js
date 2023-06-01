@@ -2,29 +2,36 @@ import './regpanel.css';
 import { useState, useEffect } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import ErrorMessage from '../ErrorMessage/ErrorMessage'
+// import { FaInfo } from 'react-icons/fa';
 // import AvatarGenerator from './AvatarGenerator'
 
 export default function RegistrationPanel({ auth, usersRef, registrationDisplaySwitch, fsUser }) {
   const [anError, setAnError] = useState('')
+
+  // Account  Info----------
+  const [photoURL, setPhotoURL] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPass, setConfirmPass] = useState('')
   const [displayName, setDisplayName] = useState('')
-  const [birthDate, setBirthDate] = useState('')
-  const [lossDate, setLossDate] = useState('')
-  const [deceased, setDeceased] = useState('')
-  const [cause, setCause] = useState('')
-  const [lossExp, setLossExp] = useState('')
+
+  // User Info----------
   const [residence, setResidence] = useState('')
+  const [lossDate, setLossDate] = useState('')
   const [raceEnthnicity, setRaceEnthnicity] = useState('')
   const [bioSex, setBioSex] = useState('')
   const [education, setEducation] = useState('')
   const [household, setHousehold] = useState('')
   const [hobbies, setHobbies] = useState('')
+
+  // Deceased Info----------
+  const [birthDate, setBirthDate] = useState('')
+  const [deceased, setDeceased] = useState('')
+  const [cause, setCause] = useState('')
   const [deceasedAge, setDeceasedAge] = useState('')
+  const [lossExp, setLossExp] = useState('')
 
   const [consent, setConsent] = useState(false)
-  const [photoURL, setPhotoURL] = useState('')
 
 
   useEffect(() => {
@@ -157,16 +164,27 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       usersRef.doc(user.uid).set({
+        // Account  Info----------
         uid: user.uid,
+        photoURL: photoURL,
         email: email,
         displayName: displayName,
-        birthDate: birthDate,
-        deceased: deceased,
-        lossDate: lossDate,
-        cause: cause,
+
+        // User Info----------
         residence: residence,
+        birthDate: birthDate,
+        raceEnthnicity: raceEnthnicity,
+        bioSex: bioSex,
+        education: education,
+        household: household,
+        hobbies: hobbies,
+
+        // Deceased Info----------
+        lossDate: lossDate,
+        deceased: deceased,
+        cause: cause,
+        deceasedAge: deceasedAge,
         lossExp: lossExp,
-        photoURL: photoURL
       })
       auth.currentUser.sendEmailVerification()
         .then(() => {
@@ -410,10 +428,6 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
                 </select>
               </div>
 
-              <label htmlFor="deceasedAge">How old were they?</label>
-              <div className='input-container'>
-                <input type="number" name="deceasedAge" id="deceasedAge" placeholder="age" className="widthAdjust" value={deceasedAge} onChange={changeHandler} />
-              </div>
 
               <label htmlFor="cause">How did your loss occur?</label>
               <div className='input-container'>
@@ -422,6 +436,11 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
                   <option>Natural</option>
                   <option>Unnatural</option>
                 </select>
+              </div>
+
+              <label htmlFor="deceasedAge">How old were they?</label>
+              <div className='input-container'>
+                <input type="number" name="deceasedAge" id="deceasedAge" placeholder="age" className="widthAdjust" value={deceasedAge} onChange={changeHandler} />
               </div>
 
               <label htmlFor="lossExp">Please use this space to describe your loss experience.</label>
