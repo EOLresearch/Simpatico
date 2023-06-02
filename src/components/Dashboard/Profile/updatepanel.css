@@ -1,6 +1,9 @@
 .back-btn:hover{
   cursor: pointer;
 }
+.accordion-handle:hover{
+  cursor: pointer;
+}
 
 .react-icons-updatePanel{
   font-size: 2rem;
@@ -9,4 +12,9 @@
 .accordion-handle{
   display: flex;
   justify-content: space-between;
+}
+
+.reg-section h6{
+  margin:0 2rem;
+  color: rgba(0, 0, 0, 0.421);
 }
