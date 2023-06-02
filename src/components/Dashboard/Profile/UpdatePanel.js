@@ -254,20 +254,16 @@ export default function UpdatePanel({ fsUser, userDetailsHandler }) {
                     <input type="email" name="email" placeholder="Email" id="email" value={email} onChange={changeHandler} />
                   </div>
 
-                  {/* <label htmlFor='password'>* Password</label> */}
                   <div className='input-container'>
                     <i className="fas fa-lock"></i>
                     <input type="password" name="password" placeholder="Password" id="password" value={password} onChange={changeHandler} />
                   </div>
 
-                  {/* <label htmlFor='confirmpass'>* Confirm Password</label> */}
                   <div className='input-container'>
                     <i className="fas fa-lock"></i>
                     <input type="password" name="confirmPass" placeholder="Confirm Password" id="confirmPass" value={confirmPass} onChange={changeHandler} />
                   </div>
 
-
-                  {/* <label htmlFor='displayName'>* Your Display Name</label> */}
                   <div className='input-container'>
                     <i className="fas fa-user-alt"></i>
                     <input type="text" name="displayName" placeholder="Display Name" id="name" value={displayName} onChange={changeHandler} />
