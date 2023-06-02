@@ -1,8 +1,21 @@
 .back-btn:hover{
   cursor: pointer;
+
 }
 .accordion-handle:hover{
   cursor: pointer;
+}
+
+.auth-wrapper .back-btn{
+  font-size: 1.2rem;
+  font-weight: 900;
+}
+
+.back-btn-container{
+  margin-top:1rem;
+  display:flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .react-icons-updatePanel{

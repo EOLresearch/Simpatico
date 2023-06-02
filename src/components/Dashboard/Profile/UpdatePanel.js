@@ -1,11 +1,10 @@
-import '../../UserAuth/userauth.css';
-import '../../UserAuth/regpanel.css';
 import './updatepanel.css'
 
 import { IconContext } from "react-icons";
 import { AiOutlineDown, AiOutlineEllipsis } from "react-icons/ai";
-import { useState, useEffect } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { BsArrowLeft } from "react-icons/bs";
+
+import { useState } from "react";
 import ErrorMessage from '../../ErrorMessage/ErrorMessage'
 // import { FaInfo } from 'react-icons/fa';
 // import AvatarGenerator from './AvatarGenerator'
@@ -20,7 +19,7 @@ export default function UpdatePanel({ fsUser, userDetailsHandler }) {
 
 
   // Account  Info----------
-  const [photoURL, setPhotoURL] = useState('')
+  // const [photoURL, setPhotoURL] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPass, setConfirmPass] = useState('')
@@ -232,9 +231,10 @@ export default function UpdatePanel({ fsUser, userDetailsHandler }) {
       <div className="auth-wrapper">
         <h5>Please use this form to update your data as you wish</h5>
         <h5>Any unanswered questions will default back to your original answer from registration.</h5>
-        <button className="back-btn" onClick={e => userDetailsHandler(e, false)} >back</button>
-
-
+        <div className='back-btn-container' onClick={e => userDetailsHandler(e, false)}>
+          <BsArrowLeft size="1.5rem" />
+          <button className="back-btn">back to profile</button>
+        </div>
 
         <div className="auth-container">
           <div className='fields-container register'>
@@ -431,7 +431,7 @@ export default function UpdatePanel({ fsUser, userDetailsHandler }) {
                 <div className='reg-section your-story'>
                   <div onClick={e => setDeceasedInfo(false)} className='accordion-handle'>
                     <h4>Your Story</h4>
-                    <AiOutlineDown />
+                    <AiOutlineEllipsis />
                   </div>
                   <label htmlFor="lossDate">When did you experience your loss?</label>
                   <div className='input-container'>
@@ -480,7 +480,6 @@ export default function UpdatePanel({ fsUser, userDetailsHandler }) {
                   </div>
                 </div>
               }
-
 
               <div className='consent'>
                 <input type="checkbox" name="consent" id="consent" value={consent} onChange={changeHandler} ></input>
