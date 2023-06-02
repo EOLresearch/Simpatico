@@ -109,7 +109,7 @@ export default function Dashboard(props) {
   }
 
   return (
-    <IconContext.Provider value={{ className: "react-icons-profile" }}>
+    <IconContext.Provider value={{ className: "react-icons-dashboard" }}>
       <div className='dashboard-container'>
         <div className='dashboard-body'>
           <div className='sub-nav'>

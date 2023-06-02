@@ -4,7 +4,9 @@
   justify-content: center;
   flex-direction: column;
 }
-
+.react-icons-dashboard {
+  font-size: 2rem;
+}
 .display-card {
   padding: 2rem;
   border-radius: 1rem;
