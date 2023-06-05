@@ -1,8 +1,9 @@
-.back-btn:hover{
-  cursor: pointer;
-
+.account-info-updatePanel{
+  /* pointer-events: none; */
+  opacity: 0.3;
 }
-.accordion-handle:hover{
+
+.reg-section:hover{
   cursor: pointer;
 }
 
@@ -25,6 +26,14 @@
 .accordion-handle{
   display: flex;
   justify-content: space-between;
+  margin:0;
+
+}
+.accordion-handle h4{
+  margin:0;
+}
+.accordion-handle:hover{
+  cursor: pointer;
 }
 
 .reg-section h6{

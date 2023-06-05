@@ -9,7 +9,7 @@ import ErrorMessage from '../../ErrorMessage/ErrorMessage'
 // import { FaInfo } from 'react-icons/fa';
 // import AvatarGenerator from './AvatarGenerator'
 
-export default function UpdatePanel({ fsUser, userDetailsHandler }) {
+export default function UpdatePanel({ firestore, fsUser, userDetailsHandler }) {
   const [anError, setAnError] = useState('')
 
   //View States-----------
@@ -27,7 +27,6 @@ export default function UpdatePanel({ fsUser, userDetailsHandler }) {
 
   // User Info----------
   const [residence, setResidence] = useState(fsUser.residence)
-  const [lossDate, setLossDate] = useState(fsUser.lossDate)
   const [raceEnthnicity, setRaceEnthnicity] = useState(fsUser.raceEnthnicity)
   const [bioSex, setBioSex] = useState(fsUser.bioSex)
   const [education, setEducation] = useState(fsUser.education)
@@ -35,6 +34,7 @@ export default function UpdatePanel({ fsUser, userDetailsHandler }) {
   const [hobbies, setHobbies] = useState(fsUser.hobbies)
 
   // Deceased Info----------
+  const [lossDate, setLossDate] = useState(fsUser.lossDate)
   const [birthDate, setBirthDate] = useState(fsUser.birthDate)
   ///should we be able to change these below?
   const [deceased, setDeceased] = useState(fsUser.deceased)
@@ -52,73 +52,55 @@ export default function UpdatePanel({ fsUser, userDetailsHandler }) {
     setAnError('')
   }
 
-  const validateNewUser = (e) => {
-    e.preventDefault()
-    setEmail(email.trim())
-    //there is some outdated code here, the if else statemnet is not needed without google signin.
 
-    if (!fsUser) {
-      if (email === "") {
-        setAnError('auth/missing-email')
-      } else if (password === '') {
-        setAnError('nopass')
-      } else if (password !== confirmPass) {
-        setAnError('nomatchpass')
-      } else if (residence === '') {
-        setAnError('noresidence')
-      } else if (birthDate === '') {
-        setAnError('nobirth')
-      } else if (over18Bouncer(birthDate) === false) {
-        setAnError('under18')
-      } else if (lossDate === '') {
-        setAnError('nolossdate')
-      } else if (deceased === '') {
-        setAnError('nodeceased')
-      } else if (cause === '') {
-        setAnError('nocause')
-      } else if (lossExp === '') {
-        setAnError('nolossexp')
-      } else if (consent === false) {
-        setAnError('consent')
-      } else if (consent === true) {
-        setAnError('')
-        // createNewUser(e)
-      }
-    } else {
-      if (residence === '') {
-        setAnError('noresidence')
-      } else if (birthDate === '') {
-        setAnError('nobirth')
-      } else if (lossDate === '') {
-        setAnError('nolossdate')
-      } else if (deceased === '') {
-        setAnError('nodeceased')
-      } else if (cause === '') {
-        setAnError('nocause')
-      } else if (lossExp === '') {
-        setAnError('nolossexp')
-      } else if (consent === false) {
-        setAnError('consent')
-      } else if (consent === true) {
-        setAnError('')
-      }
+  const validateUpdates = (e) => {
+    e.preventDefault()
+    if (residence === '') {
+      setResidence(fsUser.residence)
+    } else if (birthDate === '') {
+      setBirthDate(fsUser.birthDate)
+    } else if (raceEnthnicity === '') {
+      setRaceEnthnicity(fsUser.raceEnthnicity)
+    } else if (bioSex === '') {
+      setBioSex(fsUser.bioSex)
+    } else if (education === '') {
+      setEducation(fsUser.education)
+    } else if (household === '') {
+      setHousehold(fsUser.household)
+    } else if (hobbies === '') {
+      setHobbies(fsUser.hobbies)
+    } else if (lossDate === '') {
+      setLossDate(fsUser.lossDate)
+    } else if (deceased === '') {
+      setDeceased(fsUser.deceased)
+    } else if (cause === '') {
+      setCause(fsUser.cause)
+    } else if (deceasedAge === '') {
+      setDeceasedAge(fsUser.deceasedAge)
+    } else if (lossExp === '') {
+      setLossExp(fsUser.lossExp)
+    } else if (consent === false) {
+      setAnError('consent')
+    } else if (consent === true) {
+      setAnError('')
+      updateUser(e)
     }
   }
 
   const changeHandler = (e) => {
     switch (e.target.name) {
-      case 'email':
-        setEmail(e.target.value.trim())
-        break
-      case 'password':
-        setPassword(e.target.value)
-        break
-      case 'confirmPass':
-        setConfirmPass(e.target.value)
-        break
-      case 'displayName':
-        setDisplayName(e.target.value)
-        break
+      // case 'email':
+      //   setEmail(e.target.value.trim())
+      //   break
+      // case 'password':
+      //   setPassword(e.target.value)
+      //   break
+      // case 'confirmPass':
+      //   setConfirmPass(e.target.value)
+      //   break
+      // case 'displayName':
+      //   setDisplayName(e.target.value)
+      //   break
       case 'residence':
         setResidence(e.target.value)
         break
@@ -163,45 +145,37 @@ export default function UpdatePanel({ fsUser, userDetailsHandler }) {
     }
   }
 
-  // const createNewUser = async (e) => {
-  //   try {
-  //     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-  //     const user = userCredential.user;
-  //     usersRef.doc(user.uid).set({
-  //       // Account  Info----------
-  //       uid: user.uid,
-  //       photoURL: photoURL,
-  //       email: email,
-  //       displayName: displayName,
 
-  //       // User Info----------
-  //       residence: residence,
-  //       birthDate: birthDate,
-  //       raceEnthnicity: raceEnthnicity,
-  //       bioSex: bioSex,
-  //       education: education,
-  //       household: household,
-  //       hobbies: hobbies,
+  const updateUser = (e) => {
+    const usersRef = firestore.collection('users');
+    usersRef.doc(fsUser.uid).update({
 
-  //       // Deceased Info----------
-  //       lossDate: lossDate,
-  //       deceased: deceased,
-  //       cause: cause,
-  //       deceasedAge: deceasedAge,
-  //       lossExp: lossExp,
-  //     })
-  //     auth.currentUser.sendEmailVerification()
-  //       .then(() => {
-  //         // Email verification sent!
-  //         // ...
-  //         registrationDisplaySwitch(e);
-  //       });
-  //   } catch (error) {
-  //     const errorCode = error.code;
-  //     console.log(errorCode, error.message)
-  //     setAnError(errorCode)
-  //   }
-  // }
+
+      // User Info----------
+      residence: residence,
+      birthDate: birthDate,
+      raceEnthnicity: raceEnthnicity,
+      bioSex: bioSex,
+      education: education,
+      household: household,
+      hobbies: hobbies,
+
+      // Deceased Info----------
+      lossDate: lossDate,
+      deceased: deceased,
+      cause: cause,
+      deceasedAge: deceasedAge,
+      lossExp: lossExp,
+    })
+      .then(() => {
+        console.log('User updated!')
+        setAnError('updated')
+      })
+      .catch((error) => {
+        console.error('Error updating user: ', error)
+      })
+  }
+
 
   const over18Bouncer = (bdayString) => {
     const today = new Date()
@@ -238,18 +212,19 @@ export default function UpdatePanel({ fsUser, userDetailsHandler }) {
 
         <div className="auth-container">
           <div className='fields-container register'>
-            <form onSubmit={validateNewUser}>
+            <form onSubmit={validateUpdates}>
 
               {/* ACCOUNT INFO----------- */}
 
               {accountInfo === false
                 ?
-                <div className="reg-section account-info">
-                  <div onClick={e => setAccountInfo(true)} className='accordion-handle'>
+                <div onClick={e => setAccountInfo(true)} className="reg-section account-info-updatePanel">
+                  <div className='accordion-handle'>
                     <h4>Account Info</h4>
                     <AiOutlineDown />
                   </div>
-                  <h6>Edit Account information like Email, Password, and Display Name.</h6>
+                  <h6>Simpatico is undergoing changes that involve where these details are saved, editing account details will be avalable when that change is complete. </h6>
+                  {/* <h6>Edit Account information like Email, Password, and Display Name.</h6> */}
                 </div>
                 :
                 <div className="reg-section account-info">
@@ -283,8 +258,8 @@ export default function UpdatePanel({ fsUser, userDetailsHandler }) {
 
               {personalInfo === false
                 ?
-                <div className="reg-section personal-info">
-                  <div onClick={e => setPersonalInfo(true)} className='accordion-handle'>
+                <div onClick={e => setPersonalInfo(true)} className="reg-section personal-info">
+                  <div className='accordion-handle'>
                     <h4>Personal Info</h4>
                     <AiOutlineDown />
                   </div>
@@ -366,7 +341,16 @@ export default function UpdatePanel({ fsUser, userDetailsHandler }) {
                   <label htmlFor="raceEnthnicity">What race/ethnicity best describes you?</label>
                   <div className='input-container'>
                     {/* <i className="fas fa-calendar-alt"></i> */}
-                    <input type="text" name="raceEnthnicity" id="raceEnthnicity" placeholder="Race/Ethnicity" value={raceEnthnicity} onChange={changeHandler} />
+                    <select type="text" name="raceEnthnicity" id="raceEnthnicity" placeholder="Race/Ethnicity" value={raceEnthnicity} onChange={changeHandler} >
+                      <option>Prefer not to disclose</option>
+                      <option>White</option>
+                      <option>Black or African American</option>
+                      <option>Hispanic or Latino</option>
+                      <option>Asian</option>
+                      <option>Native American or American Indian</option>
+                      <option>Native Hawaiian or Pacific Islander</option>
+                      <option>Other</option>
+                    </select>
                   </div>
 
                   <label htmlFor="bioSex">What is your biological sex?</label>
@@ -419,8 +403,8 @@ export default function UpdatePanel({ fsUser, userDetailsHandler }) {
 
               {deceasedInfo === false
                 ?
-                <div className="reg-section your-story">
-                  <div onClick={e => setDeceasedInfo(true)} className='accordion-handle'>
+                <div onClick={e => setDeceasedInfo(true)} className="reg-section your-story">
+                  <div className='accordion-handle'>
                     <h4>Your Story</h4>
                     <AiOutlineDown />
                   </div>

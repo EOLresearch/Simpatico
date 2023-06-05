@@ -19,7 +19,8 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
   const [residence, setResidence] = useState('')
   const [lossDate, setLossDate] = useState('')
   const [raceEnthnicity, setRaceEnthnicity] = useState('')
-  const [bioSex, setBioSex] = useState('Prefer not to disclose')
+  // https://www.census.gov/topics/population/race/about.html for more about the options on raceEnthnicity
+  const [bioSex, setBioSex] = useState('')
   const [education, setEducation] = useState('')
   const [household, setHousehold] = useState('')
   const [hobbies, setHobbies] = useState('')
@@ -348,17 +349,26 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
               <label htmlFor="raceEnthnicity">What race/ethnicity best describes you?</label>
               <div className='input-container'>
                 {/* <i className="fas fa-calendar-alt"></i> */}
-                <input type="text" name="raceEnthnicity" id="raceEnthnicity" placeholder="Race/Ethnicity" value={raceEnthnicity} onChange={changeHandler} />
+                <select type="text" name="raceEnthnicity" id="raceEnthnicity" placeholder="Race/Ethnicity" value={raceEnthnicity} onChange={changeHandler} >
+                  <option>Prefer not to disclose</option>
+                  <option>White</option>
+                  <option>Black or African American</option>
+                  <option>Hispanic or Latino</option>
+                  <option>Asian</option>
+                  <option>Native American or American Indian</option>
+                  <option>Native Hawaiian or Pacific Islander</option>
+                  <option>Other</option>
+                </select>
               </div>
 
               <label htmlFor="bioSex">What is your biological sex?</label>
               <div className='input-container'>
                 {/* <i className="fas fa-calendar-alt"></i> */}
                 <select type="text" name="bioSex" id="bioSex" value={bioSex} onChange={changeHandler} >
+                  <option>Prefer not to disclose</option>
                   <option>Male</option>
                   <option>Female</option>
                   <option>Intersex</option>
-                  <option>Prefer not to disclose</option>
                 </select>
               </div>
 
