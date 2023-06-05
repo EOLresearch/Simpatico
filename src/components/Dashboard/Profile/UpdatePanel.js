@@ -150,7 +150,6 @@ export default function UpdatePanel({ firestore, fsUser, userDetailsHandler }) {
     const usersRef = firestore.collection('users');
     usersRef.doc(fsUser.uid).update({
 
-
       // User Info----------
       residence: residence,
       birthDate: birthDate,
@@ -169,10 +168,13 @@ export default function UpdatePanel({ firestore, fsUser, userDetailsHandler }) {
     })
       .then(() => {
         console.log('User updated!')
-        setAnError('updated')
+        userDetailsHandler(e, false)
+        // probably need to create a function to update the user's details in the app component and pass it down as a prop to use here to update the FsUser
+        // this is to solve the issue of the FsUser not being updated in the app component when the user updates their details
       })
       .catch((error) => {
         console.error('Error updating user: ', error)
+        setAnError('noupdate')
       })
   }
 
