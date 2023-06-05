@@ -6,6 +6,10 @@ export default function ErrorMessage({ error, cancelError }) {
   const errorMaker = (err) => {
 
     switch (err) {
+      case 'passwordreset':
+        return "Password reset email sent, check your email."
+      case 'auth/wrong-password':
+        return "Incorrect password"
       case 'auth/user-not-found':
         return "User not found."
       case "auth/internal-error":
@@ -28,20 +32,28 @@ export default function ErrorMessage({ error, cancelError }) {
         return "Please enter your birthday"
       case 'under18':
         return "You must be 18 or older to register"
+      case 'norace':
+        return "Please enter something for Race/Ethnicity. You can enter 'prefer not to disclose' if you wish."
+      case 'nobiosex':
+        return "Please enter something for Biological Sex. You can enter 'prefer not to disclose' if you wish."
+      case 'noeducation':
+        return "Please enter your level of Education."
+      case 'nohousehold':
+        return "Please answer the question about your living situation."
+      case 'nohobbies':
+        return "Please provide some of your Hobbies."
       case 'nolossdate':
         return "Please enter a date of loss"
       case 'nodeceased':
         return "Please enter kinship to the deceased"
       case 'nocause':
         return "Please enter cause of death"
-      case 'consent':
-        return "You must consent to share your information"
+      case 'nodeceasedage':
+        return "Please enter age of the deceased"
       case 'nolossexp':
         return "Please share something about your loss experience"
-      case 'passwordreset':
-        return "Password reset email sent, check your email."
-      case 'auth/wrong-password':
-        return "Incorrect password"
+      case 'consent':
+        return "You must consent to share your information"
       default:
         console.log('switch default' + error)
         return "Something went wrong. Please try again."

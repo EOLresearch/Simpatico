@@ -63,12 +63,24 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
         setAnError('nobirth')
       } else if (over18Bouncer(birthDate) === false) {
         setAnError('under18')
+      } else if (raceEnthnicity === '') {
+        setAnError('norace')
+      } else if (bioSex === '') {
+        setAnError('nobiosex')
+      } else if (education === '') {
+        setAnError('noeducation')
+      } else if (household === '') {
+        setAnError('nohousehold')
+      } else if (hobbies === '') {
+        setAnError('nohobbies')
       } else if (lossDate === '') {
         setAnError('nolossdate')
       } else if (deceased === '') {
         setAnError('nodeceased')
-      } else if (cause === '') {
+      } else if (cause === '' || cause === 'Cause of death') {
         setAnError('nocause')
+      } else if (deceasedAge === '') {
+        setAnError('nodeceasedage')
       } else if (lossExp === '') {
         setAnError('nolossexp')
       } else if (consent === false) {
