@@ -17,7 +17,7 @@ export default function Dashboard(props) {
   //TODO: USERS SHOLD BE ABLE TO CHANGE THIER DETAILS
   //TODO: Create a user who us the super admin and is added to everyones match list for testing. this might mean querying tthe db for this admin user and passing it around the entire app
 
-  const { firebase, matches, user, fsUser, profileTab, matchListTab, conversationsTab, navHandler } = props
+  const { firebase, matches, user, fsUser, profileTab, matchListTab, conversationsTab, navHandler, updateFsUser } = props
   const { uid } = user;
   const firestore = firebase.firestore();
   const [docID, setDocID] = useState()
@@ -85,13 +85,13 @@ export default function Dashboard(props) {
       mutualConsent: boolean,
     })
       .then(() => {
-        const updatedConvos = convos.map(c => {
-          if (c.docID === docID) {
-            return { ...c, mutualConsent: boolean }
-          } else {
-            return c
-          }
-        })
+        // const updatedConvos = convos.map(c => {
+        //   if (c.docID === docID) {
+        //     return { ...c, mutualConsent: boolean }
+        //   } else {
+        //     return c
+        //   }
+        // })
         setShowChatWindow(true)
         navHandler("Conversations")
 
@@ -123,7 +123,7 @@ export default function Dashboard(props) {
           </div>
           {
             profileTab === true ?
-              <Profile firestore={firestore} user={fsUser} /> : null
+              <Profile firestore={firestore} user={fsUser} updateFsUser={updateFsUser}/> : null
           }
           {
             conversationsTab === true ?

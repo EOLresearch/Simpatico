@@ -5,7 +5,7 @@ import { IoPersonAddSharp, IoBookSharp } from "react-icons/io5";
 import UpdatePanel from "./UpdatePanel"
 
 
-export default function Profile({ firestore, user }) {
+export default function Profile({ firestore, user, updateFsUser }) {
   const [editUserDetails, setEditUserDetails] = useState(false)
 
   function getAge(date) {
@@ -24,7 +24,7 @@ export default function Profile({ firestore, user }) {
   }
 
   if (editUserDetails === true) {
-    return <UpdatePanel firestore={firestore} fsUser={user} userDetailsHandler={userDetailsHandler} />
+    return <UpdatePanel firestore={firestore} fsUser={user} userDetailsHandler={userDetailsHandler} updateFsUser={updateFsUser} />
   }
 
   return (
@@ -35,7 +35,6 @@ export default function Profile({ firestore, user }) {
             <div className='display-card'>
               <div className='image-container'>
                 <img className='profile-image' src={user.photoURL} />
-                {/* <p>{user.displayName.split(" ")[0]}</p> */}
               </div>
               <div className='profile-body'>
                 <p><strong>Hello, {user.displayName}.</strong></p>
@@ -50,11 +49,6 @@ export default function Profile({ firestore, user }) {
                   </div>
 
                 </div>
-
-                {/* <h4>My Details</h4>
-                <p className='details'>{getAge(user.birthDate)}, {user.residence}<br />Lost Relationship: {user.deceased}, {user.cause}</p>
-                <h4>My Story</h4>
-                <p className='story'>{user.lossExp}</p> */}
               </div>
             </div>
           </div>

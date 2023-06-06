@@ -9,7 +9,7 @@ import ErrorMessage from '../../ErrorMessage/ErrorMessage'
 // import { FaInfo } from 'react-icons/fa';
 // import AvatarGenerator from './AvatarGenerator'
 
-export default function UpdatePanel({ firestore, fsUser, userDetailsHandler }) {
+export default function UpdatePanel({ firestore, fsUser, userDetailsHandler, updateFsUser }) {
   const [anError, setAnError] = useState('')
 
   //View States-----------
@@ -169,8 +169,29 @@ export default function UpdatePanel({ firestore, fsUser, userDetailsHandler }) {
       .then(() => {
         console.log('User updated!')
         userDetailsHandler(e, false)
-        // probably need to create a function to update the user's details in the app component and pass it down as a prop to use here to update the FsUser
-        // this is to solve the issue of the FsUser not being updated in the app component when the user updates their details
+
+        const newFsUser = {
+          ...fsUser,
+          // User Info----------
+          residence: residence,
+          birthDate: birthDate,
+          raceEnthnicity: raceEnthnicity,
+          bioSex: bioSex,
+          education: education,
+          household: household,
+          hobbies: hobbies,
+
+          // Deceased Info----------
+          lossDate: lossDate,
+          deceased: deceased,
+          cause: cause,
+          deceasedAge: deceasedAge,
+          lossExp: lossExp,
+        }
+
+        console.log(newFsUser)
+        console.log(fsUser)
+        updateFsUser(newFsUser)
       })
       .catch((error) => {
         console.error('Error updating user: ', error)
@@ -207,9 +228,9 @@ export default function UpdatePanel({ firestore, fsUser, userDetailsHandler }) {
       <div className="auth-wrapper">
         <h5>Please use this form to update your data as you wish</h5>
         <h5>Any unanswered questions will default back to your original answer from registration.</h5>
-        <div className='back-btn-container' onClick={e => userDetailsHandler(e, false)}>
+        <div className='back-btn-container'>
           <BsArrowLeft size="1.5rem" />
-          <button className="back-btn">back to profile</button>
+          <button onClick={e => userDetailsHandler(e, false)} className="back-btn">back to profile</button>
         </div>
 
         <div className="auth-container">

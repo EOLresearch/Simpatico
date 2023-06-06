@@ -96,6 +96,10 @@ function App() {
     }
   }
 
+  function updateFsUser(newFsUser) {
+    setFsUser(newFsUser)
+  }
+
   return (
     <div className="App"> 
       <div className='app-container'>
@@ -120,6 +124,7 @@ function App() {
                   matchListTab={matchListTab}
                   conversationsTab={conversationsTab}
                   navHandler={navHandler}
+                  updateFsUser={updateFsUser}
                 />
               : <UserAuth user={user} auth={auth} firebase={firebase} /> : <UserAuth auth={auth} firebase={firebase} />
           }
