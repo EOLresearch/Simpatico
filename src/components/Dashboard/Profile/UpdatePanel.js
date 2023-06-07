@@ -20,12 +20,12 @@ export default function UpdatePanel({ firestore, fsUser, userDetailsHandler, upd
 
   // Account  Info----------
   // const [photoURL, setPhotoURL] = useState('')
-  const [email, setEmail] = useState('')
+  const [email, setEmail] = useState(fsUser.email)
   const [password, setPassword] = useState('')
   const [confirmPass, setConfirmPass] = useState('')
   const [displayName, setDisplayName] = useState(fsUser.displayName)
 
-  // User Info----------
+  // Personal Info----------
   const [residence, setResidence] = useState(fsUser.residence)
   const [raceEnthnicity, setRaceEnthnicity] = useState(fsUser.raceEnthnicity)
   const [bioSex, setBioSex] = useState(fsUser.bioSex)
@@ -150,7 +150,7 @@ export default function UpdatePanel({ firestore, fsUser, userDetailsHandler, upd
     const usersRef = firestore.collection('users');
     usersRef.doc(fsUser.uid).update({
 
-      // User Info----------
+      // Personal Info----------
       residence: residence,
       birthDate: birthDate,
       raceEnthnicity: raceEnthnicity,
@@ -167,12 +167,9 @@ export default function UpdatePanel({ firestore, fsUser, userDetailsHandler, upd
       lossExp: lossExp,
     })
       .then(() => {
-        console.log('User updated!')
-        userDetailsHandler(e, false)
-
         const newFsUser = {
           ...fsUser,
-          // User Info----------
+          // Personal Info----------
           residence: residence,
           birthDate: birthDate,
           raceEnthnicity: raceEnthnicity,
@@ -188,10 +185,9 @@ export default function UpdatePanel({ firestore, fsUser, userDetailsHandler, upd
           deceasedAge: deceasedAge,
           lossExp: lossExp,
         }
-
-        console.log(newFsUser)
-        console.log(fsUser)
         updateFsUser(newFsUser)
+        console.log('User updated!')
+        userDetailsHandler(e, false)
       })
       .catch((error) => {
         console.error('Error updating user: ', error)
@@ -241,13 +237,12 @@ export default function UpdatePanel({ firestore, fsUser, userDetailsHandler, upd
 
               {accountInfo === false
                 ?
-                <div onClick={e => setAccountInfo(true)} className="reg-section account-info-updatePanel">
+                <div onClick={e => setAccountInfo(true)} className="reg-section account-info">
                   <div className='accordion-handle'>
                     <h4>Account Info</h4>
                     <AiOutlineDown />
                   </div>
-                  <h6>Simpatico is undergoing changes that involve where these details are saved, editing account details will be avalable when that change is complete. </h6>
-                  {/* <h6>Edit Account information like Email, Password, and Display Name.</h6> */}
+                  <h6>Edit Account information like Email, Password, and Display Name.</h6>
                 </div>
                 :
                 <div className="reg-section account-info">
@@ -255,6 +250,13 @@ export default function UpdatePanel({ firestore, fsUser, userDetailsHandler, upd
                     <h4>Account Info</h4>
                     <AiOutlineEllipsis />
                   </div>
+                    <form className='account-info-form' onSubmit={validateUpdates}>
+
+                  {/* <div className='account-container'>
+                    <p>Your Email is {fsUser.email} <button>Would y</button></p>
+
+                  </div> */}
+
                   <div className='input-container'>
                     <i className="fas fa-envelope"></i>
                     <input type="email" name="email" placeholder="Email" id="email" value={email} onChange={changeHandler} />
@@ -273,7 +275,9 @@ export default function UpdatePanel({ firestore, fsUser, userDetailsHandler, upd
                   <div className='input-container'>
                     <i className="fas fa-user-alt"></i>
                     <input type="text" name="displayName" placeholder="Display Name" id="name" value={displayName} onChange={changeHandler} />
-                  </div>
+                  </div> 
+
+                  </form>
                 </div>
               }
 
@@ -434,7 +438,6 @@ export default function UpdatePanel({ firestore, fsUser, userDetailsHandler, upd
                   <h6>Edit your story surrounding your loss.</h6>
                 </div>
                 :
-
                 <div className='reg-section your-story'>
                   <div onClick={e => setDeceasedInfo(false)} className='accordion-handle'>
                     <h4>Your Story</h4>

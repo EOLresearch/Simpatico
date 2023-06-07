@@ -1,12 +1,6 @@
-.account-info-updatePanel{
-  /* pointer-events: none; */
-  opacity: 0.3;
+form .account-info-form{
+  display: inline;
 }
-
-.reg-section:hover{
-  cursor: pointer;
-}
-
 .auth-wrapper .back-btn{
   font-size: 1.2rem;
   font-weight: 900;
