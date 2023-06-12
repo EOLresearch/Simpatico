@@ -45,6 +45,7 @@ export default function UpdatePanel({ firestore, fsUser, userDetailsHandler, upd
   const [lossExp, setLossExp] = useState(fsUser.lossExp)
 
   const [consent, setConsent] = useState(false)
+  const [accConsent, setAccConsent] = useState(false)
 
 
 
@@ -86,6 +87,21 @@ export default function UpdatePanel({ firestore, fsUser, userDetailsHandler, upd
       updateUser(e)
     }
   }
+
+  const validateAccountUpdates = (e) => {
+    e.preventDefault()
+    if (email === '') {
+      setEmail(fsUser.email)
+    } else if (displayName === '') {
+      setDisplayName(fsUser.displayName)
+    } else if (accConsent === false) {
+      setAnError('consent')
+    } else if (accConsent === true) {
+      setAnError('')
+      // updateAccount(e) 
+    }
+  }
+
 
   const changeHandler = (e) => {
     switch (e.target.name) {
@@ -231,12 +247,11 @@ export default function UpdatePanel({ firestore, fsUser, userDetailsHandler, upd
 
         <div className="auth-container">
           <div className='fields-container register'>
-            <form onSubmit={validateUpdates}>
+            {/* ACCOUNT INFO----------- */}
 
-              {/* ACCOUNT INFO----------- */}
-
-              {accountInfo === false
-                ?
+            {accountInfo === false
+              ?
+              <form>
                 <div onClick={e => setAccountInfo(true)} className="reg-section account-info">
                   <div className='accordion-handle'>
                     <h4>Account Info</h4>
@@ -244,13 +259,15 @@ export default function UpdatePanel({ firestore, fsUser, userDetailsHandler, upd
                   </div>
                   <h6>Edit Account information like Email, Password, and Display Name.</h6>
                 </div>
-                :
+              </form>
+              :
+              <form className='account-info-form' onSubmit={validateAccountUpdates}>
                 <div className="reg-section account-info">
                   <div onClick={e => setAccountInfo(false)} className='accordion-handle'>
                     <h4>Account Info</h4>
+                    <h6>Editing email and password will require email activation</h6>
                     <AiOutlineEllipsis />
                   </div>
-                    <form className='account-info-form' onSubmit={validateUpdates}>
 
                   {/* <div className='account-container'>
                     <p>Your Email is {fsUser.email} <button>Would y</button></p>
@@ -275,11 +292,23 @@ export default function UpdatePanel({ firestore, fsUser, userDetailsHandler, upd
                   <div className='input-container'>
                     <i className="fas fa-user-alt"></i>
                     <input type="text" name="displayName" placeholder="Display Name" id="name" value={displayName} onChange={changeHandler} />
-                  </div> 
+                  </div>
 
-                  </form>
+                  <div className='consent'>
+                    <input type="checkbox" name="accConsent" id="accConsent" value={accConsent} onChange={changeHandler} ></input>
+                    <div>
+                      <label htmlFor="accConsent">By clicking this checkbox, I agree to share the above information and allow other users to view the information I shared.</label>
+                    </div>
+                  </div>
+                  <div className='btn-container'>
+                    <input className="btn sub-btn" type="submit" value="Submit" />
+                  </div>
                 </div>
-              }
+              </form>
+            }
+
+            <form className='no-top-margin' onSubmit={validateUpdates}>
+
 
               {/* PERSONAL INFO----------- */}
 

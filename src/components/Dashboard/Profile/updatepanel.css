@@ -36,3 +36,17 @@ form .account-info-form{
   margin:0 2rem;
   color: rgba(0, 0, 0, 0.421);
 }
+#accConsent {
+  height: 1.2rem;
+  width: 1.2rem;
+  margin-right: 1rem;
+  display: flex;
+}
+
+#accConsent:checked {
+  color: black;
+}
+
+.no-top-margin{
+  margin-top: 0 !important;
+}
