@@ -1,11 +1,13 @@
 import './updatepanel.css'
 
 import { IconContext } from "react-icons";
-import { AiOutlineDown, AiOutlineEllipsis } from "react-icons/ai";
+import { AiOutlineDown, AiOutlineEllipsis, AiOutlineRight } from "react-icons/ai";
 import { BsArrowLeft } from "react-icons/bs";
 
 import { useState } from "react";
 import ErrorMessage from '../../ErrorMessage/ErrorMessage'
+import EditAccountInfo from './EditAccountInfo'
+
 // import { FaInfo } from 'react-icons/fa';
 // import AvatarGenerator from './AvatarGenerator'
 
@@ -18,11 +20,6 @@ export default function UpdatePanel({ firestore, fsUser, userDetailsHandler, upd
   const [deceasedInfo, setDeceasedInfo] = useState(false)
 
 
-  // Account  Info----------
-  // const [photoURL, setPhotoURL] = useState('')
-  const [email, setEmail] = useState(fsUser.email)
-  const [password, setPassword] = useState('')
-  const [confirmPass, setConfirmPass] = useState('')
   const [displayName, setDisplayName] = useState(fsUser.displayName)
 
   // Personal Info----------
@@ -51,6 +48,10 @@ export default function UpdatePanel({ firestore, fsUser, userDetailsHandler, upd
 
   const cancelError = () => {
     setAnError('')
+  }
+
+  const accountInfoDisplaySwitch = () => {
+    setAccountInfo(!accountInfo)
   }
 
 
@@ -88,35 +89,9 @@ export default function UpdatePanel({ firestore, fsUser, userDetailsHandler, upd
     }
   }
 
-  const validateAccountUpdates = (e) => {
-    e.preventDefault()
-    if (email === '') {
-      setEmail(fsUser.email)
-    } else if (displayName === '') {
-      setDisplayName(fsUser.displayName)
-    } else if (accConsent === false) {
-      setAnError('consent')
-    } else if (accConsent === true) {
-      setAnError('')
-      // updateAccount(e) 
-    }
-  }
-
 
   const changeHandler = (e) => {
     switch (e.target.name) {
-      // case 'email':
-      //   setEmail(e.target.value.trim())
-      //   break
-      // case 'password':
-      //   setPassword(e.target.value)
-      //   break
-      // case 'confirmPass':
-      //   setConfirmPass(e.target.value)
-      //   break
-      // case 'displayName':
-      //   setDisplayName(e.target.value)
-      //   break
       case 'residence':
         setResidence(e.target.value)
         break
@@ -234,9 +209,14 @@ export default function UpdatePanel({ firestore, fsUser, userDetailsHandler, upd
     }
   }
 
+  if (accountInfo === true) {
+    return <EditAccountInfo accountInfoDisplaySwitch={accountInfoDisplaySwitch} userDetailsHandler={userDetailsHandler} fsUser={fsUser}/>
+
+  } 
+     
+
   return (
     <IconContext.Provider value={{ className: "react-icons-updatePanel" }}>
-
       <div className="auth-wrapper">
         <h5>Please use this form to update your data as you wish</h5>
         <h5>Any unanswered questions will default back to your original answer from registration.</h5>
@@ -249,63 +229,16 @@ export default function UpdatePanel({ firestore, fsUser, userDetailsHandler, upd
           <div className='fields-container register'>
             {/* ACCOUNT INFO----------- */}
 
-            {accountInfo === false
-              ?
               <form>
-                <div onClick={e => setAccountInfo(true)} className="reg-section account-info">
+                <div onClick={accountInfoDisplaySwitch} className="reg-section account-info">
                   <div className='accordion-handle'>
                     <h4>Account Info</h4>
-                    <AiOutlineDown />
+                    <AiOutlineRight />
                   </div>
                   <h6>Edit Account information like Email, Password, and Display Name.</h6>
                 </div>
               </form>
-              :
-              <form className='account-info-form' onSubmit={validateAccountUpdates}>
-                <div className="reg-section account-info">
-                  <div onClick={e => setAccountInfo(false)} className='accordion-handle'>
-                    <h4>Account Info</h4>
-                    <h6>Editing email and password will require email activation</h6>
-                    <AiOutlineEllipsis />
-                  </div>
 
-                  {/* <div className='account-container'>
-                    <p>Your Email is {fsUser.email} <button>Would y</button></p>
-
-                  </div> */}
-
-                  <div className='input-container'>
-                    <i className="fas fa-envelope"></i>
-                    <input type="email" name="email" placeholder="Email" id="email" value={email} onChange={changeHandler} />
-                  </div>
-
-                  <div className='input-container'>
-                    <i className="fas fa-lock"></i>
-                    <input type="password" name="password" placeholder="Password" id="password" value={password} onChange={changeHandler} />
-                  </div>
-
-                  <div className='input-container'>
-                    <i className="fas fa-lock"></i>
-                    <input type="password" name="confirmPass" placeholder="Confirm Password" id="confirmPass" value={confirmPass} onChange={changeHandler} />
-                  </div>
-
-                  <div className='input-container'>
-                    <i className="fas fa-user-alt"></i>
-                    <input type="text" name="displayName" placeholder="Display Name" id="name" value={displayName} onChange={changeHandler} />
-                  </div>
-
-                  <div className='consent'>
-                    <input type="checkbox" name="accConsent" id="accConsent" value={accConsent} onChange={changeHandler} ></input>
-                    <div>
-                      <label htmlFor="accConsent">By clicking this checkbox, I agree to share the above information and allow other users to view the information I shared.</label>
-                    </div>
-                  </div>
-                  <div className='btn-container'>
-                    <input className="btn sub-btn" type="submit" value="Submit" />
-                  </div>
-                </div>
-              </form>
-            }
 
             <form className='no-top-margin' onSubmit={validateUpdates}>
 
@@ -328,6 +261,11 @@ export default function UpdatePanel({ firestore, fsUser, userDetailsHandler, upd
                     <h4>Personal Info</h4>
                     <AiOutlineEllipsis />
                   </div>
+                  <div className='input-container'>
+                    <i className="fas fa-user-alt"></i>
+                    <input type="text" name="displayName" placeholder="Display Name" id="name" value={displayName} onChange={changeHandler} />
+                  </div>
+
 
                   <label htmlFor='residence'>Home State</label>
                   <div className='input-container'>
@@ -520,7 +458,7 @@ export default function UpdatePanel({ firestore, fsUser, userDetailsHandler, upd
                 </div>
               }
 
-              <div className={accountInfo === true ? 'display-none' : "consent"}>
+              <div className='consent'>
                 <input type="checkbox" name="consent" id="consent" value={consent} onChange={changeHandler} ></input>
                 <div>
                   <label htmlFor="consent">By clicking this checkbox, I agree to share the above information and allow other users to view the information I shared.</label>
@@ -530,7 +468,7 @@ export default function UpdatePanel({ firestore, fsUser, userDetailsHandler, upd
                 ? <ErrorMessage error={anError} cancelError={cancelError} /> : null
               }
               <div className='btn-container'>
-                <input className={accountInfo === true ? 'inactive' : 'btn sub-btn'} type="submit" value={accountInfo === true ? 'Close the account information panel to submit' : 'Submit'} />
+                <input className="btn sub-btn" type="submit" value="Submit" />
               </div>
             </form>
           </div>
