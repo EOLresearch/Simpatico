@@ -235,7 +235,7 @@ export default function UpdatePanel({ firestore, fsUser, userDetailsHandler, upd
                     <h4>Account Info</h4>
                     <AiOutlineRight />
                   </div>
-                  <h6>Edit Account information like Email, Password, and Display Name.</h6>
+                  <h6>Edit Account information like Email, and Password.</h6>
                 </div>
               </form>
 
