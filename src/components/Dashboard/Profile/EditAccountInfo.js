@@ -5,6 +5,11 @@ import { BsArrowLeft } from "react-icons/bs";
 
 
 export default function EditAccountInfo({ accountInfoDisplaySwitch, userDetailsHandler, fsUser }) {
+  //Display States
+  const [emailDisplay, setEmailDisplay] = useState(false)
+  const [passwordDisplay, setPasswordDisplay] = useState(false)
+  // --- //
+
   const [photoURL, setPhotoURL] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -39,6 +44,16 @@ export default function EditAccountInfo({ accountInfoDisplaySwitch, userDetailsH
     }
   }
 
+  const displaySwitch = (e) => {
+    if (e.target.name === 'email') {
+      setEmailDisplay(!emailDisplay)
+    } else if (e.target.name === 'password') {
+      setPasswordDisplay(!passwordDisplay)
+    }
+
+  }
+
+
   return (
     <IconContext.Provider value={{ className: "react-icons-profile" }}>
       <div className="auth-wrapper">
@@ -57,12 +72,33 @@ export default function EditAccountInfo({ accountInfoDisplaySwitch, userDetailsH
                   <h6>Editing email and password will require email activation</h6>
                   <AiOutlineLeft />
                 </div>
-                <IconContext.Provider value={{ className: "react-icons-account-info" }}>
-                  <div className='info-btn-container'>
 
-                    <button>Change Email <AiOutlineRight /></button>
-                    <button>Change Password <AiOutlineRight /></button>
-                  </div>
+                <IconContext.Provider value={{ className: "react-icons-account-info" }}>
+                  {emailDisplay === false ?
+                    <div className='info-btn-container'>
+
+                      <button name="email" onClick={e => displaySwitch(e)}>Change Email <AiOutlineRight /></button>
+                      <button name='password' onClick={e => displaySwitch(e)}>Change Password <AiOutlineRight /></button>
+                    </div>
+                    :
+                    <div>
+                      <div className='info-btn-container'>
+
+                        <button name="email" onClick={e => displaySwitch(e)}>Back to Account info <AiOutlineLeft /></button>
+                        {/* <button name='password' onClick={e => displaySwitch(e)}>Change Password <AiOutlineRight /></button> */}
+                      </div>
+
+                      <div className='input-container'>
+                        <i className="fas fa-envelope"></i>
+                        <input type="email" name="email" placeholder="Email" id="email" value={email} onChange={changeHandler} />
+                      </div>
+
+                      <div className='input-container'>
+                        <i className="fas fa-lock"></i>
+                        <input type="password" name="password" placeholder="Password" id="password" value={password} onChange={changeHandler} />
+                      </div>
+                    </div>
+                  }
                 </IconContext.Provider>
 
                 {/* <div className='input-container'>
