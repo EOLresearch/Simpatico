@@ -50,3 +50,13 @@ form .account-info-form{
 .no-top-margin{
   margin-top: 0 !important;
 }
+
+.fields-container .inactive{
+  background-color: rgb(215, 215, 215);
+  color: rgb(179, 179, 179);
+  pointer-events: none;
+}
+
+.display-none{
+  display: none;
+}

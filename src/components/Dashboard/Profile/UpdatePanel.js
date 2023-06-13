@@ -520,7 +520,7 @@ export default function UpdatePanel({ firestore, fsUser, userDetailsHandler, upd
                 </div>
               }
 
-              <div className='consent'>
+              <div className={accountInfo === true ? 'display-none' : "consent"}>
                 <input type="checkbox" name="consent" id="consent" value={consent} onChange={changeHandler} ></input>
                 <div>
                   <label htmlFor="consent">By clicking this checkbox, I agree to share the above information and allow other users to view the information I shared.</label>
@@ -530,7 +530,7 @@ export default function UpdatePanel({ firestore, fsUser, userDetailsHandler, upd
                 ? <ErrorMessage error={anError} cancelError={cancelError} /> : null
               }
               <div className='btn-container'>
-                <input className="btn sub-btn" type="submit" value="Submit" />
+                <input className={accountInfo === true ? 'inactive' : 'btn sub-btn'} type="submit" value={accountInfo === true ? 'Close the account information panel to submit' : 'Submit'} />
               </div>
             </form>
           </div>
