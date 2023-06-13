@@ -5,7 +5,7 @@ import { IoPersonAddSharp, IoBookSharp } from "react-icons/io5";
 import UpdatePanel from "./UpdatePanel"
 
 
-export default function Profile({ firestore, user, updateFsUser }) {
+export default function Profile({ firebase, user, updateFsUser }) {
   const [editUserDetails, setEditUserDetails] = useState(false)
 
   function getAge(date) {
@@ -24,7 +24,7 @@ export default function Profile({ firestore, user, updateFsUser }) {
   }
 
   if (editUserDetails === true) {
-    return <UpdatePanel firestore={firestore} fsUser={user} userDetailsHandler={userDetailsHandler} updateFsUser={updateFsUser} />
+    return <UpdatePanel firebase={firebase} fsUser={user} userDetailsHandler={userDetailsHandler} updateFsUser={updateFsUser} />
   }
 
   return (

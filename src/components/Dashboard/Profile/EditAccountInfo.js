@@ -4,7 +4,7 @@ import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { BsArrowLeft } from "react-icons/bs";
 
 
-export default function EditAccountInfo({ accountInfoDisplaySwitch, userDetailsHandler, fsUser }) {
+export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, userDetailsHandler, fsUser }) {
   //Display States
   const [emailDisplay, setEmailDisplay] = useState(false)
   const [passwordDisplay, setPasswordDisplay] = useState(false)
@@ -14,6 +14,9 @@ export default function EditAccountInfo({ accountInfoDisplaySwitch, userDetailsH
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPass, setConfirmPass] = useState('')
+
+  const user = firebase.auth().currentUser;
+
 
 
   const changeHandler = (e) => {
@@ -53,6 +56,43 @@ export default function EditAccountInfo({ accountInfoDisplaySwitch, userDetailsH
 
   }
 
+  const changeUserEmail = (e) => {
+    e.preventDefault()
+    console.log(fsUser.email)
+    console.log(user.email)
+    console.log(email)
+    // send email verification
+    // update user email
+
+    //update fsuser email
+    //add former email field to the fsuser to keep track of the former email in case of calamity 
+
+    const credential = firebase.auth.EmailAuthProvider.credential(
+      fsUser.email,
+      password
+    );
+
+    user.reauthenticateWithCredential(credential).then(() => {
+      // User re-authenticated.
+      console.log('user reauthenticated')
+
+      if (email === '') {
+        console.log('no email entered')
+      } else {
+        user.updateEmail(email).then(() => {
+          console.log('email updated')
+        }).catch((error) => {
+          console.log(error)
+        })
+      }
+
+    }
+    ).catch((error) => {
+      console.log(error)
+    }
+    )
+  }
+
 
   return (
     <IconContext.Provider value={{ className: "react-icons-profile" }}>
@@ -69,33 +109,35 @@ export default function EditAccountInfo({ accountInfoDisplaySwitch, userDetailsH
               <div className="reg-section account-info">
                 <div onClick={accountInfoDisplaySwitch} className='accordion-handle'>
                   <h4>Account Info</h4>
-                  <h6>Editing email and password will require email activation</h6>
+                  <h6>Editing email and password will require email verification</h6>
                   <AiOutlineLeft />
                 </div>
 
                 <IconContext.Provider value={{ className: "react-icons-account-info" }}>
                   {emailDisplay === false ?
                     <div className='info-btn-container'>
-
                       <button name="email" onClick={e => displaySwitch(e)}>Change Email <AiOutlineRight /></button>
                       <button name='password' onClick={e => displaySwitch(e)}>Change Password <AiOutlineRight /></button>
                     </div>
                     :
                     <div>
                       <div className='info-btn-container'>
-
                         <button name="email" onClick={e => displaySwitch(e)}>Back to Account info <AiOutlineLeft /></button>
                         {/* <button name='password' onClick={e => displaySwitch(e)}>Change Password <AiOutlineRight /></button> */}
                       </div>
 
                       <div className='input-container'>
                         <i className="fas fa-envelope"></i>
-                        <input type="email" name="email" placeholder="Email" id="email" value={email} onChange={changeHandler} />
+                        <input type="email" name="email" placeholder="New Email" id="email" value={email} onChange={changeHandler} />
                       </div>
 
                       <div className='input-container'>
                         <i className="fas fa-lock"></i>
-                        <input type="password" name="password" placeholder="Password" id="password" value={password} onChange={changeHandler} />
+                        <input type="password" name="password" placeholder="Current Password" id="password" value={password} onChange={changeHandler} />
+                      </div>
+
+                      <div className='btn-container'>
+                        <input className="btn sub-btn btn-account-update" type="submit" value="Submit" onClick={e => changeUserEmail(e)} />
                       </div>
                     </div>
                   }

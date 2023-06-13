@@ -123,7 +123,7 @@ export default function Dashboard(props) {
           </div>
           {
             profileTab === true ?
-              <Profile firestore={firestore} user={fsUser} updateFsUser={updateFsUser}/> : null
+              <Profile firebase={firebase} user={fsUser} updateFsUser={updateFsUser}/> : null
           }
           {
             conversationsTab === true ?

@@ -11,7 +11,7 @@ import EditAccountInfo from './EditAccountInfo'
 // import { FaInfo } from 'react-icons/fa';
 // import AvatarGenerator from './AvatarGenerator'
 
-export default function UpdatePanel({ firestore, fsUser, userDetailsHandler, updateFsUser }) {
+export default function UpdatePanel({ firebase, fsUser, userDetailsHandler, updateFsUser }) {
   const [anError, setAnError] = useState('')
 
   //View States-----------
@@ -138,7 +138,7 @@ export default function UpdatePanel({ firestore, fsUser, userDetailsHandler, upd
 
 
   const updateUser = (e) => {
-    const usersRef = firestore.collection('users');
+    const usersRef = firebase.firestore.collection('users');
     usersRef.doc(fsUser.uid).update({
 
       // Personal Info----------
@@ -210,7 +210,7 @@ export default function UpdatePanel({ firestore, fsUser, userDetailsHandler, upd
   }
 
   if (accountInfo === true) {
-    return <EditAccountInfo accountInfoDisplaySwitch={accountInfoDisplaySwitch} userDetailsHandler={userDetailsHandler} fsUser={fsUser}/>
+    return <EditAccountInfo firebase={firebase} accountInfoDisplaySwitch={accountInfoDisplaySwitch} userDetailsHandler={userDetailsHandler} fsUser={fsUser}/>
 
   } 
      
@@ -261,6 +261,7 @@ export default function UpdatePanel({ firestore, fsUser, userDetailsHandler, upd
                     <h4>Personal Info</h4>
                     <AiOutlineEllipsis />
                   </div>
+                  <label htmlFor='displayName'>Display Name</label>
                   <div className='input-container'>
                     <i className="fas fa-user-alt"></i>
                     <input type="text" name="displayName" placeholder="Display Name" id="name" value={displayName} onChange={changeHandler} />

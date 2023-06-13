@@ -71,3 +71,9 @@ form .account-info-form{
   cursor: pointer;
   background-color: #3f7d77f1;
 }
+
+.btn-container .btn-account-update{
+  width:30%;
+  color: white;
+  font-weight: 400 ;
+}
