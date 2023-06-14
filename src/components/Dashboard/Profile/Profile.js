@@ -5,39 +5,29 @@ import { IoPersonAddSharp, IoBookSharp } from "react-icons/io5";
 import UpdatePanel from "./UpdatePanel"
 
 
-export default function Profile({ firebase, user, updateFsUser }) {
+export default function Profile({ firebase, fsUser, updateFsUser, navHandler }) {
   const [editUserDetails, setEditUserDetails] = useState(false)
 
-  function getAge(date) {
-    const today = new Date();
-    const bday = new Date(date);
-    let age = today.getFullYear() - bday.getFullYear();
-    let m = today.getMonth() - bday.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < bday.getDate())) {
-      age--;
-    }
-    return age;
-  }
 
   function userDetailsHandler(e, boolean) {
     setEditUserDetails(boolean)
   }
 
   if (editUserDetails === true) {
-    return <UpdatePanel firebase={firebase} fsUser={user} userDetailsHandler={userDetailsHandler} updateFsUser={updateFsUser} />
+    return <UpdatePanel firebase={firebase} fsUser={fsUser} userDetailsHandler={userDetailsHandler} updateFsUser={updateFsUser} navHandler={navHandler}/>
   }
 
   return (
     <IconContext.Provider value={{ className: "react-icons-profile" }}>
       {
-        user ?
+        fsUser ?
           <div className='profile-container'>
             <div className='display-card'>
               <div className='image-container'>
-                <img className='profile-image' src={user.photoURL} />
+                <img className='profile-image' src={fsUser.photoURL} />
               </div>
               <div className='profile-body'>
-                <p><strong>Hello, {user.displayName}.</strong></p>
+                <p><strong>Hello, {fsUser.displayName}.</strong></p>
                 <div className='body'>
 
                   <p>Thank you for joining <strong>SIMPATICO</strong>.</p>

@@ -4,7 +4,7 @@ import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { BsArrowLeft } from "react-icons/bs";
 
 
-export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, userDetailsHandler, fsUser }) {
+export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, userDetailsHandler, fsUser, navHandler }) {
   //Display States
   const [emailDisplay, setEmailDisplay] = useState(false)
   const [passwordDisplay, setPasswordDisplay] = useState(false)
@@ -53,19 +53,20 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
     } else if (e.target.name === 'password') {
       setPasswordDisplay(!passwordDisplay)
     }
-
   }
 
   const changeUserEmail = (e) => {
+
+    //changing the user email in the auth system is not the same as firestore.
+    //changing the user email in the auth system has consequences for the conversations and how they are logged. 
+    //---->this require a change in the conversations collection to reflect the new email for that users conversations.
+
+    // need to authenticate valid email before changing. 
+
     e.preventDefault()
     console.log(fsUser.email)
     console.log(user.email)
     console.log(email)
-    // send email verification
-    // update user email
-
-    //update fsuser email
-    //add former email field to the fsuser to keep track of the former email in case of calamity 
 
     const credential = firebase.auth.EmailAuthProvider.credential(
       fsUser.email,
@@ -79,8 +80,28 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
       if (email === '') {
         console.log('no email entered')
       } else {
+        const formerEmail = fsUser.email
         user.updateEmail(email).then(() => {
-          console.log('email updated')
+          console.log('auth email updated')
+
+          const userRef = firebase.firestore().collection('users').doc(fsUser.uid)
+
+          userRef.update({
+            email: email, formerEmails: firebase.firestore.FieldValue.arrayUnion(formerEmail)
+          }).then(() => {
+            console.log('firestore email updated')
+          }).catch((error) => {
+            console.log(error)
+          })
+
+          user.sendEmailVerification().then(() => {
+            console.log('email verification sent')
+            navHandler("All Off")
+
+          }).catch((error) => {
+            console.log(error)
+          })
+
         }).catch((error) => {
           console.log(error)
         })
@@ -121,22 +142,25 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
                     </div>
                     :
                     <div>
+                      Current email: {fsUser.email}
                       <div className='info-btn-container'>
                         <button name="email" onClick={e => displaySwitch(e)}>Back to Account info <AiOutlineLeft /></button>
-                        {/* <button name='password' onClick={e => displaySwitch(e)}>Change Password <AiOutlineRight /></button> */}
                       </div>
-
+                      
+                      <label htmlFor="email">Enter your new email address here<br /><h6>A verification email will be sent to your email address.</h6></label>
                       <div className='input-container'>
                         <i className="fas fa-envelope"></i>
                         <input type="email" name="email" placeholder="New Email" id="email" value={email} onChange={changeHandler} />
                       </div>
 
+                      <label htmlFor="password">Enter your current password<br /><h6>Reauthentication is required to change your email address.</h6></label>
                       <div className='input-container'>
                         <i className="fas fa-lock"></i>
                         <input type="password" name="password" placeholder="Current Password" id="password" value={password} onChange={changeHandler} />
                       </div>
 
                       <div className='btn-container'>
+                        <h5>Upon successfull completion of this form, you will be redirected to the login screen.</h5>
                         <input className="btn sub-btn btn-account-update" type="submit" value="Submit" onClick={e => changeUserEmail(e)} />
                       </div>
                     </div>

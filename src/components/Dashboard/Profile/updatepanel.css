@@ -77,3 +77,10 @@ form .account-info-form{
   color: white;
   font-weight: 400 ;
 }
+
+label h6{
+  padding-top:0.3rem;
+}
+.btn-container h5{
+  margin-bottom:1.5rem;
+}

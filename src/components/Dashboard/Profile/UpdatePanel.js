@@ -11,7 +11,7 @@ import EditAccountInfo from './EditAccountInfo'
 // import { FaInfo } from 'react-icons/fa';
 // import AvatarGenerator from './AvatarGenerator'
 
-export default function UpdatePanel({ firebase, fsUser, userDetailsHandler, updateFsUser }) {
+export default function UpdatePanel({ firebase, fsUser, userDetailsHandler, updateFsUser, navHandler }) {
   const [anError, setAnError] = useState('')
 
   //View States-----------
@@ -43,6 +43,8 @@ export default function UpdatePanel({ firebase, fsUser, userDetailsHandler, upda
 
   const [consent, setConsent] = useState(false)
   const [accConsent, setAccConsent] = useState(false)
+
+  const firestore = firebase.firestore();
 
 
 
@@ -138,7 +140,7 @@ export default function UpdatePanel({ firebase, fsUser, userDetailsHandler, upda
 
 
   const updateUser = (e) => {
-    const usersRef = firebase.firestore.collection('users');
+    const usersRef = firestore.collection('users');
     usersRef.doc(fsUser.uid).update({
 
       // Personal Info----------
@@ -210,7 +212,7 @@ export default function UpdatePanel({ firebase, fsUser, userDetailsHandler, upda
   }
 
   if (accountInfo === true) {
-    return <EditAccountInfo firebase={firebase} accountInfoDisplaySwitch={accountInfoDisplaySwitch} userDetailsHandler={userDetailsHandler} fsUser={fsUser}/>
+    return <EditAccountInfo firebase={firebase} accountInfoDisplaySwitch={accountInfoDisplaySwitch} userDetailsHandler={userDetailsHandler} fsUser={fsUser} navHandler={navHandler}/>
 
   } 
      
