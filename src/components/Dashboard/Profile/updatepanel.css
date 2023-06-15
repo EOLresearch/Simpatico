@@ -66,6 +66,7 @@ form .account-info-form{
   font-size: 1.5rem;
   position: absolute;
   margin: 0 0.5rem;
+  background: none;
 }
 .info-btn-container button:hover{
   cursor: pointer;
@@ -84,3 +85,7 @@ label h6{
 .btn-container h5{
   margin-bottom:1.5rem;
 }
+
+/* .react-icons-account-info path{
+  
+} */

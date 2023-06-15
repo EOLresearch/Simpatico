@@ -61,7 +61,7 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
     //changing the user email in the auth system has consequences for the conversations and how they are logged. 
     //---->this require a change in the conversations collection to reflect the new email for that users conversations.
 
-    // need to authenticate valid email before changing. 
+    // need to make sure valid email before changing. 
 
     e.preventDefault()
     console.log(fsUser.email)
@@ -85,7 +85,6 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
           console.log('auth email updated')
 
           const userRef = firebase.firestore().collection('users').doc(fsUser.uid)
-
           userRef.update({
             email: email, formerEmails: firebase.firestore.FieldValue.arrayUnion(formerEmail)
           }).then(() => {
@@ -93,7 +92,6 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
           }).catch((error) => {
             console.log(error)
           })
-
           user.sendEmailVerification().then(() => {
             console.log('email verification sent')
             navHandler("All Off")
@@ -101,12 +99,10 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
           }).catch((error) => {
             console.log(error)
           })
-
         }).catch((error) => {
           console.log(error)
         })
       }
-
     }
     ).catch((error) => {
       console.log(error)
@@ -137,16 +133,18 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
                 <IconContext.Provider value={{ className: "react-icons-account-info" }}>
                   {emailDisplay === false ?
                     <div className='info-btn-container'>
-                      <button name="email" onClick={e => displaySwitch(e)}>Change Email <AiOutlineRight /></button>
+                      <button name="email" onClick={e => displaySwitch(e)}>Change Email  <AiOutlineRight /></button>
                       <button name='password' onClick={e => displaySwitch(e)}>Change Password <AiOutlineRight /></button>
                     </div>
                     :
                     <div>
-                      Current email: {fsUser.email}
+                      {/* Current email: {fsUser.email} */}
                       <div className='info-btn-container'>
                         <button name="email" onClick={e => displaySwitch(e)}>Back to Account info <AiOutlineLeft /></button>
+                        <button name='password' onClick={e => displaySwitch(e)}>Change Password <AiOutlineRight /></button>
+
                       </div>
-                      
+
                       <label htmlFor="email">Enter your new email address here<br /><h6>A verification email will be sent to your email address.</h6></label>
                       <div className='input-container'>
                         <i className="fas fa-envelope"></i>
