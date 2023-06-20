@@ -49,8 +49,10 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
 
   const displaySwitch = (e) => {
     if (e.target.name === 'email') {
+      setPasswordDisplay(false)
       setEmailDisplay(!emailDisplay)
     } else if (e.target.name === 'password') {
+      setEmailDisplay(false)
       setPasswordDisplay(!passwordDisplay)
     }
   }
@@ -112,6 +114,20 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
     )
   }
 
+  const passwordReset = (e) => {
+    e.preventDefault()
+    if (email === '') {
+      console.log('no email entered')
+
+    } else {
+      firebase.auth().sendPasswordResetEmail(email).then(() => {
+        console.log('password reset email sent')
+        // navHandler("All Off")
+      }).catch((error) => {
+        console.log(error)
+      })
+    }
+  }
 
   return (
     <IconContext.Provider value={{ className: "react-icons-profile" }}>
@@ -133,20 +149,13 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
                 </div>
 
                 <IconContext.Provider value={{ className: "react-icons-account-info" }}>
-                  {emailDisplay === false ?
-                    <div className='info-btn-container'>
-                      <button name="email" onClick={e => displaySwitch(e)}>Change Email  <AiOutlineDown /></button>
-                      <button name='password' onClick={e => displaySwitch(e)}>Change Password <AiOutlineDown /></button>
-                    </div>
-                    :
+                  <div className='info-btn-container'>
+                    <button name="email" onClick={e => displaySwitch(e)}>Change Email  {emailDisplay === false ? <AiOutlineDown /> : <AiOutlineUp />}    </button>
+                    <button name='password' onClick={e => displaySwitch(e)}>Change Password {passwordDisplay === false ? <AiOutlineDown /> : <AiOutlineUp />} </button>
+                  </div>
+
+                  {emailDisplay === true ?
                     <div>
-                      {/* Current email: {fsUser.email} */}
-                      <div className='info-btn-container'>
-                        <button name="email" onClick={e => displaySwitch(e)}>Change Email <AiOutlineUp /></button>
-                        <button name='password' onClick={e => displaySwitch(e)}>Change Password <AiOutlineDown /></button>
-
-                      </div>
-
                       <label htmlFor="email">Enter your new email address here<br /><h6>A verification email will be sent to your email address.</h6></label>
                       <div className='input-container'>
                         <i className="fas fa-envelope"></i>
@@ -164,7 +173,29 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
                         <input className="btn sub-btn btn-account-update" type="submit" value="Submit" onClick={e => changeUserEmail(e)} />
                       </div>
                     </div>
-                  }
+                    : null}
+
+                  {passwordDisplay === true ?
+                    <div>
+                       <label htmlFor="email">Password reset<br /><h6>A password reset email will be sent to your email address.</h6></label>
+                      <div className='input-container'>
+                        <i className="fas fa-envelope"></i>
+                        <input type="email" name="email" placeholder="Email" id="email" value={email} onChange={changeHandler} />
+                      </div>
+                      <div className='input-container'>
+                        <i className="fas fa-lock"></i>
+                        <input type="password" name="password" placeholder="Password" id="password" value={password} onChange={changeHandler} />
+
+                      </div>
+                      <div className='btn-container'>
+                        <input className="btn sub-btn btn-account-update" type="submit" value="Submit" onClick={e => passwordReset(e)} />
+                        </div>
+                    </div>
+                    : null}
+
+
+
+
                 </IconContext.Provider>
 
                 {/* <div className='input-container'>
