@@ -214,12 +214,6 @@ export default function UpdatePanel({ firebase, fsUser, userDetailsHandler, upda
     }
   }
 
-  if (accountInfo === true) {
-    return <EditAccountInfo firebase={firebase} accountInfoDisplaySwitch={accountInfoDisplaySwitch} userDetailsHandler={userDetailsHandler} fsUser={fsUser} navHandler={navHandler}/>
-
-  } 
-     
-
   return (
     <IconContext.Provider value={{ className: "react-icons-updatePanel" }}>
                     {/* <AiOutlineLeft /> prev
@@ -239,19 +233,25 @@ export default function UpdatePanel({ firebase, fsUser, userDetailsHandler, upda
 
         <div className="auth-container">
           <div className='fields-container register'>
+
             {/* ACCOUNT INFO----------- */}
-              <form>
+            
+            {accountInfo === false 
+              ?
+
+              <div className='account-info-container' >
                 <div onClick={accountInfoDisplaySwitch} className="reg-section">
-
-
                   <div className='accordion-handle'>
                     <h4>Account Info</h4>
-                    <AiOutlineRight />
+                    <AiOutlineDown />
                   </div>
                   <h6>Edit Account information like Email, and Password.</h6>
                   </div>
+              </div> 
+              :
+                  <EditAccountInfo firebase={firebase} accountInfoDisplaySwitch={accountInfoDisplaySwitch} userDetailsHandler={userDetailsHandler} fsUser={fsUser} navHandler={navHandler}/>
 
-              </form>
+            }
 
             <form className='no-top-margin' onSubmit={validateUpdates}>
 

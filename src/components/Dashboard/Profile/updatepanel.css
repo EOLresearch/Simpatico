@@ -1,5 +1,5 @@
-form .account-info-form{
-  display: inline;
+.fields-container form.account-info-form{
+  margin-top:0;
 }
 .auth-wrapper .back-btn{
   font-size: 1.2rem;
@@ -96,6 +96,12 @@ label h6{
   background-color: #5c5c5cb7;
   color: rgba(0, 0, 0, 0.421);
 
+}
+.account-info-container{
+  max-width: 60%;
+  margin: 0 auto;
+  text-align: left;
+  color: black;
 }
 
 /* .react-icons-account-info path{

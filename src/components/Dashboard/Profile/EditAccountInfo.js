@@ -131,74 +131,68 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
 
   return (
     <IconContext.Provider value={{ className: "react-icons-profile" }}>
-      <div className="auth-wrapper">
-        <h5>Please use this form to update your data as you wish</h5>
-        <h5>Any unanswered questions will default back to your original answer from registration.</h5>
-        <div className='back-btn-container'>
-          <BsArrowLeft size="1.5rem" />
-          <button onClick={e => userDetailsHandler(e, false)} className="back-btn">back to profile</button>
-        </div>
-        <div className="auth-container">
-          <div className='fields-container register'>
-            <form className='account-info-form' onSubmit={validateUpdates}>
-              <div className="reg-section account-info">
-                <div onClick={accountInfoDisplaySwitch} className='accordion-handle'>
-                  <h4>Account Info</h4>
-                  <h6>Editing email and password will require email verification</h6>
-                  <AiOutlineLeft />
+
+      <div className="auth-container">
+        <div className='fields-container register'>
+          <form className='account-info-form' onSubmit={validateUpdates}>
+            <div className="reg-section account-info">
+              <div onClick={accountInfoDisplaySwitch} className='accordion-handle'>
+                <h4>Account Info</h4>
+                <h6>Editing email and password will require email verification</h6>
+                <AiOutlineUp />
+              </div>
+
+              <IconContext.Provider value={{ className: "react-icons-account-info" }}>
+                <div className='info-btn-container'>
+                  <button name="email" onClick={e => displaySwitch(e)}>Change Email  {emailDisplay === false ? <AiOutlineDown /> : <AiOutlineUp />}    </button>
+                  <button name='password' onClick={e => displaySwitch(e)}>Change Password {passwordDisplay === false ? <AiOutlineDown /> : <AiOutlineUp />} </button>
                 </div>
 
-                <IconContext.Provider value={{ className: "react-icons-account-info" }}>
-                  <div className='info-btn-container'>
-                    <button name="email" onClick={e => displaySwitch(e)}>Change Email  {emailDisplay === false ? <AiOutlineDown /> : <AiOutlineUp />}    </button>
-                    <button name='password' onClick={e => displaySwitch(e)}>Change Password {passwordDisplay === false ? <AiOutlineDown /> : <AiOutlineUp />} </button>
+                {emailDisplay === true ?
+                  <div>
+                    <label htmlFor="email">Enter your new email address here<br /><h6>A verification email will be sent to your email address.</h6></label>
+                    <div className='input-container'>
+                      <i className="fas fa-envelope"></i>
+                      <input type="email" name="email" placeholder="New Email" id="email" value={email} onChange={changeHandler} />
+                    </div>
+
+                    <label htmlFor="password">Enter your current password<br /><h6>Reauthentication is required to change your email address.</h6></label>
+                    <div className='input-container'>
+                      <i className="fas fa-lock"></i>
+                      <input type="password" name="password" placeholder="Current Password" id="password" value={password} onChange={changeHandler} />
+                    </div>
+
+                    <div className='btn-container'>
+                      <h5>Upon successfull completion of this form, you will be redirected to the login screen.</h5>
+                      <input className="btn sub-btn btn-account-update" type="submit" value="Submit" onClick={e => changeUserEmail(e)} />
+                    </div>
                   </div>
+                  : null}
 
-                  {emailDisplay === true ?
-                    <div>
-                      <label htmlFor="email">Enter your new email address here<br /><h6>A verification email will be sent to your email address.</h6></label>
-                      <div className='input-container'>
-                        <i className="fas fa-envelope"></i>
-                        <input type="email" name="email" placeholder="New Email" id="email" value={email} onChange={changeHandler} />
-                      </div>
-
-                      <label htmlFor="password">Enter your current password<br /><h6>Reauthentication is required to change your email address.</h6></label>
-                      <div className='input-container'>
-                        <i className="fas fa-lock"></i>
-                        <input type="password" name="password" placeholder="Current Password" id="password" value={password} onChange={changeHandler} />
-                      </div>
-
-                      <div className='btn-container'>
-                        <h5>Upon successfull completion of this form, you will be redirected to the login screen.</h5>
-                        <input className="btn sub-btn btn-account-update" type="submit" value="Submit" onClick={e => changeUserEmail(e)} />
-                      </div>
+                {passwordDisplay === true ?
+                  <div>
+                    <label htmlFor="email">Password reset<br /><h6>A password reset email will be sent to your email address.</h6></label>
+                    <div className='input-container'>
+                      <i className="fas fa-envelope"></i>
+                      <input type="email" name="email" placeholder="Email" id="email" value={email} onChange={changeHandler} />
                     </div>
-                    : null}
+                    <div className='input-container'>
+                      <i className="fas fa-lock"></i>
+                      <input type="password" name="password" placeholder="Password" id="password" value={password} onChange={changeHandler} />
 
-                  {passwordDisplay === true ?
-                    <div>
-                       <label htmlFor="email">Password reset<br /><h6>A password reset email will be sent to your email address.</h6></label>
-                      <div className='input-container'>
-                        <i className="fas fa-envelope"></i>
-                        <input type="email" name="email" placeholder="Email" id="email" value={email} onChange={changeHandler} />
-                      </div>
-                      <div className='input-container'>
-                        <i className="fas fa-lock"></i>
-                        <input type="password" name="password" placeholder="Password" id="password" value={password} onChange={changeHandler} />
-
-                      </div>
-                      <div className='btn-container'>
-                        <input className="btn sub-btn btn-account-update" type="submit" value="Submit" onClick={e => passwordReset(e)} />
-                        </div>
                     </div>
-                    : null}
+                    <div className='btn-container'>
+                      <input className="btn sub-btn btn-account-update" type="submit" value="Submit" onClick={e => passwordReset(e)} />
+                    </div>
+                  </div>
+                  : null}
 
 
 
 
-                </IconContext.Provider>
+              </IconContext.Provider>
 
-                {/* <div className='input-container'>
+              {/* <div className='input-container'>
                   <i className="fas fa-envelope"></i>
                   <input type="email" name="email" placeholder="Email" id="email" value={email} onChange={changeHandler} />
                 </div>
@@ -213,21 +207,21 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
                   <input type="password" name="confirmPass" placeholder="Confirm Password" id="confirmPass" value={confirmPass} onChange={changeHandler} />
                 </div> */}
 
-                {/* <div className='consent'>
+              {/* <div className='consent'>
                   <input type="checkbox" name="accConsent" id="accConsent" value={accConsent} onChange={changeHandler} ></input>
                   <div>
                     <label htmlFor="accConsent">By clicking this checkbox, I agree to share the above information and allow other users to view the information I shared.</label>
                   </div>
                 </div> */}
 
-                {/* <div className='btn-container'>
+              {/* <div className='btn-container'>
                   <input className="btn sub-btn" type="submit" value="Submit" />
                 </div> */}
-              </div>
-            </form>
-          </div>
+            </div>
+          </form>
         </div>
       </div>
+
 
     </IconContext.Provider>
   )
