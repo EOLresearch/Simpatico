@@ -1,5 +1,5 @@
 .fields-container form.account-info-form{
-  margin-top:0;
+  /* margin-top:0; */
 }
 .auth-wrapper .back-btn{
   font-size: 1.2rem;
@@ -55,6 +55,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  /* margin-top: 1rem; */
 }
 .info-btn-container button{
   display: block;
@@ -102,6 +103,10 @@ label h6{
   margin: 0 auto;
   text-align: left;
   color: black;
+  margin-top:2rem;
+}
+.account-info{
+  padding-bottom: 0.5rem;;
 }
 
 /* .react-icons-account-info path{

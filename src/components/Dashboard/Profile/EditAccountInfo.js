@@ -131,16 +131,13 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
 
   return (
     <IconContext.Provider value={{ className: "react-icons-profile" }}>
-
-      <div className="auth-container">
-        <div className='fields-container register'>
           <form className='account-info-form' onSubmit={validateUpdates}>
             <div className="reg-section account-info">
               <div onClick={accountInfoDisplaySwitch} className='accordion-handle'>
                 <h4>Account Info</h4>
-                <h6>Editing email and password will require email verification</h6>
                 <AiOutlineUp />
               </div>
+                <h6>Editing email and password will require email verification</h6>
 
               <IconContext.Provider value={{ className: "react-icons-account-info" }}>
                 <div className='info-btn-container'>
@@ -186,41 +183,9 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
                     </div>
                   </div>
                   : null}
-
-
-
-
               </IconContext.Provider>
-
-              {/* <div className='input-container'>
-                  <i className="fas fa-envelope"></i>
-                  <input type="email" name="email" placeholder="Email" id="email" value={email} onChange={changeHandler} />
-                </div>
-
-                <div className='input-container'>
-                  <i className="fas fa-lock"></i>
-                  <input type="password" name="password" placeholder="Password" id="password" value={password} onChange={changeHandler} />
-                </div>
-
-                <div className='input-container'>
-                  <i className="fas fa-lock"></i>
-                  <input type="password" name="confirmPass" placeholder="Confirm Password" id="confirmPass" value={confirmPass} onChange={changeHandler} />
-                </div> */}
-
-              {/* <div className='consent'>
-                  <input type="checkbox" name="accConsent" id="accConsent" value={accConsent} onChange={changeHandler} ></input>
-                  <div>
-                    <label htmlFor="accConsent">By clicking this checkbox, I agree to share the above information and allow other users to view the information I shared.</label>
-                  </div>
-                </div> */}
-
-              {/* <div className='btn-container'>
-                  <input className="btn sub-btn" type="submit" value="Submit" />
-                </div> */}
             </div>
           </form>
-        </div>
-      </div>
 
 
     </IconContext.Provider>
