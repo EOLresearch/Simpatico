@@ -1,8 +1,11 @@
 import './updatepanel.css'
 
 import { IconContext } from "react-icons";
-import { AiOutlineDown, AiOutlineEllipsis, AiOutlineRight } from "react-icons/ai";
+import { AiOutlineDown, AiOutlineEllipsis, AiOutlineRight, AiOutlineLeft } from "react-icons/ai";
 import { BsArrowLeft } from "react-icons/bs";
+
+import { GrResources } from "react-icons/gr";
+import { GiBookmark, GiBookmarklet} from "react-icons/gi";
 
 import { useState } from "react";
 import ErrorMessage from '../../ErrorMessage/ErrorMessage'
@@ -219,6 +222,10 @@ export default function UpdatePanel({ firebase, fsUser, userDetailsHandler, upda
 
   return (
     <IconContext.Provider value={{ className: "react-icons-updatePanel" }}>
+                    {/* <AiOutlineLeft /> prev
+
+                    next <AiOutlineRight /> */}
+
       <div className="auth-wrapper">
         <h5>Please use this form to update your data as you wish</h5>
         <h5>Any unanswered questions will default back to your original answer from registration.</h5>
@@ -227,23 +234,26 @@ export default function UpdatePanel({ firebase, fsUser, userDetailsHandler, upda
           <button onClick={e => userDetailsHandler(e, false)} className="back-btn">back to profile</button>
         </div>
 
+        
+      
+
         <div className="auth-container">
           <div className='fields-container register'>
             {/* ACCOUNT INFO----------- */}
-
               <form>
-                <div onClick={accountInfoDisplaySwitch} className="reg-section account-info">
+                <div onClick={accountInfoDisplaySwitch} className="reg-section">
+
+
                   <div className='accordion-handle'>
                     <h4>Account Info</h4>
                     <AiOutlineRight />
                   </div>
                   <h6>Edit Account information like Email, and Password.</h6>
-                </div>
+                  </div>
+
               </form>
 
-
             <form className='no-top-margin' onSubmit={validateUpdates}>
-
 
               {/* PERSONAL INFO----------- */}
 

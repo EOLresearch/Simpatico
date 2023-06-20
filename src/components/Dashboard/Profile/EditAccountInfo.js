@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { IconContext } from "react-icons";
-import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
+import { AiOutlineLeft, AiOutlineRight, AiOutlineDown, AiOutlineUp } from "react-icons/ai";
 import { BsArrowLeft } from "react-icons/bs";
 
 
@@ -57,11 +57,13 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
 
   const changeUserEmail = (e) => {
 
-    //changing the user email in the auth system is not the same as firestore.
-    //changing the user email in the auth system has consequences for the conversations and how they are logged. 
-    //---->this require a change in the conversations collection to reflect the new email for that users conversations.
+    // ***************** ----> this require a change in the conversations collection to reflect the new email for that users conversations.
 
-    // need to make sure valid email before changing. 
+    // ***************** -------> need to make sure valid email before changing. 
+
+    // ***************** -------> need a warning message before changing. 
+
+
 
     e.preventDefault()
     console.log(fsUser.email)
@@ -133,15 +135,15 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
                 <IconContext.Provider value={{ className: "react-icons-account-info" }}>
                   {emailDisplay === false ?
                     <div className='info-btn-container'>
-                      <button name="email" onClick={e => displaySwitch(e)}>Change Email  <AiOutlineRight /></button>
-                      <button name='password' onClick={e => displaySwitch(e)}>Change Password <AiOutlineRight /></button>
+                      <button name="email" onClick={e => displaySwitch(e)}>Change Email  <AiOutlineDown /></button>
+                      <button name='password' onClick={e => displaySwitch(e)}>Change Password <AiOutlineDown /></button>
                     </div>
                     :
                     <div>
                       {/* Current email: {fsUser.email} */}
                       <div className='info-btn-container'>
-                        <button name="email" onClick={e => displaySwitch(e)}>Back to Account info <AiOutlineLeft /></button>
-                        <button name='password' onClick={e => displaySwitch(e)}>Change Password <AiOutlineRight /></button>
+                        <button name="email" onClick={e => displaySwitch(e)}>Change Email <AiOutlineUp /></button>
+                        <button name='password' onClick={e => displaySwitch(e)}>Change Password <AiOutlineDown /></button>
 
                       </div>
 
