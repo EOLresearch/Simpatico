@@ -97,6 +97,13 @@ function App() {
         setProfileTab(false)
         setConversationsTab(false)
         return
+      case 'Logout':
+        setMatchListTab(false)
+        setProfileTab(false)
+        setConversationsTab(false)
+        auth.signOut()
+        return
+
       default:
         console.log('switch default NAV')
     }
