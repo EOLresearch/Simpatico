@@ -99,7 +99,6 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
           user.sendEmailVerification().then(() => {
             console.log('email verification sent')
             navHandler("All Off")
-
           }).catch((error) => {
             console.log(error)
           })

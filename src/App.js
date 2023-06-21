@@ -21,12 +21,18 @@ const auth = firebase.auth();
 
 function App() {
   const [user] = useAuthState(auth);
-  const [profileTab, setProfileTab] = useState(true)
+  const [profileTab, setProfileTab] = useState(false)
   const [matchListTab, setMatchListTab] = useState(false)
   const [conversationsTab, setConversationsTab] = useState(false)
   const [fsUser, setFsUser] = useState()
   const [matches, setMatches] = useState([])
   const firestore = firebase.firestore();
+
+  useEffect(() => {
+    if (!user) return
+    setProfileTab(true)
+  }, [user])
+  
 
   useEffect(() => {
     if (!user) return
