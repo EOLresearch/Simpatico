@@ -16,6 +16,7 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
   const [confirmPass, setConfirmPass] = useState('')
 
   const user = firebase.auth().currentUser;
+  const auth = firebase.auth();
 
 
 
@@ -121,7 +122,8 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
     } else {
       firebase.auth().sendPasswordResetEmail(email).then(() => {
         console.log('password reset email sent')
-        // navHandler("All Off")
+        navHandler("All Off")
+        auth.signOut()
       }).catch((error) => {
         console.log(error)
       })
@@ -146,11 +148,12 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
 
                 {emailDisplay === true ?
                   <div>
-                    <label htmlFor="email">Enter your new email address here<br /><h6>A verification email will be sent to your email address.</h6></label>
+                    <label htmlFor="email">Enter your new email address here<br /><h6>A verification email will be sent to your old email address.</h6></label>
                     <div className='input-container'>
                       <i className="fas fa-envelope"></i>
                       <input type="email" name="email" placeholder="New Email" id="email" value={email} onChange={changeHandler} />
                     </div>
+                      <p className="current-email">Your current account address email is {fsUser.email}</p>
 
                     <label htmlFor="password">Enter your current password<br /><h6>Reauthentication is required to change your email address.</h6></label>
                     <div className='input-container'>
@@ -178,6 +181,8 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
 
                     </div>
                     <div className='btn-container'>
+                    <h5>Upon successfull completion of this form, you will be redirected to the login screen.</h5>
+
                       <input className="btn sub-btn btn-account-update" type="submit" value="Submit" onClick={e => passwordReset(e)} />
                     </div>
                   </div>
@@ -185,8 +190,6 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
               </IconContext.Provider>
             </div>
           </form>
-
-
     </IconContext.Provider>
   )
 }
