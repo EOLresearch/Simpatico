@@ -67,11 +67,7 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
     // ***************** -------> need a warning message before changing. 
 
 
-
     e.preventDefault()
-    console.log(fsUser.email)
-    console.log(user.email)
-    console.log(email)
 
     const credential = firebase.auth.EmailAuthProvider.credential(
       fsUser.email,
@@ -80,25 +76,25 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
 
     user.reauthenticateWithCredential(credential).then(() => {
       // User re-authenticated.
-      console.log('user reauthenticated')
+      console.log('updateEmail -user reauthenticated')
 
       if (email === '') {
-        console.log('no email entered')
+        console.log('updateEmail -no email entered')
       } else {
         const formerEmail = fsUser.email
         user.updateEmail(email).then(() => {
-          console.log('auth email updated')
+          console.log('updateEmail -auth email updated')
 
           const userRef = firebase.firestore().collection('users').doc(fsUser.uid)
           userRef.update({
             email: email, formerEmails: firebase.firestore.FieldValue.arrayUnion(formerEmail)
           }).then(() => {
-            console.log('firestore email updated')
+            console.log('updateEmail -firestore email updated')
           }).catch((error) => {
             console.log(error)
           })
           user.sendEmailVerification().then(() => {
-            console.log('email verification sent')
+            console.log('updateEmail -email verification sent')
             navHandler("All Off")
           }).catch((error) => {
             console.log(error)
@@ -120,76 +116,90 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
       console.log('no email entered')
 
     } else {
-      firebase.auth().sendPasswordResetEmail(email).then(() => {
-        console.log('password reset email sent')
-        navHandler("All Off")
-        auth.signOut()
+
+      const credential = firebase.auth.EmailAuthProvider.credential(
+        fsUser.email,
+        password
+      );
+
+      user.reauthenticateWithCredential(credential).then(() => {
+        // User re-authenticated.
+        console.log('user reauthenticated')
+
+        firebase.auth().sendPasswordResetEmail(email).then(() => {
+          console.log('password reset email sent')
+          navHandler("All Off")
+          auth.signOut()
+        }).catch((error) => {
+          console.log(error)
+        })
       }).catch((error) => {
         console.log(error)
-      })
+      }
+      )
     }
   }
 
   return (
     <IconContext.Provider value={{ className: "react-icons-profile" }}>
-          <form className='account-info-form' onSubmit={validateUpdates}>
-            <div className="reg-section account-info">
-              <div onClick={accountInfoDisplaySwitch} className='accordion-handle'>
-                <h4>Account Info</h4>
-                <AiOutlineUp />
-              </div>
-                <h6>Editing email and password will require email verification</h6>
+      <form className='account-info-form' onSubmit={validateUpdates}>
+        <div className="reg-section account-info">
+          <div onClick={accountInfoDisplaySwitch} className='accordion-handle'>
+            <h4>Account Info</h4>
+            <AiOutlineUp />
+          </div>
+          <h6>Editing email and password will require email verification</h6>
 
-              <IconContext.Provider value={{ className: "react-icons-account-info" }}>
-                <div className='info-btn-container'>
-                  <button name="email" onClick={e => displaySwitch(e)}>Change Email  {emailDisplay === false ? <AiOutlineDown /> : <AiOutlineUp />}    </button>
-                  <button name='password' onClick={e => displaySwitch(e)}>Change Password {passwordDisplay === false ? <AiOutlineDown /> : <AiOutlineUp />} </button>
+          <IconContext.Provider value={{ className: "react-icons-account-info" }}>
+            <div className='info-btn-container'>
+              <button name="email" onClick={e => displaySwitch(e)}>Change Email  {emailDisplay === false ? <AiOutlineDown /> : <AiOutlineUp />}    </button>
+              <button name='password' onClick={e => displaySwitch(e)}>Change Password {passwordDisplay === false ? <AiOutlineDown /> : <AiOutlineUp />} </button>
+            </div>
+
+            {emailDisplay === true ?
+              <div>
+                <label htmlFor="email">Enter your new email address here<br /><h6>A verification email will be sent to your old email address.</h6></label>
+                <div className='input-container'>
+                  <i className="fas fa-envelope"></i>
+                  <input type="email" name="email" placeholder="New Email" id="email" value={email} onChange={changeHandler} />
+                </div>
+                <p className="current-email">Your current account address email is {fsUser.email}</p>
+
+                <label htmlFor="password">Enter your current password<br /><h6>Reauthentication is required to change your email address.</h6></label>
+                <div className='input-container'>
+                  <i className="fas fa-lock"></i>
+                  <input type="password" name="password" placeholder="Current Password" id="password" value={password} onChange={changeHandler} />
                 </div>
 
-                {emailDisplay === true ?
-                  <div>
-                    <label htmlFor="email">Enter your new email address here<br /><h6>A verification email will be sent to your old email address.</h6></label>
-                    <div className='input-container'>
-                      <i className="fas fa-envelope"></i>
-                      <input type="email" name="email" placeholder="New Email" id="email" value={email} onChange={changeHandler} />
-                    </div>
-                      <p className="current-email">Your current account address email is {fsUser.email}</p>
+                <div className='btn-container'>
+                  <h5>Upon successfull completion of this form, you will be redirected to the login screen.</h5>
+                  <input className="btn sub-btn btn-account-update" type="submit" value="Submit" onClick={e => changeUserEmail(e)} />
+                </div>
+              </div>
+              : null}
 
-                    <label htmlFor="password">Enter your current password<br /><h6>Reauthentication is required to change your email address.</h6></label>
-                    <div className='input-container'>
-                      <i className="fas fa-lock"></i>
-                      <input type="password" name="password" placeholder="Current Password" id="password" value={password} onChange={changeHandler} />
-                    </div>
+            {passwordDisplay === true ?
+              <div>
+                <label htmlFor="email">Password reset<br /><h6>A password reset email will be sent to your email address.</h6></label>
+                <div className='input-container'>
+                  <i className="fas fa-envelope"></i>
+                  <input type="email" name="email" placeholder="Email" id="email" value={email} onChange={changeHandler} />
+                </div>
+                <div className='input-container'>
+                  <i className="fas fa-lock"></i>
+                  <input type="password" name="password" placeholder="Password" id="password" value={password} onChange={changeHandler} />
 
-                    <div className='btn-container'>
-                      <h5>Upon successfull completion of this form, you will be redirected to the login screen.</h5>
-                      <input className="btn sub-btn btn-account-update" type="submit" value="Submit" onClick={e => changeUserEmail(e)} />
-                    </div>
-                  </div>
-                  : null}
+                </div>
+                <div className='btn-container'>
+                  <h5>Upon successfull completion of this form, you will be redirected to the login screen.</h5>
 
-                {passwordDisplay === true ?
-                  <div>
-                    <label htmlFor="email">Password reset<br /><h6>A password reset email will be sent to your email address.</h6></label>
-                    <div className='input-container'>
-                      <i className="fas fa-envelope"></i>
-                      <input type="email" name="email" placeholder="Email" id="email" value={email} onChange={changeHandler} />
-                    </div>
-                    <div className='input-container'>
-                      <i className="fas fa-lock"></i>
-                      <input type="password" name="password" placeholder="Password" id="password" value={password} onChange={changeHandler} />
-
-                    </div>
-                    <div className='btn-container'>
-                    <h5>Upon successfull completion of this form, you will be redirected to the login screen.</h5>
-
-                      <input className="btn sub-btn btn-account-update" type="submit" value="Submit" onClick={e => passwordReset(e)} />
-                    </div>
-                  </div>
-                  : null}
-              </IconContext.Provider>
-            </div>
-          </form>
+                  <input className="btn sub-btn btn-account-update" type="submit" value="Submit" onClick={e => passwordReset(e)} />
+                </div>
+              </div>
+              : null}
+          </IconContext.Provider>
+        </div>
+      </form>
     </IconContext.Provider>
   )
 }
