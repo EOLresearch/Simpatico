@@ -2,6 +2,7 @@ import './profile.css';
 import { useState } from "react";
 import { IconContext } from "react-icons";
 import { IoPersonAddSharp, IoBookSharp } from "react-icons/io5";
+import { RiUserSettingsLine } from "react-icons/ri";
 import UpdatePanel from "./UpdatePanel"
 
 
@@ -35,7 +36,7 @@ export default function Profile({ firebase, fsUser, updateFsUser, navHandler }) 
                   <p>Our goal is to help you find someone who can relate to your loss. We hope that you will find comfort in sharing your story and listening to the stories of others. We are here to help you through your grief journey.</p>
 
                   <div className='edit-user-details' onClick={e => userDetailsHandler(e, true)}>
-                    <p className='profile-btn'><IoBookSharp /> <span>View and Edit user details</span> </p>
+                    <p className='profile-btn'><RiUserSettingsLine /> <span>View and Edit user details</span> </p>
                   </div>
 
                 </div>

@@ -5,7 +5,7 @@ import { IoPeopleCircleOutline, IoChatbubblesSharp, IoHome } from "react-icons/i
 
 import logo from '../../assets/simpaticologogreenbg.jpg'
 
-export default function Nav({ user, auth, navHandler }) {
+export default function Nav({ user, auth, navHandler, fsUser }) {
 
   const navStyles = user ? "" : "no-user-nav" ; 
 
@@ -24,6 +24,15 @@ export default function Nav({ user, auth, navHandler }) {
             <li data-identifier="Conversations" onClick={e => navHandler("Conversations")}><IoChatbubblesSharp /><span>Conversations</span></li>
             <li className='log-out' onClick={() => auth.signOut()}><FaArrowLeft size="1rem" /><span>Logout</span></li>
             {/* <li>#MAKE A DONATION?</li> */}
+
+            {
+              fsUser && fsUser.admin === true ?
+                <li data-identifier="Admin" onClick={e => navHandler("Admin")}><IoChatbubblesSharp /><span>Admin Dashboard</span></li>
+                : null
+
+            }
+
+
           </ul>
         </div>
       </div>

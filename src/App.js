@@ -24,6 +24,7 @@ function App() {
   const [profileTab, setProfileTab] = useState(false)
   const [matchListTab, setMatchListTab] = useState(false)
   const [conversationsTab, setConversationsTab] = useState(false)
+  const [adminDash, setAdminDash] = useState(false)
   const [fsUser, setFsUser] = useState()
   const [matches, setMatches] = useState([])
   const firestore = firebase.firestore();
@@ -32,10 +33,11 @@ function App() {
     if (!user) return
     setProfileTab(true)
   }, [user])
-  
+
 
   useEffect(() => {
     if (!user) return
+    console.log(user)
     const usersRef = firestore.collection('users');
     const userQuery = usersRef.where("email", "==", user.email)
     userQuery.get()
@@ -51,7 +53,7 @@ function App() {
   }, [firestore, user])
   //USER QUERY
 
-  useEffect(() => { 
+  useEffect(() => {
     if (!fsUser) return
     const usersRef = firestore.collection('users');
     const matchQuery = usersRef.where("cause", "==", fsUser.cause).where("deceased", "==", fsUser.deceased)
@@ -86,6 +88,7 @@ function App() {
         setMatchListTab(false)
         setConversationsTab(false)
         setProfileTab(true)
+        setAdminDash(false)
         return
       case 'My Story':
         setMatchListTab(false)
@@ -103,6 +106,10 @@ function App() {
         setConversationsTab(false)
         auth.signOut()
         return
+      case 'Admin':
+     
+        setAdminDash(!adminDash)
+        return
 
       default:
         console.log('switch default NAV')
@@ -114,9 +121,9 @@ function App() {
   }
 
   return (
-    <div className="App"> 
+    <div className="App">
       <div className='app-container'>
-        <Nav user={user} auth={auth} navHandler={navHandler} />
+        <Nav user={user} auth={auth} navHandler={navHandler} fsUser={fsUser} />
         <div className='nav-dummy'>
           {/* app inner container is not centered properly without this dummy so wdith in CSS must be the same as the nav container  */}
         </div>
@@ -135,11 +142,12 @@ function App() {
                   matches={matches}
                   profileTab={profileTab}
                   matchListTab={matchListTab}
+                  adminDash={adminDash}
                   conversationsTab={conversationsTab}
                   navHandler={navHandler}
                   updateFsUser={updateFsUser}
                 />
-              : <UserAuth user={user} auth={auth} firebase={firebase} /> : <UserAuth auth={auth} firebase={firebase} />
+                : <UserAuth user={user} auth={auth} firebase={firebase} /> : <UserAuth auth={auth} firebase={firebase} />
           }
         </div>
       </div>
