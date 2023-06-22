@@ -9,59 +9,95 @@ import { IconContext } from "react-icons";
 
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
-export default function AdminDashboard({ user, fsUser, navHandler, auth}) {
+export default function AdminDashboard({ firebase, user, fsUser, navHandler, auth }) {
+  const [users, setUsers] = useState([])
+
+  const firestore = firebase.firestore();
+
+
 
   useEffect(() => {
     if (!fsUser.admin || fsUser.admin === false) {
       navHandler('Home')
     }
-  }, [fsUser])
+  }, [fsUser, navHandler])
+
+
+  function getUsers() {
+    const usersRef = firestore.collection('users');
+    usersRef.get().then((querySnapshot) => {
+      let dataArr = []
+      querySnapshot.forEach((doc) => {
+        console.log("1 Doc Read")
+        dataArr.push(doc.data())
+      });
+      setUsers(dataArr)
+    })
+      .catch((error) => {
+        console.log("Error getting documents: ", error);
+      });
+  }
+
+
 
 
   return (
 
+    <div className='admin-dashboard-container'>
+      <div className='admin-dashboard'>
+        <div className='admin-dashboard-header'>
+          <h1>Admin Dashboard</h1>
+        </div>
+        <div className='admin-dashboard-body'>
+          <button onClick={getUsers}>Get Users</button>
 
-      <div className='admin-dashboard-container'>
-        <div className='admin-dashboard'>
-          <div className='admin-dashboard-header'>
-            <h1>Admin Dashboard</h1>
-          </div>
-          <div className='admin-dashboard-body'>
-            <div className='admin-dashboard-body-left'>
-              <div className='admin-dashboard-body-left-top'>
-                <div className='admin-dashboard-body-left-top-left'>
-                  <h2>Users</h2>
-                  <button >Get Users</button>
+          {/* <div>
+            {users.map((user, index) => {
+              return (
+                <div key={index}>
+                  <p>{user.displayName}</p>
+                  <p>{user.email}</p>
                 </div>
-                <div className='admin-dashboard-body-left-top-right'>
-                  <h2>Matches</h2>
-                  <button>Get Matches</button>
-                </div>
-              </div>
+              )
+            })}
 
-              <div className='admin-dashboard-body-left-bottom'>
-                <div className='admin-dashboard-body-left-bottom-left'>
-                  <h2>Conversations</h2>
-                  <button>Get Conversations</button>
-                </div>
-                <div className='admin-dashboard-body-left-bottom-right'>
-                  <h2>Messages</h2>
-                  <button>Get Messages</button>
-                </div>
-              </div>
-            </div>
-            <div className='admin-dashboard-body-right'>
-              <h2>Admin Tools</h2>
-              <button>Get Users</button>
-              <button>Get Matches</button>
-              <button>Get Conversations</button>
-              <button>Get Messages</button>
-            </div>
+          </div> */}
+
+          {/* <div className="table-container">
+            <table className="user-table">
+              <thead>
+                <tr>
+
+                  <th>Name</th>
+                  <th>Email</th>
+                </tr>
+              </thead>
+              <tbody>
+                {users.map(user => (
+                  <tr key={user.uid}>
+                    <td>{user.displayName}</td>
+                    <td>{user.email}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div> */}
+
+<div className="card-layout">
+      {users.map(user => (
+        <div className="card" key={user.id}>
+          <img src={user.image} alt="User" className="card-image" />
+          <div className="card-content">
+            <h3 className="card-title">{user.name}</h3>
+            <p className="card-email">{user.email}</p>
           </div>
         </div>
+      ))}
+    </div>
 
-
+        </div>
       </div>
+    </div>
 
   );
 }

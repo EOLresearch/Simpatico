@@ -114,7 +114,7 @@ export default function Dashboard(props) {
     <IconContext.Provider value={{ className: "react-icons-dashboard" }}>
       <div className='dashboard-container'>
 
-        {adminDash === true ? <AdminDashboard user={user} fsUser={fsUser} navHandler={navHandler}/> :
+        {adminDash === true ? <AdminDashboard firebase={firebase} user={user} fsUser={fsUser} navHandler={navHandler}/> :
 
           <div className='dashboard-body'>
             <div className='sub-nav'>
