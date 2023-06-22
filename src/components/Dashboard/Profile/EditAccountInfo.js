@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { IconContext } from "react-icons";
 import { AiOutlineLeft, AiOutlineRight, AiOutlineDown, AiOutlineUp } from "react-icons/ai";
 import { BsArrowLeft } from "react-icons/bs";
@@ -11,9 +11,12 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
   // --- //
 
   const [photoURL, setPhotoURL] = useState('')
+  const [newEmail, setNewEmail] = useState('')
   const [email, setEmail] = useState('')
+
+  //you just changed these above so this may crash but you need to fix the submit button form inside of form issue here. 
+
   const [password, setPassword] = useState('')
-  const [confirmPass, setConfirmPass] = useState('')
 
   const user = firebase.auth().currentUser;
   const auth = firebase.auth();
@@ -28,25 +31,17 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
       case 'email':
         setEmail(e.target.value)
         break;
+      case 'newEmail':
+        setNewEmail(e.target.value)
+        break;
       case 'password':
         setPassword(e.target.value)
-        break;
-      case 'confirmPass':
-        setConfirmPass(e.target.value)
         break;
       default:
         break;
     }
   }
 
-  const validateUpdates = (e) => {
-    e.preventDefault()
-    if (password !== confirmPass) {
-      alert('Passwords do not match')
-    } else {
-      // update user info
-    }
-  }
 
   const displaySwitch = (e) => {
     if (e.target.name === 'email') {
@@ -78,16 +73,16 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
       // User re-authenticated.
       console.log('updateEmail -user reauthenticated')
 
-      if (email === '') {
+      if (newEmail === '') {
         console.log('updateEmail -no email entered')
       } else {
         const formerEmail = fsUser.email
-        user.updateEmail(email).then(() => {
+        user.updateEmail(newEmail).then(() => {
           console.log('updateEmail -auth email updated')
 
           const userRef = firebase.firestore().collection('users').doc(fsUser.uid)
           userRef.update({
-            email: email, formerEmails: firebase.firestore.FieldValue.arrayUnion(formerEmail)
+            email: newEmail, formerEmails: firebase.firestore.FieldValue.arrayUnion(formerEmail)
           }).then(() => {
             console.log('updateEmail -firestore email updated')
           }).catch((error) => {
@@ -140,9 +135,18 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
     }
   }
 
+  const changeAccountDetails = (e) => {
+    e.preventDefault()
+    if (emailDisplay === true) {
+      changeUserEmail(e)
+    } else if (passwordDisplay === true) { 
+      passwordReset(e)
+    }
+  }
+
   return (
     <IconContext.Provider value={{ className: "react-icons-profile" }}>
-      <form className='account-info-form' onSubmit={validateUpdates}>
+      <form className='account-info-form' onSubmit={changeAccountDetails}>
         <div className="reg-section account-info">
           <div onClick={accountInfoDisplaySwitch} className='accordion-handle'>
             <h4>Account Info</h4>
@@ -152,8 +156,8 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
 
           <IconContext.Provider value={{ className: "react-icons-account-info" }}>
             <div className='info-btn-container'>
-              <button name="email" onClick={e => displaySwitch(e)}>Change Email  {emailDisplay === false ? <AiOutlineDown /> : <AiOutlineUp />}    </button>
-              <button name='password' onClick={e => displaySwitch(e)}>Change Password {passwordDisplay === false ? <AiOutlineDown /> : <AiOutlineUp />} </button>
+              <button type="button" name="email" onClick={e => displaySwitch(e)}>Change Email  {emailDisplay === false ? <AiOutlineDown /> : <AiOutlineUp />}    </button>
+              <button type="button" name='password' onClick={e => displaySwitch(e)}>Change Password {passwordDisplay === false ? <AiOutlineDown /> : <AiOutlineUp />} </button>
             </div>
 
             {emailDisplay === true ?
@@ -161,7 +165,7 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
                 <label htmlFor="email">Enter your new email address here<br /><h6>A verification email will be sent to your old email address.</h6></label>
                 <div className='input-container'>
                   <i className="fas fa-envelope"></i>
-                  <input type="email" name="email" placeholder="New Email" id="email" value={email} onChange={changeHandler} />
+                  <input type="newEmail" name="newEmail" placeholder="New Email" id="newEmail" value={newEmail} onChange={changeHandler} />
                 </div>
                 <p className="current-email">Your current account address email is {fsUser.email}</p>
 
@@ -173,7 +177,7 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
 
                 <div className='btn-container'>
                   <h5>Upon successfull completion of this form, you will be redirected to the login screen.</h5>
-                  <input className="btn sub-btn btn-account-update" type="submit" value="Submit" onClick={e => changeUserEmail(e)} />
+                  <input className="btn sub-btn btn-account-update" name="email-submit" type="submit" value="Submit" />
                 </div>
               </div>
               : null}
@@ -193,7 +197,7 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
                 <div className='btn-container'>
                   <h5>Upon successfull completion of this form, you will be redirected to the login screen.</h5>
 
-                  <input className="btn sub-btn btn-account-update" type="submit" value="Submit" onClick={e => passwordReset(e)} />
+                  <input className="btn sub-btn btn-account-update" type="submit" value="Submit"  />
                 </div>
               </div>
               : null}
