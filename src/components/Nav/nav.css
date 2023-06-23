@@ -1,15 +1,17 @@
 .nav-container {
-  max-width: 15%;
+  width: 18%;
   color: white;
   background-color: #31605b;
   min-height: 100%;
   position: fixed;
-  padding: 0 0.5rem;
 }
 
-.nav-dummy {
+/* .nav-dummy {
   width: 17%;
   padding: 0 0.5rem;
+} */
+.app-body{
+  margin-left:18%;
 }
 
 .logo-container {
@@ -58,6 +60,7 @@
   padding: 1rem;
   font-size: 1.3rem;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  margin-left:0.5rem;
 }
 
 .nav-body ul li:hover {

@@ -107,7 +107,7 @@ function App() {
         auth.signOut()
         return
       case 'Admin':
-     
+
         setAdminDash(!adminDash)
         return
 
@@ -124,31 +124,32 @@ function App() {
     <div className="App">
       <div className='app-container'>
         <Nav user={user} auth={auth} navHandler={navHandler} fsUser={fsUser} />
-        <div className='nav-dummy'>
-          {/* app inner container is not centered properly without this dummy so wdith in CSS must be the same as the nav container  */}
-        </div>
         <div className='app-inner-container'>
           <div className='app-header'>
             <h1>SIMPATICO</h1>
             <p>Connecting with Others Who Have Experienced Loss</p>
           </div>
-          {
-            user ?
-              user.emailVerified === true ?
-                <Dashboard
-                  firebase={firebase}
-                  user={user}
-                  fsUser={fsUser}
-                  matches={matches}
-                  profileTab={profileTab}
-                  matchListTab={matchListTab}
-                  adminDash={adminDash}
-                  conversationsTab={conversationsTab}
-                  navHandler={navHandler}
-                  updateFsUser={updateFsUser}
-                />
-                : <UserAuth user={user} auth={auth} firebase={firebase} /> : <UserAuth auth={auth} firebase={firebase} />
-          }
+
+          <div className='app-body'>
+
+            {
+              user ?
+                user.emailVerified === true ?
+                  <Dashboard
+                    firebase={firebase}
+                    user={user}
+                    fsUser={fsUser}
+                    matches={matches}
+                    profileTab={profileTab}
+                    matchListTab={matchListTab}
+                    adminDash={adminDash}
+                    conversationsTab={conversationsTab}
+                    navHandler={navHandler}
+                    updateFsUser={updateFsUser}
+                  />
+                  : <UserAuth user={user} auth={auth} firebase={firebase} /> : <UserAuth auth={auth} firebase={firebase} />
+            }
+          </div>
         </div>
       </div>
     </div>
