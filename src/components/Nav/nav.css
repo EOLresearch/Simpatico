@@ -6,13 +6,6 @@
   position: fixed;
 }
 
-/* .nav-dummy {
-  width: 17%;
-  padding: 0 0.5rem;
-} */
-.app-body{
-  margin-left:18%;
-}
 
 .logo-container {
   display: flex;

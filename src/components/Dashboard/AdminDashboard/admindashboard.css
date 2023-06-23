@@ -1,33 +1,15 @@
 
-.admin-dashboard-container {
-  width: 80%;
-  height: 80%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  
-}
+
 
 .admin-dashboard {
-  width: 100%;
-  /* max-width: 1200px; */
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  padding: 1rem;
+  
+}
+.admin-dashboard-body{
+  overflow: auto;
+  max-width: 80%;
 }
 
-.table-container {
-  width: 100%;
-  overflow-x: auto;
-}
-
-.user-table {
-  width: 100%;
-  border-collapse: collapse;
-  background-color: #ffffff;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
 
 .user-table th,
 .user-table td {
@@ -52,18 +34,4 @@
   border-bottom: 1px solid #dddddd;
 }
 
-.user-table .id-cell {
-  color: #ffffff;
-  background-color: #ff8a65;
-}
-
-.user-table .name-cell {
-  color: #ffffff;
-  background-color: #66bb6a;
-}
-
-.user-table .email-cell {
-  color: #ffffff;
-  background-color: #42a5f5;
-}
 
