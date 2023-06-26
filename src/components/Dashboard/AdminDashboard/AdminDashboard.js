@@ -70,6 +70,10 @@ export default function AdminDashboard({ firebase, user, fsUser, navHandler, aut
   const sortedUsers = users.slice().sort(compareValues(sortConfig.key, sortConfig.direction));
 
 
+  const setMatch = (e) => {
+   console.log(e.target)
+  }
+
 
   return (
 
@@ -89,7 +93,7 @@ export default function AdminDashboard({ firebase, user, fsUser, navHandler, aut
 
           <div className="user-database">
             {users.map(user => (
-              <UserCard key={user.uid} user={user} />
+              <UserCard key={user.uid} user={user} setMatch={setMatch} />
             ))}
           </div>
 

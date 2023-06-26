@@ -2,25 +2,22 @@ import React, { useState } from 'react';
 
 
 
-export default function UserCard({ user }) {
+export default function UserCard({ user, setMatch }) {
   const [showDetails, setShowDetails] = useState(false);
+  const [showMatchInput, setShowMatchInput] = useState(false)
+  const [matchUID, setMatchUID] = useState()
+
+  
 
   const collapsed =
     <div className="user-card">
       <div className="card-header">
         <h3>{user.displayName}</h3>
 
-        {
-          user.simpaticoMatch ?
-            <div className="matched">
-              <span className="card-label">Matched</span>
-            </div>
-            :
+        <div className={user.simpaticoMatch ? "matched" : "not-matched"}>
+          <span className="card-label">{user.simpaticoMatch ? "Matched" : "Not Matched"}</span>
+        </div>
 
-            <div className="not-matched">
-              <span className="card-label">Not Matched</span>
-            </div>
-        }
       </div>
 
       <div className="card-content">
@@ -32,39 +29,48 @@ export default function UserCard({ user }) {
           <span className="card-label">Deceased:</span>
           <span>{user.deceased}</span>
         </div>
+        <div className="card-row">
+          <span className="card-label">UID:</span>
+          <span>{user.uid}</span>
+        </div>
 
+        {user.simpaticoMatch ? null : <button onClick={e=>setShowMatchInput(!showMatchInput)} className='card-btn'>Match this user</button>}
+        {showMatchInput === true ? 
+        <div className="match-container">
+          <input className="uid-input" type='text' placeholder='Enter UID' onChange={e=>setMatchUID(e.target.value)}></input>
+          <button className="match-button" onClick={null}>Match</button>
+        </div>
+          
+           : null}
         <button className="card-btn" onClick={() => setShowDetails(true)}>Show Details</button>
       </div>
     </div>
 
-    const exp = 
+  const exp =
     <div className="user-card">
-    <div className="card-header">
-      <h3>{user.displayName}</h3>
+      <div className="card-header">
+        <h3>{user.displayName}</h3>
 
-      {
-        user.simpaticoMatch ?
-          <div className="matched">
-            <span className="card-label">Matched</span>
-          </div>
-          :
+        <div className={user.simpaticoMatch ? "matched" : "not-matched"}>
+          <span className="card-label">{user.simpaticoMatch ? "Matched" : "Not Matched"}</span>
+        </div>
 
-          <div className="not-matched">
-            <span className="card-label">Not Matched</span>
-          </div>
-      }
-    </div>
-
-    <div className="card-content">
-      <div className="card-row">
-        <span className="card-label">Cause:</span>
-        <span>{user.cause}</span>
-      </div>
-      <div className="card-row">
-        <span className="card-label">Deceased:</span>
-        <span>{user.deceased}</span>
       </div>
 
+      <div className="card-content">
+        <div className="card-row">
+          <span className="card-label">Cause:</span>
+          <span>{user.cause}</span>
+        </div>
+        <div className="card-row">
+          <span className="card-label">Deceased:</span>
+          <span>{user.deceased}</span>
+        </div>
+        <div className="card-row">
+          <span className="card-label">UID:</span>
+          <span>{user.uid}</span>
+        </div>
+        {user.simpaticoMatch ? null : <button className='card-btn'>Match this user</button>}
         <button className="card-btn" onClick={() => setShowDetails(false)}>Hide Details</button>
 
         <div className="card-details">
@@ -108,14 +114,10 @@ export default function UserCard({ user }) {
             <span className="card-label">Race/Ethnicity:</span>
             <span>{user.raceEthnicity}</span>
           </div>
-          <div className="card-row">
-            <span className="card-label">UID:</span>
-            <span>{user.uid}</span>
-          </div>
         </div>
 
+      </div>
     </div>
-  </div>
 
 
   return (
