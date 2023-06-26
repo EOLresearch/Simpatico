@@ -75,9 +75,9 @@ export default function AdminDashboard({ firebase, user, fsUser, navHandler, aut
       <div className='admin-dashboard'>
         <div className='admin-dashboard-header'>
           <h1>Admin Dashboard</h1>
+          <button onClick={getUsers}>Get Users</button>
         </div>
         <div className='admin-dashboard-body'>
-          <button onClick={getUsers}>Get Users</button>
 
           <div className="user-table">
             <table>

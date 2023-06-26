@@ -1,16 +1,21 @@
-
-
-
 .admin-dashboard {
   padding: 1rem;
   
 }
 .admin-dashboard-body{
-  overflow: auto;
-  max-width: 80%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1rem;
 }
-
-
+.admin-dashboard-header{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1rem;
+}
 .user-table th,
 .user-table td {
   padding: 12px 15px;

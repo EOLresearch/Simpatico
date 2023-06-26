@@ -5,7 +5,7 @@ import { AiOutlineDown, AiOutlineEllipsis, AiOutlineRight, AiOutlineLeft } from 
 import { BsArrowLeft } from "react-icons/bs";
 
 import { GrResources } from "react-icons/gr";
-import { GiBookmark, GiBookmarklet} from "react-icons/gi";
+import { GiBookmark, GiBookmarklet } from "react-icons/gi";
 
 import { useState } from "react";
 import ErrorMessage from '../../ErrorMessage/ErrorMessage'
@@ -32,6 +32,7 @@ export default function UpdatePanel({ firebase, fsUser, userDetailsHandler, upda
   const [education, setEducation] = useState(fsUser.education)
   const [household, setHousehold] = useState(fsUser.household)
   const [hobbies, setHobbies] = useState(fsUser.hobbies)
+  const [simpaticoMatch, setSimpaticoMatch] = useState(fsUser.simpaticoMatch)
 
   // Deceased Info----------
   const [lossDate, setLossDate] = useState(fsUser.lossDate)
@@ -97,6 +98,9 @@ export default function UpdatePanel({ firebase, fsUser, userDetailsHandler, upda
 
   const changeHandler = (e) => {
     switch (e.target.name) {
+      case 'displayName':
+        setDisplayName(e.target.value)
+        break
       case 'residence':
         setResidence(e.target.value)
         break
@@ -147,6 +151,7 @@ export default function UpdatePanel({ firebase, fsUser, userDetailsHandler, upda
     usersRef.doc(fsUser.uid).update({
 
       // Personal Info----------
+      displayName: displayName,
       residence: residence,
       birthDate: birthDate,
       raceEnthnicity: raceEnthnicity,
@@ -154,6 +159,7 @@ export default function UpdatePanel({ firebase, fsUser, userDetailsHandler, upda
       education: education,
       household: household,
       hobbies: hobbies,
+      simpaticoMatch: simpaticoMatch,
 
       // Deceased Info----------
       lossDate: lossDate,
@@ -166,6 +172,7 @@ export default function UpdatePanel({ firebase, fsUser, userDetailsHandler, upda
         const newFsUser = {
           ...fsUser,
           // Personal Info----------
+          displayName: displayName,
           residence: residence,
           birthDate: birthDate,
           raceEnthnicity: raceEnthnicity,
@@ -173,6 +180,8 @@ export default function UpdatePanel({ firebase, fsUser, userDetailsHandler, upda
           education: education,
           household: household,
           hobbies: hobbies,
+          simpaticoMatch: simpaticoMatch,
+
 
           // Deceased Info----------
           lossDate: lossDate,
@@ -216,7 +225,7 @@ export default function UpdatePanel({ firebase, fsUser, userDetailsHandler, upda
 
   return (
     <IconContext.Provider value={{ className: "react-icons-updatePanel" }}>
-                    {/* <AiOutlineLeft /> prev
+      {/* <AiOutlineLeft /> prev
 
                     next <AiOutlineRight /> */}
 
@@ -227,16 +236,12 @@ export default function UpdatePanel({ firebase, fsUser, userDetailsHandler, upda
           <BsArrowLeft size="1.5rem" />
           <button onClick={e => userDetailsHandler(e, false)} className="back-btn">back to profile</button>
         </div>
-
-        
-      
-
         <div className="auth-container">
           <div className='fields-container register'>
 
             {/* ACCOUNT INFO----------- */}
-            
-            {accountInfo === false 
+
+            {accountInfo === false
               ?
 
               <div className='account-info-container' >
@@ -246,10 +251,10 @@ export default function UpdatePanel({ firebase, fsUser, userDetailsHandler, upda
                     <AiOutlineDown />
                   </div>
                   <h6>Edit Account information like Email, and Password.</h6>
-                  </div>
-              </div> 
+                </div>
+              </div>
               :
-                  <EditAccountInfo firebase={firebase} accountInfoDisplaySwitch={accountInfoDisplaySwitch} userDetailsHandler={userDetailsHandler} fsUser={fsUser} navHandler={navHandler}/>
+              <EditAccountInfo firebase={firebase} accountInfoDisplaySwitch={accountInfoDisplaySwitch} userDetailsHandler={userDetailsHandler} fsUser={fsUser} navHandler={navHandler} />
 
             }
 
@@ -276,7 +281,7 @@ export default function UpdatePanel({ firebase, fsUser, userDetailsHandler, upda
                   <label htmlFor='displayName'>Display Name</label>
                   <div className='input-container'>
                     <i className="fas fa-user-alt"></i>
-                    <input type="text" name="displayName" placeholder="Display Name" id="name" value={displayName} onChange={changeHandler} />
+                    <input type="text" name="displayName" placeholder="Display Name" id="displayName" value={displayName} onChange={changeHandler} />
                   </div>
 
 

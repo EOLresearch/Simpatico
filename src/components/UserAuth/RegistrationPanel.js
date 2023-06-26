@@ -180,7 +180,7 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
         photoURL: photoURL,
         email: email,
         displayName: displayName,
-
+        
         // User Info----------
         residence: residence,
         birthDate: birthDate,
@@ -189,6 +189,7 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
         education: education,
         household: household,
         hobbies: hobbies,
+        simpaticoMatch: '',
 
         // Deceased Info----------
         lossDate: lossDate,
