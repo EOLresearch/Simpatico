@@ -3,6 +3,8 @@ import './admindashboard.css';
 // import MatchList from './MatchList/MatchList'
 // import Profile from './Profile/Profile'
 
+import UserCard from './UserCard'
+
 
 import { useState, useEffect } from "react";
 import { IconContext } from "react-icons";
@@ -75,11 +77,26 @@ export default function AdminDashboard({ firebase, user, fsUser, navHandler, aut
       <div className='admin-dashboard'>
         <div className='admin-dashboard-header'>
           <h1>Admin Dashboard</h1>
-          <button onClick={getUsers}>Get Users</button>
+
+          <div className='admin-dashboard-nav'>
+            <button onClick={getUsers}>Get Users</button>
+            <button>filter</button>
+            <button>things</button>
+          </div>
+
         </div>
         <div className='admin-dashboard-body'>
 
-          <div className="user-table">
+          <div className="user-database">
+            {users.map(user => (
+              <UserCard key={user.uid} user={user} />
+            ))}
+          </div>
+
+
+
+
+          {/* <div className="user-table">
             <table>
               <thead>
                 <tr>
@@ -89,14 +106,15 @@ export default function AdminDashboard({ firebase, user, fsUser, navHandler, aut
                   <th onClick={() => handleSort('deceased')}>Deceased</th>
                   <th onClick={() => handleSort('cause')}>Cause</th>
                   <th onClick={() => handleSort('lossDate')}>Loss Date</th>
-                  {/* <th onClick={() => handleSort('bioSex')}>BioSex</th>
+                  <th onClick={() => handleSort('simpaticoMatch')}>Match</th>
+                  <th onClick={() => handleSort('bioSex')}>BioSex</th>
                   <th onClick={() => handleSort('education')}>Education</th>
                   <th onClick={() => handleSort('hobbies')}>Hobbies</th>
                   <th onClick={() => handleSort('household')}>Household</th>
                   <th onClick={() => handleSort('lossExp')}>Loss Experience</th>
                   <th onClick={() => handleSort('raceEthnicity')}>Race/Ethnicity</th>
                   <th onClick={() => handleSort('residence')}>Residence</th>
-                  <th onClick={() => handleSort('uid')}>UID</th> */}
+                  <th onClick={() => handleSort('uid')}>UID</th>
                 </tr>
               </thead>
               <tbody>
@@ -108,19 +126,20 @@ export default function AdminDashboard({ firebase, user, fsUser, navHandler, aut
                     <td>{user.deceased}</td>
                     <td>{user.cause}</td>
                     <td>{user.lossDate}</td>
-                    {/* <td>{user.bioSex}</td>
+                    <td>{user.simpaticoMatch}</td>
+                    <td>{user.bioSex}</td>
                     <td>{user.education}</td>
                     <td>{user.hobbies}</td>
                     <td>{user.household}</td>
                     <td>{user.lossExp}</td>
                     <td>{user.raceEthnicity}</td>
                     <td>{user.residence}</td>
-                    <td>{user.uid}</td> */}
+                    <td>{user.uid}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
-          </div>
+          </div> */}
 
         </div>
       </div>
