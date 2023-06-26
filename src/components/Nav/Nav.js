@@ -22,16 +22,14 @@ export default function Nav({ user, auth, navHandler, fsUser }) {
             <li data-identifier="Home" className="home-btn" onClick={e => navHandler("Home")}><IoHome /><span>Home</span></li>
             <li data-identifier="Matches"  onClick={e => navHandler("Matches")}><IoPeopleCircleOutline /><span>Matches</span></li>
             <li data-identifier="Conversations" onClick={e => navHandler("Conversations")}><IoChatbubblesSharp /><span>Conversations</span></li>
-            <li className='log-out' onClick={() => auth.signOut()}><FaArrowLeft size="1rem" /><span>Logout</span></li>
-            {/* <li>#MAKE A DONATION?</li> */}
-
             {
               fsUser && fsUser.admin === true ?
                 <li data-identifier="Admin" onClick={e => navHandler("Admin")}><IoChatbubblesSharp /><span>Admin Dashboard</span></li>
                 : null
 
             }
-
+            <li className='log-out' onClick={() => auth.signOut()}><FaArrowLeft size="1rem" /><span>Logout</span></li>
+            {/* <li>#MAKE A DONATION?</li> */}
 
           </ul>
         </div>
