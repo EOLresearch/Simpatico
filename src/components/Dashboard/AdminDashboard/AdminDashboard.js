@@ -14,9 +14,14 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 export default function AdminDashboard({ firebase, user, fsUser, navHandler, auth }) {
   const [users, setUsers] = useState([])
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
+  const [selectedUser, setSelectedUser] = useState()
 
   const firestore = firebase.firestore();
 
+  const selectTheUser = (e, uid) => {
+    console.log(uid)
+    setSelectedUser(uid)
+  }
 
 
   useEffect(() => {
@@ -71,7 +76,7 @@ export default function AdminDashboard({ firebase, user, fsUser, navHandler, aut
 
 
   const setMatch = (e) => {
-   console.log(e.target)
+    console.log(e.target)
   }
 
 
@@ -93,7 +98,7 @@ export default function AdminDashboard({ firebase, user, fsUser, navHandler, aut
 
           <div className="user-database">
             {users.map(user => (
-              <UserCard key={user.uid} user={user} setMatch={setMatch} />
+                <UserCard key={user.uid} user={user} setMatch={setMatch} selectTheUser={selectTheUser} selectedUser={selectedUser} />
             ))}
           </div>
 

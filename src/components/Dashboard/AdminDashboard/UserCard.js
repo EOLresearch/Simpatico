@@ -2,15 +2,25 @@ import React, { useState } from 'react';
 
 
 
-export default function UserCard({ user, setMatch }) {
+export default function UserCard({ user, setMatch, selectTheUser, selectedUser }) {
   const [showDetails, setShowDetails] = useState(false);
   const [showMatchInput, setShowMatchInput] = useState(false)
   const [matchUID, setMatchUID] = useState()
 
-  
+
+  const matchInputDisplaySwitch = (e) => {
+    e.stopPropagation()
+    setShowMatchInput(!showMatchInput)
+  }
+
+  const showDetailsDisplaySwitch = (e) => {
+    e.stopPropagation()
+    setShowDetails(!showDetails)
+  }
+
 
   const collapsed =
-    <div className="user-card">
+    <div className={selectedUser === user.uid ? "user-card selected" : "user-card"} onClick={e => selectTheUser(e, user.uid)}>
       <div className="card-header">
         <h3>{user.displayName}</h3>
 
@@ -34,20 +44,34 @@ export default function UserCard({ user, setMatch }) {
           <span>{user.uid}</span>
         </div>
 
-        {user.simpaticoMatch ? null : <button onClick={e=>setShowMatchInput(!showMatchInput)} className='card-btn'>Match this user</button>}
-        {showMatchInput === true ? 
-        <div className="match-container">
-          <input className="uid-input" type='text' placeholder='Enter UID' onChange={e=>setMatchUID(e.target.value)}></input>
-          <button className="match-button" onClick={null}>Match</button>
-        </div>
-          
-           : null}
-        <button className="card-btn" onClick={() => setShowDetails(true)}>Show Details</button>
+        {user.simpaticoMatch ? null : <button onClick={matchInputDisplaySwitch} className='card-btn'>Match this user</button>}
+        {showMatchInput === true ?
+
+           selectedUser  ?
+            <div className="match-container">
+              <button className="match-button" onClick={null}>Match with Selected User</button>
+              <button className="match-button" onClick={null}>Match</button>
+              <input className="uid-input" type='text' placeholder='Enter UID' onChange={null}></input>
+
+            </div>
+            :
+            <div className="match-container">
+              <input className="uid-input" type='text' placeholder='Enter UID' onChange={null}></input>
+              <button className="match-button" onClick={null}>Match</button>
+            </div>
+          : null}
+
+        <button className="card-btn" onClick={showDetailsDisplaySwitch}>Show Details</button>
       </div>
     </div>
 
+
+
+
+
+
   const exp =
-    <div className="user-card">
+    <div className={selectedUser === user.uid ? "user-card selected" : "user-card"} onClick={e => selectTheUser(e, user.uid)}>
       <div className="card-header">
         <h3>{user.displayName}</h3>
 
@@ -70,8 +94,22 @@ export default function UserCard({ user, setMatch }) {
           <span className="card-label">UID:</span>
           <span>{user.uid}</span>
         </div>
-        {user.simpaticoMatch ? null : <button className='card-btn'>Match this user</button>}
-        <button className="card-btn" onClick={() => setShowDetails(false)}>Hide Details</button>
+        
+        
+        {user.simpaticoMatch ? null : <button onClick={matchInputDisplaySwitch} className='card-btn'>Match this user</button>}
+        {showMatchInput === true ?
+
+           selectedUser  ?
+            <div className="match-container">
+              <button className="match-button" onClick={null}>Match with Selected User</button>
+            </div>
+            :
+            <div className="match-container">
+              <input className="uid-input" type='text' placeholder='Enter UID' onChange={null}></input>
+              <button className="match-button" onClick={null}>Match</button>
+            </div>
+          : null}
+        <button className="card-btn" onClick={showDetailsDisplaySwitch}>Hide Details</button>
 
         <div className="card-details">
           <div className="card-row">
