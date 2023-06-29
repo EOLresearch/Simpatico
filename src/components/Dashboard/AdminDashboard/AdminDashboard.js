@@ -15,12 +15,18 @@ export default function AdminDashboard({ firebase, user, fsUser, navHandler, aut
   const [users, setUsers] = useState([])
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
   const [selectedUser, setSelectedUser] = useState()
+  const [hovered, setHovered] = useState(false)
 
   const firestore = firebase.firestore();
 
   const selectTheUser = (e, uid) => {
     console.log(uid)
     setSelectedUser(uid)
+  }
+  const showSelectedUser = (e, boolean) => {
+    e.stopPropagation()
+    console.log(boolean)
+    setHovered(boolean)
   }
 
 
@@ -98,7 +104,7 @@ export default function AdminDashboard({ firebase, user, fsUser, navHandler, aut
 
           <div className="user-database">
             {users.map(user => (
-                <UserCard key={user.uid} user={user} setMatch={setMatch} selectTheUser={selectTheUser} selectedUser={selectedUser} />
+                <UserCard key={user.uid} user={user} setMatch={setMatch} selectTheUser={selectTheUser} selectedUser={selectedUser} showSelectedUser={showSelectedUser} hovered={hovered}/>
             ))}
           </div>
 

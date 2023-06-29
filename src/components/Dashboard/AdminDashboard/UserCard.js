@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 
 
-export default function UserCard({ user, setMatch, selectTheUser, selectedUser }) {
+export default function UserCard({ user, setMatch, selectTheUser, selectedUser, showSelectedUser, hovered }) {
   const [showDetails, setShowDetails] = useState(false);
   const [showMatchInput, setShowMatchInput] = useState(false)
   const [matchUID, setMatchUID] = useState()
@@ -18,16 +18,20 @@ export default function UserCard({ user, setMatch, selectTheUser, selectedUser }
     setShowDetails(!showDetails)
   }
 
+  const matchUser = (e) => {
+    e.stopPropagation()
+    console.log(e.target)
+  }
+
 
   const collapsed =
-    <div className={selectedUser === user.uid ? "user-card selected" : "user-card"} onClick={e => selectTheUser(e, user.uid)}>
+    <div className={
+      selectedUser === user.uid ? hovered === true ? "user-card selected hovered" : "user-card selected" : "user-card"} onClick={e => selectTheUser(e, user.uid)}>
       <div className="card-header">
         <h3>{user.displayName}</h3>
-
         <div className={user.simpaticoMatch ? "matched" : "not-matched"}>
           <span className="card-label">{user.simpaticoMatch ? "Matched" : "Not Matched"}</span>
         </div>
-
       </div>
 
       <div className="card-content">
@@ -47,12 +51,18 @@ export default function UserCard({ user, setMatch, selectTheUser, selectedUser }
         {user.simpaticoMatch ? null : <button onClick={matchInputDisplaySwitch} className='card-btn'>Match this user</button>}
         {showMatchInput === true ?
 
-           selectedUser  ?
+          selectedUser ?
             <div className="match-container">
-              <button className="match-button" onClick={null}>Match with Selected User</button>
-              <button className="match-button" onClick={null}>Match</button>
-              <input className="uid-input" type='text' placeholder='Enter UID' onChange={null}></input>
-
+              <button className="match-button"
+                onMouseEnter={e => showSelectedUser(e, true)}
+                onMouseLeave={e => showSelectedUser(e, false)}
+                onClick={null}>Match with Selected User</button> ...or
+              <div className="sub-container">
+                <input className="uid-input" type='text' placeholder='Enter UID'
+                  onChange={null}
+                  onClick={e => matchUser(e)}></input>
+                <button className="match-button" onClick={null}>Match</button>
+              </div>
             </div>
             :
             <div className="match-container">
@@ -71,44 +81,51 @@ export default function UserCard({ user, setMatch, selectTheUser, selectedUser }
 
 
   const exp =
-    <div className={selectedUser === user.uid ? "user-card selected" : "user-card"} onClick={e => selectTheUser(e, user.uid)}>
-      <div className="card-header">
-        <h3>{user.displayName}</h3>
+  <div className={
+    selectedUser === user.uid ? hovered === true ? "user-card selected hovered" : "user-card selected" : "user-card"} onClick={e => selectTheUser(e, user.uid)}>
+    <div className="card-header">
+      <h3>{user.displayName}</h3>
+      <div className={user.simpaticoMatch ? "matched" : "not-matched"}>
+        <span className="card-label">{user.simpaticoMatch ? "Matched" : "Not Matched"}</span>
+      </div>
+    </div>
 
-        <div className={user.simpaticoMatch ? "matched" : "not-matched"}>
-          <span className="card-label">{user.simpaticoMatch ? "Matched" : "Not Matched"}</span>
-        </div>
-
+    <div className="card-content">
+      <div className="card-row">
+        <span className="card-label">Cause:</span>
+        <span>{user.cause}</span>
+      </div>
+      <div className="card-row">
+        <span className="card-label">Deceased:</span>
+        <span>{user.deceased}</span>
+      </div>
+      <div className="card-row">
+        <span className="card-label">UID:</span>
+        <span>{user.uid}</span>
       </div>
 
-      <div className="card-content">
-        <div className="card-row">
-          <span className="card-label">Cause:</span>
-          <span>{user.cause}</span>
-        </div>
-        <div className="card-row">
-          <span className="card-label">Deceased:</span>
-          <span>{user.deceased}</span>
-        </div>
-        <div className="card-row">
-          <span className="card-label">UID:</span>
-          <span>{user.uid}</span>
-        </div>
-        
-        
-        {user.simpaticoMatch ? null : <button onClick={matchInputDisplaySwitch} className='card-btn'>Match this user</button>}
-        {showMatchInput === true ?
+      {user.simpaticoMatch ? null : <button onClick={matchInputDisplaySwitch} className='card-btn'>Match this user</button>}
+      {showMatchInput === true ?
 
-           selectedUser  ?
-            <div className="match-container">
-              <button className="match-button" onClick={null}>Match with Selected User</button>
-            </div>
-            :
-            <div className="match-container">
-              <input className="uid-input" type='text' placeholder='Enter UID' onChange={null}></input>
+        selectedUser ?
+          <div className="match-container">
+            <button className="match-button"
+              onMouseEnter={e => showSelectedUser(e, true)}
+              onMouseLeave={e => showSelectedUser(e, false)}
+              onClick={null}>Match with Selected User</button> ...or
+            <div className="sub-container">
+              <input className="uid-input" type='text' placeholder='Enter UID'
+                onChange={null}
+                onClick={e => matchUser(e)}></input>
               <button className="match-button" onClick={null}>Match</button>
             </div>
-          : null}
+          </div>
+          :
+          <div className="match-container">
+            <input className="uid-input" type='text' placeholder='Enter UID' onChange={null}></input>
+            <button className="match-button" onClick={null}>Match</button>
+          </div>
+        : null}
         <button className="card-btn" onClick={showDetailsDisplaySwitch}>Hide Details</button>
 
         <div className="card-details">
