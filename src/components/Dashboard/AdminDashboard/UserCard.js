@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 export default function UserCard({ user, setMatch, selectTheUser, selectedUser, showSelectedUser, hovered }) {
   const [showDetails, setShowDetails] = useState(false);
   const [showMatchInput, setShowMatchInput] = useState(false)
+  const [matchConfirmMessage, setMatchConfirmMessage] = useState(false)
   const [matchUID, setMatchUID] = useState()
 
 
@@ -20,7 +21,7 @@ export default function UserCard({ user, setMatch, selectTheUser, selectedUser, 
 
   const matchUser = (e) => {
     e.stopPropagation()
-    console.log(e.target)
+    console.log(e.target.userUID)
   }
 
 
@@ -52,11 +53,12 @@ export default function UserCard({ user, setMatch, selectTheUser, selectedUser, 
         {showMatchInput === true ?
 
           selectedUser ?
-            <div className="match-container">
+            <div className="match-container" >
               <button className="match-button"
+                useruid={user.uid}
                 onMouseEnter={e => showSelectedUser(e, true)}
                 onMouseLeave={e => showSelectedUser(e, false)}
-                onClick={null}>Match with Selected User</button> ...or
+                onClick={e=>setMatch(true)}>Match with Selected User</button> ...or
               <div className="sub-container">
                 <input className="uid-input" type='text' placeholder='Enter UID'
                   onChange={null}
@@ -66,8 +68,11 @@ export default function UserCard({ user, setMatch, selectTheUser, selectedUser, 
             </div>
             :
             <div className="match-container">
+              <button className='match-button' onClick={null}>Select a user to Match</button> ...or
+              <div className='sub-container'>
               <input className="uid-input" type='text' placeholder='Enter UID' onChange={null}></input>
               <button className="match-button" onClick={null}>Match</button>
+              </div>
             </div>
           : null}
 

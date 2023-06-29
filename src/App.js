@@ -37,7 +37,7 @@ function App() {
 
   useEffect(() => {
     if (!user) return
-    console.log(user)
+
     const usersRef = firestore.collection('users');
     const userQuery = usersRef.where("email", "==", user.email)
     userQuery.get()

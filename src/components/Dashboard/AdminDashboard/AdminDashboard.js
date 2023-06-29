@@ -19,17 +19,6 @@ export default function AdminDashboard({ firebase, user, fsUser, navHandler, aut
 
   const firestore = firebase.firestore();
 
-  const selectTheUser = (e, uid) => {
-    console.log(uid)
-    setSelectedUser(uid)
-  }
-  const showSelectedUser = (e, boolean) => {
-    e.stopPropagation()
-    console.log(boolean)
-    setHovered(boolean)
-  }
-
-
   useEffect(() => {
     if (!fsUser.admin || fsUser.admin === false) {
       navHandler('Home')
@@ -49,6 +38,35 @@ export default function AdminDashboard({ firebase, user, fsUser, navHandler, aut
       .catch((error) => {
         console.log("Error getting documents: ", error);
       });
+  }
+  const selectTheUser = (e, uid) => {
+    setSelectedUser(uid)
+  }
+  const showSelectedUser = (e, boolean) => {
+    e.stopPropagation()
+    if (e.target.attributes.useruid.value === selectedUser) return
+    setHovered(boolean)
+  }
+
+  const setMatch = (e) => {
+    console.log(e.target)
+
+    // const userRef = firestore.collection('users').doc(user.uid);
+    // userRef.update({
+    //   simpaticoMatch: selectedUser
+    // })
+    //   .then(() => {
+    //     console.log("Document successfully updated!");
+    //     // setSelectedUser('')
+    //   })
+    //   .catch((error) => {
+    //     // The document probably doesn't exist.
+    //     console.error("Error updating document: ", error);
+    //   });
+
+     
+
+    setHovered(false)
   }
 
   // Function to handle column header click and sort the table
@@ -79,12 +97,6 @@ export default function AdminDashboard({ firebase, user, fsUser, navHandler, aut
 
   // Apply sorting to the users array based on the current sort configuration
   const sortedUsers = users.slice().sort(compareValues(sortConfig.key, sortConfig.direction));
-
-
-  const setMatch = (e) => {
-    console.log(e.target)
-  }
-
 
   return (
 
