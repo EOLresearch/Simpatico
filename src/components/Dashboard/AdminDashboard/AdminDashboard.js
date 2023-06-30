@@ -40,22 +40,6 @@ export default function AdminDashboard({ firebase, user, fsUser, navHandler, aut
       });
   }, [firestore])
 
-
-  function getUsers() {
-    console.log('getUsers')
-    // const usersRef = firestore.collection('users');
-    // usersRef.get().then((querySnapshot) => {
-    //   let dataArr = []
-    //   querySnapshot.forEach((doc) => {
-    //     console.log("1 Doc Read")
-    //     dataArr.push(doc.data())
-    //   });
-    //   setUsers(dataArr)
-    // })
-    //   .catch((error) => {
-    //     console.log("Error getting documents: ", error);
-    //   });
-  }
   const selectTheUser = (e, user) => {
     setSelectedUser(user)
   }
@@ -66,6 +50,7 @@ export default function AdminDashboard({ firebase, user, fsUser, navHandler, aut
   }
 
   const setMatch = (useruid, selecteduid) => {
+    //removeMatch is better - reformat this to that
     console.log(useruid)
     console.log(selecteduid)
 
@@ -102,14 +87,12 @@ export default function AdminDashboard({ firebase, user, fsUser, navHandler, aut
   }
 
   const removeMatch = (e, user) => {
-
     const userRef = firestore.collection('users').doc(user.uid);
     const matchRef = firestore.collection('users').doc(user.simpaticoMatch);
 
     userRef.update({
       simpaticoMatch: ''
     }).then(() => {
-
       matchRef.update({
         simpaticoMatch: ''
       }).then(() => {
@@ -125,10 +108,8 @@ export default function AdminDashboard({ firebase, user, fsUser, navHandler, aut
         setUsers(updatedUsers)
       }
       )
-
     }
     )
-
     setHovered(false)
   }
 
