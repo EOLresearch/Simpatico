@@ -29,7 +29,8 @@ export default function UserCard({ user, setMatch, selectTheUser, selectedUser, 
   const matchConfirm = (e) => {
     e.stopPropagation()
     if(!selectedUser && matchUID === '') return alert('Please enter a UID or select a user')
-    if(matchUID === '' && selectedUser.uid == user.uid) return alert('Please enter a UID or select a user')
+    if(matchUID === '' && selectedUser.uid === user.uid) return alert('Please enter a UID or select a user')
+    if(selectedUser.simpaticoMatch) return alert('Selected user is already matched')
     setShowMatchInput(false)
     setMatchConfirmMessage(true)
 

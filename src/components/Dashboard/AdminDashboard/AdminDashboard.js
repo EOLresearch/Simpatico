@@ -25,7 +25,7 @@ export default function AdminDashboard({ firebase, user, fsUser, navHandler, aut
     }
   }, [fsUser, navHandler])
 
-  function getUsers() {
+  useEffect(() => {
     const usersRef = firestore.collection('users');
     usersRef.get().then((querySnapshot) => {
       let dataArr = []
@@ -38,6 +38,23 @@ export default function AdminDashboard({ firebase, user, fsUser, navHandler, aut
       .catch((error) => {
         console.log("Error getting documents: ", error);
       });
+  }, [firestore])
+
+
+  function getUsers() {
+    console.log('getUsers')
+    // const usersRef = firestore.collection('users');
+    // usersRef.get().then((querySnapshot) => {
+    //   let dataArr = []
+    //   querySnapshot.forEach((doc) => {
+    //     console.log("1 Doc Read")
+    //     dataArr.push(doc.data())
+    //   });
+    //   setUsers(dataArr)
+    // })
+    //   .catch((error) => {
+    //     console.log("Error getting documents: ", error);
+    //   });
   }
   const selectTheUser = (e, user) => {
     setSelectedUser(user)
@@ -57,26 +74,61 @@ export default function AdminDashboard({ firebase, user, fsUser, navHandler, aut
 
     userRef.update({
       simpaticoMatch: selecteduid
+    }).then(() => {
+      const updatedUsers = users.map(user => {
+        if (user.uid === useruid) {
+          user.simpaticoMatch = selecteduid
+        }
+        return user
+      }
+      )
+      setUsers(updatedUsers)
     })
+
     selectedRef.update({
       simpaticoMatch: useruid
+    }).then(() => {
+      const updatedUsers = users.map(user => {
+        if (user.uid === selecteduid) {
+          user.simpaticoMatch = useruid
+        }
+        return user
+      }
+      )
+      setUsers(updatedUsers)
     })
-    getUsers()
+
     setHovered(false)
   }
 
   const removeMatch = (e, user) => {
 
     const userRef = firestore.collection('users').doc(user.uid);
-    const selectedRef = firestore.collection('users').doc(user.simpaticoMatch);
+    const matchRef = firestore.collection('users').doc(user.simpaticoMatch);
 
     userRef.update({
       simpaticoMatch: ''
-    })
-    selectedRef.update({
-      simpaticoMatch: ''
-    })
-    getUsers()
+    }).then(() => {
+
+      matchRef.update({
+        simpaticoMatch: ''
+      }).then(() => {
+        const updatedUsers = users.map(user => {
+          if (user.uid === user.uid) {
+            user.simpaticoMatch = ''
+          } else if (user.uid === user.simpaticoMatch) {
+            user.simpaticoMatch = ''
+          }
+          return user
+        }
+        )
+        setUsers(updatedUsers)
+      }
+      )
+
+    }
+    )
+
     setHovered(false)
   }
 
@@ -117,7 +169,7 @@ export default function AdminDashboard({ firebase, user, fsUser, navHandler, aut
           <h1>Admin Dashboard</h1>
 
           <div className='admin-dashboard-nav'>
-            <button onClick={getUsers}>Get Users</button>
+            {/* <button onClick={getUsers}>Get Users</button> */}
             <button>filter</button>
             <button>things</button>
           </div>
@@ -127,7 +179,7 @@ export default function AdminDashboard({ firebase, user, fsUser, navHandler, aut
 
           <div className="user-database">
             {users.map(user => (
-                <UserCard key={user.uid} user={user} setMatch={setMatch} selectTheUser={selectTheUser} selectedUser={selectedUser} showSelectedUser={showSelectedUser} hovered={hovered} removeMatch={removeMatch}/>
+              <UserCard key={user.uid} user={user} setMatch={setMatch} selectTheUser={selectTheUser} selectedUser={selectedUser} showSelectedUser={showSelectedUser} hovered={hovered} removeMatch={removeMatch} />
             ))}
           </div>
 
