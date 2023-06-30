@@ -61,8 +61,23 @@ export default function AdminDashboard({ firebase, user, fsUser, navHandler, aut
     selectedRef.update({
       simpaticoMatch: useruid
     })
-    setHovered(false)
     getUsers()
+    setHovered(false)
+  }
+
+  const removeMatch = (e, user) => {
+
+    const userRef = firestore.collection('users').doc(user.uid);
+    const selectedRef = firestore.collection('users').doc(user.simpaticoMatch);
+
+    userRef.update({
+      simpaticoMatch: ''
+    })
+    selectedRef.update({
+      simpaticoMatch: ''
+    })
+    getUsers()
+    setHovered(false)
   }
 
   // Function to handle column header click and sort the table
@@ -112,7 +127,7 @@ export default function AdminDashboard({ firebase, user, fsUser, navHandler, aut
 
           <div className="user-database">
             {users.map(user => (
-                <UserCard key={user.uid} user={user} setMatch={setMatch} selectTheUser={selectTheUser} selectedUser={selectedUser} showSelectedUser={showSelectedUser} hovered={hovered}/>
+                <UserCard key={user.uid} user={user} setMatch={setMatch} selectTheUser={selectTheUser} selectedUser={selectedUser} showSelectedUser={showSelectedUser} hovered={hovered} removeMatch={removeMatch}/>
             ))}
           </div>
 

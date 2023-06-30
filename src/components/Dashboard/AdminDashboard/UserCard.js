@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 
 
-export default function UserCard({ user, setMatch, selectTheUser, selectedUser, showSelectedUser, hovered }) {
+export default function UserCard({ user, setMatch, selectTheUser, selectedUser, showSelectedUser, hovered, removeMatch }) {
   const [showDetails, setShowDetails] = useState(false);
   const [showMatchInput, setShowMatchInput] = useState(false)
   const [matchConfirmMessage, setMatchConfirmMessage] = useState(false)
@@ -84,7 +84,7 @@ export default function UserCard({ user, setMatch, selectTheUser, selectedUser, 
           <span>&nbsp;{user.simpaticoMatch ? user.simpaticoMatch : "user not matched"}</span>
         </div>
 
-        {user.simpaticoMatch ? <button onClick={null} className='card-btn'>Remove match</button> : <button onClick={matchInputDisplaySwitch} className='card-btn'>Match this user</button>}
+        {user.simpaticoMatch ? <button onClick={e=>removeMatch(e, user)} className='card-btn'>Remove match</button> : <button onClick={matchInputDisplaySwitch} className='card-btn'>Match this user</button>}
 
         {showMatchInput === true ?
           selectedUser ?
