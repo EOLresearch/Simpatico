@@ -39,8 +39,8 @@ export default function AdminDashboard({ firebase, user, fsUser, navHandler, aut
         console.log("Error getting documents: ", error);
       });
   }
-  const selectTheUser = (e, uid) => {
-    setSelectedUser(uid)
+  const selectTheUser = (e, user) => {
+    setSelectedUser(user)
   }
   const showSelectedUser = (e, boolean) => {
     e.stopPropagation()
@@ -48,25 +48,21 @@ export default function AdminDashboard({ firebase, user, fsUser, navHandler, aut
     setHovered(boolean)
   }
 
-  const setMatch = (e) => {
-    console.log(e.target)
+  const setMatch = (useruid, selecteduid) => {
+    console.log(useruid)
+    console.log(selecteduid)
 
-    // const userRef = firestore.collection('users').doc(user.uid);
-    // userRef.update({
-    //   simpaticoMatch: selectedUser
-    // })
-    //   .then(() => {
-    //     console.log("Document successfully updated!");
-    //     // setSelectedUser('')
-    //   })
-    //   .catch((error) => {
-    //     // The document probably doesn't exist.
-    //     console.error("Error updating document: ", error);
-    //   });
+    const userRef = firestore.collection('users').doc(useruid);
+    const selectedRef = firestore.collection('users').doc(selecteduid);
 
-     
-
+    userRef.update({
+      simpaticoMatch: selecteduid
+    })
+    selectedRef.update({
+      simpaticoMatch: useruid
+    })
     setHovered(false)
+    getUsers()
   }
 
   // Function to handle column header click and sort the table
