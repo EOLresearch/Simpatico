@@ -77,7 +77,16 @@ export default function AdminDashboard({ firebase, fsUser, navHandler }) {
 
         </div>
         <div className='admin-dashboard-body'>
-          <UserDatabase hovered={hovered} users={users} selectTheUser={selectTheUser} showSelectedUser={showSelectedUser} setMatch={setMatch} removeMatch={removeMatch} />
+          <UserDatabase 
+            firestore={firestore}
+            hovered={hovered}
+            users={users}
+            selectTheUser={selectTheUser}
+            selectedUser={selectedUser}
+            showSelectedUser={showSelectedUser}
+            setMatch={setMatch}
+            removeMatch={removeMatch}
+             />
         </div>
       </div>
     </div>

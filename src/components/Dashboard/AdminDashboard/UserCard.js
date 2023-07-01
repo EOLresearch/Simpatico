@@ -63,7 +63,7 @@ export default function UserCard({ user, setMatch, selectTheUser, selectedUser, 
           <span className="card-label">Cause: </span>
           <span>&nbsp;{user.cause}</span>
         </div>
-        <div className="card-row">
+        <div className="card-row"> 
           <span className="card-label">Deceased: </span>
           <span>&nbsp;{user.deceased}</span>
         </div>
