@@ -109,13 +109,15 @@ export default function Dashboard(props) {
     setShowChatWindow(true)
   }
 
+  const usersRef = firestore.collection('users');
+  const [users] = useCollectionData(usersRef);
 
   return (
     <IconContext.Provider value={{ className: "react-icons-dashboard" }}>
       <div className='dashboard-container'>
 
 
-        {adminDash === true ? <AdminDashboard firebase={firebase} user={user} fsUser={fsUser} navHandler={navHandler}/> :
+        {adminDash === true ? <AdminDashboard firebase={firebase} users={users} fsUser={fsUser} navHandler={navHandler}/> :
           <div className='dashboard-body'>
             <div className='sub-nav'>
               <div onClick={e => navHandler("Home")} className={clickedProfile}><RxPerson size="3rem" />My Profile</div>

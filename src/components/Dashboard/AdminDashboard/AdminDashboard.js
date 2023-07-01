@@ -1,18 +1,11 @@
 import './admindashboard.css';
-// import Conversations from './Conversations/Conversations'
-// import MatchList from './MatchList/MatchList'
-// import Profile from './Profile/Profile'
-
 import UserCard from './UserCard'
-
 
 import { useState, useEffect } from "react";
 import { IconContext } from "react-icons";
 
-import { useCollectionData } from 'react-firebase-hooks/firestore';
-
-export default function AdminDashboard({ firebase, user, fsUser, navHandler, auth }) {
-  const [users, setUsers] = useState([])
+export default function AdminDashboard({ firebase, users, fsUser, navHandler, auth }) {
+  // const [users, setUsers] = useState([])
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
   const [selectedUser, setSelectedUser] = useState()
   const [hovered, setHovered] = useState(false)
@@ -25,20 +18,6 @@ export default function AdminDashboard({ firebase, user, fsUser, navHandler, aut
     }
   }, [fsUser, navHandler])
 
-  useEffect(() => {
-    const usersRef = firestore.collection('users');
-    usersRef.get().then((querySnapshot) => {
-      let dataArr = []
-      querySnapshot.forEach((doc) => {
-        console.log("1 Doc Read")
-        dataArr.push(doc.data())
-      });
-      setUsers(dataArr)
-    })
-      .catch((error) => {
-        console.log("Error getting documents: ", error);
-      });
-  }, [firestore])
 
   const selectTheUser = (e, user) => {
     setSelectedUser(user)
@@ -50,7 +29,6 @@ export default function AdminDashboard({ firebase, user, fsUser, navHandler, aut
   }
 
   const setMatch = (useruid, selecteduid) => {
-    //removeMatch is better - reformat this to that
     console.log(useruid)
     console.log(selecteduid)
 
@@ -59,28 +37,10 @@ export default function AdminDashboard({ firebase, user, fsUser, navHandler, aut
 
     userRef.update({
       simpaticoMatch: selecteduid
-    }).then(() => {
-      const updatedUsers = users.map(user => {
-        if (user.uid === useruid) {
-          user.simpaticoMatch = selecteduid
-        }
-        return user
-      }
-      )
-      setUsers(updatedUsers)
     })
 
     selectedRef.update({
       simpaticoMatch: useruid
-    }).then(() => {
-      const updatedUsers = users.map(user => {
-        if (user.uid === selecteduid) {
-          user.simpaticoMatch = useruid
-        }
-        return user
-      }
-      )
-      setUsers(updatedUsers)
     })
 
     setHovered(false)
@@ -92,82 +52,68 @@ export default function AdminDashboard({ firebase, user, fsUser, navHandler, aut
 
     userRef.update({
       simpaticoMatch: ''
-    }).then(() => {
-      matchRef.update({
-        simpaticoMatch: ''
-      }).then(() => {
-        const updatedUsers = users.map(user => {
-          if (user.uid === user.uid) {
-            user.simpaticoMatch = ''
-          } else if (user.uid === user.simpaticoMatch) {
-            user.simpaticoMatch = ''
-          }
-          return user
-        }
-        )
-        setUsers(updatedUsers)
-      }
-      )
-    }
-    )
+    })
+    matchRef.update({
+      simpaticoMatch: ''
+    })
     setHovered(false)
   }
 
-  // Function to handle column header click and sort the table
-  const handleSort = (key) => {
-    let direction = 'ascending';
-    if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
-      direction = 'descending';
+// Function to handle column header click and sort the table
+const handleSort = (key) => {
+  let direction = 'ascending';
+  if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
+    direction = 'descending';
+  }
+  setSortConfig({ key, direction });
+};
+
+// Function to compare values based on the current sort configuration
+const compareValues = (key, direction = 'ascending') => {
+  return function (a, b) {
+    const valueA = a[key];
+    const valueB = b[key];
+
+    let comparison = 0;
+    if (valueA > valueB) {
+      comparison = 1;
+    } else if (valueA < valueB) {
+      comparison = -1;
     }
-    setSortConfig({ key, direction });
+
+    return direction === 'descending' ? comparison * -1 : comparison;
   };
+};
 
-  // Function to compare values based on the current sort configuration
-  const compareValues = (key, direction = 'ascending') => {
-    return function (a, b) {
-      const valueA = a[key];
-      const valueB = b[key];
+// Apply sorting to the users array based on the current sort configuration
+const sortedUsers = users.slice().sort(compareValues(sortConfig.key, sortConfig.direction));
 
-      let comparison = 0;
-      if (valueA > valueB) {
-        comparison = 1;
-      } else if (valueA < valueB) {
-        comparison = -1;
-      }
+return (
 
-      return direction === 'descending' ? comparison * -1 : comparison;
-    };
-  };
+  <div className='admin-dashboard-container'>
+    <div className='admin-dashboard'>
+      <div className='admin-dashboard-header'>
+        <h1>Admin Dashboard</h1>
 
-  // Apply sorting to the users array based on the current sort configuration
-  const sortedUsers = users.slice().sort(compareValues(sortConfig.key, sortConfig.direction));
-
-  return (
-
-    <div className='admin-dashboard-container'>
-      <div className='admin-dashboard'>
-        <div className='admin-dashboard-header'>
-          <h1>Admin Dashboard</h1>
-
-          <div className='admin-dashboard-nav'>
-            {/* <button onClick={getUsers}>Get Users</button> */}
-            <button>filter</button>
-            <button>things</button>
-          </div>
-
+        <div className='admin-dashboard-nav'>
+          {/* <button onClick={getUsers}>Get Users</button> */}
+          <button>filter</button>
+          <button>things</button>
         </div>
-        <div className='admin-dashboard-body'>
 
-          <div className="user-database">
-            {users.map(user => (
-              <UserCard key={user.uid} user={user} setMatch={setMatch} selectTheUser={selectTheUser} selectedUser={selectedUser} showSelectedUser={showSelectedUser} hovered={hovered} removeMatch={removeMatch} />
-            ))}
-          </div>
+      </div>
+      <div className='admin-dashboard-body'>
+
+        <div className="user-database">
+          {users.map(user => (
+            <UserCard key={user.uid} user={user} setMatch={setMatch} selectTheUser={selectTheUser} selectedUser={selectedUser} showSelectedUser={showSelectedUser} hovered={hovered} removeMatch={removeMatch} />
+          ))}
+        </div>
 
 
 
 
-          {/* <div className="user-table">
+        {/* <div className="user-table">
             <table>
               <thead>
                 <tr>
@@ -212,9 +158,9 @@ export default function AdminDashboard({ firebase, user, fsUser, navHandler, aut
             </table>
           </div> */}
 
-        </div>
       </div>
     </div>
+  </div>
 
-  );
+);
 }

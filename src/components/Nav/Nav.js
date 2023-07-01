@@ -28,7 +28,7 @@ export default function Nav({ user, auth, navHandler, fsUser }) {
                 : null
 
             }
-            <li className='log-out' onClick={() => auth.signOut()}><FaArrowLeft size="1rem" /><span>Logout</span></li>
+            <li className='log-out' onClick={e=>navHandler('Logout')}><FaArrowLeft size="1rem" /><span>Logout</span></li>
             {/* <li>#MAKE A DONATION?</li> */}
 
           </ul>

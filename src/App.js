@@ -104,6 +104,7 @@ function App() {
         setMatchListTab(false)
         setProfileTab(false)
         setConversationsTab(false)
+        setAdminDash(false)
         auth.signOut()
         return
       case 'Admin':
