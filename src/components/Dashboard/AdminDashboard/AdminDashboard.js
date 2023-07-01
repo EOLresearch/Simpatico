@@ -21,47 +21,6 @@ export default function AdminDashboard({ firebase, fsUser, navHandler }) {
   const [users] = useCollectionData(usersRef);
 
 
-  const selectTheUser = (e, user) => {
-    setSelectedUser(user)
-  }
-  const showSelectedUser = (e, boolean) => {
-    e.stopPropagation()
-    if (e.target.attributes.useruid.value === selectedUser) return
-    setHovered(boolean)
-  }
-
-  const setMatch = (useruid, selecteduid) => {
-    console.log(useruid)
-    console.log(selecteduid)
-
-    const userRef = firestore.collection('users').doc(useruid);
-    const selectedRef = firestore.collection('users').doc(selecteduid);
-
-    userRef.update({
-      simpaticoMatch: selecteduid
-    })
-
-    selectedRef.update({
-      simpaticoMatch: useruid
-    })
-
-    setHovered(false)
-  }
-
-  const removeMatch = (e, user) => {
-    const userRef = firestore.collection('users').doc(user.uid);
-    const matchRef = firestore.collection('users').doc(user.simpaticoMatch);
-
-    userRef.update({
-      simpaticoMatch: ''
-    })
-    matchRef.update({
-      simpaticoMatch: ''
-    })
-    setHovered(false)
-  }
-
-
   return (
 
     <div className='admin-dashboard-container'>
@@ -71,22 +30,22 @@ export default function AdminDashboard({ firebase, fsUser, navHandler }) {
 
           <div className='admin-dashboard-nav'>
             {/* <button onClick={getUsers}>Get Users</button> */}
-            <button>filter</button>
-            <button>things</button>
+            <button>All Users</button>
+            <button>Matching on Cause</button>
+            <button>Matching on Kinship</button>
+            <button>Matching on both</button>
+            <button>No Match</button>
+
+
           </div>
 
         </div>
         <div className='admin-dashboard-body'>
-          <UserDatabase 
+          <UserDatabase
             firestore={firestore}
             hovered={hovered}
             users={users}
-            selectTheUser={selectTheUser}
-            selectedUser={selectedUser}
-            showSelectedUser={showSelectedUser}
-            setMatch={setMatch}
-            removeMatch={removeMatch}
-             />
+          />
         </div>
       </div>
     </div>

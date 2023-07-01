@@ -38,6 +38,7 @@ export default function UserCard({ user, setMatch, selectTheUser, selectedUser, 
 
   const matchDoubleConfirm = (e, uid, matchuid) => {
     e.stopPropagation()
+    if(matchUID === '' && selectedUser.uid === user.uid) return alert('Please enter a UID or select a user')
     setMatchConfirmMessage(false)
     if(matchuid)return setMatch(uid, matchuid)
     setMatch(uid, selectedUser.uid)

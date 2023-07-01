@@ -36,7 +36,6 @@ export default function UserDatabase({ firestore, users }) {
   const removeMatch = (e, user) => {
     const userRef = firestore.collection('users').doc(user.uid);
     const matchRef = firestore.collection('users').doc(user.simpaticoMatch);
-
     userRef.update({
       simpaticoMatch: ''
     })
@@ -45,9 +44,10 @@ export default function UserDatabase({ firestore, users }) {
     })
     setHovered(false)
   }
+  
   return (
     <div className="user-database">
-      { users? users.map(user => (
+      { users ? users.map(user => (
         <UserCard key={user.uid}
           user={user}
           setMatch={setMatch}
