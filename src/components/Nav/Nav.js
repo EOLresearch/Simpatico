@@ -1,6 +1,6 @@
 import './nav.css';
 import { IconContext } from "react-icons";
-import { FaBookOpen, FaList, FaArrowLeft } from 'react-icons/fa';
+import { FaArrowLeft } from 'react-icons/fa';
 import { IoPeopleCircleOutline, IoChatbubblesSharp, IoHome } from "react-icons/io5";
 
 import logo from '../../assets/simpaticologogreenbg.jpg'
@@ -13,7 +13,7 @@ export default function Nav({ user, auth, navHandler, fsUser }) {
     <IconContext.Provider value={{ className: "react-icons-nav" }}>
       <div className='nav-container'>
         <div className='logo-container'>
-          <img src={logo} />
+          <img src={logo} alt="Logo"/>
           <p>Simpatico</p>
           <p>Finding Comfort in Shared Experiences</p>
         </div>
