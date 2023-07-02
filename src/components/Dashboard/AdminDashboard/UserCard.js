@@ -77,7 +77,7 @@ export default function UserCard({ user, setMatch, selectTheUser, selectedUser, 
           <span>&nbsp;{user.simpaticoMatch ? user.simpaticoMatch : "user not matched"}</span>
         </div>
 
-        {user.simpaticoMatch ? <button onClick={e=>removeMatch(e, user)} className='card-btn'>Remove match</button> : <button onClick={matchInputDisplaySwitch} className='card-btn'>Match this user</button>}
+        {user.simpaticoMatch ? <button onClick={e=>removeMatch(e, user)} className='card-btn'>Remove match</button> : <button onClick={matchInputDisplaySwitch} className='card-btn'>Match</button>}
 
         {showMatchInput === true ?
           selectedUser ?
@@ -122,7 +122,7 @@ export default function UserCard({ user, setMatch, selectTheUser, selectedUser, 
 
   const exp =
   <div className={
-    selectedUser ? selectedUser.uid === user.uid ? hovered === true ? "user-card selected hovered" : "user-card selected" : "user-card" : "user-card"} onClick={e => selectTheUser(e, user)}>
+    selectedUser ? selectedUser.uid === user.uid ? hovered === true ? "user-card selected hovered" : "user-card selected" : "user-card card-hover" : "user-card card-hover"} onClick={e => selectTheUser(e, user)}>
     <div className="card-header">
       <h3>{user.displayName}</h3>
       <div className={user.simpaticoMatch ? "matched" : "not-matched"}>
