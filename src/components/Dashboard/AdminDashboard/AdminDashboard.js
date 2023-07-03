@@ -18,7 +18,6 @@ export default function AdminDashboard({ firebase, fsUser, navHandler }) {
   const usersRef = firestore.collection('users');
   const [users] = useCollectionData(usersRef);
 
-
   return (
 
     <div className='admin-dashboard-container'>
@@ -26,7 +25,6 @@ export default function AdminDashboard({ firebase, fsUser, navHandler }) {
         <div className='admin-dashboard-header'>
           <h1>Admin Dashboard</h1>
           <div className='admin-dashboard-nav'>
-            {/* <button onClick={getUsers}>Get Users</button> */}
             <button>All Users</button>
             <button>Matching on Cause</button>
             <button>Matching on Kinship</button>
