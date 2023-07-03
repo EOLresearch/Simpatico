@@ -93,70 +93,61 @@ export default function UserCard({ user, setMatch, selectTheUser, selectedUser, 
         {showMatchingOptions === true ?
           <div className="match-container" >
             <div className='matching-btns-container'>
-
               <h5>Manual Matching options</h5>
               <div className='manual-matching-options'>
-                <div className="sub-container">
-                  <input className="uid-input" type='text' placeholder='Enter UID'
-                    onChange={changeHandler}></input>
-                  <button className="match-button" onClick={e => matchConfirm(e)}>Match</button>
-                </div>
-
                 <button
+                  className='match-button'
                   useruid={user.uid}
                   onMouseEnter={e => showSelectedUser(e, true)}
                   onMouseLeave={e => showSelectedUser(e, false)}
-                  onClick={e => matchConfirm(e)}> {selectedUser ? `Match with: ${selectedUser.displayName}` : "Match with: Select a user"}
+                  onClick={e => matchConfirm(e)}> {!selectedUser || selectedUser.uid === user.uid ? "Select a user" : `Match with: ${selectedUser.displayName}`}
                 </button>
+                <span>or</span>
+                <div className="sub-container">
+                  <input className="uid-input" type='text' placeholder='Enter UID'
+                    onChange={changeHandler}></input>
+                  <button className="uid-button" onClick={e => matchConfirm(e)}>Match</button>
+                </div>
               </div>
 
-              {toolTip ? <h5 className='tool-tip'>{toolTip}</h5> : <h5>Quick Matching options</h5>}
+              {toolTip ? <h5 className='tool-tip'>{toolTip}</h5> : <h5>Random Matching options</h5>}
               <div className='quick-matching-options'>
-                <button data-tooltip="Match randomly by CAUSE only"
-                  onMouseEnter={e => setToolTip("Match randomly by CAUSE only")}
+                <button data-tooltip="Match by CAUSE only"
+                  onMouseEnter={e => setToolTip("Match by CAUSE")}
                   onMouseLeave={e => setToolTip("")}
                 >C</button>
-                <button data-tooltip="Match randomly by KINSHIP only"
-                  onMouseEnter={e => setToolTip("Match randomly by KINSHIP only")}
+                <button data-tooltip="Match by KINSHIP only"
+                  onMouseEnter={e => setToolTip("Match by KINSHIP")}
                   onMouseLeave={e => setToolTip("")}
                 >K</button>
-                <button data-tooltip="Match randomly by KINSHIP and CAUSE"
-                
-                  onMouseEnter={e => setToolTip("Match randomly by KINSHIP & CAUSE")}
+                <button data-tooltip="Match by KINSHIP and CAUSE"
+                  onMouseEnter={e => setToolTip("Match by KINSHIP & CAUSE")}
                   onMouseLeave={e => setToolTip("")}
                 >&</button>
-                <button data-tooltip="Match randomly by NO MATCH"
-
-                  onMouseEnter={e => setToolTip("Match randomly by NO MATCH")}
+                <button data-tooltip="Match by NO MATCH"
+                  onMouseEnter={e => setToolTip("Match by NO MATCH")}
                   onMouseLeave={e => setToolTip("")}
-                  
                 >X</button>
               </div>
             </div>
-            {/* <button className="match-button"
-              useruid={user.uid}
-              onMouseEnter={e => showSelectedUser(e, true)}
-              onMouseLeave={e => showSelectedUser(e, false)}
-              onClick={e => matchConfirm(e)}> {selectedUser ? "Match with Selected User" : "Select a user"}</button>
-            <div className="sub-container">
-              <input className="uid-input" type='text' placeholder='Enter UID'
-                onChange={changeHandler}></input>
-              <button className="match-button" onClick={e => matchConfirm(e)}>Match</button>
-            </div> */}
 
           </div>
           : matchConfirmMessage === true ?
             (!selectedUser && matchUID) || (user.uid === selectedUser.uid) ?
               <div className="match-container">
                 <span className="match-confirm-message">Match this user with UID: {matchUID} ?</span>
-                <button className="match-button" onClick={e => matchDoubleConfirm(e, user.uid, matchUID)}>Confirm</button>
-                <button className="match-button" onClick={e => cancelMatchConfirm(e)}>Cancel</button>
+                <div className="match-confirm-btns">
+                  <button className="match-button" onClick={e => matchDoubleConfirm(e, user.uid, matchUID)}>Confirm</button>
+                  <button className="match-button" onClick={e => cancelMatchConfirm(e)}>Cancel</button>
+                </div>
               </div>
 
               : <div className="match-container">
-                <span className="match-confirm-message">Match this user with {selectedUser.displayName} ?</span>
-                <button className="match-button" onClick={e => matchDoubleConfirm(e, user.uid)}>Confirm</button>
-                <button className="match-button" onClick={e => cancelMatchConfirm(e)}>Cancel</button>
+                <span className="match-confirm-message">Match this user with <strong>{selectedUser.displayName}</strong> ?</span>
+                <div className="match-confirm-btns">
+                  <button className="match-button" onClick={e => matchDoubleConfirm(e, user.uid)}>Confirm</button>
+                  <button className="match-button" onClick={e => cancelMatchConfirm(e)}>Cancel</button>
+                </div>
               </div>
             : null}
       </div>

@@ -42,8 +42,6 @@
   color: white;
   cursor: pointer;
 }
-
-
 .tool-tip{
   background-color: rgba(25, 0, 255, 0.369) !important;
 }
@@ -74,26 +72,55 @@
   width: 100%;
 }
 
-.sub-container input::placeholder {
-  color: black;
+.manual-matching-options {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1rem;
 }
 
+.match-button {
+  margin-bottom:0.5rem;
+  padding: 15px 30px;
+  background-color: rgba(25, 0, 255, 0.369);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+
+}
+
+.match-button:hover {
+  background-color: #0056b3;
+}
+.sub-container {
+  margin-top:1rem;
+  display: flex;
+}
 .uid-input {
-  margin: 0;
-  padding: 0;
+  padding: 0 10px ;
+  width:80%;
+  border: none;
+  font-size: 16px;
 }
 
 .uid-input:focus {
-  outline: none;
-  border-bottom: 1px solid #555555;
+  box-shadow: 0 0 0 1px #007bff;
 }
 
-.uid-input::placeholder {
-  color: #999999;
+.uid-button {
+  padding: 10px 20px;
+  background-color: rgba(25, 0, 255, 0.369);
+  color: #fff;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
 }
-.sub-container {
-  display: flex;
-  margin: 1rem;
+
+.uid-button:hover {
+  background-color: #0056b3;
 }
 
 .card-details {
@@ -114,4 +141,21 @@
 
 .matched {
   color: green;
+}
+
+.match-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1rem;
+}
+.match-confirm-btns{
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  margin-top: 1rem;
+}
+.match-confirm-message{
+  text-align: center;
+  font-size: 1.2rem;
 }
