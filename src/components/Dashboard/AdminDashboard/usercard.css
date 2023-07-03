@@ -44,26 +44,8 @@
 }
 
 
-
-.quick-matching-options button::before{
-  content: attr(data-tooltip);
-  width: max-content;
-  position: absolute;
-  top: -0.25rem;
-  left: 50%;
-  transform: translateX(-30%);
-  background-color: rgb(25, 0, 255);
-  color: white;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  opacity: 0;
-  transition: all 0.3s ease-in-out;
-} 
-
-
-.quick-matching-options button:hover::before{
-  opacity: 1;
-  top: -2rem;
+.tool-tip{
+  background-color: rgba(25, 0, 255, 0.369) !important;
 }
 
 .card-row {

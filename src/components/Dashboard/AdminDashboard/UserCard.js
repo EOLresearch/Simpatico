@@ -7,6 +7,7 @@ export default function UserCard({ user, setMatch, selectTheUser, selectedUser, 
   const [showDetails, setShowDetails] = useState(false);
   const [showMatchingOptions, setShowMatchingOptions] = useState(false)
   const [matchConfirmMessage, setMatchConfirmMessage] = useState(false)
+  const [toolTip, setToolTip] = useState('')
   const [matchUID, setMatchUID] = useState()
 
   // =========================== GET THE LAST LOGIN AND ADD IT TO THE USER CARD FOR QUICK VIEWING ===========================
@@ -109,12 +110,27 @@ export default function UserCard({ user, setMatch, selectTheUser, selectedUser, 
                 </button>
               </div>
 
-              <h5>Quick Matching options</h5>
+              {toolTip ? <h5 className='tool-tip'>{toolTip}</h5> : <h5>Quick Matching options</h5>}
               <div className='quick-matching-options'>
-                <button data-tooltip="Match randomly by CAUSE only">C</button>
-                <button data-tooltip="Match randomly by KINSHIP only">K</button>
-                <button data-tooltip="Match randomly by KINSHIP and CAUSE">&</button>
-                <button data-tooltip="Match randomly by NO MATCH">X</button>
+                <button data-tooltip="Match randomly by CAUSE only"
+                  onMouseEnter={e => setToolTip("Match randomly by CAUSE only")}
+                  onMouseLeave={e => setToolTip("")}
+                >C</button>
+                <button data-tooltip="Match randomly by KINSHIP only"
+                  onMouseEnter={e => setToolTip("Match randomly by KINSHIP only")}
+                  onMouseLeave={e => setToolTip("")}
+                >K</button>
+                <button data-tooltip="Match randomly by KINSHIP and CAUSE"
+                
+                  onMouseEnter={e => setToolTip("Match randomly by KINSHIP & CAUSE")}
+                  onMouseLeave={e => setToolTip("")}
+                >&</button>
+                <button data-tooltip="Match randomly by NO MATCH"
+
+                  onMouseEnter={e => setToolTip("Match randomly by NO MATCH")}
+                  onMouseLeave={e => setToolTip("")}
+                  
+                >X</button>
               </div>
             </div>
             {/* <button className="match-button"
