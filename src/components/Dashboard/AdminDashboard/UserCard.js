@@ -190,77 +190,110 @@ export default function UserCard({ user, setMatch, selectTheUser, selectedUser, 
           }
           <button className="card-btn" onClick={showDetailsDisplaySwitch}>Show Details</button>
         </div>
-
+        <div className="card-details">
+          <div className="card-row">
+            <span className="card-label">Loss Date:</span>
+            <span>{user.lossDate}</span>
+          </div>
+          <div className="card-row">
+            <span className="card-label">Birth Date:</span>
+            <span>{user.birthDate}</span>
+          </div>
+          <div className="card-row">
+            <span className="card-label">Email:</span>
+            <span>{user.email}</span>
+          </div>
+          <div className="card-row">
+            <span className="card-label">Residence:</span>
+            <span>{user.residence}</span>
+          </div>
+          <div className="card-row">
+            <span className="card-label">Household:</span>
+            <span>{user.household}</span>
+          </div>
+          <div className="card-row">
+            <span className="card-label">Education:</span>
+            <span>{user.education}</span>
+          </div>
+          <div className="card-row">
+            <span className="card-label">Hobbies:</span>
+            <span>{user.hobbies}</span>
+          </div>
+          <div className="card-row">
+            <span className="card-label">Loss Experience:</span>
+            <span>{user.lossExp}</span>
+          </div>
+          <div className="card-row">
+            <span className="card-label">BioSex:</span>
+            <span>{user.bioSex}</span>
+          </div>
+          <div className="card-row">
+            <span className="card-label">Race/Ethnicity:</span>
+            <span>{user.raceEthnicity}</span>
+          </div>
+        </div>
         {showMatchingOptions === true ?
           <div className="match-container" >
-            <button className="match-button"
-              useruid={user.uid}
-              onMouseEnter={e => showSelectedUser(e, true)}
-              onMouseLeave={e => showSelectedUser(e, false)}
-              onClick={e => matchConfirm(e)}> {selectedUser ? "Match with Selected User" : "Select a user"}</button>
-            <div className="sub-container">
-              <input className="uid-input" type='text' placeholder='Enter UID'
-                onChange={changeHandler}></input>
-              <button className="match-button" onClick={e => matchConfirm(e)}>Match</button>
+            <div className='matching-btns-container'>
+              <h5>Manual Matching options</h5>
+              <div className='manual-matching-options'>
+                <button
+                  className='match-button'
+                  useruid={user.uid}
+                  onMouseEnter={e => showSelectedUser(e, true)}
+                  onMouseLeave={e => showSelectedUser(e, false)}
+                  onClick={e => matchConfirm(e)}> {!selectedUser || selectedUser.uid === user.uid ? "Select a user" : `Match with: ${selectedUser.displayName}`}
+                </button>
+                <span>or</span>
+                <div className="sub-container">
+                  <input className="uid-input" type='text' placeholder='Enter UID'
+                    onChange={changeHandler}></input>
+                  <button className="uid-button" onClick={e => matchConfirm(e)}>Match</button>
+                </div>
+              </div>
+
+              {toolTip ? <h5 className='tool-tip'>{toolTip}</h5> : <h5>Random Matching options</h5>}
+              <div className='quick-matching-options'>
+                <button data-tooltip="Match by CAUSE only"
+                  onMouseEnter={e => setToolTip("Match by CAUSE")}
+                  onMouseLeave={e => setToolTip("")}
+                >C</button>
+                <button data-tooltip="Match by KINSHIP only"
+                  onMouseEnter={e => setToolTip("Match by KINSHIP")}
+                  onMouseLeave={e => setToolTip("")}
+                >K</button>
+                <button data-tooltip="Match by KINSHIP and CAUSE"
+                  onMouseEnter={e => setToolTip("Match by KINSHIP & CAUSE")}
+                  onMouseLeave={e => setToolTip("")}
+                >&</button>
+                <button data-tooltip="Match by NO MATCH"
+                  onMouseEnter={e => setToolTip("Match by NO MATCH")}
+                  onMouseLeave={e => setToolTip("")}
+                >X</button>
+              </div>
             </div>
+
           </div>
           : matchConfirmMessage === true ?
             (!selectedUser && matchUID) || (user.uid === selectedUser.uid) ?
               <div className="match-container">
                 <span className="match-confirm-message">Match this user with UID: {matchUID} ?</span>
-                <button className="match-button" onClick={e => matchDoubleConfirm(e, user.uid, matchUID)}>Confirm</button>
-                <button className="match-button" onClick={e => cancelMatchConfirm(e)}>Cancel</button>
+                <div className="match-confirm-btns">
+                  <button className="match-button" onClick={e => matchDoubleConfirm(e, user.uid, matchUID)}>Confirm</button>
+                  <button className="match-button" onClick={e => cancelMatchConfirm(e)}>Cancel</button>
+                </div>
               </div>
 
               : <div className="match-container">
-                <span className="match-confirm-message">Match this user with {selectedUser.displayName} ?</span>
-                <button className="match-button" onClick={e => matchDoubleConfirm(e, user.uid)}>Confirm</button>
-                <button className="match-button" onClick={e => cancelMatchConfirm(e)}>Cancel</button>
+                <span className="match-confirm-message">Match this user with <strong>{selectedUser.displayName}</strong> ?</span>
+                <div className="match-confirm-btns">
+                  <button className="match-button" onClick={e => matchDoubleConfirm(e, user.uid)}>Confirm</button>
+                  <button className="match-button" onClick={e => cancelMatchConfirm(e)}>Cancel</button>
+                </div>
               </div>
             : null}
       </div>
-      <div className="card-details">
-        <div className="card-row">
-          <span className="card-label">Loss Date:</span>
-          <span>{user.lossDate}</span>
-        </div>
-        <div className="card-row">
-          <span className="card-label">Birth Date:</span>
-          <span>{user.birthDate}</span>
-        </div>
-        <div className="card-row">
-          <span className="card-label">Email:</span>
-          <span>{user.email}</span>
-        </div>
-        <div className="card-row">
-          <span className="card-label">Residence:</span>
-          <span>{user.residence}</span>
-        </div>
-        <div className="card-row">
-          <span className="card-label">Household:</span>
-          <span>{user.household}</span>
-        </div>
-        <div className="card-row">
-          <span className="card-label">Education:</span>
-          <span>{user.education}</span>
-        </div>
-        <div className="card-row">
-          <span className="card-label">Hobbies:</span>
-          <span>{user.hobbies}</span>
-        </div>
-        <div className="card-row">
-          <span className="card-label">Loss Experience:</span>
-          <span>{user.lossExp}</span>
-        </div>
-        <div className="card-row">
-          <span className="card-label">BioSex:</span>
-          <span>{user.bioSex}</span>
-        </div>
-        <div className="card-row">
-          <span className="card-label">Race/Ethnicity:</span>
-          <span>{user.raceEthnicity}</span>
-        </div>
-      </div>
+
     </div>
 
   return (
