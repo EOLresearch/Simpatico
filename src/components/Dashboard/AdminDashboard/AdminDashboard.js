@@ -1,13 +1,11 @@
 import './admindashboard.css';
 import UserDatabase from './UserDatabase';
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 // import { IconContext } from "react-icons";
 
 export default function AdminDashboard({ firebase, fsUser, navHandler }) {
-  const [selectedUser, setSelectedUser] = useState()
-  const [hovered, setHovered] = useState(false)
 
   const firestore = firebase.firestore();
 
@@ -27,7 +25,6 @@ export default function AdminDashboard({ firebase, fsUser, navHandler }) {
       <div className='admin-dashboard'>
         <div className='admin-dashboard-header'>
           <h1>Admin Dashboard</h1>
-
           <div className='admin-dashboard-nav'>
             {/* <button onClick={getUsers}>Get Users</button> */}
             <button>All Users</button>
@@ -35,15 +32,11 @@ export default function AdminDashboard({ firebase, fsUser, navHandler }) {
             <button>Matching on Kinship</button>
             <button>Matching on both</button>
             <button>No Match</button>
-
-
           </div>
-
         </div>
         <div className='admin-dashboard-body'>
           <UserDatabase
             firestore={firestore}
-            hovered={hovered}
             users={users}
           />
         </div>

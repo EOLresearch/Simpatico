@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import UserCard from './UserCard'
+import './userdatabase.css'
 
 
 export default function UserDatabase({ firestore, users }) {
@@ -44,7 +45,7 @@ export default function UserDatabase({ firestore, users }) {
     })
     setHovered(false)
   }
-  
+
   return (
     <div className="user-database">
       { users ? users.map(user => (
