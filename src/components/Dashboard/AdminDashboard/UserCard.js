@@ -3,7 +3,7 @@ import './usercard.css'
 
 
 
-export default function UserCard({ user, setMatch, selectTheUser, selectedUser, showSelectedUser, hovered, removeMatch }) {
+export default function UserCard({ user, setMatch, getMatchBy, selectTheUser, selectedUser, showSelectedUser, hovered, removeMatch }) {
   const [showDetails, setShowDetails] = useState(false);
   const [showMatchingOptions, setShowMatchingOptions] = useState(false)
   const [matchConfirmMessage, setMatchConfirmMessage] = useState(false)
@@ -25,12 +25,28 @@ export default function UserCard({ user, setMatch, selectTheUser, selectedUser, 
   }
 
   const matchConfirm = (e) => {
+    console.log(e.target)
+
+    if (e.target.dataset.tooltip === "cause") return matchRandomlyBy(e, "cause")
+    if (e.target.dataset.tooltip === "kinship") return matchRandomlyBy(e, "kinship")
+    if (e.target.dataset.tooltip === "both") return matchRandomlyBy(e, "both")
+    if (e.target.dataset.tooltip === "none") return matchRandomlyBy(e, "none")
+
     e.stopPropagation()
-    if (!selectedUser && matchUID === '') return alert('Please enter a UID or select a user')
-    if (matchUID === '' && selectedUser.uid === user.uid) return alert('Please enter a UID or select a user')
     if (selectedUser.simpaticoMatch) return alert('Selected user is already matched')
     setShowMatchingOptions(false)
     setMatchConfirmMessage(true)
+  }
+
+  const matchRandomlyBy = (e, type) => {
+    e.stopPropagation()
+    setShowMatchingOptions(false)
+    if (type === "cause") {
+      const match = getMatchBy(user.uid, user.cause, "cause")
+
+      //THIS IS WHERE YOU LEFT OFF BRUAH
+    }
+
   }
 
   const cancelMatchConfirm = (e) => {
@@ -55,7 +71,7 @@ export default function UserCard({ user, setMatch, selectTheUser, selectedUser, 
 
   const collapsed =
     <div className={
-      selectedUser ? selectedUser.uid === user.uid ? hovered === true ? "user-card selected hovered" : "user-card selected" : "user-card" : "user-card"} onClick={e => selectTheUser(e, user)}>
+      selectedUser ? selectedUser.uid === user.uid ? hovered === true ? "user-card user-selected hovered" : "user-card user-selected" : "user-card" : "user-card"} onClick={e => selectTheUser(e, user)}>
       <div className="card-header">
         <h3>{user.displayName}</h3>
         <div className={user.simpaticoMatch ? "matched" : "not-matched"}>
@@ -93,7 +109,7 @@ export default function UserCard({ user, setMatch, selectTheUser, selectedUser, 
         {showMatchingOptions === true ?
           <div className="match-container" >
             <div className='matching-btns-container'>
-              <h5>Manual Matching options</h5>
+              {/* <h5>Manual Matching options</h5> */}
               <div className='manual-matching-options'>
                 <button
                   className='match-button'
@@ -102,61 +118,56 @@ export default function UserCard({ user, setMatch, selectTheUser, selectedUser, 
                   onMouseLeave={e => showSelectedUser(e, false)}
                   onClick={e => matchConfirm(e)}> {!selectedUser || selectedUser.uid === user.uid ? "Select a user" : `Match with: ${selectedUser.displayName}`}
                 </button>
-                <span>or</span>
+                {/* <span>or</span>
                 <div className="sub-container">
                   <input className="uid-input" type='text' placeholder='Enter UID'
                     onChange={changeHandler}></input>
                   <button className="uid-button" onClick={e => matchConfirm(e)}>Match</button>
-                </div>
+                </div> */}
               </div>
 
-              {toolTip ? <h5 className='tool-tip'>{toolTip}</h5> : <h5>Random Matching options</h5>}
+              {toolTip ? <h5 className='tool-tip'>{toolTip}</h5> : <h5>Quick Matching options</h5>}
               <div className='quick-matching-options'>
-                <button data-tooltip="Match by CAUSE only"
+                <button data-tooltip="cause"
                   onMouseEnter={e => setToolTip("Match by CAUSE")}
                   onMouseLeave={e => setToolTip("")}
+                  onClick={e => matchConfirm(e)}
                 >C</button>
-                <button data-tooltip="Match by KINSHIP only"
+                <button data-tooltip="kinship"
                   onMouseEnter={e => setToolTip("Match by KINSHIP")}
                   onMouseLeave={e => setToolTip("")}
+                  onClick={e => matchConfirm(e)}
                 >K</button>
-                <button data-tooltip="Match by KINSHIP and CAUSE"
+                <button data-tooltip="both"
                   onMouseEnter={e => setToolTip("Match by KINSHIP & CAUSE")}
                   onMouseLeave={e => setToolTip("")}
+                  onClick={e => matchConfirm(e)}
                 >&</button>
-                <button data-tooltip="Match by NO MATCH"
+                <button data-tooltip="none"
                   onMouseEnter={e => setToolTip("Match by NO MATCH")}
                   onMouseLeave={e => setToolTip("")}
+                  onClick={e => matchConfirm(e)}
                 >X</button>
               </div>
             </div>
 
           </div>
           : matchConfirmMessage === true ?
-            (!selectedUser && matchUID) || (user.uid === selectedUser.uid) ?
-              <div className="match-container">
-                <span className="match-confirm-message">Match this user with UID: {matchUID} ?</span>
-                <div className="match-confirm-btns">
-                  <button className="match-button" onClick={e => matchDoubleConfirm(e, user.uid, matchUID)}>Confirm</button>
-                  <button className="match-button" onClick={e => cancelMatchConfirm(e)}>Cancel</button>
-                </div>
+            <div className="match-container">
+              <span className="match-confirm-message">Match this user with <strong>{selectedUser.displayName}</strong> ?</span>
+              <div className="match-confirm-btns">
+                <button className="match-button" onClick={e => matchDoubleConfirm(e, user.uid)}>Confirm</button>
+                <button className="match-button" onClick={e => cancelMatchConfirm(e)}>Cancel</button>
               </div>
-
-              : <div className="match-container">
-                <span className="match-confirm-message">Match this user with <strong>{selectedUser.displayName}</strong> ?</span>
-                <div className="match-confirm-btns">
-                  <button className="match-button" onClick={e => matchDoubleConfirm(e, user.uid)}>Confirm</button>
-                  <button className="match-button" onClick={e => cancelMatchConfirm(e)}>Cancel</button>
-                </div>
-              </div>
+            </div>
             : null}
       </div>
 
     </div>
 
-  const exp =
+  const expanded =
     <div className={
-      selectedUser ? selectedUser.uid === user.uid ? hovered === true ? "user-card selected hovered" : "user-card selected" : "user-card" : "user-card"} onClick={e => selectTheUser(e, user)}>
+      selectedUser ? selectedUser.uid === user.uid ? hovered === true ? "user-card user-selected hovered" : "user-card user-selected" : "user-card" : "user-card"} onClick={e => selectTheUser(e, user)}>
       <div className="card-header">
         <h3>{user.displayName}</h3>
         <div className={user.simpaticoMatch ? "matched" : "not-matched"}>
@@ -298,7 +309,7 @@ export default function UserCard({ user, setMatch, selectTheUser, selectedUser, 
 
   return (
     <div>
-      {showDetails ? exp : collapsed}
+      {showDetails ? expanded : collapsed}
     </div>
   );
 };

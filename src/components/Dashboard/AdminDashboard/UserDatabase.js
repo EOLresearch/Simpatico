@@ -16,6 +16,18 @@ export default function UserDatabase({ firestore, users }) {
     setHovered(boolean)
   }
 
+  const getMatchBy = (uid, userCause, userKinship, type) => {
+    console.log(type)
+
+    console.log(users)
+    if (type === 'cause') {
+      const match = users.find(user => user.cause === userCause && user.uid !== uid)
+      console.log(match)
+      return match
+    }
+
+  }
+
   const setMatch = (useruid, selecteduid) => {
     console.log(useruid)
     console.log(selecteduid)
@@ -52,6 +64,7 @@ export default function UserDatabase({ firestore, users }) {
         <UserCard key={user.uid}
           user={user}
           setMatch={setMatch}
+          getMatchBy={getMatchBy}
           selectTheUser={selectTheUser}
           selectedUser={selectedUser}
           showSelectedUser={showSelectedUser}

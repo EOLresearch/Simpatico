@@ -78,11 +78,13 @@ function App() {
         setMatchListTab(false)
         setProfileTab(false)
         setConversationsTab(true)
+        setAdminDash(false)
         return
       case 'Matches':
         setProfileTab(false)
         setConversationsTab(false)
         setMatchListTab(true)
+        setAdminDash(false)
         return
       case 'Home':
         setMatchListTab(false)
@@ -94,11 +96,13 @@ function App() {
         setMatchListTab(false)
         setProfileTab(false)
         setConversationsTab(false)
+        setAdminDash(false)
         return
       case 'All Off':
         setMatchListTab(false)
         setProfileTab(false)
         setConversationsTab(false)
+        setAdminDash(false)
         return
       case 'Logout':
         setMatchListTab(false)
