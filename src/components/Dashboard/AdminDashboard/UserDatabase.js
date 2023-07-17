@@ -10,6 +10,7 @@ export default function UserDatabase({ firestore, users }) {
   const selectTheUser = (e, user) => {
     setSelectedUser(user)
   }
+
   const showSelectedUser = (e, boolean) => {
     e.stopPropagation()
     if (e.target.attributes.useruid.value === selectedUser) return
@@ -20,15 +21,29 @@ export default function UserDatabase({ firestore, users }) {
     console.log(type)
 
     console.log(users)
+    const unmatchedUsers = users.filter(user => user.simpaticoMatch === '')
     if (type === 'cause') {
-      const match = users.find(user => user.cause === userCause && user.uid !== uid)
+      const match = unmatchedUsers.find(user => user.cause === userCause && user.uid !== uid)
+      setSelectedUser(match)
+    } else if (type === 'kinship') {
+      const match = unmatchedUsers.find(user => user.kinship === userKinship && user.uid !== uid)
+      setSelectedUser(match)
+    } else if (type === 'both') {
+      const match = unmatchedUsers.find(user => user.cause === userCause && user.kinship === userKinship && user.uid !== uid)
+      setSelectedUser(match)
+    } else if (type === 'none') {
+      const match = unmatchedUsers.map(user => {
+        const excludeThisUser = unmatchedUsers.filter(user => user.uid !== uid)
+        const noCauseMatches = excludeThisUser.filter(user => user.cause !== userCause)
+        const noKinshipMatches = noCauseMatches.filter(user => user.kinship !== userKinship)
+        return noKinshipMatches[Math.floor(Math.random() * noKinshipMatches.length)]
+      })
+      // setSelectedUser(match)
       console.log(match)
-      return match
     }
-
   }
 
-  const setMatch = (useruid, selecteduid) => {
+  const setSimpaticoMatch = (useruid, selecteduid) => {
     console.log(useruid)
     console.log(selecteduid)
 
@@ -63,7 +78,7 @@ export default function UserDatabase({ firestore, users }) {
       { users ? users.map(user => (
         <UserCard key={user.uid}
           user={user}
-          setMatch={setMatch}
+          setSimpaticoMatch={setSimpaticoMatch}
           getMatchBy={getMatchBy}
           selectTheUser={selectTheUser}
           selectedUser={selectedUser}

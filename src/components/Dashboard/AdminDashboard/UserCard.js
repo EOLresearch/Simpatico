@@ -3,12 +3,13 @@ import './usercard.css'
 
 
 
-export default function UserCard({ user, setMatch, getMatchBy, selectTheUser, selectedUser, showSelectedUser, hovered, removeMatch }) {
+export default function UserCard({ user, setSimpaticoMatch, getMatchBy, selectTheUser, selectedUser, showSelectedUser, hovered, removeMatch }) {
   const [showDetails, setShowDetails] = useState(false);
   const [showMatchingOptions, setShowMatchingOptions] = useState(false)
+  //this boolean piece of state below is misleadedly named. lets work on that
   const [matchConfirmMessage, setMatchConfirmMessage] = useState(false)
   const [toolTip, setToolTip] = useState('')
-  const [matchUID, setMatchUID] = useState()
+  // const [match, setMatch] = useState()
 
   // =========================== GET THE LAST LOGIN AND ADD IT TO THE USER CARD FOR QUICK VIEWING ===========================
 
@@ -16,7 +17,6 @@ export default function UserCard({ user, setMatch, getMatchBy, selectTheUser, se
   const matchInputDisplaySwitch = (e) => {
     e.stopPropagation()
     setShowMatchingOptions(!showMatchingOptions)
-    setMatchUID('')
   }
 
   const showDetailsDisplaySwitch = (e) => {
@@ -25,48 +25,42 @@ export default function UserCard({ user, setMatch, getMatchBy, selectTheUser, se
   }
 
   const matchConfirm = (e) => {
-    console.log(e.target)
-
-    if (e.target.dataset.tooltip === "cause") return matchRandomlyBy(e, "cause")
-    if (e.target.dataset.tooltip === "kinship") return matchRandomlyBy(e, "kinship")
-    if (e.target.dataset.tooltip === "both") return matchRandomlyBy(e, "both")
-    if (e.target.dataset.tooltip === "none") return matchRandomlyBy(e, "none")
-
     e.stopPropagation()
-    if (selectedUser.simpaticoMatch) return alert('Selected user is already matched')
+    console.log(e.target)
+    
+    if (e.target.dataset.tooltip === "cause") {
+      setMatchConfirmMessage(true)
+      getMatchBy(user.uid, user.cause, user.kinship, "cause")
+    } else if (e.target.dataset.tooltip === "kinship") {
+      setMatchConfirmMessage(true)
+      getMatchBy(user.uid, user.cause, user.kinship, "kinship")
+    } else if (e.target.dataset.tooltip === "both") {
+      setMatchConfirmMessage(true)
+      getMatchBy(user.uid, user.cause, user.kinship, "both")
+    } else if (e.target.dataset.tooltip === "none") {
+      setMatchConfirmMessage(true)
+      getMatchBy(user.uid, user.cause, user.kinship, "none")
+    }
+
     setShowMatchingOptions(false)
     setMatchConfirmMessage(true)
   }
 
-  const matchRandomlyBy = (e, type) => {
-    e.stopPropagation()
-    setShowMatchingOptions(false)
-    if (type === "cause") {
-      const match = getMatchBy(user.uid, user.cause, "cause")
-
-      //THIS IS WHERE YOU LEFT OFF BRUAH
-    }
-
-  }
 
   const cancelMatchConfirm = (e) => {
     e.stopPropagation()
     setMatchConfirmMessage(false)
     setShowMatchingOptions(true)
-    setMatchUID('')
   }
 
-  const matchDoubleConfirm = (e, uid, matchuid) => {
+  const matchDoubleConfirm = (e, uid) => {
     e.stopPropagation()
-    if (matchUID === '' && selectedUser.uid === user.uid) return alert('Please enter a UID or select a user')
     setMatchConfirmMessage(false)
-    if (matchuid) return setMatch(uid, matchuid)
-    setMatch(uid, selectedUser.uid)
+    setSimpaticoMatch(uid, selectedUser.uid)
   }
 
   const changeHandler = (e) => {
     e.stopPropagation()
-    setMatchUID(e.target.value)
   }
 
   const collapsed =
@@ -109,7 +103,6 @@ export default function UserCard({ user, setMatch, getMatchBy, selectTheUser, se
         {showMatchingOptions === true ?
           <div className="match-container" >
             <div className='matching-btns-container'>
-              {/* <h5>Manual Matching options</h5> */}
               <div className='manual-matching-options'>
                 <button
                   className='match-button'
@@ -118,12 +111,6 @@ export default function UserCard({ user, setMatch, getMatchBy, selectTheUser, se
                   onMouseLeave={e => showSelectedUser(e, false)}
                   onClick={e => matchConfirm(e)}> {!selectedUser || selectedUser.uid === user.uid ? "Select a user" : `Match with: ${selectedUser.displayName}`}
                 </button>
-                {/* <span>or</span>
-                <div className="sub-container">
-                  <input className="uid-input" type='text' placeholder='Enter UID'
-                    onChange={changeHandler}></input>
-                  <button className="uid-button" onClick={e => matchConfirm(e)}>Match</button>
-                </div> */}
               </div>
 
               {toolTip ? <h5 className='tool-tip'>{toolTip}</h5> : <h5>Quick Matching options</h5>}
@@ -286,11 +273,11 @@ export default function UserCard({ user, setMatch, getMatchBy, selectTheUser, se
 
           </div>
           : matchConfirmMessage === true ?
-            (!selectedUser && matchUID) || (user.uid === selectedUser.uid) ?
+            (!selectedUser) || (user.uid === selectedUser.uid) ?
               <div className="match-container">
-                <span className="match-confirm-message">Match this user with UID: {matchUID} ?</span>
+                <span className="match-confirm-message">Match this user with UID: ?</span>
                 <div className="match-confirm-btns">
-                  <button className="match-button" onClick={e => matchDoubleConfirm(e, user.uid, matchUID)}>Confirm</button>
+                  <button className="match-button" onClick={e => matchDoubleConfirm(e, user.uid)}>Confirm</button>
                   <button className="match-button" onClick={e => cancelMatchConfirm(e)}>Cancel</button>
                 </div>
               </div>
