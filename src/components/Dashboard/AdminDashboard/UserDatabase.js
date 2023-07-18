@@ -22,6 +22,7 @@ export default function UserDatabase({ firestore, users }) {
 
     console.log(users)
     const unmatchedUsers = users.filter(user => user.simpaticoMatch === '')
+    
     if (type === 'cause') {
       const match = unmatchedUsers.find(user => user.cause === userCause && user.uid !== uid)
       setSelectedUser(match)

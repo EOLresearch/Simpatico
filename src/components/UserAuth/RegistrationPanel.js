@@ -18,7 +18,9 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
   // User Info----------
   const [residence, setResidence] = useState('')
   const [lossDate, setLossDate] = useState('')
-  const [raceEnthnicity, setRaceEnthnicity] = useState('')
+  // const [raceEnthnicity, setRaceEnthnicity] = useState('')
+  const [race, setRace] = useState('')
+  const [ethnicity, setEthnicity] = useState('')
   // https://www.census.gov/topics/population/race/about.html for more about the options on raceEnthnicity
   const [bioSex, setBioSex] = useState('')
   const [education, setEducation] = useState('')
@@ -63,7 +65,7 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
         setAnError('nobirth')
       } else if (over18Bouncer(birthDate) === false) {
         setAnError('under18')
-      } else if (raceEnthnicity === '') {
+      } else if (race === '') {
         setAnError('norace')
       } else if (bioSex === '') {
         setAnError('nobiosex')
@@ -146,8 +148,8 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
       case 'lossExp':
         setLossExp(e.target.value)
         break
-      case 'raceEnthnicity':
-        setRaceEnthnicity(e.target.value)
+      case 'race':
+        setRace(e.target.value)
         break
       case 'bioSex':
         setBioSex(e.target.value)
@@ -180,11 +182,13 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
         photoURL: photoURL,
         email: email,
         displayName: displayName,
-        
+
         // User Info----------
         residence: residence,
         birthDate: birthDate,
-        raceEnthnicity: raceEnthnicity,
+        // raceEnthnicity: raceEnthnicity,
+        race: race,
+        ethnicity: ethnicity,
         bioSex: bioSex,
         education: education,
         household: household,
@@ -359,10 +363,35 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
                 <input type="date" name="birthDate" id="birthDate" className="widthAdjust" placeholder="e.g. 01/01/1990" value={birthDate} onChange={changeHandler} />
               </div>
 
-              <label htmlFor="raceEnthnicity">What race/ethnicity best describes you?</label>
+              {/* <label htmlFor="raceEnthnicity">What race/ethnicity best describes you?</label>
               <div className='input-container'>
-                {/* <i className="fas fa-calendar-alt"></i> */}
                 <select type="text" name="raceEnthnicity" id="raceEnthnicity" placeholder="Race/Ethnicity" value={raceEnthnicity} onChange={changeHandler} >
+                  <option>Prefer not to disclose</option>
+                  <option>White</option>
+                  <option>Black or African American</option>
+                  <option>Hispanic or Latino</option>
+                  <option>Asian</option>
+                  <option>Native American or American Indian</option>
+                  <option>Native Hawaiian or Pacific Islander</option>
+                  <option>Other</option>
+                </select>
+              </div> */}
+              <label htmlFor="race">What race best describes you?</label>
+              <div className='input-container'>
+                <select type="text" name="race" id="race" placeholder="Race" value={race} onChange={changeHandler} >
+                  <option>Prefer not to disclose</option>
+                  <option>White</option>
+                  <option>Black or African American</option>
+                  <option>Hispanic or Latino</option>
+                  <option>Asian</option>
+                  <option>Native American or American Indian</option>
+                  <option>Native Hawaiian or Pacific Islander</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <label htmlFor="ethnicity">What ethnicity best describes you?</label>
+              <div className='input-container'>
+                <select type="text" name="ethnicity" id="ethnicity" placeholder="Ethnicity" value={ethnicity} onChange={changeHandler} >
                   <option>Prefer not to disclose</option>
                   <option>White</option>
                   <option>Black or African American</option>
