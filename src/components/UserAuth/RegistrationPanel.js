@@ -67,7 +67,7 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
         setAnError('under18')
       } else if (race === '') {
         setAnError('norace')
-      } else if (ethnicity === ''){
+      } else if (ethnicity === '') {
         setAnError('noethnicity')
       } else if (bioSex === '') {
         setAnError('nobiosex')
@@ -93,7 +93,7 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
         setAnError('')
         createNewUser(e)
       }
-    } 
+    }
   }
 
   const changeHandler = (e) => {
@@ -288,7 +288,7 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
               <div className='input-container'>
                 {/* <i className="fas fa-map"></i> */}
                 <select type="text" name="residence" placeholder="Home State" id="residence" value={residence} onChange={changeHandler} >
-                  <option>Home State</option>
+                  <option value="" disabled selected>Select your option</option>
                   <option value="AL">Alabama</option>
                   <option value="AK">Alaska</option>
                   <option value="AZ">Arizona</option>
@@ -352,21 +352,23 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
               <label htmlFor="race">What race best describes you?</label>
               <div className='input-container'>
                 <select type="text" name="race" id="race" placeholder="Race" value={race} onChange={changeHandler} >
-                  <option>Prefer not to disclose</option>
+                  <option value="" disabled selected>Select your option</option>
                   <option>Black or African American</option>
                   <option>Asian</option>
                   <option>Native American or Alaska Native</option>
                   <option>Native Hawaiian or Pacific Islander</option>
                   <option>White</option>
                   <option>Other</option>
+                  <option>Prefer not to disclose</option>
                 </select>
               </div>
               <label htmlFor="ethnicity">What ethnicity best describes you?</label>
               <div className='input-container'>
                 <select type="text" name="ethnicity" id="ethnicity" placeholder="Ethnicity" value={ethnicity} onChange={changeHandler} >
-                  <option>Prefer not to disclose</option>
+                  <option value="" disabled selected>Select your option</option>
                   <option>Hispanic or Latino</option>
                   <option>Not Hispanic or Latino</option>
+                  <option>Prefer not to disclose</option>
                 </select>
               </div>
 
@@ -374,10 +376,11 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
               <div className='input-container'>
                 {/* <i className="fas fa-calendar-alt"></i> */}
                 <select type="text" name="bioSex" id="bioSex" value={bioSex} onChange={changeHandler} >
-                  <option>Prefer not to disclose</option>
+                  <option value="" disabled selected>Select your option</option>
                   <option>Male</option>
                   <option>Female</option>
                   <option>Intersex</option>
+                  <option>Prefer not to disclose</option>
                 </select>
               </div>
 
@@ -385,6 +388,7 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
               <div className='input-container'>
                 {/* <i className="fas fa-calendar-alt"></i> */}
                 <select type="text" name="education" id="education" value={education} onChange={changeHandler} >
+                  <option value="" disabled selected>Select your option</option>
                   <option>High School</option>
                   <option>Some College</option>
                   <option>Associate's Degree</option>
@@ -400,6 +404,7 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
               <div className='input-container'>
                 {/* <i className="fas fa-calendar-alt"></i> */}
                 <select type="text" name="household" id="household" value={household} onChange={changeHandler} >
+                  <option value="" disabled selected>Select your option</option>
                   <option>Live alone</option>
                   <option>Live with partner</option>
                   <option>Live with family</option>
