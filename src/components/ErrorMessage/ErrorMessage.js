@@ -33,7 +33,9 @@ export default function ErrorMessage({ error, cancelError }) {
       case 'under18':
         return "You must be 18 or older to register"
       case 'norace':
-        return "Please enter something for Race/Ethnicity. You can enter 'prefer not to disclose' if you wish."
+        return "Please enter something for Race. You can enter 'prefer not to disclose' if you wish."
+      case 'noethnicity':
+        return "Please enter something for Ethnicity. You can enter 'prefer not to disclose' if you wish."
       case 'nobiosex':
         return "Please enter something for Biological Sex. You can enter 'prefer not to disclose' if you wish."
       case 'noeducation':

@@ -67,6 +67,8 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
         setAnError('under18')
       } else if (race === '') {
         setAnError('norace')
+      } else if (ethnicity === ''){
+        setAnError('noethnicity')
       } else if (bioSex === '') {
         setAnError('nobiosex')
       } else if (education === '') {
@@ -91,26 +93,7 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
         setAnError('')
         createNewUser(e)
       }
-    } else {
-      if (residence === '') {
-        setAnError('noresidence')
-      } else if (birthDate === '') {
-        setAnError('nobirth')
-      } else if (lossDate === '') {
-        setAnError('nolossdate')
-      } else if (deceased === '') {
-        setAnError('nodeceased')
-      } else if (cause === '') {
-        setAnError('nocause')
-      } else if (lossExp === '') {
-        setAnError('nolossexp')
-      } else if (consent === false) {
-        setAnError('consent')
-      } else if (consent === true) {
-        setAnError('')
-        updateUser()
-      }
-    }
+    } 
   }
 
   const changeHandler = (e) => {
@@ -150,6 +133,9 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
         break
       case 'race':
         setRace(e.target.value)
+        break
+      case 'ethnicity':
+        setEthnicity(e.target.value)
         break
       case 'bioSex':
         setBioSex(e.target.value)
@@ -363,29 +349,15 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
                 <input type="date" name="birthDate" id="birthDate" className="widthAdjust" placeholder="e.g. 01/01/1990" value={birthDate} onChange={changeHandler} />
               </div>
 
-              {/* <label htmlFor="raceEnthnicity">What race/ethnicity best describes you?</label>
-              <div className='input-container'>
-                <select type="text" name="raceEnthnicity" id="raceEnthnicity" placeholder="Race/Ethnicity" value={raceEnthnicity} onChange={changeHandler} >
-                  <option>Prefer not to disclose</option>
-                  <option>White</option>
-                  <option>Black or African American</option>
-                  <option>Hispanic or Latino</option>
-                  <option>Asian</option>
-                  <option>Native American or American Indian</option>
-                  <option>Native Hawaiian or Pacific Islander</option>
-                  <option>Other</option>
-                </select>
-              </div> */}
               <label htmlFor="race">What race best describes you?</label>
               <div className='input-container'>
                 <select type="text" name="race" id="race" placeholder="Race" value={race} onChange={changeHandler} >
                   <option>Prefer not to disclose</option>
-                  <option>White</option>
                   <option>Black or African American</option>
-                  <option>Hispanic or Latino</option>
                   <option>Asian</option>
-                  <option>Native American or American Indian</option>
+                  <option>Native American or Alaska Native</option>
                   <option>Native Hawaiian or Pacific Islander</option>
+                  <option>White</option>
                   <option>Other</option>
                 </select>
               </div>
@@ -393,13 +365,8 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
               <div className='input-container'>
                 <select type="text" name="ethnicity" id="ethnicity" placeholder="Ethnicity" value={ethnicity} onChange={changeHandler} >
                   <option>Prefer not to disclose</option>
-                  <option>White</option>
-                  <option>Black or African American</option>
                   <option>Hispanic or Latino</option>
-                  <option>Asian</option>
-                  <option>Native American or American Indian</option>
-                  <option>Native Hawaiian or Pacific Islander</option>
-                  <option>Other</option>
+                  <option>Not Hispanic or Latino</option>
                 </select>
               </div>
 
