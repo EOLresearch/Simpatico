@@ -63,6 +63,10 @@ export default function UserCard({ user, setSimpaticoMatch, getMatchBy, selectTh
     e.stopPropagation()
   }
 
+  const truncate = (str, n) => {
+    return (str.length > n) ? str.substr(0, n - 1) + '...' : str;
+  };
+
   const collapsed =
     <div className={
       selectedUser ? selectedUser.uid === user.uid ? hovered === true ? "user-card user-selected hovered" : "user-card user-selected" : "user-card" : "user-card"} onClick={e => selectTheUser(e, user)}>
@@ -191,43 +195,51 @@ export default function UserCard({ user, setSimpaticoMatch, getMatchBy, selectTh
         <div className="card-details">
           <div className="card-row">
             <span className="card-label">Loss Date:</span>
-            <span>{user.lossDate}</span>
+            <span>&nbsp;{user.lossDate}</span>
           </div>
           <div className="card-row">
             <span className="card-label">Birth Date:</span>
-            <span>{user.birthDate}</span>
+            <span>&nbsp;{user.birthDate}</span>
           </div>
           <div className="card-row">
             <span className="card-label">Email:</span>
-            <span>{user.email}</span>
+            <span>&nbsp;{user.email}</span>
           </div>
           <div className="card-row">
             <span className="card-label">Residence:</span>
-            <span>{user.residence}</span>
+            <span>&nbsp;{user.residence}</span>
           </div>
           <div className="card-row">
             <span className="card-label">Household:</span>
-            <span>{user.household}</span>
+            <span>&nbsp;{user.household}</span>
           </div>
           <div className="card-row">
             <span className="card-label">Education:</span>
-            <span>{user.education}</span>
+            <span>&nbsp;{user.education}</span>
           </div>
-          <div className="card-row">
+          {/* <div className="card-row">
             <span className="card-label">Hobbies:</span>
-            <span>{user.hobbies}</span>
+            <span>&nbsp;{truncate(user.hobbies, 50)}</span>
           </div>
+
+
+          Should these be here? In this needed in the admin? Maytbe we should just add a button for optioal viewing? these are the two open ended fields that can have a lot of content.
+
           <div className="card-row">
             <span className="card-label">Loss Experience:</span>
-            <span>{user.lossExp}</span>
-          </div>
+            <span>&nbsp;{truncate(user.lossExp, 50)}</span>
+          </div> */}
           <div className="card-row">
             <span className="card-label">BioSex:</span>
-            <span>{user.bioSex}</span>
+            <span>&nbsp;{user.bioSex}</span>
           </div>
           <div className="card-row">
-            <span className="card-label">Race/Ethnicity:</span>
-            <span>{user.raceEthnicity}</span>
+            <span className="card-label">Race:</span>
+            <span>&nbsp;{user.race}</span>
+          </div>
+          <div className="card-row">
+            <span className="card-label">Ethnicity:</span>
+            <span>&nbsp;{user.ethnicity}</span>
           </div>
         </div>
         {showMatchingOptions === true ?

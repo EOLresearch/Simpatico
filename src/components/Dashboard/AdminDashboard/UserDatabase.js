@@ -19,8 +19,6 @@ export default function UserDatabase({ firestore, users }) {
 
   const getMatchBy = (uid, userCause, userKinship, type) => {
     console.log(type)
-
-    console.log(users)
     const unmatchedUsers = users.filter(user => user.simpaticoMatch === '')
     
     if (type === 'cause') {
