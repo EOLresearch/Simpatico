@@ -34,11 +34,11 @@ export default function UpdatePanel({ firebase, fsUser, userDetailsHandler, upda
   const [hobbies, setHobbies] = useState(fsUser.hobbies)
   const [simpaticoMatch, setSimpaticoMatch] = useState(fsUser.simpaticoMatch)
 
-  // Deceased Info----------
+  // Kinship Info----------
   const [lossDate, setLossDate] = useState(fsUser.lossDate)
   const [birthDate, setBirthDate] = useState(fsUser.birthDate)
   ///should we be able to change these below?
-  const [deceased, setDeceased] = useState(fsUser.deceased)
+  const [kinship, setKinship] = useState(fsUser.kinship)
   const [cause, setCause] = useState(fsUser.cause)
   const [deceasedAge, setDeceasedAge] = useState(fsUser.deceasedAge)
 
@@ -79,8 +79,8 @@ export default function UpdatePanel({ firebase, fsUser, userDetailsHandler, upda
       setHobbies(fsUser.hobbies)
     } else if (lossDate === '') {
       setLossDate(fsUser.lossDate)
-    } else if (deceased === '') {
-      setDeceased(fsUser.deceased)
+    } else if (kinship === '') {
+      setKinship(fsUser.kinship)
     } else if (cause === '') {
       setCause(fsUser.cause)
     } else if (deceasedAge === '') {
@@ -110,8 +110,8 @@ export default function UpdatePanel({ firebase, fsUser, userDetailsHandler, upda
       case 'lossDate':
         setLossDate(e.target.value)
         break
-      case 'deceased':
-        setDeceased(e.target.value)
+      case 'kinship':
+        setKinship(e.target.value)
         break
       case 'consent':
         setConsent(!consent)
@@ -161,9 +161,9 @@ export default function UpdatePanel({ firebase, fsUser, userDetailsHandler, upda
       hobbies: hobbies,
       simpaticoMatch: simpaticoMatch,
 
-      // Deceased Info----------
+      // Kinship Info----------
       lossDate: lossDate,
-      deceased: deceased,
+      kinship: kinship,
       cause: cause,
       deceasedAge: deceasedAge,
       lossExp: lossExp,
@@ -183,9 +183,9 @@ export default function UpdatePanel({ firebase, fsUser, userDetailsHandler, upda
           simpaticoMatch: simpaticoMatch,
 
 
-          // Deceased Info----------
+          // Kinship Info----------
           lossDate: lossDate,
-          deceased: deceased,
+          kinship: kinship,
           cause: cause,
           deceasedAge: deceasedAge,
           lossExp: lossExp,
@@ -434,9 +434,9 @@ export default function UpdatePanel({ firebase, fsUser, userDetailsHandler, upda
                     <input type="date" name="lossDate" id="lossDate" className="widthAdjust" placeholder="e.g. 01/01/1990" value={lossDate} onChange={changeHandler} />
                   </div>
 
-                  <label htmlFor="deceased">Relationship to deceased: the deceased is my...</label>
+                  <label htmlFor="Kinship">Relationship to deceased: the deceased is my...</label>
                   <div className='input-container'>
-                    <select name="deceased" id="deceased" value={deceased} onChange={changeHandler} >
+                    <select name="kinship" id="kinship" value={kinship} onChange={changeHandler} >
                       <option>The deceased is my...</option>
                       <option>Partner</option>
                       <option>Grandparent</option>

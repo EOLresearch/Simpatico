@@ -46,7 +46,7 @@ export default function ErrorMessage({ error, cancelError }) {
         return "Please provide some of your Hobbies."
       case 'nolossdate':
         return "Please enter a date of loss"
-      case 'nodeceased':
+      case 'nokinship':
         return "Please enter kinship to the deceased"
       case 'nocause':
         return "Please enter cause of death"

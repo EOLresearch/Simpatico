@@ -83,8 +83,8 @@ export default function UserCard({ user, setSimpaticoMatch, getMatchBy, selectTh
           <span>&nbsp;{user.cause}</span>
         </div>
         <div className="card-row">
-          <span className="card-label">Deceased: </span>
-          <span>&nbsp;{user.deceased}</span>
+          <span className="card-label">Kinship: </span>
+          <span>&nbsp;{user.kinship}</span>
         </div>
         <div className="card-row">
           <span className="card-label">UID: </span>
@@ -172,8 +172,8 @@ export default function UserCard({ user, setSimpaticoMatch, getMatchBy, selectTh
           <span>&nbsp;{user.cause}</span>
         </div>
         <div className="card-row">
-          <span className="card-label">Deceased: </span>
-          <span>&nbsp;{user.deceased}</span>
+          <span className="card-label">Kinship: </span>
+          <span>&nbsp;{user.kinship}</span>
         </div>
         <div className="card-row">
           <span className="card-label">UID: </span>

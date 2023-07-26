@@ -56,7 +56,7 @@ function App() {
   useEffect(() => {
     if (!fsUser) return
     const usersRef = firestore.collection('users');
-    const matchQuery = usersRef.where("cause", "==", fsUser.cause).where("deceased", "==", fsUser.deceased)
+    const matchQuery = usersRef.where("cause", "==", fsUser.cause).where("kinship", "==", fsUser.kinship)
     matchQuery.get()
       .then((querySnapshot) => {
         let dataArr = []

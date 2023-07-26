@@ -27,9 +27,9 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
   const [household, setHousehold] = useState('')
   const [hobbies, setHobbies] = useState('')
 
-  // Deceased Info----------
+  // Kinship Info----------
   const [birthDate, setBirthDate] = useState('')
-  const [deceased, setDeceased] = useState('')
+  const [kinship, setKinship] = useState('')
   const [cause, setCause] = useState('')
   const [deceasedAge, setDeceasedAge] = useState('')
   const [lossExp, setLossExp] = useState('')
@@ -79,8 +79,8 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
         setAnError('nohobbies')
       } else if (lossDate === '') {
         setAnError('nolossdate')
-      } else if (deceased === '') {
-        setAnError('nodeceased')
+      } else if (kinship === '') {
+        setAnError('nokinship')
       } else if (cause === '' || cause === 'Cause of death') {
         setAnError('nocause')
       } else if (deceasedAge === '') {
@@ -119,8 +119,8 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
       case 'lossDate':
         setLossDate(e.target.value)
         break
-      case 'deceased':
-        setDeceased(e.target.value)
+      case 'kinship':
+        setKinship(e.target.value)
         break
       case 'consent':
         setConsent(!consent)
@@ -181,9 +181,9 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
         hobbies: hobbies,
         simpaticoMatch: '',
 
-        // Deceased Info----------
+        // Kinship Info----------
         lossDate: lossDate,
-        deceased: deceased,
+        kinship: kinship,
         cause: cause,
         deceasedAge: deceasedAge,
         lossExp: lossExp,
@@ -231,7 +231,7 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
         displayName: displayName ? displayName : fsUser.displayName,
         birthDate: birthDate,
         photoURL: fsUser.photoURL,
-        deceased: deceased,
+        kinship: kinship,
         lossDate: lossDate,
         cause: cause,
         residence: residence,
@@ -288,7 +288,7 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
               <div className='input-container'>
                 {/* <i className="fas fa-map"></i> */}
                 <select type="text" name="residence" placeholder="Home State" id="residence" value={residence} onChange={changeHandler} >
-                  <option value="" disabled selected>Select your option</option>
+                  <option value="" disabled defaultValue=''>Select your option</option>
                   <option value="AL">Alabama</option>
                   <option value="AK">Alaska</option>
                   <option value="AZ">Arizona</option>
@@ -352,7 +352,7 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
               <label htmlFor="race">What race best describes you?</label>
               <div className='input-container'>
                 <select type="text" name="race" id="race" placeholder="Race" value={race} onChange={changeHandler} >
-                  <option value="" disabled selected>Select your option</option>
+                  <option value="" disabled defaultValue=''>Select your option</option>
                   <option>Black or African American</option>
                   <option>Asian</option>
                   <option>Native American or Alaska Native</option>
@@ -365,7 +365,7 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
               <label htmlFor="ethnicity">What ethnicity best describes you?</label>
               <div className='input-container'>
                 <select type="text" name="ethnicity" id="ethnicity" placeholder="Ethnicity" value={ethnicity} onChange={changeHandler} >
-                  <option value="" disabled selected>Select your option</option>
+                  <option value="" disabled defaultValue=''>Select your option</option>
                   <option>Hispanic or Latino</option>
                   <option>Not Hispanic or Latino</option>
                   <option>Prefer not to disclose</option>
@@ -376,7 +376,7 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
               <div className='input-container'>
                 {/* <i className="fas fa-calendar-alt"></i> */}
                 <select type="text" name="bioSex" id="bioSex" value={bioSex} onChange={changeHandler} >
-                  <option value="" disabled selected>Select your option</option>
+                  <option value="" disabled defaultValue=''>Select your option</option>
                   <option>Male</option>
                   <option>Female</option>
                   <option>Intersex</option>
@@ -388,7 +388,7 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
               <div className='input-container'>
                 {/* <i className="fas fa-calendar-alt"></i> */}
                 <select type="text" name="education" id="education" value={education} onChange={changeHandler} >
-                  <option value="" disabled selected>Select your option</option>
+                  <option value="" disabled defaultValue=''>Select your option</option>
                   <option>High School</option>
                   <option>Some College</option>
                   <option>Associate's Degree</option>
@@ -404,7 +404,7 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
               <div className='input-container'>
                 {/* <i className="fas fa-calendar-alt"></i> */}
                 <select type="text" name="household" id="household" value={household} onChange={changeHandler} >
-                  <option value="" disabled selected>Select your option</option>
+                  <option value="" disabled defaultValue=''>Select your option</option>
                   <option>Live alone</option>
                   <option>Live with partner</option>
                   <option>Live with family</option>
@@ -428,10 +428,10 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
                 <input type="date" name="lossDate" id="lossDate" className="widthAdjust" placeholder="e.g. 01/01/1990" value={lossDate} onChange={changeHandler} />
               </div>
 
-              <label htmlFor="deceased">Relationship to deceased: the deceased is my...</label>
+              <label htmlFor="kinship">Relationship to deceased: the deceased is my...</label>
               <div className='input-container'>
-                <select name="deceased" id="deceased" value={deceased} onChange={changeHandler} >
-                  <option>The deceased is my...</option>
+                <select name="kinship" id="kinship" value={kinship} onChange={changeHandler} >
+                  <option value="" disabled defaultValue=''>The deceased is my...</option>
                   <option>Partner</option>
                   <option>Grandparent</option>
                   <option>Parent</option>
@@ -453,7 +453,7 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
               <label htmlFor="cause">How did your loss occur?</label>
               <div className='input-container'>
                 <select name="cause" id="cause" value={cause} onChange={changeHandler} >
-                  <option>Cause of death</option>
+                  <option value="" disabled defaultValue=''>Cause of death</option>
                   <option>Natural</option>
                   <option>Unnatural</option>
                 </select>
