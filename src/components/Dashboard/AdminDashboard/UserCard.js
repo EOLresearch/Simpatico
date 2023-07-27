@@ -9,8 +9,6 @@ export default function UserCard({ user, setSimpaticoMatch, getMatchBy, selectTh
   //this boolean piece of state below is misleadedly named. lets work on that
   const [matchConfirmMessage, setMatchConfirmMessage] = useState(false)
   const [toolTip, setToolTip] = useState('')
-  // const [match, setMatch] = useState()
-
   // =========================== GET THE LAST LOGIN AND ADD IT TO THE USER CARD FOR QUICK VIEWING ===========================
 
 
@@ -29,23 +27,24 @@ export default function UserCard({ user, setSimpaticoMatch, getMatchBy, selectTh
     console.log(e.target)
     
     if (e.target.dataset.tooltip === "cause") {
-      setMatchConfirmMessage(true)
+      // setMatchConfirmMessage(true)
       getMatchBy(user.uid, user.cause, user.kinship, "cause")
     } else if (e.target.dataset.tooltip === "kinship") {
-      setMatchConfirmMessage(true)
+      // setMatchConfirmMessage(true)
       getMatchBy(user.uid, user.cause, user.kinship, "kinship")
     } else if (e.target.dataset.tooltip === "both") {
-      setMatchConfirmMessage(true)
+      // setMatchConfirmMessage(true)
       getMatchBy(user.uid, user.cause, user.kinship, "both")
     } else if (e.target.dataset.tooltip === "none") {
-      setMatchConfirmMessage(true)
+      // setMatchConfirmMessage(true)
       getMatchBy(user.uid, user.cause, user.kinship, "none")
-    }
-
-    setShowMatchingOptions(false)
-    setMatchConfirmMessage(true)
+    } else if (selectedUser.uid === user.uid) {
+      alert("You can't match a user with themselves")
+    } else if ( e.target.attributes.useruid ) {
+      setShowMatchingOptions(false)
+      setMatchConfirmMessage(true)
+    } 
   }
-
 
   const cancelMatchConfirm = (e) => {
     e.stopPropagation()
@@ -145,7 +144,7 @@ export default function UserCard({ user, setSimpaticoMatch, getMatchBy, selectTh
           </div>
           : matchConfirmMessage === true ?
             <div className="match-container">
-              <span className="match-confirm-message">Match this user with <strong>{selectedUser.displayName}</strong> ?</span>
+              <span className="match-confirm-message">Match this user with <strong>{selectedUser ? selectedUser.displayName : "No Selected User"}</strong> ?</span>
               <div className="match-confirm-btns">
                 <button className="match-button" onClick={e => matchDoubleConfirm(e, user.uid)}>Confirm</button>
                 <button className="match-button" onClick={e => cancelMatchConfirm(e)}>Cancel</button>

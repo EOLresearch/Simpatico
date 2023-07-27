@@ -23,21 +23,20 @@ export default function UserDatabase({ firestore, users }) {
     
     if (type === 'cause') {
       const match = unmatchedUsers.find(user => user.cause === userCause && user.uid !== uid)
+      if (!match) return alert('no match available')
       setSelectedUser(match)
     } else if (type === 'kinship') {
       const match = unmatchedUsers.find(user => user.kinship === userKinship && user.uid !== uid)
+      if (!match) return alert('no match available')
       setSelectedUser(match)
     } else if (type === 'both') {
       const match = unmatchedUsers.find(user => user.cause === userCause && user.kinship === userKinship && user.uid !== uid)
+      if (!match) return alert('no match available')
       setSelectedUser(match)
     } else if (type === 'none') {
-      const match = unmatchedUsers.map(user => {
-        const excludeThisUser = unmatchedUsers.filter(user => user.uid !== uid)
-        const noCauseMatches = excludeThisUser.filter(user => user.cause !== userCause)
-        const noKinshipMatches = noCauseMatches.filter(user => user.kinship !== userKinship)
-        return noKinshipMatches[Math.floor(Math.random() * noKinshipMatches.length)]
-      })
-      // setSelectedUser(match)
+      const match = unmatchedUsers.find(user => user.cause !== userCause && user.kinship !== userKinship && user.uid !== uid) 
+      if (!match) return alert('no match available')
+      setSelectedUser(match)
       console.log(match)
     }
   }
