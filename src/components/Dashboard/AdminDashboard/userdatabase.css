@@ -4,4 +4,14 @@
   justify-content: center;
   gap: 20px;
 }
+.user-database-columns{
+  display: flex;
+}
+.cause-column{
+  margin: 0 1rem;
+  text-align: center;
+}
 
+.cause-column .user-card{
+  margin:1rem;
+}
