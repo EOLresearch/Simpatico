@@ -1,17 +1,26 @@
+.user-database-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .user-database {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
+  margin-top:1rem;
 }
 
 .kinship-selections {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
-  /* flex-direction: column; */
+  justify-content: right;
   gap: 0.5rem;
   width:80%;
+  background-color: #bfbfbf;
+  padding: 2rem;
+  border-radius: 1rem;
+  transition: all 0.3s ease-in-out;
 }
 
 .double-btn {
@@ -41,9 +50,6 @@
   background-color: #aaaaaa54;
   color: white;
 }
-.double-btn button:first-child{
-  border-radius: 0.5rem 0 0 0.5rem;
-}
 .double-btn button:last-child{
   /* border-left: 1px solid #646464; */
   border-radius: 0 0.5rem 0.5rem 0;
@@ -56,5 +62,5 @@
 }
 .double-btn span:hover{
   background-color: #aaaaaa54;
-  border-radius: 0.5rem;
+  border-radius: 0.5rem 0 0 0.5rem; ;
 }
