@@ -4,14 +4,57 @@
   justify-content: center;
   gap: 20px;
 }
-.user-database-columns{
+
+.kinship-selections {
   display: flex;
-}
-.cause-column{
-  margin: 0 1rem;
-  text-align: center;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  /* flex-direction: column; */
+  gap: 0.5rem;
+  width:80%;
 }
 
-.cause-column .user-card{
-  margin:1rem;
+.double-btn {
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  background-color: rgb(203, 203, 218);
+  text-align: center;
+  background-color: #ebebeb;
+  border-radius: 0.5rem;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  width: fit-content;
+}
+
+.double-btn button {
+  color: #646464;
+  font-size: 0.8rem;
+}
+.sub-btn-container{
+  display: flex;
+  justify-content: space-evenly;
+
+}
+.double-btn button:hover {
+  background-color: #aaaaaa54;
+  color: white;
+}
+.double-btn button:first-child{
+  border-radius: 0.5rem 0 0 0.5rem;
+}
+.double-btn button:last-child{
+  /* border-left: 1px solid #646464; */
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+.double-btn span{
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  position: relative;
+  width: fit-content;
+  /* top:0.5rem; */
+}
+.double-btn span:hover{
+  background-color: #aaaaaa54;
+  border-radius: 0.5rem;
 }

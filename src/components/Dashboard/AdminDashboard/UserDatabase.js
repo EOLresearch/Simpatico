@@ -3,7 +3,7 @@ import UserCard from './UserCard'
 import './userdatabase.css'
 
 
-export default function UserDatabase({ firestore, users, showAllUsers, showNatural, showUnnatural, showKinshipFilters}) {
+export default function UserDatabase({ firestore, users, showAllUsers, showNatural, showUnnatural, showKinshipFilters }) {
   const [selectedUser, setSelectedUser] = useState()
   const [hovered, setHovered] = useState(false)
 
@@ -70,9 +70,60 @@ export default function UserDatabase({ firestore, users, showAllUsers, showNatur
     setHovered(false)
   }
 
+  const kinshipFilterer = (e, kinship) => {
+    switch (kinship) {
+      case 'Partner':
+        // setKinshipFilter('Partner')
+        return
+      case 'Grandparent':
+        // setKinshipFilter('Grandparent')
+        return
+      case 'Parent':
+        // setKinshipFilter('Parent')
+        return
+      case 'Offspring':
+        // setKinshipFilter('Offspring')
+        return
+      case 'Sibling':
+        // setKinshipFilter('Sibling')
+        return
+      case 'Cousin':
+        // setKinshipFilter('Cousin')
+        return
+      case 'Grandchild':
+        // setKinshipFilter('Grandchild')
+        return
+      case 'Aunt':
+        // setKinshipFilter('Aunt')
+        return
+      case 'Uncle':
+        // setKinshipFilter('Uncle')
+        return
+      case 'Niece':
+        // setKinshipFilter('Niece')
+        return
+      case 'Nephew':
+        // setKinshipFilter('Nephew')
+        return
+      case 'Friend':
+        // setKinshipFilter('Friend')
+        return
+      case 'Other':
+        // setKinshipFilter('Other')
+        return
+      case 'I want to support others':
+        // setKinshipFilter('I want to support others')
+        return
+      default:
+        console.log('switch default' + kinship)
+        return
+    }
+  }
+
   if (showAllUsers === true) {
     return (
       <div className="user-database">
+        
         {users ? users.map(user => (
           <UserCard key={user.uid}
             user={user}
@@ -89,102 +140,130 @@ export default function UserDatabase({ firestore, users, showAllUsers, showNatur
   }
 
   if (showNatural === true) {
-
     return (
-      <div className="user-database-columns">
-        <div className='cause-column natural-causes'>
-          <h2>Natural</h2>
-          {users ? users.map(user => (
-            user.cause === 'Natural' ? <UserCard key={user.uid}
-              user={user}
-              setSimpaticoMatch={setSimpaticoMatch}
-              getMatchBy={getMatchBy}
-              selectTheUser={selectTheUser}
-              selectedUser={selectedUser}
-              showSelectedUser={showSelectedUser}
-              hovered={hovered}
-              removeMatch={removeMatch} /> : null
-          )) : <p>loading...</p>}
-        </div>
-        <div className='cause-column unnatural-causes'>
-          <h2>Unnatural</h2>
-          {users ? users.map(user => (
-            user.cause === 'Unnatural' ? <UserCard key={user.uid}
-              user={user}
-              setSimpaticoMatch={setSimpaticoMatch}
-              getMatchBy={getMatchBy}
-              selectTheUser={selectTheUser}
-              selectedUser={selectedUser}
-              showSelectedUser={showSelectedUser}
-              hovered={hovered}
-              removeMatch={removeMatch} /> : null
-          )) : <p>loading...</p>}
-
-        </div>
+      <div className="user-database">
+        {users ? users.map(user => (
+          user.cause === 'Natural' ? <UserCard key={user.uid}
+            user={user}
+            setSimpaticoMatch={setSimpaticoMatch}
+            getMatchBy={getMatchBy}
+            selectTheUser={selectTheUser}
+            selectedUser={selectedUser}
+            showSelectedUser={showSelectedUser}
+            hovered={hovered}
+            removeMatch={removeMatch} /> : null
+        )) : <p>loading...</p>}
       </div>
     )
-
   }
 
   if (showUnnatural === true) {
-
     return (
-      <div className="user-database-columns">
-        <div className='cause-column natural-causes'>
-          <h2>Natural</h2>
-          {users ? users.map(user => (
-            user.cause === 'Natural' ? <UserCard key={user.uid}
-              user={user}
-              setSimpaticoMatch={setSimpaticoMatch}
-              getMatchBy={getMatchBy}
-              selectTheUser={selectTheUser}
-              selectedUser={selectedUser}
-              showSelectedUser={showSelectedUser}
-              hovered={hovered}
-              removeMatch={removeMatch} /> : null
-          )) : <p>loading...</p>}
-        </div>
-        <div className='cause-column unnatural-causes'>
-          <h2>Unnatural</h2>
-          {users ? users.map(user => (
-            user.cause === 'Unnatural' ? <UserCard key={user.uid}
-              user={user}
-              setSimpaticoMatch={setSimpaticoMatch}
-              getMatchBy={getMatchBy}
-              selectTheUser={selectTheUser}
-              selectedUser={selectedUser}
-              showSelectedUser={showSelectedUser}
-              hovered={hovered}
-              removeMatch={removeMatch} /> : null
-          )) : <p>loading...</p>}
-
-        </div>
+      <div className="user-database">
+        {users ? users.map(user => (
+          user.cause === 'Unnatural' ? <UserCard key={user.uid}
+            user={user}
+            setSimpaticoMatch={setSimpaticoMatch}
+            getMatchBy={getMatchBy}
+            selectTheUser={selectTheUser}
+            selectedUser={selectedUser}
+            showSelectedUser={showSelectedUser}
+            hovered={hovered}
+            removeMatch={removeMatch} /> : null
+        )) : <p>loading...</p>}
       </div>
     )
-
   }
-
 
   if (showKinshipFilters === true) {
     return (
       <div className="kinship-selections">
-        <div className='kinship-column'>
-          <button>Partner</button>
-          <button>Grandparent</button>
-          <button>Parent</button>
-          <button>Offspring</button>
-          <button>Sibling</button>
-          <button>Cousin</button>
-          <button>Grandchild</button>
+
+        <div className='double-btn'>
+          <span>Partner</span>
+          <div className='sub-btn-container'>
+            <button>N</button><button>U</button>
+          </div>
         </div>
-        <div className='kinship-column'>
-          <button>Aunt</button>
-          <button>Uncle</button>
-          <button>Niece</button>
-          <button>Nephew</button>
-          <button>Friend</button>
-          <button>Other</button>
-          <button>I want to support others</button>
+        <div className='double-btn'>
+          <span>Parent</span>
+          <div className='sub-btn-container'>
+            <button>N</button><button>U</button>
+          </div>
+        </div>
+
+        <div className='double-btn'>
+          <span>Offspring</span>
+          <div className='sub-btn-container'>
+            <button>N</button><button>U</button>
+          </div>
+        </div>
+        <div className='double-btn'>
+          <span>Sibling</span>
+          <div className='sub-btn-container'>
+            <button>N</button><button>U</button>
+          </div>
+        </div>
+        <div className='double-btn'>
+          <span>Cousin</span>
+          <div className='sub-btn-container'>
+            <button>N</button><button>U</button>
+          </div>
+        </div>
+        <div className='double-btn'>
+          <span>Grandparent</span>
+          <div className='sub-btn-container'>
+            <button>N</button><button>U</button>
+          </div>
+        </div>
+        <div className='double-btn'>
+          <span>Grandchild</span>
+          <div className='sub-btn-container'>
+            <button>N</button><button>U</button>
+          </div>
+        </div>
+
+        <div className='double-btn'>
+          <span>Aunt</span>
+          <div className='sub-btn-container'>
+            <button>N</button><button>U</button>
+          </div>
+        </div>
+        <div className='double-btn'>
+          <span>Uncle</span>
+          <div className='sub-btn-container'>
+            <button>N</button><button>U</button>
+          </div>
+        </div>
+        <div className='double-btn'>
+          <span>Niece</span>
+          <div className='sub-btn-container'>
+            <button>N</button><button>U</button>
+          </div>
+        </div>
+        <div className='double-btn'>
+          <span>Nephew</span>
+          <div className='sub-btn-container'>
+            <button>N</button><button>U</button>
+          </div>
+        </div>
+        <div className='double-btn'>
+          <span>Friend</span>
+          <div className='sub-btn-container'>
+            <button>N</button><button>U</button>
+          </div>
+        </div>
+        <div className='double-btn'>
+          <span>Other</span>
+          <div className='sub-btn-container'>
+            <button>N</button><button>U</button>
+          </div>
+        </div>
+        <div className='double-btn'>
+          <span>I want to support others</span>
+          <div className='sub-btn-container'>
+            <button>N</button><button>U</button>
+          </div>
         </div>
       </div>
     )

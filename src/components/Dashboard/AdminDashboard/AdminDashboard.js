@@ -1,6 +1,5 @@
 import './admindashboard.css';
 import UserDatabase from './UserDatabase';
-
 import { useEffect, useState } from "react";
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 // import { IconContext } from "react-icons";
@@ -10,7 +9,7 @@ export default function AdminDashboard({ firebase, fsUser, navHandler }) {
   const [showNatural, setShowNatural] = useState(false)
   const [showUnnatural, setShowUnnatural] = useState(false)
   const [showKinshipFilters, setShowKinshipFilters] = useState(false)
-
+  const [kinshipFilter, setKinshipFilter] = useState('')
 
   const firestore = firebase.firestore();
 
@@ -52,7 +51,6 @@ export default function AdminDashboard({ firebase, fsUser, navHandler }) {
       default:
         console.log('switch default' + renderCondition)
         return
-
     }
   }
 
@@ -80,6 +78,5 @@ export default function AdminDashboard({ firebase, fsUser, navHandler }) {
         </div>
       </div>
     </div>
-
   );
 }
