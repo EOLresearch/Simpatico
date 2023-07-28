@@ -3,7 +3,7 @@ import UserCard from './UserCard'
 import './userdatabase.css'
 
 
-export default function UserDatabase({ firestore, users, showAllUsers, showCauseMatches, showKinshipMatches }) {
+export default function UserDatabase({ firestore, users, showAllUsers, showNatural, showUnnatural, showKinshipFilters}) {
   const [selectedUser, setSelectedUser] = useState()
   const [hovered, setHovered] = useState(false)
 
@@ -88,7 +88,7 @@ export default function UserDatabase({ firestore, users, showAllUsers, showCause
     );
   }
 
-  if (showCauseMatches === true) {
+  if (showNatural === true) {
 
     return (
       <div className="user-database-columns">
@@ -126,7 +126,46 @@ export default function UserDatabase({ firestore, users, showAllUsers, showCause
 
   }
 
-  if (showKinshipMatches === true) {
+  if (showUnnatural === true) {
+
+    return (
+      <div className="user-database-columns">
+        <div className='cause-column natural-causes'>
+          <h2>Natural</h2>
+          {users ? users.map(user => (
+            user.cause === 'Natural' ? <UserCard key={user.uid}
+              user={user}
+              setSimpaticoMatch={setSimpaticoMatch}
+              getMatchBy={getMatchBy}
+              selectTheUser={selectTheUser}
+              selectedUser={selectedUser}
+              showSelectedUser={showSelectedUser}
+              hovered={hovered}
+              removeMatch={removeMatch} /> : null
+          )) : <p>loading...</p>}
+        </div>
+        <div className='cause-column unnatural-causes'>
+          <h2>Unnatural</h2>
+          {users ? users.map(user => (
+            user.cause === 'Unnatural' ? <UserCard key={user.uid}
+              user={user}
+              setSimpaticoMatch={setSimpaticoMatch}
+              getMatchBy={getMatchBy}
+              selectTheUser={selectTheUser}
+              selectedUser={selectedUser}
+              showSelectedUser={showSelectedUser}
+              hovered={hovered}
+              removeMatch={removeMatch} /> : null
+          )) : <p>loading...</p>}
+
+        </div>
+      </div>
+    )
+
+  }
+
+
+  if (showKinshipFilters === true) {
     return (
       <div className="kinship-selections">
         <div className='kinship-column'>

@@ -7,8 +7,9 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 export default function AdminDashboard({ firebase, fsUser, navHandler }) {
   const [showAllUsers, setShowAllUsers] = useState(true)
-  const [showCauseMatches, setShowCauseMatches] = useState(false)
-  const [showKinshipMatches, setShowKinshipMatches] = useState(false)
+  const [showNatural, setShowNatural] = useState(false)
+  const [showUnnatural, setShowUnnatural] = useState(false)
+  const [showKinshipFilters, setShowKinshipFilters] = useState(false)
 
 
   const firestore = firebase.firestore();
@@ -24,23 +25,34 @@ export default function AdminDashboard({ firebase, fsUser, navHandler }) {
 
   const subNavHandler = (renderCondition) => {
     switch (renderCondition) {
-      case 'Cause':
-        setShowCauseMatches(true)
-        setShowKinshipMatches(false)
-        setShowAllUsers(false)
-        return
-      case 'Kinship':
-        setShowKinshipMatches(true)
-        setShowCauseMatches(false)
-        setShowAllUsers(false)
-        return
       case 'All':
         setShowAllUsers(true)
-        setShowCauseMatches(false)
-        setShowKinshipMatches(false)
+        setShowNatural(false)
+        setShowUnnatural(false)
+        setShowKinshipFilters(false)
+        return
+      case 'Natural':
+        setShowAllUsers(false)
+        setShowNatural(true)
+        setShowUnnatural(false)
+        setShowKinshipFilters(false)
+        return
+      case 'Unnatural':
+        setShowAllUsers(false)
+        setShowNatural(false)
+        setShowUnnatural(true)
+        setShowKinshipFilters(false)
+        return
+      case 'Kinship':
+        setShowAllUsers(false)
+        setShowNatural(false)
+        setShowUnnatural(false)
+        setShowKinshipFilters(true)
         return
       default:
+        console.log('switch default' + renderCondition)
         return
+
     }
   }
 
@@ -51,10 +63,9 @@ export default function AdminDashboard({ firebase, fsUser, navHandler }) {
           <h1>Admin Dashboard</h1>
           <div className='admin-dashboard-nav'>
             <button onClick={e=>subNavHandler("All")}>All Users</button>
-            <button onClick={e=>subNavHandler("Cause")} >Matching on Cause</button>
-            <button onClick={e=>subNavHandler("Kinship")} >Matching on Kinship</button>
-            <button>Matching on both</button>
-            <button>No Match</button>
+            <button onClick={e=>subNavHandler("Natural")} >Natural Causes</button>
+            <button onClick={e=>subNavHandler("Unnatural")} >Unnatural Causes</button>
+            <button onClick={e=>subNavHandler("Kinship")}>Kinship Filters</button>
           </div>
         </div>
         <div className='admin-dashboard-body'>
@@ -62,8 +73,9 @@ export default function AdminDashboard({ firebase, fsUser, navHandler }) {
             firestore={firestore}
             users={users}
             showAllUsers={showAllUsers}
-            showCauseMatches={showCauseMatches}
-            showKinshipMatches={showKinshipMatches}
+            showNatural={showNatural}
+            showUnnatural={showUnnatural}
+            showKinshipFilters={showKinshipFilters}
           />
         </div>
       </div>
