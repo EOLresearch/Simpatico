@@ -11,7 +11,6 @@ export default function UserCard({ user, setSimpaticoMatch, getMatchBy, selectTh
   const [toolTip, setToolTip] = useState('')
   // =========================== GET THE LAST LOGIN AND ADD IT TO THE USER CARD FOR QUICK VIEWING ===========================
 
-
   const matchInputDisplaySwitch = (e) => {
     e.stopPropagation()
     setShowMatchingOptions(!showMatchingOptions)

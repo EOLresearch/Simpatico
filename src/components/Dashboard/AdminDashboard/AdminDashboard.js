@@ -5,9 +5,7 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 // import { IconContext } from "react-icons";
 
 export default function AdminDashboard({ firebase, fsUser, navHandler }) {
-
   const firestore = firebase.firestore();
-
   useEffect(() => {
     if (!fsUser.admin || fsUser.admin === false) {
       navHandler('Home')

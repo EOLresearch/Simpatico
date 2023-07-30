@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
 import UserCard from './UserCard'
+import DatabaseFilterContainer from './DatabaseFilterContainer'
 import './userdatabase.css'
 
 
 export default function UserDatabase({ firestore, users }) {
   const [selectedUser, setSelectedUser] = useState()
   const [hovered, setHovered] = useState(false)
-
-  const [showAllUsers, setShowAllUsers] = useState(true)
-  const [showNatural, setShowNatural] = useState(false)
-  const [showUnnatural, setShowUnnatural] = useState(false)
-  const [showKinshipFilters, setShowKinshipFilters] = useState(false)
+  const [showKinshipFilters, setShowKinshipFilters] = useState(true)
   const [kinshipFilter, setKinshipFilter] = useState('')
+  const [causeFilter, setCauseFilter] = useState('')
 
   const selectTheUser = (e, user) => {
     setSelectedUser(user)
@@ -76,54 +74,82 @@ export default function UserDatabase({ firestore, users }) {
     setHovered(false)
   }
 
-  const subNavHandler = (renderCondition) => {
-    switch (renderCondition) {
+  const filterHandler = (filterCondition) => {
+    switch (filterCondition) {
       case 'All':
-        setShowAllUsers(true)
-        setShowNatural(false)
-        setShowUnnatural(false)
-        setShowKinshipFilters(false)
+        setKinshipFilter('All')
+        setCauseFilter('All')
         return
       case 'Natural':
-        setShowAllUsers(false)
-        setShowNatural(true)
-        setShowUnnatural(false)
-        setShowKinshipFilters(false)
+        setCauseFilter('Natural')
         return
       case 'Unnatural':
-        setShowAllUsers(false)
-        setShowNatural(false)
-        setShowUnnatural(true)
-        setShowKinshipFilters(false)
+        setCauseFilter('Unnatural')
         return
       case 'Kinship':
         setShowKinshipFilters(!showKinshipFilters)
         return
+      case 'Partner':
+        setKinshipFilter('Partner')
+        return
+      case 'Parent':
+        setKinshipFilter('Parent')
+        return
+      case 'Offspring':
+        setKinshipFilter('Offspring')
+        return
+      case 'Sibling':
+        setKinshipFilter('Sibling')
+        return
+      case 'Cousin':
+        setKinshipFilter('Cousin')
+        return
+      case 'Grandparent':
+        setKinshipFilter('Grandparent')
+        return
+      case 'Grandchild':
+        setKinshipFilter('Grandchild')
+        return
+      case 'Aunt':
+        setKinshipFilter('Aunt')
+        return
+      case 'Uncle':
+        setKinshipFilter('Uncle')
+        return
+      case 'Niece':
+        setKinshipFilter('Niece')
+        return
+      case 'Nephew':
+        setKinshipFilter('Nephew')
+        return
+      case 'Friend':
+        setKinshipFilter('Friend')
+        return
+      case 'Other':
+        setKinshipFilter('Other')
+        return
+      case 'I want to support others':
+        setKinshipFilter('I want to support others')
+        return
       default:
-        console.log('switch default' + renderCondition)
+        console.log('switch default' + filterCondition)
         return
     }
   }
 
-  //leaving off here incomplete for the day. 
-  //trying to get the filters working in a way that the kinship filters will also work 
-  //creating a new container component under this one to the user-db-body
-  //proably renaming this component to something more descriptive which will go with the lower container that will filter the users based on the filters. 
-  
-
   return (
     <div className="user-database-container">
       <div className='admin-dashboard-nav'>
-        <button onClick={e => subNavHandler("All")}>All Users</button>
-        <button onClick={e => subNavHandler("Natural")} >Natural Causes</button>
-        <button onClick={e => subNavHandler("Unnatural")} >Unnatural Causes</button>
-        <button onClick={e => subNavHandler("Kinship")}>Kinship Filters</button>
+        <button onClick={e => filterHandler("All")}>All Users</button>
+        <button onClick={e => filterHandler("Natural")} >Natural Causes</button>
+        <button onClick={e => filterHandler("Unnatural")} >Unnatural Causes</button>
+        <button onClick={e => filterHandler("Kinship")}>Kinship Filters</button>
       </div>
       <div className="user-database">
         {showKinshipFilters === true ? (
           <div className="kinship-selections">
             <div className='double-btn'>
-              <span>Partner</span>
+              <span onClick={e => filterHandler("")}>Partner</span>
               <div className='sub-btn-container'>
                 <button>N</button><button>U</button>
               </div>
@@ -208,7 +234,19 @@ export default function UserDatabase({ firestore, users }) {
             </div>
           </div>
         ) : null}
-        {users ? null : <p>loading...</p>}
+        {users ?
+          <DatabaseFilterContainer
+            users={users}
+            kinshipFilter={kinshipFilter}
+            causeFilter={causeFilter}
+            hovered={hovered}
+            selectTheUser={selectTheUser}
+            showSelectedUser={showSelectedUser}
+            getMatchBy={getMatchBy}
+            setSimpaticoMatch={setSimpaticoMatch}
+            removeMatch={removeMatch}
+          />
+          : <p>loading...</p>}
       </div>
     </div>
 
