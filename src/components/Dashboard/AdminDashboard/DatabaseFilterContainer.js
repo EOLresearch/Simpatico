@@ -1,11 +1,19 @@
+import UserCard from './UserCard'
 
+export default function DatabaseFilterContainer({ users }) {
 
-export default function DatabaseFilterContainer({  }) {
- 
 
   return (
     <div className='database-filter-container'>
-      
-      </div>
+      {users ? users.map(user => {
+        return (
+          <UserCard
+            key={user.uid}
+            user={user}
+          />
+        )
+      }
+      ) : null}
+    </div>
   );
 }

@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import UserCard from './UserCard'
+import React, { useEffect, useState } from 'react';
 import DatabaseFilterContainer from './DatabaseFilterContainer'
 import './userdatabase.css'
 
@@ -8,8 +7,24 @@ export default function UserDatabase({ firestore, users }) {
   const [selectedUser, setSelectedUser] = useState()
   const [hovered, setHovered] = useState(false)
   const [showKinshipFilters, setShowKinshipFilters] = useState(true)
-  const [kinshipFilter, setKinshipFilter] = useState('')
-  const [causeFilter, setCauseFilter] = useState('')
+  const [kinshipFilter, setKinshipFilter] = useState('All')
+  const [causeFilter, setCauseFilter] = useState('All')
+  const [filteredUsers, setFilteredUsers] = useState()
+
+  useEffect(() => {
+    if (!users) return
+
+    const filteredUsers = users.filter(user => {
+      if (causeFilter === 'All' && kinshipFilter === 'All') return user
+      if (causeFilter === 'All' && kinshipFilter !== 'All') return user.kinship === kinshipFilter
+      if (causeFilter !== 'All' && kinshipFilter === 'All') return user.cause === causeFilter
+      if (causeFilter !== 'All' && kinshipFilter !== 'All') return user.cause === causeFilter && user.kinship === kinshipFilter
+    }
+    )
+    setFilteredUsers(filteredUsers)
+
+  }, [users, causeFilter, kinshipFilter])
+
 
   const selectTheUser = (e, user) => {
     setSelectedUser(user)
@@ -148,95 +163,104 @@ export default function UserDatabase({ firestore, users }) {
       <div className="user-database">
         {showKinshipFilters === true ? (
           <div className="kinship-selections">
-            <div className='double-btn'>
-              <span onClick={e => filterHandler("")}>Partner</span>
-              <div className='sub-btn-container'>
-                <button>N</button><button>U</button>
+            <div className='kinship-selections-header'>
+              <button onClick={e => filterHandler("Kinship")}>X</button>
+              <button onClick={e => filterHandler("All")}>All</button>
+            </div>
+            <div className='double-btn-container'>
+              <div className='double-btn'>
+                <span onClick={e => filterHandler("Partner")}>Partner</span>
+                <div className='sub-btn-container'>
+                  <button>N</button><button>U</button>
+                </div>
+              </div>
+              <div className='double-btn'>
+                <span onClick={e => filterHandler("Parent")} >Parent</span>
+                <div className='sub-btn-container'>
+                  <button>N</button><button>U</button>
+                </div>
+              </div>
+              <div className='double-btn'>
+                <span onClick={e => filterHandler("Offspring")} >Offspring</span>
+                <div className='sub-btn-container'>
+                  <button>N</button><button>U</button>
+                </div>
+              </div>
+              <div className='double-btn'>
+                <span onClick={e => filterHandler("Sibling")} >Sibling</span>
+                <div className='sub-btn-container'>
+                  <button>N</button><button>U</button>
+                </div>
+              </div>
+              <div className='double-btn'>
+                <span onClick={e => filterHandler("Cousin")} >Cousin</span>
+                <div className='sub-btn-container'>
+                  <button>N</button><button>U</button>
+                </div>
+              </div>
+              <div className='double-btn'>
+                <span onClick={e => filterHandler("Grandparent")} >Grandparent</span>
+                <div className='sub-btn-container'>
+                  <button>N</button><button>U</button>
+                </div>
+              </div>
+              <div className='double-btn'>
+                <span onClick={e => filterHandler("Grandchild")} >Grandchild</span>
+                <div className='sub-btn-container'>
+                  <button>N</button><button>U</button>
+                </div>
+              </div>
+              <div className='double-btn'>
+                <span onClick={e => filterHandler("Aunt")} >Aunt</span>
+                <div className='sub-btn-container'>
+                  <button>N</button><button>U</button>
+                </div>
+              </div>
+              <div className='double-btn'>
+                <span onClick={e => filterHandler("Uncle")} >Uncle</span>
+                <div className='sub-btn-container'>
+                  <button>N</button><button>U</button>
+                </div>
+              </div>
+              <div className='double-btn'>
+                <span onClick={e => filterHandler("Niece")} >Niece</span>
+                <div className='sub-btn-container'>
+                  <button>N</button><button>U</button>
+                </div>
+              </div>
+              <div className='double-btn'>
+                <span onClick={e => filterHandler("Nephew")} >Nephew</span>
+                <div className='sub-btn-container'>
+                  <button>N</button><button>U</button>
+                </div>
+              </div>
+              <div className='double-btn'>
+                <span onClick={e => filterHandler("Friend")} >Friend</span>
+                <div className='sub-btn-container'>
+                  <button>N</button><button>U</button>
+                </div>
+              </div>
+              <div className='double-btn'>
+                <span onClick={e => filterHandler("Other")} >Other</span>
+                <div className='sub-btn-container'>
+                  <button>N</button><button>U</button>
+                </div>
+              </div>
+              <div className='double-btn'>
+                <span onClick={e => filterHandler("Support")} >I want to support others</span>
+                <div className='sub-btn-container'>
+                  <button>N</button><button>U</button>
+                </div>
               </div>
             </div>
-            <div className='double-btn'>
-              <span>Parent</span>
-              <div className='sub-btn-container'>
-                <button>N</button><button>U</button>
-              </div>
-            </div>
-            <div className='double-btn'>
-              <span>Offspring</span>
-              <div className='sub-btn-container'>
-                <button>N</button><button>U</button>
-              </div>
-            </div>
-            <div className='double-btn'>
-              <span>Sibling</span>
-              <div className='sub-btn-container'>
-                <button>N</button><button>U</button>
-              </div>
-            </div>
-            <div className='double-btn'>
-              <span>Cousin</span>
-              <div className='sub-btn-container'>
-                <button>N</button><button>U</button>
-              </div>
-            </div>
-            <div className='double-btn'>
-              <span>Grandparent</span>
-              <div className='sub-btn-container'>
-                <button>N</button><button>U</button>
-              </div>
-            </div>
-            <div className='double-btn'>
-              <span>Grandchild</span>
-              <div className='sub-btn-container'>
-                <button>N</button><button>U</button>
-              </div>
-            </div>
-            <div className='double-btn'>
-              <span>Aunt</span>
-              <div className='sub-btn-container'>
-                <button>N</button><button>U</button>
-              </div>
-            </div>
-            <div className='double-btn'>
-              <span>Uncle</span>
-              <div className='sub-btn-container'>
-                <button>N</button><button>U</button>
-              </div>
-            </div>
-            <div className='double-btn'>
-              <span>Niece</span>
-              <div className='sub-btn-container'>
-                <button>N</button><button>U</button>
-              </div>
-            </div>
-            <div className='double-btn'>
-              <span>Nephew</span>
-              <div className='sub-btn-container'>
-                <button>N</button><button>U</button>
-              </div>
-            </div>
-            <div className='double-btn'>
-              <span>Friend</span>
-              <div className='sub-btn-container'>
-                <button>N</button><button>U</button>
-              </div>
-            </div>
-            <div className='double-btn'>
-              <span>Other</span>
-              <div className='sub-btn-container'>
-                <button>N</button><button>U</button>
-              </div>
-            </div>
-            <div className='double-btn'>
-              <span>I want to support others</span>
-              <div className='sub-btn-container'>
-                <button>N</button><button>U</button>
-              </div>
-            </div>
+
+
+
           </div>
         ) : null}
         {users ?
           <DatabaseFilterContainer
-            users={users}
+            users={filteredUsers}
             kinshipFilter={kinshipFilter}
             causeFilter={causeFilter}
             hovered={hovered}
