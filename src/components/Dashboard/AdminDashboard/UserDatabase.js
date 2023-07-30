@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import DatabaseFilterContainer from './DatabaseFilterContainer'
 import './userdatabase.css'
 
-
 export default function UserDatabase({ firestore, users }) {
   const [selectedUser, setSelectedUser] = useState()
   const [hovered, setHovered] = useState(false)
@@ -19,8 +18,7 @@ export default function UserDatabase({ firestore, users }) {
       if (causeFilter === 'All' && kinshipFilter !== 'All') return user.kinship === kinshipFilter
       if (causeFilter !== 'All' && kinshipFilter === 'All') return user.cause === causeFilter
       if (causeFilter !== 'All' && kinshipFilter !== 'All') return user.cause === causeFilter && user.kinship === kinshipFilter
-    }
-    )
+    })
     setFilteredUsers(filteredUsers)
 
   }, [users, causeFilter, kinshipFilter])
@@ -154,12 +152,12 @@ export default function UserDatabase({ firestore, users }) {
 
   return (
     <div className="user-database-container">
-      <div className='admin-dashboard-nav'>
+      {/* <div className='admin-dashboard-nav'>
         <button onClick={e => filterHandler("All")}>All Users</button>
         <button onClick={e => filterHandler("Natural")} >Natural Causes</button>
         <button onClick={e => filterHandler("Unnatural")} >Unnatural Causes</button>
-        <button onClick={e => filterHandler("Kinship")}>Kinship Filters</button>
-      </div>
+        <button onClick={e => filterHandler("Kinship")}>Open Filters</button>
+      </div> */}
       <div className="user-database">
         {showKinshipFilters === true ? (
           <div className="kinship-selections">
@@ -247,15 +245,12 @@ export default function UserDatabase({ firestore, users }) {
                 </div>
               </div>
               <div className='double-btn'>
-                <span onClick={e => filterHandler("Support")} >I want to support others</span>
+                <span onClick={e => filterHandler("Support")} >Support others</span>
                 <div className='sub-btn-container'>
                   <button>N</button><button>U</button>
                 </div>
               </div>
             </div>
-
-
-
           </div>
         ) : null}
         {users ?
