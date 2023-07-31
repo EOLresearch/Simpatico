@@ -10,9 +10,13 @@ export default function UserDatabase({ firestore, users }) {
   const [causeFilter, setCauseFilter] = useState('All')
   const [filteredUsers, setFilteredUsers] = useState()
 
+  //really need to go back through here in the refactor and re think these names.
+
   useEffect(() => {
     if (!users) return
 
+    console.log(causeFilter)
+    console.log(kinshipFilter)
     const filteredUsers = users.filter(user => {
       if (causeFilter === 'All' && kinshipFilter === 'All') return user
       if (causeFilter === 'All' && kinshipFilter !== 'All') return user.kinship === kinshipFilter
@@ -152,19 +156,15 @@ export default function UserDatabase({ firestore, users }) {
 
   return (
     <div className="user-database-container">
-      {/* <div className='admin-dashboard-nav'>
-        <button onClick={e => filterHandler("All")}>All Users</button>
-        <button onClick={e => filterHandler("Natural")} >Natural Causes</button>
-        <button onClick={e => filterHandler("Unnatural")} >Unnatural Causes</button>
-        <button onClick={e => filterHandler("Kinship")}>Open Filters</button>
-      </div> */}
+      <div className='filter-nav'>
+        <button onClick={e => filterHandler("Kinship")}>{showKinshipFilters === true ? "X" : "_"}</button>
+        <button onClick={e => filterHandler("Natural")} >Natural</button>
+        <button onClick={e => filterHandler("Unnatural")} >Unnatural</button>
+        <button onClick={e => filterHandler("All")}>All</button>
+      </div>
       <div className="user-database">
         {showKinshipFilters === true ? (
           <div className="kinship-selections">
-            <div className='kinship-selections-header'>
-              <button onClick={e => filterHandler("Kinship")}>X</button>
-              <button onClick={e => filterHandler("All")}>All</button>
-            </div>
             <div className='double-btn-container'>
               <div className='double-btn'>
                 <span onClick={e => filterHandler("Partner")}>Partner</span>
@@ -256,16 +256,18 @@ export default function UserDatabase({ firestore, users }) {
         {users ?
           <DatabaseFilterContainer
             users={filteredUsers}
-            kinshipFilter={kinshipFilter}
-            causeFilter={causeFilter}
+            // kinshipFilter={kinshipFilter}
+            // causeFilter={causeFilter}
             hovered={hovered}
             selectTheUser={selectTheUser}
             showSelectedUser={showSelectedUser}
             getMatchBy={getMatchBy}
             setSimpaticoMatch={setSimpaticoMatch}
             removeMatch={removeMatch}
+            selectedUser={selectedUser}
           />
           : <p>loading...</p>}
+        
       </div>
     </div>
 
