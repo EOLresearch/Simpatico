@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import UserCardFilterContainer from './UserCardFilterContainer'
+import UserCardFilterContainer from './UserCardFilterContainer/UserCardFilterContainer'
 import './userdisplay.css'
 
 export default function UserDisplay({ firestore, users }) {
@@ -9,8 +9,6 @@ export default function UserDisplay({ firestore, users }) {
   const [kinshipFilter, setKinshipFilter] = useState('All')
   const [causeFilter, setCauseFilter] = useState('All')
   const [filteredUsers, setFilteredUsers] = useState()
-
-  //really need to go back through here in the refactor and re think these names.
 
   useEffect(() => {
     if (!users) return

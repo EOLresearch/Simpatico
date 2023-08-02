@@ -1,5 +1,5 @@
 import './admindashboard.css';
-import UserDisplay from './UserDisplay';
+import UserDisplay from './UserDisplay/UserDisplay';
 import { useEffect, useState } from "react";
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 // import { IconContext } from "react-icons";

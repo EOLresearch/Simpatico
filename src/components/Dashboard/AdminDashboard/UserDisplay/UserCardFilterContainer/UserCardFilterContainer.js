@@ -1,5 +1,6 @@
 import React from 'react';
-import UserCard from './UserCard';
+import UserCard from './UserCard/UserCard';
+import './usercardfiltercontainer.css'
 
 function UserCardFilterContainer({ users, selectedUser, hovered, selectTheUser, showSelectedUser, getMatchBy, setSimpaticoMatch, removeMatch }) {
   return (

@@ -1,128 +1,112 @@
-import UserAuth from './components/UserAuth/UserAuth'
-import Dashboard from './components/Dashboard/Dashboard'
+import React from 'react';
+import UserAuth from './components/UserAuth/UserAuth';
+import Dashboard from './components/Dashboard/Dashboard';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
-import Nav from './components/Nav/Nav'
-import { useState, useEffect } from "react";
+import Nav from './components/Nav/Nav';
+import { useState, useEffect } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
-firebase.initializeApp({
-  apiKey: "AIzaSyAxg7-rLpEzc7-4AE0l12lVJUbPFef2T2I",
-  authDomain: "simpatico-a5b64.firebaseapp.com",
-  projectId: "simpatico-a5b64",
-  storageBucket: "simpatico-a5b64.appspot.com",
-  messagingSenderId: "767358111176",
-  appId: "1:767358111176:web:9003318c304d5422e8c4fd",
-  measurementId: "G-VC7VQ32QB3"
-})
+// Firebase Configuration
+import firebaseConfig from './firebase-config'; // Create a separate file for Firebase config
 
+firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
+const firestore = firebase.firestore();
+
+// Custom hook for user query
+function useUserQuery(user) {
+  const [fsUser, setFsUser] = useState(null);
+
+  useEffect(() => {
+    if (!user) return;
+    const usersRef = firestore.collection('users');
+    const userQuery = usersRef.where('email', '==', user.email);
+
+    userQuery.get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        console.log('1 Doc Read');
+        setFsUser(doc.data());
+      });
+    }).catch((error) => {
+      console.log('Error getting documents: ', error);
+    });
+  }, [firestore, user]);
+
+  return fsUser;
+}
+
+// Custom hook for match query
+function useMatchQuery(fsUser) {
+  const [matches, setMatches] = useState([]);
+
+  useEffect(() => {
+    if (!fsUser) return;
+    const usersRef = firestore.collection('users');
+    const matchQuery = usersRef.where('cause', '==', fsUser.cause).where('kinship', '==', fsUser.kinship);
+
+    matchQuery.get().then((querySnapshot) => {
+      const dataArr = [];
+      querySnapshot.forEach((doc) => {
+        console.log('1 Doc Read');
+        dataArr.push(doc.data());
+      });
+      setMatches(dataArr);
+    }).catch((error) => {
+      console.log('Error getting documents: ', error);
+    });
+  }, [firestore, fsUser]);
+
+  return matches;
+}
 
 function App() {
   const [user] = useAuthState(auth);
-  const [profileTab, setProfileTab] = useState(false)
-  const [matchListTab, setMatchListTab] = useState(false)
-  const [conversationsTab, setConversationsTab] = useState(false)
-  const [adminDash, setAdminDash] = useState(false)
-  const [fsUser, setFsUser] = useState()
-  const [matches, setMatches] = useState([])
-  const firestore = firebase.firestore();
+  const [profileTab, setProfileTab] = useState(false);
+  const [matchListTab, setMatchListTab] = useState(false);
+  const [conversationsTab, setConversationsTab] = useState(false);
+  const [adminDash, setAdminDash] = useState(false);
+
+  // Use the custom hooks to get the fsUser and matches
+  const fsUser = useUserQuery(user);
+  const matches = useMatchQuery(fsUser);
 
   useEffect(() => {
-    if (!user) return
-    setProfileTab(true)
-  }, [user])
-
-
-  useEffect(() => {
-    if (!user) return
-
-    const usersRef = firestore.collection('users');
-    const userQuery = usersRef.where("email", "==", user.email)
-    userQuery.get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          console.log("1 Doc Read")
-          setFsUser(doc.data())
-        });
-      })
-      .catch((error) => {
-        console.log("Error getting documents: ", error);
-      });
-  }, [firestore, user])
-  //USER QUERY
-
-  useEffect(() => {
-    if (!fsUser) return
-    const usersRef = firestore.collection('users');
-    const matchQuery = usersRef.where("cause", "==", fsUser.cause).where("kinship", "==", fsUser.kinship)
-    matchQuery.get()
-      .then((querySnapshot) => {
-        let dataArr = []
-        querySnapshot.forEach((doc) => {
-          console.log("1 Doc Read")
-          dataArr.push(doc.data())
-        });
-        setMatches(dataArr)
-      })
-      .catch((error) => {
-        console.log("Error getting documents: ", error);
-      });
-  }, [firestore, fsUser])
-  //MATCH query
-
-  function navHandler(renderCondition) {
-    switch (renderCondition) {
-      case 'Conversations':
-        setMatchListTab(false)
-        setProfileTab(false)
-        setConversationsTab(true)
-        setAdminDash(false)
-        return
-      case 'Matches':
-        setProfileTab(false)
-        setConversationsTab(false)
-        setMatchListTab(true)
-        setAdminDash(false)
-        return
-      case 'Home':
-        setMatchListTab(false)
-        setConversationsTab(false)
-        setProfileTab(true)
-        setAdminDash(false)
-        return
-      case 'My Story':
-        setMatchListTab(false)
-        setProfileTab(false)
-        setConversationsTab(false)
-        setAdminDash(false)
-        return
-      case 'All Off':
-        setMatchListTab(false)
-        setProfileTab(false)
-        setConversationsTab(false)
-        setAdminDash(false)
-        return
-      case 'Logout':
-        setMatchListTab(false)
-        setProfileTab(false)
-        setConversationsTab(false)
-        setAdminDash(false)
-        auth.signOut()
-        return
-      case 'Admin':
-
-        setAdminDash(!adminDash)
-        return
-
-      default:
-        console.log('switch default NAV')
+    if (user) {
+      setProfileTab(true);
     }
-  }
+  }, [user]);
 
-  function updateFsUser(newFsUser) {
-    setFsUser(newFsUser)
+  // Simplified navHandler function
+  function navHandler(renderCondition) {
+    const tabs = {
+      'Conversations': setConversationsTab,
+      'Matches': setMatchListTab,
+      'Home': setProfileTab,
+      'My Story': () => {}, // Handle My Story logic here
+      'All Off': () => {
+        setMatchListTab(false);
+        setProfileTab(false);
+        setConversationsTab(false);
+        setAdminDash(false);
+      },
+      'Logout': () => {
+        setMatchListTab(false);
+        setProfileTab(false);
+        setConversationsTab(false);
+        setAdminDash(false);
+        auth.signOut();
+      },
+      'Admin': () => setAdminDash(!adminDash),
+    };
+
+    const tabHandler = tabs[renderCondition];
+    if (tabHandler) {
+      tabHandler();
+    } else {
+      console.log('switch default NAV');
+    }
   }
 
   return (
@@ -136,23 +120,24 @@ function App() {
           </div>
 
           <div className='app-body'>
-
             {
-              user ?
-                user.emailVerified === true ?
-                  <Dashboard
-                    firebase={firebase}
-                    user={user}
-                    fsUser={fsUser}
-                    matches={matches}
-                    profileTab={profileTab}
-                    matchListTab={matchListTab}
-                    adminDash={adminDash}
-                    conversationsTab={conversationsTab}
-                    navHandler={navHandler}
-                    updateFsUser={updateFsUser}
-                  />
-                  : <UserAuth user={user} auth={auth} firebase={firebase} /> : <UserAuth auth={auth} firebase={firebase} />
+              user ? (user.emailVerified ? (
+                <Dashboard
+                  firebase={firebase}
+                  user={user}
+                  fsUser={fsUser}
+                  matches={matches}
+                  profileTab={profileTab}
+                  matchListTab={matchListTab}
+                  adminDash={adminDash}
+                  conversationsTab={conversationsTab}
+                  navHandler={navHandler}
+                />
+              ) : (
+                <UserAuth user={user} auth={auth} firebase={firebase} />
+              )) : (
+                <UserAuth auth={auth} firebase={firebase} />
+              )
             }
           </div>
         </div>
@@ -160,5 +145,5 @@ function App() {
     </div>
   );
 }
-export default App;
 
+export default App;
