@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import DatabaseFilterContainer from './DatabaseFilterContainer'
-import './userdatabase.css'
+import UserCardFilterContainer from './UserCardFilterContainer'
+import './userdisplay.css'
 
-export default function UserDatabase({ firestore, users }) {
+export default function UserDisplay({ firestore, users }) {
   const [selectedUser, setSelectedUser] = useState()
   const [hovered, setHovered] = useState(false)
   const [showKinshipFilters, setShowKinshipFilters] = useState(true)
@@ -22,6 +22,7 @@ export default function UserDatabase({ firestore, users }) {
       if (causeFilter === 'All' && kinshipFilter !== 'All') return user.kinship === kinshipFilter
       if (causeFilter !== 'All' && kinshipFilter === 'All') return user.cause === causeFilter
       if (causeFilter !== 'All' && kinshipFilter !== 'All') return user.cause === causeFilter && user.kinship === kinshipFilter
+      return false;
     })
     setFilteredUsers(filteredUsers)
 
@@ -155,14 +156,14 @@ export default function UserDatabase({ firestore, users }) {
   }
 
   return (
-    <div className="user-database-container">
-      <div className='filter-nav'>
+    <div className="user-display-container">
+      <div className='user-display-header filer-nav'>
         <button onClick={e => filterHandler("Kinship")}>{showKinshipFilters === true ? "X" : "_"}</button>
         <button onClick={e => filterHandler("Natural")} >Natural</button>
         <button onClick={e => filterHandler("Unnatural")} >Unnatural</button>
         <button onClick={e => filterHandler("All")}>All</button>
       </div>
-      <div className="user-database">
+      <div className="user-display-body">
         {showKinshipFilters === true ? (
           <div className="kinship-selections">
             <div className='double-btn-container'>
@@ -254,10 +255,8 @@ export default function UserDatabase({ firestore, users }) {
           </div>
         ) : null}
         {users ?
-          <DatabaseFilterContainer
+          <UserCardFilterContainer
             users={filteredUsers}
-            // kinshipFilter={kinshipFilter}
-            // causeFilter={causeFilter}
             hovered={hovered}
             selectTheUser={selectTheUser}
             showSelectedUser={showSelectedUser}

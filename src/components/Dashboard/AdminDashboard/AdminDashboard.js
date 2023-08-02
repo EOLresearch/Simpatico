@@ -1,5 +1,5 @@
 import './admindashboard.css';
-import UserDatabase from './UserDatabase';
+import UserDisplay from './UserDisplay';
 import { useEffect, useState } from "react";
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 // import { IconContext } from "react-icons";
@@ -32,7 +32,7 @@ export default function AdminDashboard({ firebase, fsUser, navHandler }) {
           </div> */}
         </div>
         <div className='admin-dashboard-body'>
-          <UserDatabase
+          <UserDisplay
             firestore={firestore}
             users={users}
           />
