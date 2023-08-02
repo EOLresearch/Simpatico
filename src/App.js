@@ -32,7 +32,7 @@ function useUserQuery(user) {
     }).catch((error) => {
       console.log('Error getting documents: ', error);
     });
-  }, [firestore, user]);
+  }, [user]);
 
   return fsUser;
 }
@@ -56,7 +56,7 @@ function useMatchQuery(fsUser) {
     }).catch((error) => {
       console.log('Error getting documents: ', error);
     });
-  }, [firestore, fsUser]);
+  }, [fsUser]);
 
   return matches;
 }
@@ -81,9 +81,24 @@ function App() {
   // Simplified navHandler function
   function navHandler(renderCondition) {
     const tabs = {
-      'Conversations': setConversationsTab,
-      'Matches': setMatchListTab,
-      'Home': setProfileTab,
+      'Conversations': ( )=> {
+        setConversationsTab(true);
+        setMatchListTab(false);
+        setProfileTab(false);
+        setAdminDash(false);
+      },
+      'Matches': () => {
+        setMatchListTab(true);
+        setProfileTab(false);
+        setConversationsTab(false);
+        setAdminDash(false);
+      },
+      'Home': () => {
+        setMatchListTab(false);
+        setProfileTab(true);
+        setConversationsTab(false);
+        setAdminDash(false);
+      },
       'My Story': () => {}, // Handle My Story logic here
       'All Off': () => {
         setMatchListTab(false);
