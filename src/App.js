@@ -6,12 +6,57 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import Nav from './components/Nav/Nav';
 import Dashboard from './components/Dashboard/Dashboard';
 import UserAuth from './components/UserAuth/UserAuth';
-import useUserQuery from './hooks/useUserQuery';
-import useMatchQuery from './hooks/useMatchQuery';
 import firebaseConfig from './firebase-config'; 
 
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
+const firestore = firebase.firestore();
+
+// Custom hook for user query
+function useUserQuery(user) {
+  const [fsUser, setFsUser] = useState(null);
+
+  useEffect(() => {
+    if (!user) return;
+    const usersRef = firestore.collection('users');
+    const userQuery = usersRef.where('email', '==', user.email);
+
+    userQuery.get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        console.log('1 Doc Read');
+        setFsUser(doc.data());
+      });
+    }).catch((error) => {
+      console.log('Error getting documents: ', error);
+    });
+  }, [user]);
+
+  return fsUser;
+}
+
+// Custom hook for match query
+function useMatchQuery(fsUser) {
+  const [matches, setMatches] = useState([]);
+
+  useEffect(() => {
+    if (!fsUser) return;
+    const usersRef = firestore.collection('users');
+    const matchQuery = usersRef.where('cause', '==', fsUser.cause).where('kinship', '==', fsUser.kinship);
+
+    matchQuery.get().then((querySnapshot) => {
+      const dataArr = [];
+      querySnapshot.forEach((doc) => {
+        console.log('1 Doc Read');
+        dataArr.push(doc.data());
+      });
+      setMatches(dataArr);
+    }).catch((error) => {
+      console.log('Error getting documents: ', error);
+    });
+  }, [fsUser]);
+
+  return matches;
+}
 
 function App() {
   const [user] = useAuthState(auth);

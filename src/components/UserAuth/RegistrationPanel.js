@@ -4,7 +4,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import './regpanel.css';
 
-const RegistrationPanel = ({ auth, usersRef, registrationDisplaySwitch, fsUser }) => {
+const RegistrationPanel = ({ auth, usersRef, registrationDisplaySwitch }) => {
   const [anError, setAnError] = useState('');
   const [photoURL, setPhotoURL] = useState('');
   const [email, setEmail] = useState('');
@@ -42,7 +42,7 @@ const RegistrationPanel = ({ auth, usersRef, registrationDisplaySwitch, fsUser }
     setEmail(email.trim())
     //there is some outdated code here, the if else statemnet is not needed without google signin.
 
-    if (!fsUser) {
+
       if (email === "") {
         setAnError('auth/missing-email')
       } else if (password === '') {
@@ -83,7 +83,7 @@ const RegistrationPanel = ({ auth, usersRef, registrationDisplaySwitch, fsUser }
         setAnError('')
         createNewUser(e)
       }
-    }
+
   }
 
   const changeHandler = (e) => {
@@ -465,7 +465,6 @@ RegistrationPanel.propTypes = {
   auth: PropTypes.object.isRequired,
   usersRef: PropTypes.object.isRequired,
   registrationDisplaySwitch: PropTypes.func.isRequired,
-  fsUser: PropTypes.object,
 };
 
 export default RegistrationPanel;
