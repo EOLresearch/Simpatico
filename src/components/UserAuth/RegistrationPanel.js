@@ -1,40 +1,30 @@
-import './regpanel.css';
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import PropTypes from 'prop-types';
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import ErrorMessage from '../ErrorMessage/ErrorMessage'
-// import { FaInfo } from 'react-icons/fa';
-// import AvatarGenerator from './AvatarGenerator'
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
+import './regpanel.css';
 
-export default function RegistrationPanel({ auth, usersRef, registrationDisplaySwitch, fsUser }) {
-  const [anError, setAnError] = useState('')
-
-  // Account  Info----------
-  const [photoURL, setPhotoURL] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPass, setConfirmPass] = useState('')
-  const [displayName, setDisplayName] = useState('')
-
-  // User Info----------
-  const [residence, setResidence] = useState('')
-  const [lossDate, setLossDate] = useState('')
-  // const [raceEnthnicity, setRaceEnthnicity] = useState('')
-  const [race, setRace] = useState('')
-  const [ethnicity, setEthnicity] = useState('')
-  // https://www.census.gov/topics/population/race/about.html for more about the options on raceEnthnicity
-  const [bioSex, setBioSex] = useState('')
-  const [education, setEducation] = useState('')
-  const [household, setHousehold] = useState('')
-  const [hobbies, setHobbies] = useState('')
-
-  // Kinship Info----------
-  const [birthDate, setBirthDate] = useState('')
-  const [kinship, setKinship] = useState('')
-  const [cause, setCause] = useState('')
-  const [deceasedAge, setDeceasedAge] = useState('')
-  const [lossExp, setLossExp] = useState('')
-
-  const [consent, setConsent] = useState(false)
+const RegistrationPanel = ({ auth, usersRef, registrationDisplaySwitch, fsUser }) => {
+  const [anError, setAnError] = useState('');
+  const [photoURL, setPhotoURL] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPass, setConfirmPass] = useState('');
+  const [displayName, setDisplayName] = useState('');
+  const [residence, setResidence] = useState('');
+  const [lossDate, setLossDate] = useState('');
+  const [race, setRace] = useState('');
+  const [ethnicity, setEthnicity] = useState('');
+  const [bioSex, setBioSex] = useState('');
+  const [education, setEducation] = useState('');
+  const [household, setHousehold] = useState('');
+  const [hobbies, setHobbies] = useState('');
+  const [birthDate, setBirthDate] = useState('');
+  const [kinship, setKinship] = useState('');
+  const [cause, setCause] = useState('');
+  const [deceasedAge, setDeceasedAge] = useState('');
+  const [lossExp, setLossExp] = useState('');
+  const [consent, setConsent] = useState(false);
 
   useEffect(() => {
     const randomNumber = Math.floor(Math.random() * (14 - 0 + 1) + 0)
@@ -223,26 +213,6 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
     }
   }
 
-  const updateUser = async () => {
-    try {
-      usersRef.doc(fsUser.uid).set({
-        email: fsUser.email,
-        uid: fsUser.uid,
-        displayName: displayName ? displayName : fsUser.displayName,
-        birthDate: birthDate,
-        photoURL: fsUser.photoURL,
-        kinship: kinship,
-        lossDate: lossDate,
-        cause: cause,
-        residence: residence,
-        lossExp: lossExp,
-      })
-    } catch (error) {
-      const errorCode = error.code;
-      console.log(errorCode, error.message)
-      setAnError(errorCode)
-    }
-  }
 
   return (
     <div className="auth-wrapper">
@@ -490,3 +460,12 @@ export default function RegistrationPanel({ auth, usersRef, registrationDisplayS
     </div>
   )
 }
+
+RegistrationPanel.propTypes = {
+  auth: PropTypes.object.isRequired,
+  usersRef: PropTypes.object.isRequired,
+  registrationDisplaySwitch: PropTypes.func.isRequired,
+  fsUser: PropTypes.object,
+};
+
+export default RegistrationPanel;

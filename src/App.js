@@ -1,15 +1,12 @@
-import React from 'react';
-import UserAuth from './components/UserAuth/UserAuth';
-import Dashboard from './components/Dashboard/Dashboard';
+import React, { useState, useEffect } from 'react';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
-import Nav from './components/Nav/Nav';
-import { useState, useEffect } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-
-// Firebase Configuration
-import firebaseConfig from './firebase-config'; // Create a separate file for Firebase config
+import Nav from './components/Nav/Nav';
+import Dashboard from './components/Dashboard/Dashboard';
+import UserAuth from './components/UserAuth/UserAuth';
+import firebaseConfig from './firebase-config'; 
 
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
