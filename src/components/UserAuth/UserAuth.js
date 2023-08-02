@@ -65,11 +65,6 @@ const UserAuth = ({ user, firebase }) => {
 
   return (
     <div className="auth-wrapper">
-      <div className='callout-container'>
-        {[...Array(3)].map((_, index) => (
-          <div key={index} className='callout auth-callout'></div>
-        ))}
-      </div>
       <div className='error-container'>
         {error && <ErrorMessage error={error} cancelError={handleCancelError} />}
       </div>

@@ -4,7 +4,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import './regpanel.css';
 
-const RegistrationPanel = ({ auth, usersRef, registrationDisplaySwitch }) => {
+const RegistrationPanel = ({ auth, usersRef, handleToggleRegistrationPanel }) => {
   const [anError, setAnError] = useState('');
   const [photoURL, setPhotoURL] = useState('');
   const [email, setEmail] = useState('');
@@ -182,7 +182,7 @@ const RegistrationPanel = ({ auth, usersRef, registrationDisplaySwitch }) => {
         .then(() => {
           // Email verification sent!
           // ...
-          registrationDisplaySwitch(e);
+          handleToggleRegistrationPanel(e);
         });
     } catch (error) {
       const errorCode = error.code;
@@ -456,7 +456,7 @@ const RegistrationPanel = ({ auth, usersRef, registrationDisplaySwitch }) => {
           </form>
         </div>
       </div>
-      <button onClick={registrationDisplaySwitch} className='btn btn-back'> Already joined? <strong>Login now</strong></button>
+      <button onClick={handleToggleRegistrationPanel} className='btn btn-back'> Already joined? <strong>Login now</strong></button>
     </div>
   )
 }
@@ -464,7 +464,7 @@ const RegistrationPanel = ({ auth, usersRef, registrationDisplaySwitch }) => {
 RegistrationPanel.propTypes = {
   auth: PropTypes.object.isRequired,
   usersRef: PropTypes.object.isRequired,
-  registrationDisplaySwitch: PropTypes.func.isRequired,
+  handleToggleRegistrationPanel: PropTypes.func.isRequired,
 };
 
 export default RegistrationPanel;
