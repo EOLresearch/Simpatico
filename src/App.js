@@ -6,57 +6,12 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import Nav from './components/Nav/Nav';
 import Dashboard from './components/Dashboard/Dashboard';
 import UserAuth from './components/UserAuth/UserAuth';
+import useUserQuery from './hooks/useUserQuery';
+import useMatchQuery from './hooks/useMatchQuery';
 import firebaseConfig from './firebase-config'; 
 
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
-const firestore = firebase.firestore();
-
-// Custom hook for user query
-function useUserQuery(user) {
-  const [fsUser, setFsUser] = useState(null);
-
-  useEffect(() => {
-    if (!user) return;
-    const usersRef = firestore.collection('users');
-    const userQuery = usersRef.where('email', '==', user.email);
-
-    userQuery.get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        console.log('1 Doc Read');
-        setFsUser(doc.data());
-      });
-    }).catch((error) => {
-      console.log('Error getting documents: ', error);
-    });
-  }, [user]);
-
-  return fsUser;
-}
-
-// Custom hook for match query
-function useMatchQuery(fsUser) {
-  const [matches, setMatches] = useState([]);
-
-  useEffect(() => {
-    if (!fsUser) return;
-    const usersRef = firestore.collection('users');
-    const matchQuery = usersRef.where('cause', '==', fsUser.cause).where('kinship', '==', fsUser.kinship);
-
-    matchQuery.get().then((querySnapshot) => {
-      const dataArr = [];
-      querySnapshot.forEach((doc) => {
-        console.log('1 Doc Read');
-        dataArr.push(doc.data());
-      });
-      setMatches(dataArr);
-    }).catch((error) => {
-      console.log('Error getting documents: ', error);
-    });
-  }, [fsUser]);
-
-  return matches;
-}
 
 function App() {
   const [user] = useAuthState(auth);
@@ -76,38 +31,15 @@ function App() {
   }, [user]);
 
   // Simplified navHandler function
-  function navHandler(renderCondition) {
+  const navHandler = (renderCondition) => {
     const tabs = {
-      'Conversations': ( )=> {
-        setConversationsTab(true);
-        setMatchListTab(false);
-        setProfileTab(false);
-        setAdminDash(false);
-      },
-      'Matches': () => {
-        setMatchListTab(true);
-        setProfileTab(false);
-        setConversationsTab(false);
-        setAdminDash(false);
-      },
-      'Home': () => {
-        setMatchListTab(false);
-        setProfileTab(true);
-        setConversationsTab(false);
-        setAdminDash(false);
-      },
+      'Conversations': () => toggleTabs(true, false, false, false),
+      'Matches': () => toggleTabs(false, true, false, false),
+      'Home': () => toggleTabs(false, false, true, false),
       'My Story': () => {}, // Handle My Story logic here
-      'All Off': () => {
-        setMatchListTab(false);
-        setProfileTab(false);
-        setConversationsTab(false);
-        setAdminDash(false);
-      },
+      'All Off': () => toggleTabs(false, false, false, false),
       'Logout': () => {
-        setMatchListTab(false);
-        setProfileTab(false);
-        setConversationsTab(false);
-        setAdminDash(false);
+        toggleTabs(false, false, false, false);
         auth.signOut();
       },
       'Admin': () => setAdminDash(!adminDash),
@@ -119,7 +51,14 @@ function App() {
     } else {
       console.log('switch default NAV');
     }
-  }
+  };
+
+  const toggleTabs = (conversations, matchList, profile, admin) => {
+    setConversationsTab(conversations);
+    setMatchListTab(matchList);
+    setProfileTab(profile);
+    setAdminDash(admin);
+  };
 
   return (
     <div className="App">
