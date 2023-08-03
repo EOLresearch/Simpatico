@@ -1,49 +1,51 @@
-// firebaseHelpers.js
-import { firestore } from './firebase-config'; // Assuming you've a separate config file for firebase
+// helpers/firebase.js
 
-export function createConvo(uid, fsUser, e, message, user, navHandler, setShowChatWindow) {
-  e.preventDefault()
+import { firestore } from "../firebase-config";
 
-  const documentID = `${uid} + ${user.uid}`
-  const conversationsRef = firestore.collection('conversations');
-  const conversationRef = conversationsRef.doc(documentID);
+export const createConvo = async (uid, fsUser, message, user) => {
+  try {
+    const documentID = `${uid} + ${user.uid}`;
+    const conversationsRef = firestore.collection('conversations');
+    const conversationRef = conversationsRef.doc(documentID);
 
-  const newConvo = {
-    users: [uid, user.uid],
-    userData: {
-      sender: fsUser,
-      receiver: user,
-    },
-    createdAt: firestore.FieldValue.serverTimestamp(),
-    docID: documentID,
-    mutualConsent: false,
-    firstMessage: message,
+    const newConvo = {
+      users: [uid, user.uid],
+      userData: {
+        sender: fsUser,
+        receiver: user,
+      },
+      createdAt: firestore.FieldValue.serverTimestamp(),
+      docID: documentID,
+      mutualConsent: false,
+      firstMessage: message,
+    }
+
+    await conversationRef.set(newConvo)
+
+    const msgDocRef = conversationRef.collection('messages').doc()
+    await msgDocRef.set({
+      mid: msgDocRef.id,
+      body: message,
+      createdAt: firestore.FieldValue.serverTimestamp(),
+      sentFromUid: uid,
+      sentFromDisplayName: fsUser.displayName,
+      photoURL: fsUser.photoURL,
+    })
+  } catch (error) {
+    console.error("Error creating conversation: ", error);
   }
-  conversationRef.set(newConvo)
-
-  const msgDocRef = conversationRef.collection('messages').doc()
-  msgDocRef.set({
-    mid: msgDocRef.id,
-    body: message,
-    createdAt: firestore.FieldValue.serverTimestamp(),
-    sentFromUid: uid,
-    sentFromDisplayName: fsUser.displayName,
-    photoURL: fsUser.photoURL,
-  })
-
-  navHandler("Conversations")
-  setShowChatWindow(true)
 }
 
-export function convoMutualConsentToggle(docID, boolean, setShowChatWindow, navHandler) {
-  const conversationsRef = firestore.collection('conversations');
-  const conversationRef = conversationsRef.doc(docID);
-  conversationRef.update({
-    mutualConsent: boolean,
-  })
-    .then(() => {
-      setShowChatWindow(true)
-      navHandler("Conversations")
-      console.log("Document successfully updated!");
+export const convoMutualConsentToggle = async (docID, boolean) => {
+  try {
+    const conversationsRef = firestore.collection('conversations');
+    const conversationRef = conversationsRef.doc(docID);
+
+    await conversationRef.update({
+      mutualConsent: boolean,
     })
+    console.log("Document successfully updated!");
+  } catch (error) {
+    console.error("Error updating mutual consent: ", error);
+  }
 }

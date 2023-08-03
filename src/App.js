@@ -5,8 +5,6 @@ import Dashboard from './components/Dashboard/Dashboard';
 import UserAuth from './components/UserAuth/UserAuth';
 import { firestore, auth } from './firebase-config';
 
-
-
 // Custom hook for user query
 function useUserQuery(user) {
   const [fsUser, setFsUser] = useState(null);
