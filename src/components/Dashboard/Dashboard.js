@@ -11,7 +11,7 @@ import Profile from './Profile/Profile'
 import AdminDashboard from './AdminDashboard/AdminDashboard';
 import { firestore } from '../../firebase-config';
 import PropTypes from 'prop-types';
-import { createConvo, convoMutualConsentToggle } from "../../helpers/firebaseHelpers";
+import { convoMutualConsentToggle, createConvo } from '../../helpers/firebaseHelpers'
 
 function Dashboard({
   matches,
@@ -65,7 +65,11 @@ function Dashboard({
               </div>
               {showNotification && <span className="notification">{convoRequests.length}</span>}
             </div>
-            {profileTab && <Profile fsUser={fsUser} updateFsUser={updateFsUser} navHandler={navHandler} />}
+            {profileTab &&
+              <Profile
+                fsUser={fsUser}
+                updateFsUser={updateFsUser}
+                navHandler={navHandler} />}
             {conversationsTab &&
               <Conversations
                 chatHandler={chatHandler}

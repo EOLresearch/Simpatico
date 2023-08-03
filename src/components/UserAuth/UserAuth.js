@@ -1,6 +1,6 @@
 // UserAuth.js
 import React, { useState } from "react";
-import { signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
+// import { signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 import PropTypes from 'prop-types';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import RegistrationPanel from './RegistrationPanel';
@@ -20,7 +20,7 @@ const UserAuth = ({ user }) => {
   const handleSendResetEmail = async (e) => {
     e.preventDefault();
     try {
-      await sendPasswordResetEmail(auth, email);
+      await auth.sendPasswordResetEmail(email);
       console.log("Password reset email sent");
       setError("passwordreset");
     } catch (error) {
@@ -32,7 +32,7 @@ const UserAuth = ({ user }) => {
   const handleLogin = (e) => {
     e.preventDefault();
 
-    signInWithEmailAndPassword(auth, email, password)
+    auth.signInWithEmailAndPassword( email, password)
       .then(() => {
         // Signed in successfully
       })

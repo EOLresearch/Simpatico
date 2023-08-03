@@ -101,7 +101,7 @@ function App() {
   return (
     <div className="App">
       <div className='app-container'>
-        <Nav user={user} auth={auth} navHandler={navHandler} fsUser={fsUser} />
+        <Nav user={user} navHandler={navHandler} fsUser={fsUser} />
         <div className='app-inner-container'>
           <div className='app-header'>
             <h1>SIMPATICO</h1>

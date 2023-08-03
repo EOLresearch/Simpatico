@@ -1,26 +1,35 @@
+// AdminDashboard.js
+
 import './admindashboard.css';
 import UserDisplay from './UserDisplay/UserDisplay';
 import { useEffect, useState } from "react";
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { firestore, auth } from '../../../firebase-config';
+import { firestore } from '../../../firebase-config';
+import PropTypes from 'prop-types';
 
-// import { IconContext } from "react-icons";
+function AdminDashboard({ fsUser, navHandler }) {
+  const [view, setView] = useState('Cards');
 
-export default function AdminDashboard({ fsUser, navHandler }) {
   useEffect(() => {
     if (!fsUser.admin || fsUser.admin === false) {
-      navHandler('Home')
+      navHandler('Home');
     }
-  }, [fsUser, navHandler])
+  }, [fsUser, navHandler]);
 
   const usersRef = firestore.collection('users');
   const [users] = useCollectionData(usersRef);
 
-  const subNavHandler = (renderCondition) => {
-    switch (renderCondition) {
-
-    }
-  }
+  // Placeholder for view switching feature
+  const renderView = () => {
+    // switch (view) {
+    //   case 'Cards':
+    //     return <CardView users={users} />;
+    //   case 'Table':
+    //     return <TableView users={users} />;
+    //   default:
+    //     return <CardView users={users} />;
+    // }
+  };
 
   return (
     <div className='admin-dashboard-container'>
@@ -28,17 +37,21 @@ export default function AdminDashboard({ fsUser, navHandler }) {
         <div className='admin-dashboard-header'>
           <h1>Admin Dashboard</h1>
           {/* <div className='admin-dashboard-nav'>
-            <button onClick={e=>subNavHandler("Cards")}>Card View</button>
-            <button onClick={e=>subNavHandler("Table")} >Table View</button>
+            <button onClick={() => setView('Cards')}>Card View</button>
+            <button onClick={() => setView('Table')}>Table View</button>
           </div> */}
         </div>
         <div className='admin-dashboard-body'>
-          <UserDisplay
-            firestore={firestore}
-            users={users}
-          />
+          <UserDisplay users={users} />
+          {/* Alternatively, use renderView() to switch between different views */}
+          {/* {renderView()} */}
         </div>
       </div>
     </div>
   );
 }
+AdminDashboard.propTypes = {
+  fsUser: PropTypes.object.isRequired,
+  navHandler: PropTypes.func.isRequired,
+};
+export default AdminDashboard;
