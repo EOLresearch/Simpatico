@@ -3,11 +3,9 @@ import ChatMessage from '../../ChatMessage/ChatMessage'
 import ConvoInvite from '../../ConvoInvite/ConvoInvite'
 import { useRef, useState, useEffect } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { auth, firestore, firebase } from '../../../../firebase-config';
 
-
-export default function ChatWindow({ firebase, convoDocId, convo, fsUser, convoMutualConsentToggle }) {
-  const auth = firebase.auth();
-  const firestore = firebase.firestore()
+export default function ChatWindow({ convoDocId, convo, fsUser, convoMutualConsentToggle }) {
 
   const conversationRef = firestore.collection('conversations').doc(convoDocId);
 

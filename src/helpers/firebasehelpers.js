@@ -1,5 +1,5 @@
 
-import { firestore } from "../firebase-config";
+import { firestore, firebase } from "../firebase-config";
 
 export const createConvo = (uid, fsUser, message, user) => {
   const documentID = `${uid} + ${user.uid}`;
@@ -23,7 +23,7 @@ export const createConvo = (uid, fsUser, message, user) => {
   msgDocRef.set({
     mid: msgDocRef.id,
     body: message,
-    createdAt: firestore.FieldValue.serverTimestamp(),
+    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     sentFromUid: uid,
     sentFromDisplayName: fsUser.displayName,
     photoURL: fsUser.photoURL,
@@ -31,7 +31,7 @@ export const createConvo = (uid, fsUser, message, user) => {
 }
 
 export const convoMutualConsentToggle = (docID, boolean) => {
-  const conversationsRef = firestore.collection('conversations');
+  const conversationsRef = firebase.firestore.collection('conversations');
   const conversationRef = conversationsRef.doc(docID);
 
   conversationRef.update({
@@ -40,4 +40,18 @@ export const convoMutualConsentToggle = (docID, boolean) => {
   .then(() => {
     console.log("Document successfully updated!");
   })
+}
+
+const usersCollection = firestore.collection('users');
+
+export const updateSimpaticoMatch = (uid, matchUid) => {
+  return usersCollection.doc(uid).update({
+    simpaticoMatch: matchUid
+  });
+}
+
+export const removeSimpaticoMatch = (uid) => {
+  return usersCollection.doc(uid).update({
+    simpaticoMatch: ''
+  });
 }

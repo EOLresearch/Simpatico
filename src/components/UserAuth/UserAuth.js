@@ -69,7 +69,7 @@ const UserAuth = ({ user }) => {
       <div className='error-container'>
         {error && <ErrorMessage error={error} cancelError={handleCancelError} />}
       </div>
-      <div className="auth-container">
+      <div className="auth-container login">
         {view === 'login' && (
           <div className="fields-container">
             <h4>Log in to your profile</h4>
@@ -126,7 +126,6 @@ const UserAuth = ({ user }) => {
 
 UserAuth.propTypes = {
   user: PropTypes.object,
-  firebase: PropTypes.object.isRequired,
 };
 
 export default UserAuth;

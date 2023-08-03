@@ -4,7 +4,7 @@ import Convo from './Convo'
 import ChatWindow from './ChatWindow/ChatWindow'
 import { useEffect, useState } from 'react';
 
-export default function Conversations({ chatHandler, docID, showChatWindow, firebase, convos, fsUser, convoMutualConsentToggle }) {
+export default function Conversations({ chatHandler, docID, showChatWindow, convos, fsUser, convoMutualConsentToggle }) {
 
   const [selectedConvo, setSelectedConvo] = useState(null)
 
@@ -23,14 +23,14 @@ export default function Conversations({ chatHandler, docID, showChatWindow, fire
           <h3>YOUR CONNECTIONS</h3>
           {
           convos ? 
-            convos.map(convo => <Convo key={convo.docID} firebase={firebase} selectedDocID={docID} convo={convo} chatHandler={chatHandler} />) 
+            convos.map(convo => <Convo key={convo.docID} selectedDocID={docID} convo={convo} chatHandler={chatHandler} />) 
             : null
           }
         </div>
       </div>
           {
             showChatWindow === true ?
-              <ChatWindow firebase={firebase} convoDocId={docID} convo={selectedConvo} fsUser={fsUser} convoMutualConsentToggle={convoMutualConsentToggle}/> : <div className="no-convos"><p>NO CONVERSATION SELECTED</p></div>
+              <ChatWindow convoDocId={docID} convo={selectedConvo} fsUser={fsUser} convoMutualConsentToggle={convoMutualConsentToggle}/> : <div className="no-convos"><p>NO CONVERSATION SELECTED</p></div>
           }
     </div>
   )

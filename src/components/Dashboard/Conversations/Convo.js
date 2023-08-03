@@ -1,6 +1,7 @@
-export default function Convo({ firebase, convo, selectedDocID, chatHandler }) {
+import { auth } from '../../../firebase-config';
 
-  const auth = firebase.auth();
+export default function Convo({convo, selectedDocID, chatHandler }) {
+
   const { uid } = auth.currentUser;
 
   const theOtherPerson = uid === convo.userData.sender.uid ? convo.userData.receiver : convo.userData.sender

@@ -96,7 +96,7 @@ export default function UserCard({ user, setSimpaticoMatch, getMatchBy, selectTh
         <div className="card-btn-container">
           {
             user.simpaticoMatch
-              ? <button onClick={e => removeMatch(e, user)} className='card-btn'>Remove match</button>
+              ? <button onClick={e => removeMatch(user)} className='card-btn'>Remove match</button>
               : <button onClick={matchInputDisplaySwitch} className='card-btn'>Matching options</button>
           }
           <button className="card-btn" onClick={showDetailsDisplaySwitch}>Show Details</button>
