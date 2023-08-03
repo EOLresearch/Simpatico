@@ -4,7 +4,7 @@ import './usercardfiltercontainer.css'
 
 function UserCardFilterContainer({ users, selectedUser, hovered, selectTheUser, showSelectedUser, getMatchBy, setSimpaticoMatch, removeMatch }) {
   return (
-    <div className='database-filter-container'>
+    <div className={'user-card-filter-container'}>
       {users && users.map(user => (
         <UserCard
           key={user.uid}

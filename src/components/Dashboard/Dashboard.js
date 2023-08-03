@@ -13,18 +13,6 @@ import { firestore } from '../../firebase-config';
 import PropTypes from 'prop-types';
 import { convoMutualConsentToggle, createConvo } from '../../helpers/firebaseHelpers'
 
-Dashboard.propTypes = {
-  matches: PropTypes.array.isRequired,
-  user: PropTypes.object.isRequired,
-  fsUser: PropTypes.object,
-  profileTab: PropTypes.bool.isRequired,
-  matchListTab: PropTypes.bool.isRequired,
-  conversationsTab: PropTypes.bool.isRequired,
-  adminDash: PropTypes.bool.isRequired,
-  navHandler: PropTypes.func.isRequired,
-};
-
-
 function Dashboard({
   matches,
   user,
@@ -101,5 +89,16 @@ function Dashboard({
     </IconContext.Provider>
   );
 }
+
+Dashboard.propTypes = {
+  matches: PropTypes.array.isRequired,
+  user: PropTypes.object.isRequired,
+  fsUser: PropTypes.object,
+  profileTab: PropTypes.bool.isRequired,
+  matchListTab: PropTypes.bool.isRequired,
+  conversationsTab: PropTypes.bool.isRequired,
+  adminDash: PropTypes.bool.isRequired,
+  navHandler: PropTypes.func.isRequired,
+};
 
 export default Dashboard;

@@ -28,8 +28,16 @@ const kinshipTypes = [
   'Nephew',
   'Friend',
   'Other',
-  'I want to support others'
+  'Support others'
 ];
+UserDisplay.propTypes = {
+  users: PropTypes.arrayOf(PropTypes.shape({
+    uid: PropTypes.string.isRequired,
+    simpaticoMatch: PropTypes.string.isRequired,
+    cause: PropTypes.string.isRequired,
+    kinship: PropTypes.string.isRequired,
+  })),
+};
 
 export default function UserDisplay({ view, users }) {
   const [selectedUser, setSelectedUser] = useState()
@@ -124,9 +132,9 @@ export default function UserDisplay({ view, users }) {
 
   return (
     <div className="user-display-container">
-      <div className='user-display-header filer-nav'>
+      <div className='user-display-header'>
         {['Kinship', 'Natural', 'Unnatural', 'All'].map(filter =>
-          <button key={filter} onClick={() => filterHandler(filter)}>
+          <button key={filter} onClick={() => {filterHandler(filter); setKinshipFilter('All');}}>
             {filter === 'Kinship' ? showKinshipFilters ? 'X' : '_' : filter}
           </button>
         )}
