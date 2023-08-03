@@ -1,3 +1,7 @@
+import firebase from 'firebase/compat/app';
+import 'firebase/firestore';
+import 'firebase/auth';
+
 const firebaseConfig = {
   apiKey: "AIzaSyAxg7-rLpEzc7-4AE0l12lVJUbPFef2T2I",
   authDomain: "simpatico-a5b64.firebaseapp.com",
@@ -8,4 +12,8 @@ const firebaseConfig = {
   measurementId: "G-VC7VQ32QB3"
 };
 
-export default firebaseConfig;
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const firestore = firebase.firestore();
+
+export { auth, firestore, firebaseConfig };

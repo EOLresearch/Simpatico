@@ -5,15 +5,16 @@ import PropTypes from 'prop-types';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import RegistrationPanel from './RegistrationPanel';
 import './userauth.css';
+import { firestore, auth } from '../../firebase-config';
 
-const UserAuth = ({ user, firebase }) => {
+
+const UserAuth = ({ user }) => {
   const [view, setView] = useState('login');
   const [error, setError] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const auth = firebase.auth();
-  const firestore = firebase.firestore();
+
   const usersRef = firestore.collection('users');
 
   const handleSendResetEmail = async (e) => {

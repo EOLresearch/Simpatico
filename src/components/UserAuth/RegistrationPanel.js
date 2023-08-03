@@ -40,50 +40,46 @@ const RegistrationPanel = ({ auth, usersRef, handleToggleRegistrationPanel }) =>
   const validateNewUser = (e) => {
     e.preventDefault()
     setEmail(email.trim())
-    //there is some outdated code here, the if else statemnet is not needed without google signin.
-
-
-      if (email === "") {
-        setAnError('auth/missing-email')
-      } else if (password === '') {
-        setAnError('nopass')
-      } else if (password !== confirmPass) {
-        setAnError('nomatchpass')
-      } else if (residence === '') {
-        setAnError('noresidence')
-      } else if (birthDate === '') {
-        setAnError('nobirth')
-      } else if (over18Bouncer(birthDate) === false) {
-        setAnError('under18')
-      } else if (race === '') {
-        setAnError('norace')
-      } else if (ethnicity === '') {
-        setAnError('noethnicity')
-      } else if (bioSex === '') {
-        setAnError('nobiosex')
-      } else if (education === '') {
-        setAnError('noeducation')
-      } else if (household === '') {
-        setAnError('nohousehold')
-      } else if (hobbies === '') {
-        setAnError('nohobbies')
-      } else if (lossDate === '') {
-        setAnError('nolossdate')
-      } else if (kinship === '') {
-        setAnError('nokinship')
-      } else if (cause === '' || cause === 'Cause of death') {
-        setAnError('nocause')
-      } else if (deceasedAge === '') {
-        setAnError('nodeceasedage')
-      } else if (lossExp === '') {
-        setAnError('nolossexp')
-      } else if (consent === false) {
-        setAnError('consent')
-      } else if (consent === true) {
-        setAnError('')
-        createNewUser(e)
-      }
-
+    if (email === "") {
+      setAnError('auth/missing-email')
+    } else if (password === '') {
+      setAnError('nopass')
+    } else if (password !== confirmPass) {
+      setAnError('nomatchpass')
+    } else if (residence === '') {
+      setAnError('noresidence')
+    } else if (birthDate === '') {
+      setAnError('nobirth')
+    } else if (over18Bouncer(birthDate) === false) {
+      setAnError('under18')
+    } else if (race === '') {
+      setAnError('norace')
+    } else if (ethnicity === '') {
+      setAnError('noethnicity')
+    } else if (bioSex === '') {
+      setAnError('nobiosex')
+    } else if (education === '') {
+      setAnError('noeducation')
+    } else if (household === '') {
+      setAnError('nohousehold')
+    } else if (hobbies === '') {
+      setAnError('nohobbies')
+    } else if (lossDate === '') {
+      setAnError('nolossdate')
+    } else if (kinship === '') {
+      setAnError('nokinship')
+    } else if (cause === '' || cause === 'Cause of death') {
+      setAnError('nocause')
+    } else if (deceasedAge === '') {
+      setAnError('nodeceasedage')
+    } else if (lossExp === '') {
+      setAnError('nolossexp')
+    } else if (consent === false) {
+      setAnError('consent')
+    } else if (consent === true) {
+      setAnError('')
+      createNewUser(e)
+    }
   }
 
   const changeHandler = (e) => {
@@ -148,7 +144,6 @@ const RegistrationPanel = ({ auth, usersRef, handleToggleRegistrationPanel }) =>
   }
 
   const createNewUser = async (e) => {
-
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
@@ -222,29 +217,20 @@ const RegistrationPanel = ({ auth, usersRef, handleToggleRegistrationPanel }) =>
 
         <div className='fields-container register'>
           <form onSubmit={validateNewUser}>
-
             <div className="reg-section account-info">
               <h4>Account Info</h4>
-              {/* <label htmlFor='email'>* Email Address</label> */}
               <div className='input-container'>
                 <i className="fas fa-envelope"></i>
                 <input type="email" name="email" placeholder="Email" id="email" value={email} onChange={changeHandler} />
               </div>
-
-              {/* <label htmlFor='password'>* Password</label> */}
               <div className='input-container'>
                 <i className="fas fa-lock"></i>
                 <input type="password" name="password" placeholder="Password" id="password" value={password} onChange={changeHandler} />
               </div>
-
-              {/* <label htmlFor='confirmpass'>* Confirm Password</label> */}
               <div className='input-container'>
                 <i className="fas fa-lock"></i>
                 <input type="password" name="confirmPass" placeholder="Confirm Password" id="confirmPass" value={confirmPass} onChange={changeHandler} />
               </div>
-
-
-              {/* <label htmlFor='displayName'>* Your Display Name</label> */}
               <div className='input-container'>
                 <i className="fas fa-user-alt"></i>
                 <input type="text" name="displayName" placeholder="Display Name" id="name" value={displayName} onChange={changeHandler} />
@@ -256,7 +242,6 @@ const RegistrationPanel = ({ auth, usersRef, handleToggleRegistrationPanel }) =>
 
               <label htmlFor='residence'>Home State</label>
               <div className='input-container'>
-                {/* <i className="fas fa-map"></i> */}
                 <select type="text" name="residence" placeholder="Home State" id="residence" value={residence} onChange={changeHandler} >
                   <option value="" disabled defaultValue=''>Select your option</option>
                   <option value="AL">Alabama</option>
@@ -315,7 +300,6 @@ const RegistrationPanel = ({ auth, usersRef, handleToggleRegistrationPanel }) =>
 
               <label htmlFor="birthDate">Birthdate</label>
               <div className='input-container'>
-                {/* <i className="fas fa-calendar-alt"></i> */}
                 <input type="date" name="birthDate" id="birthDate" className="widthAdjust" placeholder="e.g. 01/01/1990" value={birthDate} onChange={changeHandler} />
               </div>
 
@@ -344,7 +328,6 @@ const RegistrationPanel = ({ auth, usersRef, handleToggleRegistrationPanel }) =>
 
               <label htmlFor="bioSex">What is your biological sex?</label>
               <div className='input-container'>
-                {/* <i className="fas fa-calendar-alt"></i> */}
                 <select type="text" name="bioSex" id="bioSex" value={bioSex} onChange={changeHandler} >
                   <option value="" disabled defaultValue=''>Select your option</option>
                   <option>Male</option>
@@ -356,7 +339,6 @@ const RegistrationPanel = ({ auth, usersRef, handleToggleRegistrationPanel }) =>
 
               <label htmlFor="education">What is your level of education?</label>
               <div className='input-container'>
-                {/* <i className="fas fa-calendar-alt"></i> */}
                 <select type="text" name="education" id="education" value={education} onChange={changeHandler} >
                   <option value="" disabled defaultValue=''>Select your option</option>
                   <option>High School</option>
@@ -372,7 +354,6 @@ const RegistrationPanel = ({ auth, usersRef, handleToggleRegistrationPanel }) =>
 
               <label htmlFor="household">What is your living situation?</label>
               <div className='input-container'>
-                {/* <i className="fas fa-calendar-alt"></i> */}
                 <select type="text" name="household" id="household" value={household} onChange={changeHandler} >
                   <option value="" disabled defaultValue=''>Select your option</option>
                   <option>Live alone</option>
@@ -394,7 +375,6 @@ const RegistrationPanel = ({ auth, usersRef, handleToggleRegistrationPanel }) =>
               <h4>Your Story</h4>
               <label htmlFor="lossDate">When did you experience your loss?</label>
               <div className='input-container'>
-                {/* <i className="fas fa-calendar-alt"></i> */}
                 <input type="date" name="lossDate" id="lossDate" className="widthAdjust" placeholder="e.g. 01/01/1990" value={lossDate} onChange={changeHandler} />
               </div>
 

@@ -10,11 +10,13 @@ import { GiBookmark, GiBookmarklet } from "react-icons/gi";
 import { useState } from "react";
 import ErrorMessage from '../../ErrorMessage/ErrorMessage'
 import EditAccountInfo from './EditAccountInfo'
+import { firestore, auth } from '../../../firebase-config';
+
 
 // import { FaInfo } from 'react-icons/fa';
 // import AvatarGenerator from './AvatarGenerator'
 
-export default function UpdatePanel({ firebase, fsUser, userDetailsHandler, updateFsUser, navHandler }) {
+export default function UpdatePanel({ fsUser, userDetailsHandler, updateFsUser, navHandler }) {
   const [anError, setAnError] = useState('')
 
   //View States-----------
@@ -47,8 +49,6 @@ export default function UpdatePanel({ firebase, fsUser, userDetailsHandler, upda
 
   const [consent, setConsent] = useState(false)
   const [accConsent, setAccConsent] = useState(false)
-
-  const firestore = firebase.firestore();
 
 
 
@@ -254,7 +254,7 @@ export default function UpdatePanel({ firebase, fsUser, userDetailsHandler, upda
                 </div>
               </div>
               :
-              <EditAccountInfo firebase={firebase} accountInfoDisplaySwitch={accountInfoDisplaySwitch} userDetailsHandler={userDetailsHandler} fsUser={fsUser} navHandler={navHandler} />
+              <EditAccountInfo firestore={firestore} auth={auth} accountInfoDisplaySwitch={accountInfoDisplaySwitch} userDetailsHandler={userDetailsHandler} fsUser={fsUser} navHandler={navHandler} />
 
             }
 

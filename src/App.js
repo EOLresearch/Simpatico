@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
-import 'firebase/compat/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Nav from './components/Nav/Nav';
 import Dashboard from './components/Dashboard/Dashboard';
 import UserAuth from './components/UserAuth/UserAuth';
-import firebaseConfig from './firebase-config'; 
+import { firestore, auth } from './firebase-config';
 
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const firestore = firebase.firestore();
+
 
 // Custom hook for user query
 function useUserQuery(user) {
@@ -119,7 +114,6 @@ function App() {
             {
               user ? (user.emailVerified ? (
                 <Dashboard
-                  firebase={firebase}
                   user={user}
                   fsUser={fsUser}
                   matches={matches}
@@ -130,9 +124,9 @@ function App() {
                   navHandler={navHandler}
                 />
               ) : (
-                <UserAuth user={user} auth={auth} firebase={firebase} />
+                <UserAuth user={user}  />
               )) : (
-                <UserAuth auth={auth} firebase={firebase} />
+                <UserAuth  />
               )
             }
           </div>

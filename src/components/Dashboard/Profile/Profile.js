@@ -6,7 +6,7 @@ import { RiUserSettingsLine } from "react-icons/ri";
 import UpdatePanel from "./UpdatePanel"
 
 
-export default function Profile({ firebase, fsUser, updateFsUser, navHandler }) {
+export default function Profile({ fsUser, updateFsUser, navHandler }) {
   const [editUserDetails, setEditUserDetails] = useState(false)
 
 
@@ -15,7 +15,7 @@ export default function Profile({ firebase, fsUser, updateFsUser, navHandler }) 
   }
 
   if (editUserDetails === true) {
-    return <UpdatePanel firebase={firebase} fsUser={fsUser} userDetailsHandler={userDetailsHandler} updateFsUser={updateFsUser} navHandler={navHandler}/>
+    return <UpdatePanel fsUser={fsUser} userDetailsHandler={userDetailsHandler} updateFsUser={updateFsUser} navHandler={navHandler}/>
   }
 
   return (

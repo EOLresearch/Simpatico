@@ -4,7 +4,7 @@ import { AiOutlineLeft, AiOutlineRight, AiOutlineDown, AiOutlineUp } from "react
 import { BsArrowLeft } from "react-icons/bs";
 
 
-export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, userDetailsHandler, fsUser, navHandler }) {
+export default function EditAccountInfo({ auth, firestore, accountInfoDisplaySwitch, userDetailsHandler, fsUser, navHandler }) {
   //Display States
   const [emailDisplay, setEmailDisplay] = useState(false)
   const [passwordDisplay, setPasswordDisplay] = useState(false)
@@ -18,8 +18,8 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
 
   const [password, setPassword] = useState('')
 
-  const user = firebase.auth().currentUser;
-  const auth = firebase.auth();
+  const user = auth.currentUser;
+  // const auth = firebase.auth();
 
 
 
@@ -64,7 +64,7 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
 
     e.preventDefault()
 
-    const credential = firebase.auth.EmailAuthProvider.credential(
+    const credential = auth.EmailAuthProvider.credential(
       fsUser.email,
       password
     );
@@ -80,9 +80,9 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
         user.updateEmail(newEmail).then(() => {
           console.log('updateEmail -auth email updated')
 
-          const userRef = firebase.firestore().collection('users').doc(fsUser.uid)
+          const userRef = firestore.collection('users').doc(fsUser.uid)
           userRef.update({
-            email: newEmail, formerEmails: firebase.firestore.FieldValue.arrayUnion(formerEmail)
+            email: newEmail, formerEmails: firestore.FieldValue.arrayUnion(formerEmail)
           }).then(() => {
             console.log('updateEmail -firestore email updated')
           }).catch((error) => {
@@ -112,7 +112,7 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
 
     } else {
 
-      const credential = firebase.auth.EmailAuthProvider.credential(
+      const credential = auth.EmailAuthProvider.credential(
         fsUser.email,
         password
       );
@@ -121,7 +121,7 @@ export default function EditAccountInfo({ firebase, accountInfoDisplaySwitch, us
         // User re-authenticated.
         console.log('user reauthenticated')
 
-        firebase.auth().sendPasswordResetEmail(email).then(() => {
+        auth.sendPasswordResetEmail(email).then(() => {
           console.log('password reset email sent')
           navHandler("All Off")
           auth.signOut()

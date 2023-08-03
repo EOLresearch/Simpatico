@@ -4,23 +4,19 @@ import MatchList from './MatchList/MatchList'
 import Profile from './Profile/Profile'
 import AdminDashboard from './AdminDashboard/AdminDashboard';
 
-//TODO: component import-index refactor
-
 import { RxPerson } from "react-icons/rx";
 import { IoPeopleCircleOutline, IoChatbubblesSharp } from "react-icons/io5";
 import { useState, useEffect } from "react";
 import { IconContext } from "react-icons";
 
 import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { firestore, auth } from '../../firebase-config';
+
 
 export default function Dashboard(props) {
-  //TODO: TRY AND LIMIT THE AMOUNT OF TIMES YOU PASS FIREBASE DOWN
-  //TODO: USERS SHOLD BE ABLE TO CHANGE THIER DETAILS
-  //TODO: Create a user who us the super admin and is added to everyones match list for testing. this might mean querying tthe db for this admin user and passing it around the entire app
 
-  const { firebase, matches, user, fsUser, profileTab, matchListTab, conversationsTab, adminDash, navHandler, updateFsUser } = props
+  const { matches, user, fsUser, profileTab, matchListTab, conversationsTab, adminDash, navHandler, updateFsUser } = props
   const { uid } = user;
-  const firestore = firebase.firestore();
   const [docID, setDocID] = useState()
   const [convoRequests, setConvoRequests] = useState([])
 
@@ -57,7 +53,7 @@ export default function Dashboard(props) {
         sender: fsUser,
         receiver: user,
       },
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      createdAt: firestore.FieldValue.serverTimestamp(),
       docID: documentID,
       mutualConsent: false,
       firstMessage: message,
@@ -68,7 +64,7 @@ export default function Dashboard(props) {
     msgDocRef.set({
       mid: msgDocRef.id,
       body: message,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      createdAt: firestore.FieldValue.serverTimestamp(),
       sentFromUid: uid,
       sentFromDisplayName: fsUser.displayName,
       photoURL: fsUser.photoURL,
@@ -114,7 +110,7 @@ export default function Dashboard(props) {
       <div className='dashboard-container'>
 
 
-        {adminDash === true ? <AdminDashboard firebase={firebase} fsUser={fsUser} navHandler={navHandler}/> :
+        {adminDash === true ? <AdminDashboard fsUser={fsUser} navHandler={navHandler}/> :
           <div className='dashboard-body'>
             <div className='sub-nav'>
               <div onClick={e => navHandler("Home")} className={clickedProfile}><RxPerson size="3rem" />My Profile</div>
@@ -124,9 +120,9 @@ export default function Dashboard(props) {
               {showNotification === true ? <span className="notification">{convoRequests.length}</span> : null}
             </div>
 
-            {profileTab === true ? <Profile firebase={firebase} fsUser={fsUser} updateFsUser={updateFsUser} navHandler={navHandler} /> : null}
+            {profileTab === true ? <Profile fsUser={fsUser} updateFsUser={updateFsUser} navHandler={navHandler} /> : null}
 
-            {conversationsTab === true ? <Conversations chatHandler={chatHandler} docID={docID} showChatWindow={showChatWindow} firebase={firebase} convos={convos} fsUser={fsUser} convoMutualConsentToggle={convoMutualConsentToggle} /> : null}
+            {conversationsTab === true ? <Conversations chatHandler={chatHandler} docID={docID} showChatWindow={showChatWindow} convos={convos} fsUser={fsUser} convoMutualConsentToggle={convoMutualConsentToggle} /> : null}
 
             {matchListTab === true ? <MatchList fsUser={fsUser} matches={matches} createConvo={createConvo} convos={convos} convoMutualConsentToggle={convoMutualConsentToggle} /> : null}
 

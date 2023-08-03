@@ -2,10 +2,11 @@ import './admindashboard.css';
 import UserDisplay from './UserDisplay/UserDisplay';
 import { useEffect, useState } from "react";
 import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { firestore, auth } from '../../../firebase-config';
+
 // import { IconContext } from "react-icons";
 
-export default function AdminDashboard({ firebase, fsUser, navHandler }) {
-  const firestore = firebase.firestore();
+export default function AdminDashboard({ fsUser, navHandler }) {
   useEffect(() => {
     if (!fsUser.admin || fsUser.admin === false) {
       navHandler('Home')
