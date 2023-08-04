@@ -5,62 +5,17 @@ import Dashboard from './components/Dashboard/Dashboard';
 import UserAuth from './components/UserAuth/UserAuth';
 import { firestore, auth } from './firebase-config';
 
-// Custom hook for user query
-function useUserQuery(user) {
-  const [fsUser, setFsUser] = useState(null);
-
-  useEffect(() => {
-    if (!user) return;
-    const usersRef = firestore.collection('users');
-    const userQuery = usersRef.where('email', '==', user.email);
-
-    userQuery.get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        console.log('1 Doc Read');
-        setFsUser(doc.data());
-      });
-    }).catch((error) => {
-      console.log('Error getting documents: ', error);
-    });
-  }, [user]);
-
-  return fsUser;
-}
-
-// Custom hook for match query
-function useMatchQuery(fsUser) {
-  const [matches, setMatches] = useState([]);
-
-  useEffect(() => {
-    if (!fsUser) return;
-    const usersRef = firestore.collection('users');
-    const matchQuery = usersRef.where('cause', '==', fsUser.cause).where('kinship', '==', fsUser.kinship);
-
-    matchQuery.get().then((querySnapshot) => {
-      const dataArr = [];
-      querySnapshot.forEach((doc) => {
-        console.log('1 Doc Read');
-        dataArr.push(doc.data());
-      });
-      setMatches(dataArr);
-    }).catch((error) => {
-      console.log('Error getting documents: ', error);
-    });
-  }, [fsUser]);
-
-  return matches;
-}
-
 function App() {
   const [user] = useAuthState(auth);
   const [profileTab, setProfileTab] = useState(false);
   const [matchListTab, setMatchListTab] = useState(false);
   const [conversationsTab, setConversationsTab] = useState(false);
   const [adminDash, setAdminDash] = useState(false);
+  const [fsUser, setFsUser] = useState(null);
+  const [fsMatch, setFsMatch] = useState(null);
+  const [error, setError] = useState(null);
 
-  // Use the custom hooks to get the fsUser and matches
-  const fsUser = useUserQuery(user);
-  const matches = useMatchQuery(fsUser);
+
 
   useEffect(() => {
     if (user) {
@@ -68,13 +23,45 @@ function App() {
     }
   }, [user]);
 
-  // Simplified navHandler function
+  useEffect(() => {
+    const fetchUserAndMatch = async () => {
+      if (!user) return;
+
+      const usersRef = firestore.collection('users');
+      const userQuery = usersRef.where('email', '==', user.email);
+
+      try {
+        const userSnapshot = await userQuery.get();
+
+        if (!userSnapshot.empty) {
+          const userData = userSnapshot.docs[0].data();
+          setFsUser(userData);
+
+          if (userData.simpaticoMatch) {
+            const matchDoc = await usersRef.doc(userData.simpaticoMatch).get();
+            if (matchDoc.exists) {
+              setFsMatch(matchDoc.data());
+            } else {
+              throw new Error("No such match user document!");
+            }
+          }
+        }
+      } catch (error) {
+        setError(error);
+        console.log('Error getting documents: ', error);
+      }
+    };
+
+    fetchUserAndMatch();
+  }, [user]);
+
+
   const navHandler = (renderCondition) => {
     const tabs = {
       'Conversations': () => toggleTabs(true, false, false, false),
       'Matches': () => toggleTabs(false, true, false, false),
       'Home': () => toggleTabs(false, false, true, false),
-      'My Story': () => {}, // Handle My Story logic here
+      'My Story': () => { }, // Handle My Story logic here
       'All Off': () => toggleTabs(false, false, false, false),
       'Logout': () => {
         toggleTabs(false, false, false, false);
@@ -109,12 +96,13 @@ function App() {
           </div>
 
           <div className='app-body'>
+            {error && <div>Error: {error.message}</div>}
             {
               user ? (user.emailVerified ? (
                 <Dashboard
                   user={user}
                   fsUser={fsUser}
-                  matches={matches}
+                  match={fsMatch}
                   profileTab={profileTab}
                   matchListTab={matchListTab}
                   adminDash={adminDash}
@@ -122,9 +110,9 @@ function App() {
                   navHandler={navHandler}
                 />
               ) : (
-                <UserAuth user={user}  />
+                <UserAuth user={user} />
               )) : (
-                <UserAuth  />
+                <UserAuth />
               )
             }
           </div>

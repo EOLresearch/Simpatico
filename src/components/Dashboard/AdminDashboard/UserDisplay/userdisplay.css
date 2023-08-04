@@ -18,11 +18,6 @@
 }
 
 .kinship-selections {
-
-  left:18%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   margin: 0.5rem;
 }
 .user-card-filter-container {
@@ -31,10 +26,7 @@
   justify-content: center;
   flex-grow: 1;
   overflow: auto;
-
 }
-
-
 .user-card-filter-container .user-card {
   margin: 0.5rem;
 }
@@ -45,6 +37,9 @@
   padding: 0.5rem;
   display: flex;
   flex-wrap: wrap;
+  justify-content: left;
+  width: 90%;
+  margin: 0 auto;
 }
 
 .double-btn {

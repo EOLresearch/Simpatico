@@ -14,7 +14,7 @@ import PropTypes from 'prop-types';
 import { convoMutualConsentToggle, createConvo } from '../../helpers/firebaseHelpers'
 
 function Dashboard({
-  matches,
+  match,
   user,
   fsUser,
   profileTab,
@@ -22,6 +22,7 @@ function Dashboard({
   conversationsTab,
   adminDash,
   navHandler,
+  updateFsUser
 }) {
 
   const { uid } = user;
@@ -64,10 +65,7 @@ function Dashboard({
               </div>
               {showNotification && <span className="notification">{convoRequests.length}</span>}
             </div>
-            {profileTab &&
-              <Profile
-                fsUser={fsUser}
-                navHandler={navHandler} />}
+            {profileTab && <Profile fsUser={fsUser} updateFsUser={updateFsUser} navHandler={navHandler} />}
             {conversationsTab &&
               <Conversations
                 chatHandler={chatHandler}
@@ -79,7 +77,7 @@ function Dashboard({
             {matchListTab &&
               <MatchList
                 fsUser={fsUser}
-                matches={matches}
+                match={match}
                 createConvo={createConvo}
                 convos={convos}
                 convoMutualConsentToggle={convoMutualConsentToggle} />}
@@ -91,7 +89,7 @@ function Dashboard({
 }
 
 Dashboard.propTypes = {
-  matches: PropTypes.array.isRequired,
+
   user: PropTypes.object.isRequired,
   fsUser: PropTypes.object,
   profileTab: PropTypes.bool.isRequired,

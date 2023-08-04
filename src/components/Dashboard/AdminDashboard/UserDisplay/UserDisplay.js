@@ -30,16 +30,8 @@ const kinshipTypes = [
   'Other',
   'Support others'
 ];
-UserDisplay.propTypes = {
-  users: PropTypes.arrayOf(PropTypes.shape({
-    uid: PropTypes.string.isRequired,
-    simpaticoMatch: PropTypes.string.isRequired,
-    cause: PropTypes.string.isRequired,
-    kinship: PropTypes.string.isRequired,
-  })),
-};
 
-export default function UserDisplay({ view, users }) {
+function UserDisplay({ view, users }) {
   const [selectedUser, setSelectedUser] = useState()
   const [hovered, setHovered] = useState(false)
   const [showKinshipFilters, setShowKinshipFilters] = useState(true)
@@ -172,3 +164,13 @@ export default function UserDisplay({ view, users }) {
   );
 }
 
+UserDisplay.propTypes = {
+  users: PropTypes.arrayOf(PropTypes.shape({
+    uid: PropTypes.string.isRequired,
+    simpaticoMatch: PropTypes.string.isRequired,
+    cause: PropTypes.string.isRequired,
+    kinship: PropTypes.string.isRequired,
+  })),
+};
+
+export default UserDisplay;

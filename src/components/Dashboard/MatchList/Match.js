@@ -2,7 +2,7 @@ import './matchlist.css';
 import { useState } from "react";
 import ConvoInvite from '../ConvoInvite/ConvoInvite'
 
-export default function Match({ user, createConvo, convo, convoMutualConsentToggle }) {
+export default function Match({ fsUser, user, createConvo, convo, convoMutualConsentToggle }) {
   const [message, setMessage] = useState('')
 
   function getAge(date) {
@@ -29,7 +29,7 @@ export default function Match({ user, createConvo, convo, convoMutualConsentTogg
             <p>{user.lossExp}</p>
           </div>
         </div>
-        <form onSubmit={e => createConvo(e, message, user)} className="input-container-match">
+        <form onSubmit={e => createConvo(e, fsUser, message, user)} className="input-container-match">
           <label htmlFor="inputer">Send a supportive message to {user.displayName}</label>
           <input value={message} onChange={e => setMessage(e.target.value)} id="inputer" type="text" placeholder="Start a Conversation"></input>
           <button type='submit' ><i className="fas fa-paper-plane"></i></button>

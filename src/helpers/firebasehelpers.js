@@ -1,18 +1,19 @@
 
 import { firestore, firebase } from "../firebase-config";
 
-export const createConvo = (uid, fsUser, message, user) => {
-  const documentID = `${uid} + ${user.uid}`;
+export const createConvo = (e, fsUser, message, user) => {
+  e.preventDefault();
+  const documentID = `${fsUser.uid} + ${user.uid}`;
   const conversationsRef = firestore.collection('conversations');
   const conversationRef = conversationsRef.doc(documentID);
 
   const newConvo = {
-    users: [uid, user.uid],
+    users: [fsUser.uid, user.uid],
     userData: {
       sender: fsUser,
       receiver: user,
     },
-    createdAt: firestore.FieldValue.serverTimestamp(),
+    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     docID: documentID,
     mutualConsent: false,
     firstMessage: message,
@@ -24,7 +25,7 @@ export const createConvo = (uid, fsUser, message, user) => {
     mid: msgDocRef.id,
     body: message,
     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-    sentFromUid: uid,
+    sentFromUid: fsUser.uid,
     sentFromDisplayName: fsUser.displayName,
     photoURL: fsUser.photoURL,
   })
