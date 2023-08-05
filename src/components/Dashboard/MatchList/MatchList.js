@@ -1,35 +1,8 @@
-import Match from './Match';
 import './matchlist.css';
-import { useState, useEffect } from "react";
-import { firestore } from '../../../firebase-config'
+import PropTypes from 'prop-types';
+import Match from './Match';
 
-export default function MatchList({ fsUser, match, createConvo, convoMutualConsentToggle }) {
-
-
-  const [convo, setConvo] = useState();
-
-  useEffect(() => {
-    const fetchConvos = async () => {
-      if (!fsUser) return;
-
-      const convosRef = firestore.collection('conversations');
-      const convoQuery = convosRef.where('users', 'array-contains', fsUser.uid);
-
-      try {
-        const convoSnapshot = await convoQuery.get();
-
-        if (!convoSnapshot.empty) {
-          const convoData = convoSnapshot.docs.map(doc => doc.data());
-          // const convo = convos.find(c => c.docID === `${fsUser.uid} + ${match.uid}` || c.docID === `${match.uid} + ${fsUser.uid}`) If there are multiples BUT THERE IS CURRENTLY ONLY ONE          // setConvo(convoData);
-          setConvo(convoData[0]);
-        }
-      } catch (error) {
-        console.log('Error getting documents: ', error);
-      }
-    };
-
-    fetchConvos();
-  }, [fsUser]);
+function MatchList({ fsUser, match, convos, createConvo, convoMutualConsentToggle }) {
 
   return (
     <div className='match-list-container'>
@@ -43,12 +16,13 @@ export default function MatchList({ fsUser, match, createConvo, convoMutualConse
               <h3>Sorry, you have not been matched yet</h3>
             </div>
             :
+            convos &&
             <Match
               fsUser={fsUser}
               key={match.uid}
               user={match}
               createConvo={createConvo}
-              convo={convo}
+              convo={convos.find(c => c.docID === `${fsUser.uid} + ${match.uid}` || c.docID === `${match.uid} + ${fsUser.uid}`) }
               convoMutualConsentToggle={convoMutualConsentToggle}
             />
         }
@@ -56,3 +30,13 @@ export default function MatchList({ fsUser, match, createConvo, convoMutualConse
     </div>
   );
 }
+
+MatchList.propTypes = {
+  fsUser: PropTypes.object.isRequired,
+  match: PropTypes.object,
+  convos: PropTypes.array.isRequired,
+  createConvo: PropTypes.func.isRequired,
+  convoMutualConsentToggle: PropTypes.func.isRequired,
+};
+
+export default MatchList;

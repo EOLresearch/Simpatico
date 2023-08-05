@@ -33,7 +33,7 @@ function Dashboard({
 
   const conversationsRef = firestore.collection('conversations');
   const convoQuery = conversationsRef.where("users", "array-contains", uid);
-  const [convos] = useCollectionData(convoQuery, { idField: 'id' });
+  const [convos] = useCollectionData(convoQuery);
 
   useEffect(() => {
     if (!convos) return;
