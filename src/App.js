@@ -85,6 +85,11 @@ function App() {
     setAdminDash(admin);
   };
 
+  const updateFsUser = (updatedUser) => {
+    setFsUser(updatedUser);
+  };
+
+
   return (
     <div className="App">
       <div className='app-container'>
@@ -108,6 +113,7 @@ function App() {
                   adminDash={adminDash}
                   conversationsTab={conversationsTab}
                   navHandler={navHandler}
+                  updateFsUser={updateFsUser}
                 />
               ) : (
                 <UserAuth user={user} />

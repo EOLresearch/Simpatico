@@ -2,9 +2,10 @@ import { useState, useMemo, useCallback } from "react";
 import { IconContext } from "react-icons";
 import { AiOutlineLeft, AiOutlineRight, AiOutlineDown, AiOutlineUp } from "react-icons/ai";
 import { BsArrowLeft } from "react-icons/bs";
+import { auth, firestore } from "../../../firebase-config"
 
 
-export default function EditAccountInfo({ auth, firestore, accountInfoDisplaySwitch, userDetailsHandler, fsUser, navHandler }) {
+export default function EditAccountInfo({ accountInfoDisplaySwitch, userDetailsHandler, fsUser, navHandler }) {
   //Display States
   const [emailDisplay, setEmailDisplay] = useState(false)
   const [passwordDisplay, setPasswordDisplay] = useState(false)

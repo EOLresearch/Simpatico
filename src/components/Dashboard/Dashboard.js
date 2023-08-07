@@ -14,9 +14,9 @@ import PropTypes from 'prop-types';
 import { convoMutualConsentToggle, createConvo } from '../../helpers/firebaseHelpers'
 
 function Dashboard({
-  match,
   user,
   fsUser,
+  match,
   profileTab,
   matchListTab,
   conversationsTab,
@@ -89,7 +89,6 @@ function Dashboard({
 }
 
 Dashboard.propTypes = {
-
   user: PropTypes.object.isRequired,
   fsUser: PropTypes.object,
   profileTab: PropTypes.bool.isRequired,

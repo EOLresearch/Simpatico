@@ -1,20 +1,13 @@
 import './updatepanel.css'
 
 import { IconContext } from "react-icons";
-import { AiOutlineDown, AiOutlineEllipsis, AiOutlineRight, AiOutlineLeft } from "react-icons/ai";
+import { AiOutlineDown, AiOutlineEllipsis} from "react-icons/ai";
 import { BsArrowLeft } from "react-icons/bs";
-
-import { GrResources } from "react-icons/gr";
-import { GiBookmark, GiBookmarklet } from "react-icons/gi";
 
 import { useState } from "react";
 import ErrorMessage from '../../ErrorMessage/ErrorMessage'
 import EditAccountInfo from './EditAccountInfo'
 import { firestore, auth } from '../../../firebase-config';
-
-
-// import { FaInfo } from 'react-icons/fa';
-// import AvatarGenerator from './AvatarGenerator'
 
 export default function UpdatePanel({ fsUser, userDetailsHandler, updateFsUser, navHandler }) {
   const [anError, setAnError] = useState('')
@@ -23,7 +16,6 @@ export default function UpdatePanel({ fsUser, userDetailsHandler, updateFsUser, 
   const [accountInfo, setAccountInfo] = useState(false)
   const [personalInfo, setPersonalInfo] = useState(false)
   const [deceasedInfo, setDeceasedInfo] = useState(false)
-
 
   const [displayName, setDisplayName] = useState(fsUser.displayName)
 
@@ -44,13 +36,8 @@ export default function UpdatePanel({ fsUser, userDetailsHandler, updateFsUser, 
   const [cause, setCause] = useState(fsUser.cause)
   const [deceasedAge, setDeceasedAge] = useState(fsUser.deceasedAge)
 
-  ///we should keep a record of all these changes
   const [lossExp, setLossExp] = useState(fsUser.lossExp)
-
   const [consent, setConsent] = useState(false)
-  const [accConsent, setAccConsent] = useState(false)
-
-
 
   const cancelError = () => {
     setAnError('')
@@ -200,35 +187,8 @@ export default function UpdatePanel({ fsUser, userDetailsHandler, updateFsUser, 
       })
   }
 
-
-  const over18Bouncer = (bdayString) => {
-    const today = new Date()
-    const birthDate = new Date(bdayString)
-    const age = today.getFullYear() - birthDate.getFullYear()
-    const month = today.getMonth() - birthDate.getMonth()
-    let realAge = 0
-
-    if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
-      realAge = age - 1
-      console.log(realAge)
-    } else {
-      realAge = age
-      console.log(realAge)
-    }
-
-    if (realAge < 18) {
-      return false
-    } else {
-      return true
-    }
-  }
-
   return (
     <IconContext.Provider value={{ className: "react-icons-updatePanel" }}>
-      {/* <AiOutlineLeft /> prev
-
-                    next <AiOutlineRight /> */}
-
       <div className="auth-wrapper">
         <h5>Please use this form to update your data as you wish</h5>
         <h5>Any unanswered questions will default back to your original answer from registration.</h5>
@@ -254,7 +214,7 @@ export default function UpdatePanel({ fsUser, userDetailsHandler, updateFsUser, 
                 </div>
               </div>
               :
-              <EditAccountInfo firestore={firestore} auth={auth} accountInfoDisplaySwitch={accountInfoDisplaySwitch} userDetailsHandler={userDetailsHandler} fsUser={fsUser} navHandler={navHandler} />
+              <EditAccountInfo accountInfoDisplaySwitch={accountInfoDisplaySwitch} userDetailsHandler={userDetailsHandler} fsUser={fsUser} navHandler={navHandler} />
 
             }
 
