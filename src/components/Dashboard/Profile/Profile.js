@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { useState } from "react";
 import { IconContext } from "react-icons";
 import { RiUserSettingsLine } from "react-icons/ri";
-import UpdatePanel from "./UpdatePanel";
 
 function Profile({ fsUser, updateFsUser, navHandler }) {
   const [editUserDetails, setEditUserDetails] = useState(false);
@@ -11,10 +10,6 @@ function Profile({ fsUser, updateFsUser, navHandler }) {
   const userDetailsHandler = (boolean) => {
     setEditUserDetails(boolean);
   };
-
-  if (editUserDetails) {
-    return <UpdatePanel fsUser={fsUser} userDetailsHandler={userDetailsHandler} updateFsUser={updateFsUser} navHandler={navHandler} />;
-  }
 
   return (
     <IconContext.Provider value={{ className: "react-icons-profile" }}>
