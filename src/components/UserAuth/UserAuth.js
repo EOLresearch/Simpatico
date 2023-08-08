@@ -14,7 +14,6 @@ const UserAuth = ({ user }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-
   const usersRef = firestore.collection('users');
 
   const handleSendResetEmail = async (e) => {
@@ -69,9 +68,9 @@ const UserAuth = ({ user }) => {
       <div className='error-container'>
         {error && <ErrorMessage error={error} cancelError={handleCancelError} />}
       </div>
-      <div className="auth-container login">
+      <div className="auth-container">
         {view === 'login' && (
-          <div className="fields-container">
+          <div className="fields-container login">
             <h4>Log in to your profile</h4>
 
             {user && !user.emailVerified && (
@@ -84,7 +83,7 @@ const UserAuth = ({ user }) => {
               </div>
             )}
 
-            <form onSubmit={handleLogin}>
+            <form id="login" onSubmit={handleLogin}>
               <div className='input-container'>
                 <i className="fas fa-envelope"></i>
                 <input id="email" type="email" placeholder="Your Email Address" value={email} onChange={handleChange} name="email" required />

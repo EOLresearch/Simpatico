@@ -8,6 +8,8 @@ import Section from './Section';
 import InputField from './InputField';
 import SelectField from './SelectField';
 
+import { US_STATES, RACE_OPTIONS, ETHNICITY_OPTIONS, BIOLOGICAL_SEX_OPTIONS, EDUCATION_OPTIONS, HOUSEHOLD_OPTIONS, KINSHIP_OPTIONS, CAUSE_OPTIONS } from "../../../helpers/selectOptions";
+
 const UserDetailsForm = ({ auth, usersRef, handleToggleRegistrationPanel }) => {
   const [userDetails, setUserDetails] = useState({
     photoURL: '',
@@ -171,20 +173,20 @@ const changeHandler = (e) => {
             </Section>
   
             <Section title="Personal Info">
-              <SelectField label="Home State" name="residence" placeholder="Home State" id="residence" value={userDetails.residence} onChange={changeHandler} options={[/* array of state options here */]} />
+              <SelectField label="Home State" name="residence" placeholder="Home State" id="residence" value={userDetails.residence} onChange={changeHandler} options={US_STATES} />
               <InputField label="Birth Date" type="date" name="birthDate" placeholder="e.g. 01/01/1990" id="birthDate" value={userDetails.birthDate} onChange={changeHandler} />
-              <SelectField label="What race best describes you?" name="race" placeholder="Race" id="race" value={userDetails.race} onChange={changeHandler} options={[/* array of race options here */]} />
-              <SelectField label="What ethnicity best describes you?" name="ethnicity" placeholder="Ethnicity" id="ethnicity" value={userDetails.ethnicity} onChange={changeHandler} options={[/* array of ethnicity options here */]} />
-              <SelectField label="Biological Sex" name="bioSex" placeholder="Biological Sex" id="bioSex" value={userDetails.bioSex} onChange={changeHandler} options={[/* array of bioSex options here */]} />
-              <SelectField label="Level of Education" name="education" placeholder="Level of Education" id="education" value={userDetails.education} onChange={changeHandler} options={[/* array of education options here */]} />
-              <SelectField label="Please describe your living situation." name="household" placeholder="Living Situation" id="household" value={userDetails.household} onChange={changeHandler} options={[/* array of household options here */]} />
+              <SelectField label="What race best describes you?" name="race" placeholder="Race" id="race" value={userDetails.race} onChange={changeHandler} options={RACE_OPTIONS} />
+              <SelectField label="What ethnicity best describes you?" name="ethnicity" placeholder="Ethnicity" id="ethnicity" value={userDetails.ethnicity} onChange={changeHandler} options={ETHNICITY_OPTIONS} />
+              <SelectField label="Biological Sex" name="bioSex" placeholder="Biological Sex" id="bioSex" value={userDetails.bioSex} onChange={changeHandler} options={BIOLOGICAL_SEX_OPTIONS} />
+              <SelectField label="Level of Education" name="education" placeholder="Level of Education" id="education" value={userDetails.education} onChange={changeHandler} options={EDUCATION_OPTIONS} />
+              <SelectField label="Please describe your living situation." name="household" placeholder="Living Situation" id="household" value={userDetails.household} onChange={changeHandler} options={HOUSEHOLD_OPTIONS} />
               <InputField label="Tell us some of your hobbies" type="textarea" name="hobbies" placeholder="Hobbies" id="hobbies" value={userDetails.hobbies} onChange={changeHandler} />
             </Section>
   
             <Section title="Your Story">
               <InputField label="What date did you experience your loss?" type="date" name="lossDate" placeholder="e.g. 01/01/1990" id="lossDate" value={userDetails.lossDate} onChange={changeHandler} />
-              <SelectField label="Relationship to the deceased" name="kinship" placeholder="Relationship to deceased" id="kinship" value={userDetails.kinship} onChange={changeHandler} options={[/* array of kinship options here */]} />
-              <SelectField label="Cause of Death" name="cause" placeholder="Cause of death" id="cause" value={userDetails.cause} onChange={changeHandler} options={[/* array of cause options here */]} />
+              <SelectField label="Relationship to the deceased" name="kinship" placeholder="Relationship to deceased" id="kinship" value={userDetails.kinship} onChange={changeHandler} options={KINSHIP_OPTIONS} />
+              <SelectField label="Cause of Death" name="cause" placeholder="Cause of death" id="cause" value={userDetails.cause} onChange={changeHandler} options={CAUSE_OPTIONS} />
               <InputField label="How old were they?" type="number" name="deceasedAge" placeholder="age" id="deceasedAge" value={userDetails.deceasedAge} onChange={changeHandler} />
               <InputField label="Please describe your loss experience" type="textarea" name="lossExp" placeholder="" id="lossExp" value={userDetails.lossExp} onChange={changeHandler} />
             </Section>

@@ -1,0 +1,167 @@
+export const US_STATES = [
+  "Alabama",
+  "Alaska",
+  "Arizona",
+  "Arkansas",
+  "California",
+  "Colorado",
+  "Connecticut",
+  "Delaware",
+  "Florida",
+  "Georgia",
+  "Hawaii",
+  "Idaho",
+  "Illinois",
+  "Indiana",
+  "Iowa",
+  "Kansas",
+  "Kentucky",
+  "Louisiana",
+  "Maine",
+  "Maryland",
+  "Massachusetts",
+  "Michigan",
+  "Minnesota",
+  "Mississippi",
+  "Missouri",
+  "Montana",
+  "Nebraska",
+  "Nevada",
+  "New Hampshire",
+  "New Jersey",
+  "New Mexico",
+  "New York",
+  "North Carolina",
+  "North Dakota",
+  "Ohio",
+  "Oklahoma",
+  "Oregon",
+  "Pennsylvania",
+  "Rhode Island",
+  "South Carolina",
+  "South Dakota",
+  "Tennessee",
+  "Texas",
+  "Utah",
+  "Vermont",
+  "Virginia",
+  "Washington",
+  "West Virginia",
+  "Wisconsin",
+  "Wyoming"
+];
+
+
+export const RACE_OPTIONS = [
+  "American Indian or Alaska Native",
+  "Asian",
+  "Black or African American",
+  "Hispanic or Latino",
+  "Native Hawaiian or Other Pacific Islander",
+  "White",
+  "Two or More Races",
+  "Prefer not to say",
+  "Other"
+];
+
+export const ETHNICITY_OPTIONS = [
+  "Hispanic or Latino",
+  "Not Hispanic or Latino",
+  // "Arab",
+  // "Ashkenazi Jewish",
+  // "Sephardic Jewish",
+  // "Chinese",
+  // "Filipino",
+  // "Indian",
+  // "Japanese",
+  // "Korean",
+  // "Vietnamese",
+  // "Pakistani",
+  // "African",
+  // "Russian",
+  // "Italian",
+  // "Greek",
+  // "Irish",
+  // "English",
+  // "German",
+  // "French",
+  // "Somali",
+  // "Turkish",
+  // "Iranian",
+  // "Kurdish",
+  // "Roma (Gypsy)",
+  // "Scandinavian",
+  // "Slavic",
+  // "Native American",
+  // "Polynesian",
+  // "Melanesian",
+  // "Micronesian",
+  // "Caribbean",
+  // "Caucasian",
+  // "Other",
+  // "Prefer not to say"
+];
+
+
+
+export const BIOLOGICAL_SEX_OPTIONS = [
+  "Male",
+  "Female",
+  "Intersex",
+  "Prefer not to say"
+];
+
+export const EDUCATION_OPTIONS = [
+  "No formal education",
+  "Some primary school",
+  "Primary school completed",
+  "Some high school",
+  "High school/GED completed",
+  "Trade/Technical/Vocational training",
+  "Some college",
+  "Associate degree (e.g., AA, AS)",
+  "Bachelor’s degree (e.g., BA, BS)",
+  "Post-graduate diploma/certificate",
+  "Master’s degree (e.g., MA, MS, MEng, MEd, MSW, MBA)",
+  "Professional degree (e.g., MD, DDS, DVM, JD)",
+  "Doctorate (e.g., PhD, EdD)",
+  "Prefer not to say"
+];
+
+export const HOUSEHOLD_OPTIONS = [
+  "Single adult",
+  "Two or more unrelated adults",
+  "Single parent with children",
+  "Couple without children",
+  "Couple with children",
+  "Extended family (e.g., grandparents, aunts, uncles)",
+  "Shared/Roommates",
+  "Group home or communal living",
+  "Student residence/dormitory",
+  "Elderly living alone",
+  "Elderly couple without children at home",
+  "Other",
+  "Prefer not to say"
+];
+
+export const KINSHIP_OPTIONS = [
+  "Spouse",
+  "Partner",
+  "Parent",
+  "Sibling",
+  "Child",
+  "Grandparent",
+  "Grandchild",
+  "Aunt",
+  "Uncle",
+  "Niece",
+  "Nephew",
+  "Cousin",
+  "Friend",
+  "Other",
+];
+
+export const CAUSE_OPTIONS = [  
+  "Natural",
+  "Unnatural",
+];
