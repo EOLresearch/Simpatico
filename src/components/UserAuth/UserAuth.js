@@ -3,7 +3,7 @@ import React, { useState } from "react";
 // import { signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 import PropTypes from 'prop-types';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
-import RegistrationPanel from './RegistrationPanel';
+import UserDetailsForm from './UserDetailsForm/UserDetailsForm';
 import './userauth.css';
 import { firestore, auth } from '../../firebase-config';
 
@@ -117,7 +117,7 @@ const UserAuth = ({ user }) => {
         )}
 
         {view === 'register' && (
-          <RegistrationPanel auth={auth} usersRef={usersRef} fsUser={null} handleToggleRegistrationPanel={() => handleToggleView('login')} />
+          <UserDetailsForm auth={auth} usersRef={usersRef} fsUser={null} handleToggleRegistrationPanel={() => handleToggleView('login')} />
         )}
       </div>
     </div>
