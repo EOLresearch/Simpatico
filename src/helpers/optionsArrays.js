@@ -130,7 +130,7 @@ export const EDUCATION_OPTIONS = [
 
 export const HOUSEHOLD_OPTIONS = [
   "Single adult",
-  "Two or more unrelated adults",
+  "With two or more unrelated adults",
   "Single parent with children",
   "Couple without children",
   "Couple with children",
@@ -159,6 +159,7 @@ export const KINSHIP_OPTIONS = [
   "Cousin",
   "Friend",
   "Other",
+  'Support others',
 ];
 
 export const CAUSE_OPTIONS = [  

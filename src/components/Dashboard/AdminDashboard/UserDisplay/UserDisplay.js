@@ -4,6 +4,8 @@ import './userdisplay.css'
 import { updateSimpaticoMatch, removeSimpaticoMatch } from '../../../../helpers/firebaseHelpers';
 import PropTypes from 'prop-types';
 
+import { KINSHIP_OPTIONS } from '../../../../helpers/optionsArrays';
+
 const filterUsers = (users, causeFilter, kinshipFilter) => {
   if (!users) return [];
 
@@ -14,22 +16,6 @@ const filterUsers = (users, causeFilter, kinshipFilter) => {
     return user.cause === causeFilter && user.kinship === kinshipFilter;
   });
 }
-const kinshipTypes = [
-  'Partner',
-  'Parent',
-  'Offspring',
-  'Sibling',
-  'Cousin',
-  'Grandparent',
-  'Grandchild',
-  'Aunt',
-  'Uncle',
-  'Niece',
-  'Nephew',
-  'Friend',
-  'Other',
-  'Support others'
-];
 
 function UserDisplay({ view, users }) {
   const [selectedUser, setSelectedUser] = useState()
@@ -135,7 +121,7 @@ function UserDisplay({ view, users }) {
         {showKinshipFilters && (
           <div className="kinship-selections">
             <div className='double-btn-container'>
-              {kinshipTypes.map(kinship => (
+              {KINSHIP_OPTIONS.map(kinship => (
                 <div key={kinship} className='double-btn'>
                   <span onClick={() => filterHandler(kinship)}>{kinship}</span>
                   <div className='sub-btn-container'>
