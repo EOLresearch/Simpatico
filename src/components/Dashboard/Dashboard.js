@@ -65,7 +65,7 @@ function Dashboard({
               </div>
               {showNotification && <span className="notification">{convoRequests.length}</span>}
             </div>
-            {profileTab && <Profile fsUser={fsUser} updateFsUser={updateFsUser} navHandler={navHandler} />}
+            {profileTab && <Profile fsUser={fsUser} updateFsUser={updateFsUser} />}
             {conversationsTab &&
               <Conversations
                 chatHandler={chatHandler}

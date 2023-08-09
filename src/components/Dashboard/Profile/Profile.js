@@ -3,13 +3,18 @@ import PropTypes from 'prop-types';
 import { useState } from "react";
 import { IconContext } from "react-icons";
 import { RiUserSettingsLine } from "react-icons/ri";
+import UserDetailsForm from '../../UserAuth/UserDetailsForm/UserDetailsForm';
 
-function Profile({ fsUser, updateFsUser, navHandler }) {
+function Profile({ fsUser, updateFsUser}) {
   const [editUserDetails, setEditUserDetails] = useState(false);
 
   const userDetailsHandler = (boolean) => {
     setEditUserDetails(boolean);
   };
+
+  if (editUserDetails) {
+    return <UserDetailsForm handleToggle={()=>setEditUserDetails(!editUserDetails)} fsUser={fsUser} updateFsUser={updateFsUser} />
+  }
 
   return (
     <IconContext.Provider value={{ className: "react-icons-profile" }}>
@@ -43,7 +48,6 @@ Profile.propTypes = {
     displayName: PropTypes.string
   }),
   updateFsUser: PropTypes.func.isRequired,
-  navHandler: PropTypes.func.isRequired
 };
 
 export default Profile;

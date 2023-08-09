@@ -8,10 +8,12 @@ import Section from './Section';
 import InputField from './InputField';
 import SelectField from './SelectField';
 
+import { auth, firestore } from '../../../firebase-config';
+
 import { US_STATES, RACE_OPTIONS, ETHNICITY_OPTIONS, BIOLOGICAL_SEX_OPTIONS, EDUCATION_OPTIONS, HOUSEHOLD_OPTIONS, KINSHIP_OPTIONS, CAUSE_OPTIONS } from "../../../helpers/optionsArrays";
 
-const UserDetailsForm = ({ auth, usersRef, handleToggleRegistrationPanel }) => {
-  const [anError, setAnError] = useState('test')
+const UserDetailsForm = ({ handleToggle, fsUser, updateFsUser }) => {
+  const [anError, setAnError] = useState('')
   const [consent, setConsent] = useState(false)
   const [userDetails, setUserDetails] = useState({
     photoURL: '',
@@ -54,7 +56,6 @@ const UserDetailsForm = ({ auth, usersRef, handleToggleRegistrationPanel }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validation rules
     const validations = [
       { condition: !userDetails.email.trim(), error: 'auth/missing-email' },
       { condition: !userDetails.password, error: 'nopass' },
@@ -106,22 +107,20 @@ const UserDetailsForm = ({ auth, usersRef, handleToggleRegistrationPanel }) => {
       const userCredential = await createUserWithEmailAndPassword(auth, userDetails.email, userDetails.password);
       const user = userCredential.user;
 
-      // Extract necessary details to create a new user
       const newUser = {
         uid: user.uid,
-        ...userDetails,  // Spread the details
-        simpaticoMatch: '',  // This remains static as before
+        ...userDetails,
+        simpaticoMatch: '',
       };
 
-      // We'll remove keys that are not meant to be stored
       delete newUser.anError;
       delete newUser.password;
       delete newUser.confirmPass;
 
+      const usersRef = firestore.collection('users');
       await usersRef.doc(user.uid).set(newUser);
-
       await auth.currentUser.sendEmailVerification();
-      handleToggleRegistrationPanel(e);
+      handleToggle(e);
     } catch (error) {
       console.log(error.code, error.message);
       setUserDetails(prevState => ({
@@ -160,7 +159,6 @@ const UserDetailsForm = ({ auth, usersRef, handleToggleRegistrationPanel }) => {
       <h3>Please complete this form</h3>
       <h5>You will be able to edit these details later</h5>
       <div className="auth-container">
-
         <div className='fields-container register'>
           <form onSubmit={handleSubmit}>
 
@@ -207,16 +205,15 @@ const UserDetailsForm = ({ auth, usersRef, handleToggleRegistrationPanel }) => {
           </form>
         </div>
       </div>
-      <button onClick={handleToggleRegistrationPanel} className='btn btn-back'> Already joined? <strong>Login now</strong></button>
+      <button onClick={handleToggle} className='btn btn-back'> Already joined? <strong>Login now</strong></button>
     </div>
   );
 
 }
 
 UserDetailsForm.propTypes = {
-  auth: PropTypes.object.isRequired,
   usersRef: PropTypes.object.isRequired,
-  handleToggleRegistrationPanel: PropTypes.func.isRequired,
+  handleToggle: PropTypes.func.isRequired,
 };
 
 export default UserDetailsForm;

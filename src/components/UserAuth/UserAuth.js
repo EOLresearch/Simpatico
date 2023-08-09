@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import UserDetailsForm from './UserDetailsForm/UserDetailsForm';
 import './userauth.css';
-import { firestore, auth } from '../../firebase-config';
+import { auth } from '../../firebase-config';
 
 
 const UserAuth = ({ user }) => {
@@ -13,8 +13,6 @@ const UserAuth = ({ user }) => {
   const [error, setError] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const usersRef = firestore.collection('users');
 
   const handleSendResetEmail = async (e) => {
     e.preventDefault();
@@ -116,7 +114,7 @@ const UserAuth = ({ user }) => {
         )}
 
         {view === 'register' && (
-          <UserDetailsForm auth={auth} usersRef={usersRef} fsUser={null} handleToggleRegistrationPanel={() => handleToggleView('login')} />
+          <UserDetailsForm fsUser={null} handleToggle={() => handleToggleView('login')} />
         )}
       </div>
     </div>
