@@ -92,7 +92,6 @@ const UserDetailsForm = ({ handleToggle, fsUser, updateFsUser }) => {
 
   }
 
-
   const changeHandler = (e) => {
     const { name, value } = e.target;
     setUserDetails(prevState => ({ ...prevState, [name]: value }));
@@ -100,7 +99,6 @@ const UserDetailsForm = ({ handleToggle, fsUser, updateFsUser }) => {
       setConsent(!consent)
     }
   }
-
 
   const createNewUser = async (e) => {
     try {
@@ -153,23 +151,22 @@ const UserDetailsForm = ({ handleToggle, fsUser, updateFsUser }) => {
     }
   }
 
-
   return (
     <div className="auth-wrapper">
-      <h3>Please complete this form</h3>
-      <h5>You will be able to edit these details later</h5>
+      <button onClick={handleToggle} className='btn btn-back'>{fsUser ? "Return to Home" :  <strong>Back to Login</strong>} </button>
+
+      <h3>{fsUser ? "Update Your details": "Please complete this form"}</h3>
+      <h5>{fsUser ? "":"You will be able to edit these details later"}</h5>
       <div className="auth-container">
         <div className='fields-container register'>
           <form onSubmit={handleSubmit}>
-
-            <Section title="Account Info">
+            <Section title="Account Info" isUpdate={fsUser ? false : true}>
               <InputField label="" type="email" name="email" placeholder="Email" id="email" value={userDetails.email} iconClass="fas fa-envelope" onChange={changeHandler} />
               <InputField label="" type="password" name="password" placeholder="Password" id="password" value={userDetails.password} iconClass="fas fa-lock" onChange={changeHandler} />
               <InputField label="" type="password" name="confirmPass" placeholder="Confirm Password" id="confirmPass" value={userDetails.confirmPass} iconClass="fas fa-lock" onChange={changeHandler} />
               <InputField label="" type="text" name="displayName" placeholder="Display Name" id="name" value={userDetails.displayName} iconClass="fas fa-user-alt" onChange={changeHandler} />
             </Section>
-
-            <Section title="Personal Info">
+            <Section title="Personal Info" isUpdate={fsUser ? false : true}>
               <SelectField label="Home State" name="residence" placeholder="Home State" id="residence" value={userDetails.residence} onChange={changeHandler} options={US_STATES} />
               <InputField label="Birth Date" type="date" name="birthDate" placeholder="e.g. 01/01/1990" id="birthDate" value={userDetails.birthDate} onChange={changeHandler} />
               <SelectField label="What race best describes you?" name="race" placeholder="Race" id="race" value={userDetails.race} onChange={changeHandler} options={RACE_OPTIONS} />
@@ -179,15 +176,13 @@ const UserDetailsForm = ({ handleToggle, fsUser, updateFsUser }) => {
               <SelectField label="Please describe your living situation." name="household" placeholder="Living Situation" id="household" value={userDetails.household} onChange={changeHandler} options={HOUSEHOLD_OPTIONS} />
               <InputField label="Tell us some of your hobbies" type="textarea" name="hobbies" placeholder="Hobbies" id="hobbies" value={userDetails.hobbies} onChange={changeHandler} />
             </Section>
-
-            <Section title="Your Story">
+            <Section title="Your Story"isUpdate={fsUser ? false : true}>
               <InputField label="What date did you experience your loss?" type="date" name="lossDate" placeholder="e.g. 01/01/1990" id="lossDate" value={userDetails.lossDate} onChange={changeHandler} />
               <SelectField label="Relationship to the deceased" name="kinship" placeholder="Relationship to deceased" id="kinship" value={userDetails.kinship} onChange={changeHandler} options={KINSHIP_OPTIONS} />
               <SelectField label="Cause of Death" name="cause" placeholder="Cause of death" id="cause" value={userDetails.cause} onChange={changeHandler} options={CAUSE_OPTIONS} />
               <InputField label="How old were they?" type="number" name="deceasedAge" placeholder="age" id="deceasedAge" value={userDetails.deceasedAge} onChange={changeHandler} />
               <InputField label="Please describe your loss experience" type="textarea" name="lossExp" placeholder="" id="lossExp" value={userDetails.lossExp} onChange={changeHandler} />
             </Section>
-
             <div className='consent'>
               <input type="checkbox" name="consent" id="consent" value={consent} onChange={changeHandler}></input>
               <div>
@@ -205,14 +200,13 @@ const UserDetailsForm = ({ handleToggle, fsUser, updateFsUser }) => {
           </form>
         </div>
       </div>
-      <button onClick={handleToggle} className='btn btn-back'> Already joined? <strong>Login now</strong></button>
+      <button onClick={handleToggle} className='btn btn-back margin-top-3'>{fsUser ? "Return to Home" :  <strong>Back to Login</strong>} </button>
     </div>
   );
 
 }
 
 UserDetailsForm.propTypes = {
-  usersRef: PropTypes.object.isRequired,
   handleToggle: PropTypes.func.isRequired,
 };
 

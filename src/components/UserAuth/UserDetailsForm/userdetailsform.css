@@ -26,6 +26,7 @@
 }
 .reg-section h4{
   margin-bottom:1rem;
+
 }
 
 .register form input {
@@ -114,8 +115,8 @@
   font-weight: 300;
 }
 
-.btn-back {
-  margin-top: 5rem;
+.margin-top-3 {
+  margin-top: 3rem;
 }
 
 .btn-back:hover {

@@ -80,3 +80,10 @@ h3, h5{
   font-size: 1.3rem;
   color: rgba(0, 0, 0, 0.842);
 }
+
+.fields-container form [type=date]{
+  width:unset;
+}
+.fields-container form [type=number]{
+  width:unset;
+}
