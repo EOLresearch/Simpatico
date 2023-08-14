@@ -36,7 +36,6 @@ const UserDetailsForm = ({ handleToggle, fsUser, updateFsUser }) => {
     lossExp: '',
   });
 
-
   useEffect(() => {
     const avatarOptions = ["Bubba", "Chloe", "Bob", "Casper", "Boo", "Boots", "Abby", "Chester", "Charlie", "Cuddles", "Bandit", "Angel", "Baby", "Cookie", "Daisy"];
 
