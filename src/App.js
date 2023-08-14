@@ -65,6 +65,7 @@ function App() {
       'All Off': () => toggleTabs(false, false, false, false),
       'Logout': () => {
         toggleTabs(false, false, false, false);
+        setFsUser(null);
         auth.signOut();
       },
       'Admin': () => setAdminDash(!adminDash),
