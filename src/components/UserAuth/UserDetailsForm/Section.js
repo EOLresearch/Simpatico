@@ -1,7 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-function Section({ title, children,}) {
-  const [isOpen, setIsOpen] = useState(false);
+function Section({ title, children, isUpdate}) {
+  const [isOpen, setIsOpen] = useState(true);
+
+  useEffect(() => {
+    if (isUpdate) {
+      setIsOpen(false);
+    }
+  }, [isUpdate]);
 
   return (
     <div className="reg-section">
