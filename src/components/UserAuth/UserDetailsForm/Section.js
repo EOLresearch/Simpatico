@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-function Section({ title, children, isUpdate}) {
+function Section({ title, children, isUpdate }) {
   const [isOpen, setIsOpen] = useState(true);
 
   useEffect(() => {

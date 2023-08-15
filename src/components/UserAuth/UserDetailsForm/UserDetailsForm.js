@@ -94,7 +94,7 @@ const UserDetailsForm = ({ handleToggle, fsUser, updateFsUser }) => {
       setAnError('noconsent');
       return;
     }
-    
+
     if (isUpdateForm) {
       updateFsUser(userDetails)
       handleToggle(e);
@@ -166,18 +166,23 @@ const UserDetailsForm = ({ handleToggle, fsUser, updateFsUser }) => {
 
   return (
     <div className="auth-wrapper">
-      <button onClick={handleToggle} className='btn btn-back'>{isUpdateForm ? "Return to Home" :  <strong>Back to Login</strong>} </button>
+      <button onClick={handleToggle} className='btn btn-back'>{isUpdateForm ? "Return to Home" : <strong>Back to Login</strong>} </button>
 
-      <h3>{isUpdateForm ? "Update Your details": "Please complete this form"}</h3>
-      <h5>{isUpdateForm ? "expand each section to alter your current details in place":"You will be able to edit these details later"}</h5>
+      <h3>{isUpdateForm ? "Update Your details" : "Please complete this form"}</h3>
+      <h5>{isUpdateForm ? "expand each section to alter your current details in place" : "You will be able to edit these details later"}</h5>
       <div className="auth-container">
         <div className='fields-container register'>
           <form onSubmit={handleSubmit}>
             <Section title="Account Info" isUpdate={isUpdateForm}>
-              <InputField label="" type="email" name="email" placeholder="Email" id="email" value={userDetails.email} iconClass="fas fa-envelope" onChange={changeHandler} />
-              <InputField label="" type="password" name="password" placeholder="Password" id="password" value={userDetails.password} iconClass="fas fa-lock" onChange={changeHandler} />
-              <InputField label="" type="password" name="confirmPass" placeholder="Confirm Password" id="confirmPass" value={userDetails.confirmPass} iconClass="fas fa-lock" onChange={changeHandler} />
-              <InputField label="" type="text" name="displayName" placeholder="Display Name" id="name" value={userDetails.displayName} iconClass="fas fa-user-alt" onChange={changeHandler} />
+              {isUpdateForm ?
+                null :
+                <>
+                  <InputField label="" type="email" name="email" placeholder="Email" id="email" value={userDetails.email} iconClass="fas fa-envelope" onChange={changeHandler} />
+                  <InputField label="" type="password" name="password" placeholder="Password" id="password" value={userDetails.password} iconClass="fas fa-lock" onChange={changeHandler} />
+                  <InputField label="" type="password" name="confirmPass" placeholder="Confirm Password" id="confirmPass" value={userDetails.confirmPass} iconClass="fas fa-lock" onChange={changeHandler} />
+                  <InputField label="" type="text" name="displayName" placeholder="Display Name" id="name" value={userDetails.displayName} iconClass="fas fa-user-alt" onChange={changeHandler} />
+                </>
+              }
             </Section>
             <Section title="Personal Info" isUpdate={isUpdateForm}>
               <SelectField label="Home State" name="residence" placeholder="Home State" id="residence" value={userDetails.residence} onChange={changeHandler} options={US_STATES} />
@@ -213,7 +218,7 @@ const UserDetailsForm = ({ handleToggle, fsUser, updateFsUser }) => {
           </form>
         </div>
       </div>
-      <button onClick={handleToggle} className='btn btn-back margin-top-3'>{isUpdateForm ? "Return to Home" :  <strong>Back to Login</strong>} </button>
+      <button onClick={handleToggle} className='btn btn-back margin-top-3'>{isUpdateForm ? "Return to Home" : <strong>Back to Login</strong>} </button>
     </div>
   );
 
