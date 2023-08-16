@@ -1,5 +1,4 @@
-
-.register form{
+.register form {
   color: black;
   margin: 0 auto;
   display: flex;
@@ -10,22 +9,23 @@
   margin-top: 2rem;
 }
 
-.account-info input{
+.account-info input {
   background-color: transparent;
 }
 
-.reg-section{
-  padding:2rem;
-  margin-bottom:1rem;
+.reg-section {
+  padding: 2rem;
+  margin-bottom: 1rem;
   border: solid rgba(0, 0, 0, 0.082) 1px;
   background-color: #3f7d7714;
 }
 
-.reg-section input{
+.reg-section input {
   background-color: transparent;
 }
-.reg-section h4{
-  margin-bottom:1rem;
+
+.reg-section h4 {
+  margin-bottom: 1rem;
 
 }
 
@@ -34,8 +34,8 @@
   padding: 0.5rem;
 }
 
-.register form .widthAdjust{
-  width:max-content;
+.register form .widthAdjust {
+  width: max-content;
 }
 
 .register form label {
@@ -44,7 +44,7 @@
   color: #31605b;
   font-weight: 600;
   background-color: #31605b2f;
-  width:100%;
+  width: 100%;
   display: inline-block;
   margin-top: 0.5rem;
 }
@@ -74,10 +74,11 @@
   float: right;
 }
 
-.reg-section input:hover{
+.reg-section input:hover {
   cursor: pointer;
 }
-.reg-section select:hover{
+
+.reg-section select:hover {
   cursor: pointer;
 }
 
@@ -155,7 +156,7 @@
   margin-bottom: 2rem;
 }
 
-.consent div label{
+.consent div label {
   background-color: transparent;
 }
 
@@ -189,7 +190,8 @@
   left: 0;
   bottom: 0;
 }
-.user-verify button{
+
+.user-verify button {
   color: white;
 }
 
@@ -252,3 +254,18 @@
   transform: translateY(-0.3rem);
 }
 
+.reg-section .account-login-btn {
+  font-weight: 700;
+  position: relative;
+  padding: 1rem;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 0.5rem;
+  background-color: #31605b1a;
+  margin-top:1rem;
+
+}
+
+.reg-section .account-login-btn:hover {
+  background-color: #31605b3c;
+}

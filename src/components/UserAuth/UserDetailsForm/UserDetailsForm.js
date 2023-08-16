@@ -8,6 +8,8 @@ import Section from './Section';
 import InputField from './InputField';
 import SelectField from './SelectField';
 
+import { reAuth } from '../../../helpers/firebaseHelpers';
+
 import { auth, firestore } from '../../../firebase-config';
 
 import { US_STATES, RACE_OPTIONS, ETHNICITY_OPTIONS, BIOLOGICAL_SEX_OPTIONS, EDUCATION_OPTIONS, HOUSEHOLD_OPTIONS, KINSHIP_OPTIONS, CAUSE_OPTIONS } from "../../../helpers/optionsArrays";
@@ -175,7 +177,13 @@ const UserDetailsForm = ({ handleToggle, fsUser, updateFsUser }) => {
           <form onSubmit={handleSubmit}>
             <Section title="Account Info" isUpdate={isUpdateForm}>
               {isUpdateForm ?
-                null :
+                <>
+                  <h5>Please confirm your login to change account details.</h5>
+                  <InputField label="" type="email" name="email" placeholder="Email" id="email" value={userDetails.email} iconClass="fas fa-envelope" onChange={changeHandler} />
+                  <InputField label="" type="password" name="password" placeholder="Password" id="password" value={userDetails.password} iconClass="fas fa-lock" onChange={changeHandler} />
+                  <button type="button" onClick={e => reAuth()} className='account-login-btn'>Login</button>
+                </>
+                :
                 <>
                   <InputField label="" type="email" name="email" placeholder="Email" id="email" value={userDetails.email} iconClass="fas fa-envelope" onChange={changeHandler} />
                   <InputField label="" type="password" name="password" placeholder="Password" id="password" value={userDetails.password} iconClass="fas fa-lock" onChange={changeHandler} />
