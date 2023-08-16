@@ -3,14 +3,14 @@ import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAxg7-rLpEzc7-4AE0l12lVJUbPFef2T2I",
-  authDomain: "simpatico-a5b64.firebaseapp.com",
-  projectId: "simpatico-a5b64",
-  storageBucket: "simpatico-a5b64.appspot.com",
-  messagingSenderId: "767358111176",
-  appId: "1:767358111176:web:9003318c304d5422e8c4fd",
-  measurementId: "G-VC7VQ32QB3"
+  apiKey: "AIzaSyCeO_aBVdFNQZqvHeQMcEI5-HVR-6WZmU4",
+  authDomain: "simpatico-chat.firebaseapp.com",
+  projectId: "simpatico-chat",
+  storageBucket: "simpatico-chat.appspot.com",
+  messagingSenderId: "482031006479",
+  appId: "1:482031006479:web:67a10d3e7c80f09ed5447a"
 };
+
 
 firebase.initializeApp(firebaseConfig);
 
