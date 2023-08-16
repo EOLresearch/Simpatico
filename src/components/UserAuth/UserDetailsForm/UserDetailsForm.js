@@ -8,16 +8,18 @@ import Section from './Section';
 import InputField from './InputField';
 import SelectField from './SelectField';
 
-import { reAuth } from '../../../helpers/firebaseHelpers';
+import { reAuth, updateUserEmail } from '../../../helpers/firebaseHelpers';
 
 import { auth, firestore } from '../../../firebase-config';
 
 import { US_STATES, RACE_OPTIONS, ETHNICITY_OPTIONS, BIOLOGICAL_SEX_OPTIONS, EDUCATION_OPTIONS, HOUSEHOLD_OPTIONS, KINSHIP_OPTIONS, CAUSE_OPTIONS } from "../../../helpers/optionsArrays";
 
-const UserDetailsForm = ({ handleToggle, fsUser, updateFsUser }) => {
+const UserDetailsForm = ({ handleToggle, fsUser }) => {
   const [anError, setAnError] = useState('')
   const [consent, setConsent] = useState(false)
   const [isUpdateForm, setIsUpdateForm] = useState(false)
+  const [accountInfoDisplayToggle, setAccountInfoDisplayToggle] = useState(false)
+  const [newEmail, setNewEmail] = useState('')
   const [userDetails, setUserDetails] = useState({
     photoURL: '',
     email: '',
@@ -98,7 +100,7 @@ const UserDetailsForm = ({ handleToggle, fsUser, updateFsUser }) => {
     }
 
     if (isUpdateForm) {
-      updateFsUser(userDetails)
+
       handleToggle(e);
       return;
     } else {
@@ -109,10 +111,13 @@ const UserDetailsForm = ({ handleToggle, fsUser, updateFsUser }) => {
 
   const changeHandler = (e) => {
     const { name, value } = e.target;
-    setUserDetails(prevState => ({ ...prevState, [name]: value }));
     if (name === 'consent') {
       setConsent(!consent)
     }
+    if (name === 'newEmail') {
+      setNewEmail(value)
+    }
+    setUserDetails(prevState => ({ ...prevState, [name]: value }));
   }
 
   const createNewUser = async (e) => {
@@ -178,10 +183,21 @@ const UserDetailsForm = ({ handleToggle, fsUser, updateFsUser }) => {
             <Section title="Account Info" isUpdate={isUpdateForm}>
               {isUpdateForm ?
                 <>
-                  <h5>Please confirm your login to change account details.</h5>
-                  <InputField label="" type="email" name="email" placeholder="Email" id="email" value={userDetails.email} iconClass="fas fa-envelope" onChange={changeHandler} />
-                  <InputField label="" type="password" name="password" placeholder="Password" id="password" value={userDetails.password} iconClass="fas fa-lock" onChange={changeHandler} />
-                  <button type="button" onClick={e => reAuth()} className='account-login-btn'>Login</button>
+                  {accountInfoDisplayToggle ?
+                    <>
+                      <h5>Enter your new account email.</h5>
+                      <InputField label="" type="email" name="newEmail" placeholder="Email" id="newEmail" value={newEmail} iconClass="fas fa-envelope" onChange={changeHandler} />
+
+                      {/* <button type='button' onClick={()=>setAccountInfoDisplayToggle(false)} >something</button> */}
+                    </>
+                    :
+                    <>
+                      <h5>Please confirm your login to change account details.</h5>
+                      <InputField label="" type="email" name="email" placeholder="Email" id="email" value={userDetails.email} iconClass="fas fa-envelope" onChange={changeHandler} />
+                      <InputField label="" type="password" name="password" placeholder="Password" id="password" value={userDetails.password} iconClass="fas fa-lock" onChange={changeHandler} />
+                      <button type="button" onClick={e => reAuth(userDetails.email, userDetails.password, setAccountInfoDisplayToggle)} className='account-login-btn'>Login</button>
+                    </>
+                  }
                 </>
                 :
                 <>

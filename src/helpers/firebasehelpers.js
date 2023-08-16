@@ -57,7 +57,7 @@ export const removeSimpaticoMatch = (uid) => {
   });
 }
 
-export const reAuth = (email, password) => {
+export const reAuth = (email, password, displayToggle) => {
   const user = auth.currentUser;
 
   const credential = firebase.auth.EmailAuthProvider.credential(
@@ -67,9 +67,26 @@ export const reAuth = (email, password) => {
 
   user.reauthenticateWithCredential(credential).then(() => {
     // User re-authenticated.
-    console.log('reauthenticated')
+    displayToggle(true)
+
   }).catch((error) => {
     // An error occurred
     // ...
   });
 }
+
+const updateEmail = (email, displayToggle) => {
+  const user = auth.currentUser;
+
+  user.updateEmail(email).then(() => {
+    // Update successful
+    // displayToggle(true)
+
+    console.log('email updated')
+  }).catch((error) => {
+    // An error occurred
+    // ...
+  });
+}
+
+// export const updateFireStoreUser = (userDetails, displayToggle) => {
