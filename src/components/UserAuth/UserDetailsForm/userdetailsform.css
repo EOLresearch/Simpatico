@@ -269,3 +269,22 @@
 .reg-section .account-login-btn:hover {
   background-color: #31605b3c;
 }
+
+.account-btns{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  padding:2rem;
+}
+.auth-wrapper .account-btns button{
+  width: 48%;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  border: none;
+  background-color: #31605b3a;
+  color: #31605b;
+  font-weight: 700;
+  cursor: pointer;
+  
+}

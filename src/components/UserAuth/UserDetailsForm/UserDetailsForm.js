@@ -8,7 +8,7 @@ import Section from './Section';
 import InputField from './InputField';
 import SelectField from './SelectField';
 
-import { reAuth, updateUserEmail } from '../../../helpers/firebaseHelpers';
+import { reAuth, updateUserEmail, sendResetPasswordEmail } from '../../../helpers/firebaseHelpers';
 
 import { auth, firestore } from '../../../firebase-config';
 
@@ -19,6 +19,8 @@ const UserDetailsForm = ({ handleToggle, fsUser }) => {
   const [consent, setConsent] = useState(false)
   const [isUpdateForm, setIsUpdateForm] = useState(false)
   const [accountInfoDisplayToggle, setAccountInfoDisplayToggle] = useState(false)
+  const [changeEmailDisplay, setChangeEmailDisplay] = useState(false)
+  const [resetEmailSent, setResetEmailSent] = useState(false);
   const [newEmail, setNewEmail] = useState('')
   const [userDetails, setUserDetails] = useState({
     photoURL: '',
@@ -171,42 +173,72 @@ const UserDetailsForm = ({ handleToggle, fsUser }) => {
     }
   }
 
+  const handlePasswordReset = () => {
+    sendResetPasswordEmail(userDetails.email)
+    setResetEmailSent(true);
+  }
+
+  const emailChange =
+    (
+      <div className="change-email-input-container">
+        <InputField label="" type="email" name="newEmail" placeholder="New Email" id="newEmail" value={newEmail} iconClass="fas fa-envelope" onChange={changeHandler} />
+        <button type="button" onClick={e => updateUserEmail(fsUser.uid, newEmail)} className='account-login-btn'>Update Email</button>
+        <button type="button" onClick={e => setChangeEmailDisplay(false)} className='account-login-btn'>Back</button>
+      </div>
+    );
+
+  const accountButtons = (
+    <div className="account-btns">
+      <button type="button" onClick={e => setChangeEmailDisplay(true)}>Change Email</button>
+      <button type="button" onClick={handlePasswordReset}>Reset Password</button>
+    </div>
+  );
+
+  const loginToChangeDetails = (
+    <>
+      <h5>Please confirm your login to change account details.</h5>
+      <InputField label="" type="email" name="email" placeholder="Email" id="email" value={userDetails.email} iconClass="fas fa-envelope" onChange={changeHandler} />
+      <InputField label="" type="password" name="password" placeholder="Password" id="password" value={userDetails.password} iconClass="fas fa-lock" onChange={changeHandler} />
+      <button type="button" onClick={e => reAuth(userDetails.email, userDetails.password, setAccountInfoDisplayToggle)} className='account-login-btn'>Login</button>
+    </>
+  );
+
+
+  const defaultForm = (
+    <>
+      <InputField label="" type="email" name="email" placeholder="Email" id="email" value={userDetails.email} iconClass="fas fa-envelope" onChange={changeHandler} />
+      <InputField label="" type="password" name="password" placeholder="Password" id="password" value={userDetails.password} iconClass="fas fa-lock" onChange={changeHandler} />
+      <InputField label="" type="password" name="confirmPass" placeholder="Confirm Password" id="confirmPass" value={userDetails.confirmPass} iconClass="fas fa-lock" onChange={changeHandler} />
+      <InputField label="" type="text" name="displayName" placeholder="Display Name" id="name" value={userDetails.displayName} iconClass="fas fa-user-alt" onChange={changeHandler} />
+    </>
+  );
+
+  const resetEmailSentMessage = (
+    <div>
+      <h5>Password reset email has been sent to {fsUser.email}!</h5>
+      <button type="button" onClick={e => setResetEmailSent(false)} className='account-login-btn'>Okay</button>
+    </div>
+  );
   return (
     <div className="auth-wrapper">
       <button onClick={handleToggle} className='btn btn-back'>{isUpdateForm ? "Return to Home" : <strong>Back to Login</strong>} </button>
-
+  
       <h3>{isUpdateForm ? "Update Your details" : "Please complete this form"}</h3>
       <h5>{isUpdateForm ? "expand each section to alter your current details in place" : "You will be able to edit these details later"}</h5>
       <div className="auth-container">
         <div className='fields-container register'>
           <form onSubmit={handleSubmit}>
             <Section title="Account Info" isUpdate={isUpdateForm}>
-              {isUpdateForm ?
-                <>
-                  {accountInfoDisplayToggle ?
-                    <>
-                      <h5>Enter your new account email.</h5>
-                      <InputField label="" type="email" name="newEmail" placeholder="Email" id="newEmail" value={newEmail} iconClass="fas fa-envelope" onChange={changeHandler} />
-
-                      {/* <button type='button' onClick={()=>setAccountInfoDisplayToggle(false)} >something</button> */}
-                    </>
-                    :
-                    <>
-                      <h5>Please confirm your login to change account details.</h5>
-                      <InputField label="" type="email" name="email" placeholder="Email" id="email" value={userDetails.email} iconClass="fas fa-envelope" onChange={changeHandler} />
-                      <InputField label="" type="password" name="password" placeholder="Password" id="password" value={userDetails.password} iconClass="fas fa-lock" onChange={changeHandler} />
-                      <button type="button" onClick={e => reAuth(userDetails.email, userDetails.password, setAccountInfoDisplayToggle)} className='account-login-btn'>Login</button>
-                    </>
-                  }
-                </>
-                :
-                <>
-                  <InputField label="" type="email" name="email" placeholder="Email" id="email" value={userDetails.email} iconClass="fas fa-envelope" onChange={changeHandler} />
-                  <InputField label="" type="password" name="password" placeholder="Password" id="password" value={userDetails.password} iconClass="fas fa-lock" onChange={changeHandler} />
-                  <InputField label="" type="password" name="confirmPass" placeholder="Confirm Password" id="confirmPass" value={userDetails.confirmPass} iconClass="fas fa-lock" onChange={changeHandler} />
-                  <InputField label="" type="text" name="displayName" placeholder="Display Name" id="name" value={userDetails.displayName} iconClass="fas fa-user-alt" onChange={changeHandler} />
-                </>
-              }
+              {isUpdateForm ? (
+                resetEmailSent ? resetEmailSentMessage :
+                  accountInfoDisplayToggle ? (
+                    changeEmailDisplay ? emailChange : accountButtons
+                  ) : (
+                    loginToChangeDetails
+                  )
+              ) : (
+                defaultForm
+              )}
             </Section>
             <Section title="Personal Info" isUpdate={isUpdateForm}>
               <SelectField label="Home State" name="residence" placeholder="Home State" id="residence" value={userDetails.residence} onChange={changeHandler} options={US_STATES} />
@@ -231,11 +263,11 @@ const UserDetailsForm = ({ handleToggle, fsUser }) => {
                 <label htmlFor="consent">By clicking this checkbox, I agree to share the above information and allow other users to view the information I shared.</label>
               </div>
             </div>
-
+  
             {(anError !== "")
               ? <ErrorMessage error={anError} cancelError={cancelError} /> : null
             }
-
+  
             <div className='btn-container'>
               <input className="btn sub-btn" type="submit" value="Submit" />
             </div>
@@ -245,7 +277,6 @@ const UserDetailsForm = ({ handleToggle, fsUser }) => {
       <button onClick={handleToggle} className='btn btn-back margin-top-3'>{isUpdateForm ? "Return to Home" : <strong>Back to Login</strong>} </button>
     </div>
   );
-
 }
 
 UserDetailsForm.propTypes = {
