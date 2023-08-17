@@ -85,6 +85,12 @@ export const updateUserEmail = async (uid, newEmail) => {
       console.error("Error updating email in Auth: ", error);
       throw error;
     });
+
+    // Send verification email to the new email address
+    await userAuth.sendEmailVerification().catch(error => {
+      console.error("Error sending verification email: ", error);
+      throw error;
+    });
   } else {
     throw new Error("No authenticated user found.");
   }

@@ -21,6 +21,8 @@ const UserDetailsForm = ({ handleToggle, fsUser }) => {
   const [accountInfoDisplayToggle, setAccountInfoDisplayToggle] = useState(false)
   const [changeEmailDisplay, setChangeEmailDisplay] = useState(false)
   const [resetEmailSent, setResetEmailSent] = useState(false);
+  const [showConfirmMessage, setShowConfirmMessage] = useState(false)
+  const [changeConfirmation, setChangeConfirmation] = useState(false)
   const [newEmail, setNewEmail] = useState('')
   const [userDetails, setUserDetails] = useState({
     photoURL: '',
@@ -178,11 +180,29 @@ const UserDetailsForm = ({ handleToggle, fsUser }) => {
     setResetEmailSent(true);
   }
 
+  const handleUpdateUserEmail = () => {
+    if (changeConfirmation) {
+      updateUserEmail(userDetails.uid, newEmail)
+      setShowConfirmMessage(false)
+      setChangeEmailDisplay(false)
+    } else {
+      alert('Please confirm your email change')
+      setShowConfirmMessage(true)
+    }
+  }
+
   const emailChange =
     (
       <div className="change-email-input-container">
+        <h5>Enter your new email address below.</h5>
         <InputField label="" type="email" name="newEmail" placeholder="New Email" id="newEmail" value={newEmail} iconClass="fas fa-envelope" onChange={changeHandler} />
-        <button type="button" onClick={e => updateUserEmail(fsUser.uid, newEmail)} className='account-login-btn'>Update Email</button>
+        {showConfirmMessage &&
+          <div className='confirm'>
+            <input type="checkbox" name="changeConfirmation" id="changeConfirmation" value={changeConfirmation} onChange={changeHandler}></input>
+
+            <label htmlFor="changeConfirmation">Change account email address used for login from {userDetails.email} to {newEmail} ?</label>
+          </div>}
+        <button type="button" onClick={handleUpdateUserEmail} className='account-login-btn'>Update Email</button>
         <button type="button" onClick={e => setChangeEmailDisplay(false)} className='account-login-btn'>Back</button>
       </div>
     );
@@ -222,7 +242,7 @@ const UserDetailsForm = ({ handleToggle, fsUser }) => {
   return (
     <div className="auth-wrapper">
       <button onClick={handleToggle} className='btn btn-back'>{isUpdateForm ? "Return to Home" : <strong>Back to Login</strong>} </button>
-  
+
       <h3>{isUpdateForm ? "Update Your details" : "Please complete this form"}</h3>
       <h5>{isUpdateForm ? "expand each section to alter your current details in place" : "You will be able to edit these details later"}</h5>
       <div className="auth-container">
@@ -263,11 +283,11 @@ const UserDetailsForm = ({ handleToggle, fsUser }) => {
                 <label htmlFor="consent">By clicking this checkbox, I agree to share the above information and allow other users to view the information I shared.</label>
               </div>
             </div>
-  
+
             {(anError !== "")
               ? <ErrorMessage error={anError} cancelError={cancelError} /> : null
             }
-  
+
             <div className='btn-container'>
               <input className="btn sub-btn" type="submit" value="Submit" />
             </div>
