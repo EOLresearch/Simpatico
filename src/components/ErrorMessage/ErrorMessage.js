@@ -56,6 +56,8 @@ export default function ErrorMessage({ error, cancelError }) {
         return "Please share something about your loss experience"
       case 'consent':
         return "You must consent to share your information"
+      case 'noemailchange':
+        return "Please check the box confirming your email change"
       default:
         console.log('switch default' + error)
         return "Something went wrong. Please try again."

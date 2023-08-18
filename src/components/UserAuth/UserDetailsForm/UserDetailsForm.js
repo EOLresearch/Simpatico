@@ -115,6 +115,9 @@ const UserDetailsForm = ({ handleToggle, fsUser }) => {
 
   const changeHandler = (e) => {
     const { name, value } = e.target;
+    if (name === 'changeConfirmation') {
+      setChangeConfirmation(!changeConfirmation)
+    }
     if (name === 'consent') {
       setConsent(!consent)
     }
@@ -152,7 +155,6 @@ const UserDetailsForm = ({ handleToggle, fsUser }) => {
     }
   }
 
-
   const over18Bouncer = (bdayString) => {
     const today = new Date()
     const birthDate = new Date(bdayString)
@@ -179,33 +181,46 @@ const UserDetailsForm = ({ handleToggle, fsUser }) => {
     sendResetPasswordEmail(userDetails.email)
     setResetEmailSent(true);
   }
-
+  const validateEmail = (email) => {
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    return emailRegex.test(email);
+  };
   const handleUpdateUserEmail = () => {
-    if (changeConfirmation) {
-      updateUserEmail(userDetails.uid, newEmail)
-      setShowConfirmMessage(false)
-      setChangeEmailDisplay(false)
+    setShowConfirmMessage(true)
+    if (validateEmail(newEmail)) {
+      // Continue with the email update
+      if (changeConfirmation) {
+        updateUserEmail(userDetails.uid, newEmail)
+        setShowConfirmMessage(false)
+        setChangeEmailDisplay(false)
+        auth.signOut()
+      } else {
+        setAnError("noemailchange")
+      }
     } else {
-      alert('Please confirm your email change')
-      setShowConfirmMessage(true)
+      console.error("Invalid email format");
+      setAnError("Invalid email format");
+      throw new Error("Invalid email format");
     }
   }
 
-  const emailChange =
-    (
-      <div className="change-email-input-container">
-        <h5>Enter your new email address below.</h5>
-        <InputField label="" type="email" name="newEmail" placeholder="New Email" id="newEmail" value={newEmail} iconClass="fas fa-envelope" onChange={changeHandler} />
-        {showConfirmMessage &&
-          <div className='confirm'>
-            <input type="checkbox" name="changeConfirmation" id="changeConfirmation" value={changeConfirmation} onChange={changeHandler}></input>
-
-            <label htmlFor="changeConfirmation">Change account email address used for login from {userDetails.email} to {newEmail} ?</label>
-          </div>}
-        <button type="button" onClick={handleUpdateUserEmail} className='account-login-btn'>Update Email</button>
-        <button type="button" onClick={e => setChangeEmailDisplay(false)} className='account-login-btn'>Back</button>
-      </div>
-    );
+  const emailChange = (
+    <div className="change-email-input-container">
+      <h5>Enter your new email address below.</h5>
+      <InputField label="" type="email" name="newEmail" placeholder="New Email" id="newEmail" value={newEmail} iconClass="fas fa-envelope" onChange={changeHandler} />
+      {showConfirmMessage &&
+        <div className='confirm'>
+          <input type="checkbox" name="changeConfirmation" id="changeConfirmation" value={changeConfirmation} onChange={changeHandler}></input>
+          <label htmlFor="changeConfirmation">Change account email address used for login from {userDetails.email} to {newEmail} ?</label>
+        </div>}
+      <h5>Changing your login email will log you off and send the new address a verifcation email.</h5>
+      {(anError !== "")
+        ? <ErrorMessage error={anError} cancelError={cancelError} /> : null
+      }
+      <button type="button" onClick={handleUpdateUserEmail} className='account-login-btn'>{showConfirmMessage ? "Update Email" : "Confirm"}</button>
+      <button type="button" onClick={e => setChangeEmailDisplay(false)} className='account-login-btn'>Back</button>
+    </div>
+  );
 
   const accountButtons = (
     <div className="account-btns">
@@ -219,7 +234,10 @@ const UserDetailsForm = ({ handleToggle, fsUser }) => {
       <h5>Please confirm your login to change account details.</h5>
       <InputField label="" type="email" name="email" placeholder="Email" id="email" value={userDetails.email} iconClass="fas fa-envelope" onChange={changeHandler} />
       <InputField label="" type="password" name="password" placeholder="Password" id="password" value={userDetails.password} iconClass="fas fa-lock" onChange={changeHandler} />
-      <button type="button" onClick={e => reAuth(userDetails.email, userDetails.password, setAccountInfoDisplayToggle)} className='account-login-btn'>Login</button>
+      {(anError !== "")
+        ? <ErrorMessage error={anError} cancelError={cancelError} /> : null
+      }
+      <button type="button" onClick={e => reAuth(userDetails.email, userDetails.password, setAccountInfoDisplayToggle, setAnError)} className='account-login-btn'>Login</button>
     </>
   );
 

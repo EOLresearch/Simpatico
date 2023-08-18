@@ -288,16 +288,26 @@
   cursor: pointer;
   
 }
-.fields-container .confirm{ 
+.fields-container .change-email-input-container .confirm{ 
   display: flex;
   align-items: center;
   width:100%;
 }
-.fields-container .confirm input{
+.fields-container .change-email-input-container .confirm input{
   width: fit-content;
 }
-.fields-container .confirm label{
+.fields-container .change-email-input-container .confirm label{
   width: fit-content;
   background-color: transparent;
   margin-top: 0;
+  color: #31605b;
+}
+
+.fields-container .change-email-input-container h5{
+  padding:1rem;
+}
+.reg-section-header{
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
 }
