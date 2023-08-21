@@ -113,6 +113,7 @@ const UserDetailsForm = ({ handleToggle, fsUser, updateFsUser }) => {
       handleToggle(e);
       updateUserDetails(fsUser.uid, userDetails);
       updateFsUser(userDetails);
+      alert("Your details have been updated!")
       return;
     } else {
       createNewUser(e);
@@ -258,7 +259,7 @@ const UserDetailsForm = ({ handleToggle, fsUser, updateFsUser }) => {
 
   const resetEmailSentMessage = (
     <div>
-      <h5>Password reset email has been sent to {fsUser.email}!</h5>
+      <h5>Password reset email has been sent to {userDetails.email}!</h5>
       <button type="button" onClick={e => setResetEmailSent(false)} className='account-login-btn'>Okay</button>
     </div>
   );
