@@ -32,7 +32,8 @@ export const createConvo = (e, fsUser, message, user) => {
 }
 
 export const convoMutualConsentToggle = (docID, boolean) => {
-  const conversationsRef = firebase.firestore.collection('conversations');
+  console.log('consent toggle')
+  const conversationsRef = firestore.collection('conversations');
   const conversationRef = conversationsRef.doc(docID);
 
   conversationRef.update({
