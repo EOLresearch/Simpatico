@@ -8,13 +8,13 @@ import Section from './Section';
 import InputField from './InputField';
 import SelectField from './SelectField';
 
-import { reAuth, updateUserEmail, sendResetPasswordEmail } from '../../../helpers/firebaseHelpers';
+import { reAuth, updateUserEmail, sendResetPasswordEmail, updateUserDetails } from '../../../helpers/firebaseHelpers';
 
 import { auth, firestore } from '../../../firebase-config';
 
 import { US_STATES, RACE_OPTIONS, ETHNICITY_OPTIONS, BIOLOGICAL_SEX_OPTIONS, EDUCATION_OPTIONS, HOUSEHOLD_OPTIONS, KINSHIP_OPTIONS, CAUSE_OPTIONS } from "../../../helpers/optionsArrays";
 
-const UserDetailsForm = ({ handleToggle, fsUser }) => {
+const UserDetailsForm = ({ handleToggle, fsUser, updateFsUser }) => {
   const [anError, setAnError] = useState('')
   const [consent, setConsent] = useState(false)
   const [isUpdateForm, setIsUpdateForm] = useState(false)
@@ -71,10 +71,17 @@ const UserDetailsForm = ({ handleToggle, fsUser }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const validations = [
-      { condition: !userDetails.email.trim(), error: 'auth/missing-email' },
-      { condition: !userDetails.password, error: 'nopass' },
-      { condition: userDetails.password !== userDetails.confirmPass, error: 'nomatchpass' },
+    const validations = []
+
+    if (!isUpdateForm) {
+      validations.push(
+        { condition: !userDetails.email.trim(), error: 'auth/missing-email' },
+        { condition: !userDetails.password, error: 'nopass' },
+        { condition: userDetails.password !== userDetails.confirmPass, error: 'nomatchpass' }
+      );
+    }
+
+    validations.push(
       { condition: !userDetails.residence, error: 'noresidence' },
       { condition: !userDetails.birthDate, error: 'nobirth' },
       { condition: !over18Bouncer(userDetails.birthDate), error: 'under18' },
@@ -83,13 +90,12 @@ const UserDetailsForm = ({ handleToggle, fsUser }) => {
       { condition: !userDetails.bioSex, error: 'nobiosex' },
       { condition: !userDetails.education, error: 'noeducation' },
       { condition: !userDetails.household, error: 'nohousehold' },
-      { condition: !userDetails.hobbies, error: 'nohobbies' },
-      { condition: !userDetails.lossDate, error: 'nolossdate' },
-      { condition: !userDetails.kinship, error: 'nokinship' },
-      { condition: !userDetails.cause || userDetails.cause === 'Cause of death', error: 'nocause' },
       { condition: !userDetails.deceasedAge, error: 'nodeceasedage' },
       { condition: !userDetails.lossExp, error: 'nolossexp' },
-    ];
+      { condition: !userDetails.lossDate, error: 'nolossdate' },
+      { condition: !userDetails.kinship, error: 'nokinship' },
+      { condition: !userDetails.cause, error: 'nocause' },
+    );
 
     for (const validation of validations) {
       if (validation.condition) {
@@ -104,13 +110,13 @@ const UserDetailsForm = ({ handleToggle, fsUser }) => {
     }
 
     if (isUpdateForm) {
-
       handleToggle(e);
+      updateUserDetails(fsUser.uid, userDetails);
+      updateFsUser(userDetails);
       return;
     } else {
       createNewUser(e);
     }
-
   }
 
   const changeHandler = (e) => {
@@ -164,10 +170,8 @@ const UserDetailsForm = ({ handleToggle, fsUser }) => {
 
     if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
       realAge = age - 1
-      console.log(realAge)
     } else {
       realAge = age
-      console.log(realAge)
     }
 
     if (realAge < 18) {
@@ -181,10 +185,12 @@ const UserDetailsForm = ({ handleToggle, fsUser }) => {
     sendResetPasswordEmail(userDetails.email)
     setResetEmailSent(true);
   }
+
   const validateEmail = (email) => {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     return emailRegex.test(email);
   };
+
   const handleUpdateUserEmail = () => {
     setShowConfirmMessage(true)
     if (validateEmail(newEmail)) {
@@ -204,6 +210,22 @@ const UserDetailsForm = ({ handleToggle, fsUser }) => {
     }
   }
 
+  const defaultForm = (
+    <>
+      <InputField label="" type="email" name="email" placeholder="Email" id="email" value={userDetails.email} iconClass="fas fa-envelope" onChange={changeHandler} />
+      <InputField label="" type="password" name="password" placeholder="Password" id="password" value={userDetails.password} iconClass="fas fa-lock" onChange={changeHandler} />
+      <InputField label="" type="password" name="confirmPass" placeholder="Confirm Password" id="confirmPass" value={userDetails.confirmPass} iconClass="fas fa-lock" onChange={changeHandler} />
+      <InputField label="" type="text" name="displayName" placeholder="Display Name" id="name" value={userDetails.displayName} iconClass="fas fa-user-alt" onChange={changeHandler} />
+    </>
+  );
+
+  const accountButtons = (
+    <div className="account-btns">
+      <button type="button" onClick={e => setChangeEmailDisplay(true)}>Change Email</button>
+      <button type="button" onClick={handlePasswordReset}>Reset Password</button>
+    </div>
+  );
+
   const emailChange = (
     <div className="change-email-input-container">
       <h5>Enter your new email address below.</h5>
@@ -222,13 +244,6 @@ const UserDetailsForm = ({ handleToggle, fsUser }) => {
     </div>
   );
 
-  const accountButtons = (
-    <div className="account-btns">
-      <button type="button" onClick={e => setChangeEmailDisplay(true)}>Change Email</button>
-      <button type="button" onClick={handlePasswordReset}>Reset Password</button>
-    </div>
-  );
-
   const loginToChangeDetails = (
     <>
       <h5>Please confirm your login to change account details.</h5>
@@ -241,22 +256,13 @@ const UserDetailsForm = ({ handleToggle, fsUser }) => {
     </>
   );
 
-
-  const defaultForm = (
-    <>
-      <InputField label="" type="email" name="email" placeholder="Email" id="email" value={userDetails.email} iconClass="fas fa-envelope" onChange={changeHandler} />
-      <InputField label="" type="password" name="password" placeholder="Password" id="password" value={userDetails.password} iconClass="fas fa-lock" onChange={changeHandler} />
-      <InputField label="" type="password" name="confirmPass" placeholder="Confirm Password" id="confirmPass" value={userDetails.confirmPass} iconClass="fas fa-lock" onChange={changeHandler} />
-      <InputField label="" type="text" name="displayName" placeholder="Display Name" id="name" value={userDetails.displayName} iconClass="fas fa-user-alt" onChange={changeHandler} />
-    </>
-  );
-
   const resetEmailSentMessage = (
     <div>
       <h5>Password reset email has been sent to {fsUser.email}!</h5>
       <button type="button" onClick={e => setResetEmailSent(false)} className='account-login-btn'>Okay</button>
     </div>
   );
+
   return (
     <div className="auth-wrapper">
       <button onClick={handleToggle} className='btn btn-back'>{isUpdateForm ? "Return to Home" : <strong>Back to Login</strong>} </button>
@@ -267,17 +273,22 @@ const UserDetailsForm = ({ handleToggle, fsUser }) => {
         <div className='fields-container register'>
           <form onSubmit={handleSubmit}>
             <Section title="Account Info" isUpdate={isUpdateForm}>
-              {isUpdateForm ? (
-                resetEmailSent ? resetEmailSentMessage :
-                  accountInfoDisplayToggle ? (
-                    changeEmailDisplay ? emailChange : accountButtons
-                  ) : (
-                    loginToChangeDetails
+              {
+                isUpdateForm
+                  ? (
+                    resetEmailSent
+                      ? resetEmailSentMessage
+                      : (
+                        accountInfoDisplayToggle
+                          ? (changeEmailDisplay ? emailChange : accountButtons)
+                          : loginToChangeDetails
+                      )
                   )
-              ) : (
-                defaultForm
-              )}
+                  : defaultForm
+              }
             </Section>
+            {/* plan is to turn this first section into its own component because of how unique it is that way it can handle its own error state too */}
+
             <Section title="Personal Info" isUpdate={isUpdateForm}>
               <SelectField label="Home State" name="residence" placeholder="Home State" id="residence" value={userDetails.residence} onChange={changeHandler} options={US_STATES} />
               <InputField label="Birth Date" type="date" name="birthDate" placeholder="e.g. 01/01/1990" id="birthDate" value={userDetails.birthDate} onChange={changeHandler} />

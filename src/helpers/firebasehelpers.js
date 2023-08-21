@@ -71,6 +71,7 @@ export const reAuth = (email, password, displayToggle, setAnError) => {
 
   }).catch((error) => {
     // An error ocurred
+    console.log(error.message)
     setAnError(error.message)
   });
 }
@@ -112,3 +113,12 @@ export const sendResetPasswordEmail = async (email) => {
       throw error; // Forward the error so you can notify the user or handle it in your UI.
   }
 };
+
+export const updateUserDetails = async (uid, newDetails) => {
+  const userRef = firestore.collection('users').doc(uid);
+  return userRef.update(newDetails)
+    .catch(error => {
+      console.error("Error updating user details: ", error);
+      throw error;
+    });
+}

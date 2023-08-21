@@ -1,7 +1,9 @@
 import './errormessage.css';
 
 export default function ErrorMessage({ error, cancelError }) {
-  //can refactor this to using lookupobj with {lookUpOBJ[error]} in the JSX. but not needed now
+//needs refactor
+
+//appears in two places when the login for changing account details is missed, the errors for no pass is also  
 
   const errorMaker = (err) => {
 

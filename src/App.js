@@ -55,7 +55,6 @@ function App() {
     fetchUserAndMatch();
   }, [user]);
 
-
   const navHandler = (renderCondition) => {
     const tabs = {
       'Conversations': () => toggleTabs(true, false, false, false),
