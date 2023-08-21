@@ -26,7 +26,7 @@ export default function ErrorMessage({ error, cancelError }) {
     'nocause': "Please enter cause of death",
     'nodeceasedage': "Please enter age of the deceased",
     'nolossexp': "Please share something about your loss experience",
-    'consent': "You must consent to share your information",
+    'noconsent': "You must consent to share your information",
     'noemailchange': "Please check the box confirming your email change"
   };
 

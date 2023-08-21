@@ -90,11 +90,11 @@ const UserDetailsForm = ({ handleToggle, fsUser, updateFsUser }) => {
       { condition: !userDetails.bioSex, error: 'nobiosex' },
       { condition: !userDetails.education, error: 'noeducation' },
       { condition: !userDetails.household, error: 'nohousehold' },
-      { condition: !userDetails.deceasedAge, error: 'nodeceasedage' },
-      { condition: !userDetails.lossExp, error: 'nolossexp' },
       { condition: !userDetails.lossDate, error: 'nolossdate' },
       { condition: !userDetails.kinship, error: 'nokinship' },
       { condition: !userDetails.cause, error: 'nocause' },
+      { condition: !userDetails.deceasedAge, error: 'nodeceasedage' },
+      { condition: !userDetails.lossExp, error: 'nolossexp' },
     );
 
     for (const validation of validations) {
