@@ -14,12 +14,10 @@ body {
 }
 
 .app-container{
-
   display: flex;
 }
 
 .app-inner-container{
-
   width: 100%;
   display: flex;
   flex-direction: column;

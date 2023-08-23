@@ -111,16 +111,25 @@ function UserDisplay({ view, users }) {
   return (
     <div className="user-display-container">
       <div className='user-display-header'>
-        {['Kinship', 'Natural', 'Unnatural', 'All'].map(filter =>
-          <button key={filter} onClick={() => {filterHandler(filter); setKinshipFilter('All');}}>
-            {filter === 'Kinship' ? showKinshipFilters ? 'X' : '_' : filter}
-          </button>
-        )}
+        <div className='user-display-cause-selections'>
+          {['Kinship', 'Natural', 'Unnatural', 'All'].map(filter =>
+            <button key={filter} onClick={() => { filterHandler(filter); setKinshipFilter('All'); }}>
+              {filter === 'Kinship' ? showKinshipFilters ? 'X' : '_' : filter}
+            </button>
+          )}
+        </div>
       </div>
       <div className="user-display-body">
         {showKinshipFilters && (
           <div className="kinship-selections">
             <div className='double-btn-container'>
+              <div className='filter-labels'>
+                {/* <span>Current Filters:</span> */}
+                <div className='filter-labels-container'>
+                  <span>Cause: <span>{causeFilter}</span> </span>
+                  <span>Kinship: <span>{kinshipFilter}</span></span>
+                </div>
+              </div>
               {KINSHIP_OPTIONS.map(kinship => (
                 <div key={kinship} className='double-btn'>
                   <span onClick={() => filterHandler(kinship)}>{kinship}</span>
