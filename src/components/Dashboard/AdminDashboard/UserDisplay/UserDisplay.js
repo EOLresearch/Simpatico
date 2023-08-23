@@ -132,7 +132,7 @@ function UserDisplay({ view, users }) {
               </div>
               {KINSHIP_OPTIONS.map(kinship => (
                 <div key={kinship} className='double-btn'>
-                  <span onClick={() => filterHandler(kinship)}>{kinship}</span>
+                  <span onClick={() => {filterHandler(kinship); setCauseFilter("All")}}>{kinship}</span>
                   <div className='sub-btn-container'>
                     <button onClick={() => { setCauseFilter('Natural'); setKinshipFilter(kinship); }}>N</button>
                     <button onClick={() => { setCauseFilter('Unnatural'); setKinshipFilter(kinship); }}>U</button>
