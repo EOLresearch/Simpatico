@@ -47,7 +47,7 @@ export const convoMutualConsentToggle = (docID, boolean) => {
 
 
 export const updateSimpaticoMatch = (uid, matchUid) => {
-  if (uid === matchUid) throw new Error("Cannot match with yourself!");
+  if (uid === matchUid) alert("Cannot match with yourself!");
   return usersCollection.doc(uid).update({
     simpaticoMatch: matchUid
   });

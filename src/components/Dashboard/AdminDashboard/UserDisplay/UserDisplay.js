@@ -30,7 +30,7 @@ function UserDisplay({ view, users }) {
   }, [users, causeFilter, kinshipFilter])
 
 
-  const selectTheUser = (e, user) => {
+  const selectTheUser = (user) => {
     setSelectedUser(user)
   }
 

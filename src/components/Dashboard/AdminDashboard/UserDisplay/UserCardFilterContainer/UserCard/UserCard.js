@@ -6,7 +6,6 @@ import './usercard.css'
 export default function UserCard({ user, setSimpaticoMatch, getMatchBy, selectTheUser, selectedUser, showSelectedUser, hovered, removeMatch }) {
   const [showDetails, setShowDetails] = useState(false);
   const [showMatchingOptions, setShowMatchingOptions] = useState(false)
-  //this boolean piece of state below is misleadedly named. lets work on that
   const [matchConfirmMessage, setMatchConfirmMessage] = useState(false)
   const [toolTip, setToolTip] = useState('')
   // =========================== GET THE LAST LOGIN AND ADD IT TO THE USER CARD FOR QUICK VIEWING ===========================
@@ -22,20 +21,14 @@ export default function UserCard({ user, setSimpaticoMatch, getMatchBy, selectTh
   }
 
   const matchConfirm = (e) => {
-    e.stopPropagation()
-    console.log(e.target)
-    
+    e.stopPropagation()    
     if (e.target.dataset.tooltip === "cause") {
-      // setMatchConfirmMessage(true)
       getMatchBy(user.uid, user.cause, user.kinship, "cause")
     } else if (e.target.dataset.tooltip === "kinship") {
-      // setMatchConfirmMessage(true)
       getMatchBy(user.uid, user.cause, user.kinship, "kinship")
     } else if (e.target.dataset.tooltip === "both") {
-      // setMatchConfirmMessage(true)
       getMatchBy(user.uid, user.cause, user.kinship, "both")
     } else if (e.target.dataset.tooltip === "none") {
-      // setMatchConfirmMessage(true)
       getMatchBy(user.uid, user.cause, user.kinship, "none")
     } else if (selectedUser.uid === user.uid) {
       alert("You can't match a user with themselves")
@@ -61,13 +54,18 @@ export default function UserCard({ user, setSimpaticoMatch, getMatchBy, selectTh
     e.stopPropagation()
   }
 
-  const truncate = (str, n) => {
-    return (str.length > n) ? str.substr(0, n - 1) + '...' : str;
-  };
+  // const truncate = (str, n) => {
+  //   return (str.length > n) ? str.substr(0, n - 1) + '...' : str;
+  // };
+
+  const userSelectionHandler = () => {
+    if (matchConfirmMessage || showMatchingOptions) return
+    selectTheUser(user)
+  }
 
   const collapsed =
     <div className={
-      selectedUser ? selectedUser.uid === user.uid ? hovered === true ? "user-card user-selected hovered" : "user-card user-selected" : "user-card" : "user-card"} onClick={e => selectTheUser(e, user)}>
+      selectedUser ? selectedUser.uid === user.uid ? hovered === true ? "user-card user-selected hovered" : "user-card user-selected" : "user-card" : "user-card"} onClick={userSelectionHandler}>
       <div className="card-header">
         <h3>{user.displayName}</h3>
         <div className={user.simpaticoMatch ? "matched" : "not-matched"}>
@@ -156,7 +154,7 @@ export default function UserCard({ user, setSimpaticoMatch, getMatchBy, selectTh
 
   const expanded =
     <div className={
-      selectedUser ? selectedUser.uid === user.uid ? hovered === true ? "user-card user-selected hovered" : "user-card user-selected" : "user-card" : "user-card"} onClick={e => selectTheUser(e, user)}>
+      selectedUser ? selectedUser.uid === user.uid ? hovered === true ? "user-card user-selected hovered" : "user-card user-selected" : "user-card" : "user-card"} onClick={userSelectionHandler}>
       <div className="card-header">
         <h3>{user.displayName}</h3>
         <div className={user.simpaticoMatch ? "matched" : "not-matched"}>
