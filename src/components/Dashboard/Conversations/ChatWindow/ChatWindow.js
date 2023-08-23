@@ -9,7 +9,7 @@ export default function ChatWindow({ convoDocId, convo, fsUser, convoMutualConse
 
   const conversationRef = firestore.collection('conversations').doc(convoDocId);
 
-  const messagesColOrderedRef = conversationRef.collection('messages').orderBy('createdAt').limitToLast(25)
+  const messagesColOrderedRef = conversationRef.collection('messages').orderBy('createdAt').limitToLast(15)
   const [messages = []] = useCollectionData(messagesColOrderedRef);
 
   const [messageBody, setMessageBody] = useState('')
