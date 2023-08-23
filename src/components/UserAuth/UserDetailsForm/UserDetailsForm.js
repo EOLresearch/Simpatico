@@ -43,6 +43,7 @@ const UserDetailsForm = ({ handleToggle, fsUser, updateFsUser }) => {
     cause: '',
     deceasedAge: '',
     lossExp: '',
+    admin:true,
   });
 
   useEffect(() => {
@@ -111,6 +112,11 @@ const UserDetailsForm = ({ handleToggle, fsUser, updateFsUser }) => {
 
     if (isUpdateForm) {
       handleToggle(e);
+
+      delete userDetails.password;
+      delete userDetails.confirmPass;
+      delete userDetails.email;
+
       updateUserDetails(fsUser.uid, userDetails);
       updateFsUser(userDetails);
       alert("Your details have been updated!")
@@ -145,7 +151,6 @@ const UserDetailsForm = ({ handleToggle, fsUser, updateFsUser }) => {
         simpaticoMatch: '',
       };
 
-      delete newUser.anError;
       delete newUser.password;
       delete newUser.confirmPass;
 
@@ -155,10 +160,7 @@ const UserDetailsForm = ({ handleToggle, fsUser, updateFsUser }) => {
       handleToggle(e);
     } catch (error) {
       console.log(error.code, error.message);
-      setUserDetails(prevState => ({
-        ...prevState,
-        anError: error.code
-      }));
+      setAnError(error.code);
     }
   }
 

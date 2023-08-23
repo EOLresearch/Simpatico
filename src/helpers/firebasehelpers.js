@@ -1,5 +1,6 @@
 
 import { auth, firestore, firebase } from "../firebase-config";
+const usersCollection = firestore.collection('users');
 
 export const createConvo = (e, fsUser, message, user) => {
   e.preventDefault();
@@ -44,7 +45,6 @@ export const convoMutualConsentToggle = (docID, boolean) => {
     })
 }
 
-const usersCollection = firestore.collection('users');
 
 export const updateSimpaticoMatch = (uid, matchUid) => {
   return usersCollection.doc(uid).update({
