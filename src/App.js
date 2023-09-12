@@ -15,8 +15,6 @@ function App() {
   const [fsMatch, setFsMatch] = useState(null);
   const [error, setError] = useState(null);
 
-
-
   useEffect(() => {
     if (user) {
       setProfileTab(true);
@@ -32,7 +30,6 @@ function App() {
 
       try {
         const userSnapshot = await userQuery.get();
-
         if (!userSnapshot.empty) {
           const userData = userSnapshot.docs[0].data();
           setFsUser(userData);
