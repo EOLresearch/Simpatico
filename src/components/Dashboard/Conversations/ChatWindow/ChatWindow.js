@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import './chatwindow.css';
 import ChatMessage from '../../ChatMessage/ChatMessage';
 import ConvoInvite from '../../ConvoInvite/ConvoInvite';
+import ChatInput from './ChatInput';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { auth, firestore, firebase } from '../../../../firebase-config';
 
@@ -40,6 +41,7 @@ export default function ChatWindow({ convoDocId, convo, fsUser, convoMutualConse
     </div>
   );
 
+  //below function needs refactor, the input should have its own component for the gifs/fornatting bar to be included
   const renderChatMessages = () => (
     <div className="chat-window-container">
       <div className="message-container">
@@ -49,6 +51,7 @@ export default function ChatWindow({ convoDocId, convo, fsUser, convoMutualConse
         <div className="scrollref" ref={scrollHandle}></div>
       </div>
       <form onSubmit={submitHandler}>
+        <ChatInput />
         <input
           value={messageBody}
           placeholder="Send a message..."
