@@ -23,6 +23,7 @@ export default function ChatWindow({ convoDocId, convo, fsUser, convoMutualConse
     </div>
   );
 
+  
   const renderSentRequestMessage = () => (
     <div className="chat-window-container">
       <p className="sent-request">
