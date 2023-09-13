@@ -10,6 +10,7 @@ export default function ChatInput({ onSubmit }) {
     setMessageBody('');
   };
 
+  test
   return (
     <form onSubmit={handleSubmit}>
       <input
