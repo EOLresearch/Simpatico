@@ -1,8 +1,8 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import './chatwindow.css';
 import ChatMessage from '../../ChatMessage/ChatMessage';
 import ConvoInvite from '../../ConvoInvite/ConvoInvite';
-import ChatInput from './ChatInput';
+import ChatInput from './ChatInput'; // Import the ChatInput component
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { auth, firestore, firebase } from '../../../../firebase-config';
 
@@ -11,7 +11,6 @@ export default function ChatWindow({ convoDocId, convo, fsUser, convoMutualConse
   const messagesColOrderedRef = conversationRef.collection('messages').orderBy('createdAt').limitToLast(15);
   const [messages = []] = useCollectionData(messagesColOrderedRef);
 
-  const [messageBody, setMessageBody] = useState('');
   const scrollHandle = useRef();
 
   useEffect(() => {
@@ -41,42 +40,17 @@ export default function ChatWindow({ convoDocId, convo, fsUser, convoMutualConse
     </div>
   );
 
-  //below function needs refactor, the input should have its own component for the gifs/fornatting bar to be included
-  const renderChatMessages = () => (
-    <div className="chat-window-container">
-      <div className="message-container">
-        {messages.map((msg) => (
-          <ChatMessage key={msg.mid} auth={auth} mid={msg.mid} message={msg} />
-        ))}
-        <div className="scrollref" ref={scrollHandle}></div>
-      </div>
-      <form onSubmit={submitHandler}>
-        <ChatInput />
-        <input
-          value={messageBody}
-          placeholder="Send a message..."
-          onChange={(e) => setMessageBody(e.target.value)}
-        />
-        <button type="submit">
-          <i className="fas fa-paper-plane"></i>
-        </button>
-      </form>
-    </div>
-  );
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-    if (messageBody === '') return;
+  const handleSubmitMessage = (message) => {
+    if (message.trim() === '') return;
     const msgDocRef = conversationRef.collection('messages').doc();
     msgDocRef.set({
       mid: msgDocRef.id,
-      body: messageBody,
+      body: message,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       sentFromUid: fsUser.uid,
       sentFromDisplayName: fsUser.displayName,
       photoURL: fsUser.photoURL,
     });
-    setMessageBody('');
   };
 
   if (!convo) {
@@ -91,7 +65,15 @@ export default function ChatWindow({ convoDocId, convo, fsUser, convoMutualConse
     return renderConvoInvite();
   }
 
-  if (convo.mutualConsent === true) {
-    return renderChatMessages();
-  }
+  return (
+    <div className="chat-window-container">
+      <div className="message-container">
+        {messages.map((msg) => (
+          <ChatMessage key={msg.mid} auth={auth} mid={msg.mid} message={msg} />
+        ))}
+        <div className="scrollref" ref={scrollHandle}></div>
+      </div>
+      <ChatInput onSubmit={handleSubmitMessage} />
+    </div>
+  );
 }
