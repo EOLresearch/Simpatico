@@ -53,7 +53,7 @@ function Dashboard({
         {adminDash === true ?
           <AdminDashboard fsUser={fsUser} navHandler={navHandler} /> :
           <div className='dashboard-body'>
-            <div className='sub-nav'>
+            {/* <div className='sub-nav'>
               <div onClick={() => navHandler("Home")} className={profileTab ? "clicked" : null}>
                 <RxPerson size="3rem" />My Profile
               </div>
@@ -64,7 +64,7 @@ function Dashboard({
                 <IoChatbubblesSharp size="3rem" />Conversations
               </div>
               {showNotification && <span className="notification">{convoRequests.length}</span>}
-            </div>
+            </div> */}
             {profileTab && <Profile fsUser={fsUser} updateFsUser={updateFsUser} />}
             {conversationsTab &&
               <Conversations

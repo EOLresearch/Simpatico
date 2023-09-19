@@ -47,3 +47,6 @@ body {
   letter-spacing: .1rem;
   padding: 0.5rem;
 }
+.app-body{
+  margin: 3rem 0;
+}

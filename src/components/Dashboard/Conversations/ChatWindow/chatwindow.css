@@ -1,11 +1,11 @@
 .chatroom {
-  width: 80%;
+  width: 90%;
   background: #31605b5e;
   margin: 0 auto;
   border-radius: 1rem;
   display: flex;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, .75);
-  height: 65vh;
+  height: 70vh;
 }
 .chat-window-container{
   width:100%;
@@ -28,12 +28,19 @@
   width:100%;
   margin-top:1rem;
   border-bottom:1px solid black;
-  display: flex;
+  /* display: flex; */
+  border: black solid 2px;
+  border-radius: 1rem;
 }
-.chat-window-container form input{
-  width:90%;
+.input-container{
+  display: flex;
+  flex-grow: 2;
+  align-items: center;
+  justify-content: space-between;
+}
+.input-container input{
+  width:100%;
   border:none;
-  flex-grow:2;
   background: transparent;
   font-size: 1.5rem;
   padding:0.5rem 1rem ;
@@ -42,6 +49,8 @@
 .chat-window-container form button{
   border: none;
   background-color: white;
+  padding:0.5rem 1rem ;
+
   font-size: 1.5rem;
   color:#31605b;
   background: transparent;
@@ -62,3 +71,4 @@
   background-color: #31605b1d;
   border-radius: .4rem;
 }
+
