@@ -28,7 +28,6 @@
   width:100%;
   margin-top:1rem;
   border-bottom:1px solid black;
-  /* display: flex; */
   border: black solid 2px;
   border-radius: 1rem;
 }
@@ -49,8 +48,6 @@
 .chat-window-container form button{
   border: none;
   background-color: white;
-  padding:0.5rem 1rem ;
-
   font-size: 1.5rem;
   color:#31605b;
   background: transparent;
