@@ -24,7 +24,7 @@
   display: none;
 }
 
-.chat-window-container form{
+.chat-window-container .chat-palette{
   width:100%;
   margin-top:1rem;
   border-bottom:1px solid black;
@@ -45,27 +45,30 @@
   padding:0.5rem 1rem ;
   color:#31605b;
 }
-.chat-window-container form button{
+.chat-window-container .chat-palette button{
   border: none;
   background-color: white;
   font-size: 1.5rem;
   color:#31605b;
   background: transparent;
 }
-.chat-window-container form button:hover{
+.chat-window-container .chat-palette button:hover{
   cursor: pointer;
   background-color: #31605b1d;
 }
-.chat-window-container form button:active{
+.chat-window-container .chat-palette button:active{
   transform: scale(0.9);
   outline: none;
 }
-.chat-window-container form button:focus{
+.chat-window-container .chat-palette button:focus{
   outline: none;
 }
-.chat-window-container form input:focus{
+.chat-window-container .chat-palette input:focus{
   outline: none;
   background-color: #31605b1d;
   border-radius: .4rem;
 }
 
+.chat-palette{
+  padding:1rem;
+}

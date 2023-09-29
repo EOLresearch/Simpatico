@@ -31,7 +31,6 @@ h3, h5{
 .callout-container {
   display: flex;
   justify-content: center;
-  /* background-color: #00000034; */
   margin-bottom: 1rem;
 }
 
@@ -46,12 +45,6 @@ h3, h5{
   transform: scale(1.1);
   cursor: pointer;
 }
-
-/* .auth-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-} */
 
 .fields-container {
   width: 100%;
