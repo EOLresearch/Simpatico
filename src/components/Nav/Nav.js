@@ -7,14 +7,14 @@ import { IoPeopleCircleOutline, IoChatbubblesSharp, IoHome } from "react-icons/i
 import logo from '../../assets/simpaticologogreenbg.jpg';
 
 
-const NavItem = ({ identifier, icon, label, onClick }) => (
-  <li data-identifier={identifier} onClick={onClick}>
+const NavItem = ({ identifier, icon, label, onClick, style }) => (
+  <li data-identifier={identifier} onClick={onClick} className={style}>
     {icon}
     <span>{label}</span>
   </li>
 );
 
-const Nav = ({ user, navHandler, fsUser }) => {
+const Nav = ({ user, navHandler, fsUser, profileTab, conversationsTab, matchListTab, adminDash }) => {
   const navStyles = user ? "" : "no-user-nav";
 
   return (
@@ -26,11 +26,11 @@ const Nav = ({ user, navHandler, fsUser }) => {
           <p>Finding Comfort in Shared Experiences</p>
           <div className={'nav-body ' + navStyles}>
             <ul>
-              <NavItem identifier="Home" icon={<IoHome />} label="Home" onClick={() => navHandler("Home")} />
-              <NavItem identifier="Matches" icon={<IoPeopleCircleOutline />} label="Matches" onClick={() => navHandler("Matches")} />
-              <NavItem identifier="Conversations" icon={<IoChatbubblesSharp />} label="Conversations" onClick={() => navHandler("Conversations")} />
+              <NavItem identifier="Home" icon={<IoHome />} label="Home" onClick={() => navHandler("Home")} style={profileTab ? "clicked" : null}/>
+              <NavItem identifier="Matches" icon={<IoPeopleCircleOutline />} label="Matches" onClick={() => navHandler("Matches")} style={matchListTab ? "clicked" : null} />
+              <NavItem identifier="Conversations" icon={<IoChatbubblesSharp />} label="Conversations" onClick={() => navHandler("Conversations")} style={conversationsTab ? "clicked" : null}/>
               {fsUser && fsUser.admin === true && (
-                <NavItem identifier="Admin" icon={<IoChatbubblesSharp />} label="Admin Dashboard" onClick={() => navHandler("Admin")} />
+                <NavItem identifier="Admin" icon={<IoChatbubblesSharp />} label="Admin Dashboard" onClick={() => navHandler("Admin")} style={adminDash ? "clicked" : null}/>
               )}
               <NavItem identifier="Logout" icon={<FaArrowLeft size="1rem" />} label="Logout" onClick={() => navHandler("Logout")} />
             </ul>
