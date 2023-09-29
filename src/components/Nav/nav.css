@@ -1,59 +1,70 @@
+
 .nav-container {
-  width: 18%;
+  display: flex;
+  justify-content: left;
+  width:100%;
   color: white;
   background-color: #31605b;
-  min-height: 100%;
-  position: fixed;
 }
 
-
-.logo-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  margin-top: 2rem;
-}
-
-.logo-container img {
-  height: 10rem;
-  width: 10rem;
+.nav-container img {
+  height: 12rem;
+  width: 12rem;
   border-radius: 50%;
   object-fit: cover;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  border: 3px white solid;
 }
 
-.logo-container p {
-  border-bottom: white solid 1px;
-  width: 100%;
-  text-align: center;
-  padding: 0.5rem;
+.nav-container p {
+  /* width: 100%; */
   margin: 0;
 }
 
-.logo-container :nth-child(2) {
-  font-weight: 900;
-  font-size: 2rem;
+.inner-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 1rem;
+  width: 100%;
+}
+.inner-container p{
+  text-align: center;
+}
+.inner-container p:first-child{
+  /* margin-top: 1rem; */
+  font-size: 3rem;
+  font-weight: 600;
+}
+.inner-container p:nth-child(2){
+  font-size: 1.5rem;
+  font-weight: 400;
+  padding-bottom:1rem;
+  border-bottom: 1px white solid;
+  width: 100%;
 }
 
-.logo-container :nth-child(3) {
-  border: none;
-}
 
 .nav-body {
-  margin-top: 2rem;
+  /* margin-top: 2rem; */
 }
 
 .nav-body ul {
   all: unset;
-  margin: 10%;
+  /* margin: 10%; */
   list-style: none;
+  display: flex;
 }
 
 .nav-body ul li {
-  padding: 1rem;
+  padding: 1.3rem;
   font-size: 1.3rem;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  margin-left:0.5rem;
+  margin-left:1rem;
 }
 
 .nav-body ul li:hover {
