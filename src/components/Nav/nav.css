@@ -12,7 +12,7 @@
   width: 12rem;
   border-radius: 50%;
   object-fit: cover;
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   z-index: 100;
@@ -20,7 +20,6 @@
 }
 
 .nav-container p {
-  /* width: 100%; */
   margin: 0;
 }
 
@@ -36,7 +35,6 @@
   text-align: center;
 }
 .inner-container p:first-child{
-  /* margin-top: 1rem; */
   font-size: 3rem;
   font-weight: 600;
 }
@@ -50,21 +48,21 @@
 
 
 .nav-body {
-  /* margin-top: 2rem; */
+  margin-right:3rem;
 }
 
 .nav-body ul {
   all: unset;
-  /* margin: 10%; */
   list-style: none;
   display: flex;
+  justify-content: right;
+  width: 100vw;
 }
 
 .nav-body ul li {
   padding: 1.3rem;
   font-size: 1.3rem;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  margin-left:1rem;
 }
 
 .nav-body ul li:hover {
@@ -77,62 +75,3 @@
   margin-left: 1rem;
 }
 
-
-@media (max-width: 1115px) {
-  .nav-container span {
-    font-size: 0.7rem;
-  }
-
-  .logo-container img {
-    height: 7rem;
-    width: 7rem;
-  }
-}
-
-@media (max-width: 920px) {
-  .nav-container {
-    width: 10vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .nav-dummy {
-    width: 10vw;
-  }
-
-  .nav-body ul {
-    list-style: none;
-  }
-
-  .nav-container span {
-    display: none;
-  }
-
-  .logo-container {
-    margin: 0;
-  }
-
-  .logo-container img {
-    height: 4rem;
-    width: 4rem;
-  }
-
-  .logo-container p {
-    display: none;
-  }
-}
-
-@media (max-width: 645px) {
-  /* HAMBURGER MENU TIME */
-}
-
-.no-user-nav {
-  color: #39716b !important;
-}
-
-.no-user-nav li:hover {
-  cursor: auto !important;
-  background-color: #31605b !important;
-  color: #31605b !important;
-}

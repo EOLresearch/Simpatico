@@ -25,6 +25,8 @@ function Dashboard({
   updateFsUser
 }) {
 
+
+  //RIGHT NOW THE IDEA: the home/profile componnent will turn into a welcome modal, each of the component - matchlist - conversations - will appear in bubbles to choose from under it on the dashboard. this is the first idea, we will see how it pans out. 
   const { uid } = user;
   const [docID, setDocID] = useState();
   const [convoRequests, setConvoRequests] = useState([]);
@@ -53,34 +55,20 @@ function Dashboard({
         {adminDash === true ?
           <AdminDashboard fsUser={fsUser} navHandler={navHandler} /> :
           <div className='dashboard-body'>
-            {/* <div className='sub-nav'>
-              <div onClick={() => navHandler("Home")} className={profileTab ? "clicked" : null}>
-                <RxPerson size="3rem" />My Profile
-              </div>
-              <div onClick={() => navHandler("Matches")} className={matchListTab ? "clicked" : null}>
-                <IoPeopleCircleOutline size="3rem" />Matches
-              </div>
-              <div onClick={() => navHandler("Conversations")} className={conversationsTab ? "clicked" : null}>
-                <IoChatbubblesSharp size="3rem" />Conversations
-              </div>
-              {showNotification && <span className="notification">{convoRequests.length}</span>}
-            </div> */}
-            {profileTab && <Profile fsUser={fsUser} updateFsUser={updateFsUser} />}
-            {conversationsTab &&
-              <Conversations
-                chatHandler={chatHandler}
-                docID={docID}
-                showChatWindow={showChatWindow}
-                convos={convos}
-                fsUser={fsUser}
-                convoMutualConsentToggle={convoMutualConsentToggle} />}
-            {matchListTab &&
-              <MatchList
-                fsUser={fsUser}
-                match={match}
-                createConvo={createConvo}
-                convos={convos}
-                convoMutualConsentToggle={convoMutualConsentToggle} />}
+            <Profile fsUser={fsUser} updateFsUser={updateFsUser} />
+            <Conversations
+              chatHandler={chatHandler}
+              docID={docID}
+              showChatWindow={showChatWindow}
+              convos={convos}
+              fsUser={fsUser}
+              convoMutualConsentToggle={convoMutualConsentToggle} />
+            <MatchList
+              fsUser={fsUser}
+              match={match}
+              createConvo={createConvo}
+              convos={convos}
+              convoMutualConsentToggle={convoMutualConsentToggle} />
           </div>
         }
       </div>
