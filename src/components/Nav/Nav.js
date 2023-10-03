@@ -4,6 +4,7 @@ import './nav.css';
 import { IconContext } from "react-icons";
 import { FaArrowLeft } from 'react-icons/fa';
 import { IoPeopleCircleOutline, IoChatbubblesSharp, IoHome } from "react-icons/io5";
+import { RiUserSettingsLine } from "react-icons/ri";
 import logo from '../../assets/simpaticologogreenbg.jpg';
 
 
@@ -33,6 +34,8 @@ const Nav = ({ user, navHandler, fsUser, profileTab, conversationsTab, matchList
                 <NavItem identifier="Admin" icon={<IoChatbubblesSharp />} label="Admin Dashboard" onClick={() => navHandler("Admin")} style={adminDash ? "clicked" : null}/>
               )} */}
               <NavItem identifier="Logout" icon={<FaArrowLeft size="1rem" />} label="Logout" onClick={() => navHandler("Logout")} />
+              <NavItem identifier="Account" icon={<RiUserSettingsLine size="1rem" />} label="Account options" onClick={() => navHandler("Account")} />
+
             </ul>
           </div>
         </div>

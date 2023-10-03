@@ -5,9 +5,14 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { RxPerson } from "react-icons/rx";
 import { IoPeopleCircleOutline, IoChatbubblesSharp } from "react-icons/io5";
 
-import Conversations from './Conversations/Conversations'
-import MatchList from './MatchList/MatchList'
-import Profile from './Profile/Profile'
+// import Conversations from './Conversations/Conversations'
+// import MatchList from './MatchList/MatchList'
+// import Profile from './legacy/Profile/Profile'
+
+import WelcomeMessage from './WelcomeMessage';
+import MatchView from './MatchView/MatchView';
+import Chatroom from './Chatroom/Chatroom';
+
 import AdminDashboard from './AdminDashboard/AdminDashboard';
 import { firestore } from '../../firebase-config';
 import PropTypes from 'prop-types';
@@ -26,7 +31,6 @@ function Dashboard({
 }) {
 
 
-  //RIGHT NOW THE IDEA: the home/profile componnent will turn into a welcome modal, each of the component - matchlist - conversations - will appear in bubbles to choose from under it on the dashboard. this is the first idea, we will see how it pans out. 
   const { uid } = user;
   const [docID, setDocID] = useState();
   const [convoRequests, setConvoRequests] = useState([]);
@@ -55,20 +59,9 @@ function Dashboard({
         {adminDash === true ?
           <AdminDashboard fsUser={fsUser} navHandler={navHandler} /> :
           <div className='dashboard-body'>
-            <Profile fsUser={fsUser} updateFsUser={updateFsUser} />
-            <Conversations
-              chatHandler={chatHandler}
-              docID={docID}
-              showChatWindow={showChatWindow}
-              convos={convos}
-              fsUser={fsUser}
-              convoMutualConsentToggle={convoMutualConsentToggle} />
-            <MatchList
-              fsUser={fsUser}
-              match={match}
-              createConvo={createConvo}
-              convos={convos}
-              convoMutualConsentToggle={convoMutualConsentToggle} />
+            <WelcomeMessage fsUser={fsUser} match={match} />
+            <MatchView match={match} fsUser={fsUser} />
+            <Chatroom fsUser={fsUser} match={match} />
           </div>
         }
       </div>

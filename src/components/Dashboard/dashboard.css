@@ -1,3 +1,7 @@
-.clicked{
-  background-color:#458881 ;
+.clicked {
+  background-color: #458881;
+}
+
+.dashboard-body {
+  border: 2px black solid;
 }

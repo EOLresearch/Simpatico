@@ -13,38 +13,11 @@ body {
   font-weight: 400;
 }
 
-.app-container{
-  /* display: flex; */
-}
-
 .app-inner-container{
   width: 100%;
 
 }
-.app-header{
-  width:100%;
-  min-height:6rem;
-  text-align: center;
-  margin:3rem 2rem 0 0 ;
-  font-weight: 400;
-  font-family: "Asap",sans-serif;
-  color: #31605b;
-}
 
-.app-header h1 {
-  border-bottom: 1px solid black;
-  margin: 0;
-  font-size:3rem;
-  letter-spacing: .5rem;
-  font-weight: 600;
-}
-
-.app-header p {
-  margin: 0;
-  font-size: 1.5rem;
-  letter-spacing: .1rem;
-  padding: 0.5rem;
-}
 .app-body{
-  margin: 3rem 0;
+  /* margin: 3rem 0; */
 }

@@ -92,11 +92,6 @@ function App() {
       <div className='app-container'>
         <Nav user={user} navHandler={navHandler} fsUser={fsUser} profileTab={profileTab} conversationsTab={conversationsTab}matchListTab={matchListTab} adminDash={adminDash}/>
         <div className='app-inner-container'>
-          {/* <div className='app-header'>
-            <h1>SIMPATICO</h1>
-            <p>Connecting with Others Who Have Experienced Loss</p>
-          </div> */}
-
           <div className='app-body'>
             {error && <div>Error: {error.message}</div>}
             {

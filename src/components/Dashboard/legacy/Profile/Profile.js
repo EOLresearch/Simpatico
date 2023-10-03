@@ -1,20 +1,13 @@
-import './profile.css';
+// import './profile.css';
 import PropTypes from 'prop-types';
 import { useState } from "react";
 import { IconContext } from "react-icons";
 import { RiUserSettingsLine } from "react-icons/ri";
-import UserDetailsForm from '../../UserAuth/UserDetailsForm/UserDetailsForm';
+import UserDetailsForm from '../../../UserAuth/UserDetailsForm/UserDetailsForm';
 
 function Profile({ fsUser, updateFsUser}) {
-  const [editUserDetails, setEditUserDetails] = useState(false);
 
-  const userDetailsHandler = (boolean) => {
-    setEditUserDetails(boolean);
-  };
 
-  if (editUserDetails) {
-    return <UserDetailsForm handleToggle={()=>setEditUserDetails(!editUserDetails)} fsUser={fsUser} updateFsUser={updateFsUser} />
-  }
 
   return (
     <IconContext.Provider value={{ className: "react-icons-profile" }}>
@@ -30,9 +23,7 @@ function Profile({ fsUser, updateFsUser}) {
                 <p>Thank you for joining <strong>SIMPATICO</strong>.</p>
                 <p>This application is designed for you to create positive social interactions with others who have experienced a similar loss. We ask that you log in at least once a day to chat with your SIMPATICO match. You can see your personal details below and edit them as you wish.</p>
                 <p>Our goal is to help you find someone who can relate to your loss. We hope that you will find comfort in sharing your story and listening to the stories of others. We are here to help you through your grief journey.</p>
-                <div className='edit-user-details' onClick={() => userDetailsHandler(true)}>
-                  <p className='profile-btn'><RiUserSettingsLine /> <span>View and Edit user details</span> </p>
-                </div>
+
               </div>
             </div>
           </div>
