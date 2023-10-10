@@ -5,10 +5,6 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { RxPerson } from "react-icons/rx";
 import { IoPeopleCircleOutline, IoChatbubblesSharp } from "react-icons/io5";
 
-// import Conversations from './Conversations/Conversations'
-// import MatchList from './MatchList/MatchList'
-// import Profile from './legacy/Profile/Profile'
-
 import WelcomeMessage from './WelcomeMessage';
 import MatchView from './MatchView/MatchView';
 import Chatroom from './Chatroom/Chatroom';
@@ -29,7 +25,6 @@ function Dashboard({
   navHandler,
   updateFsUser
 }) {
-
 
   const { uid } = user;
   const [docID, setDocID] = useState();
