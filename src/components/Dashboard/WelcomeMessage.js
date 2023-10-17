@@ -1,11 +1,11 @@
 import './welcomemessage.css';
 
-function WelcomeMessage({ fsUser, match }) {
+function WelcomeMessage({ fsUser, match, navHandler }) {
   if (!fsUser) return null; // Return nothing if there's no user
 
   return (
     <div className="welcome-message">
-      <button>X</button>
+      <button onClick={e=>navHandler('welcome')}>X</button>
       <div className='image-container'>
         <img className='profile-image' alt={`Profile of ${fsUser.displayName}`} src={fsUser.photoURL} />
       </div>

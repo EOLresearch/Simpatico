@@ -18,11 +18,9 @@ function Dashboard({
   user,
   fsUser,
   match,
-  profileTab,
-  matchListTab,
-  conversationsTab,
   adminDash,
   navHandler,
+  showWelcomeMessage,
   updateFsUser
 }) {
 
@@ -54,7 +52,9 @@ function Dashboard({
         {adminDash === true ?
           <AdminDashboard fsUser={fsUser} navHandler={navHandler} /> :
           <div className='dashboard-body'>
-            <WelcomeMessage fsUser={fsUser} match={match} />
+            { showWelcomeMessage === true &&
+              <WelcomeMessage fsUser={fsUser} match={match} navHandler={navHandler} />
+            }
             <MatchView match={match} fsUser={fsUser} />
             <Chatroom fsUser={fsUser} match={match} />
           </div>

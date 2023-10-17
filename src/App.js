@@ -4,12 +4,11 @@ import Nav from './components/Nav/Nav';
 import Dashboard from './components/Dashboard/Dashboard';
 import UserAuth from './components/UserAuth/UserAuth';
 import { firestore, auth } from './firebase-config';
+import WelcomeMessage from './components/Dashboard/WelcomeMessage';
 
 function App() {
   const [user] = useAuthState(auth);
-  const [profileTab, setProfileTab] = useState(false);
-  const [matchListTab, setMatchListTab] = useState(false);
-  const [conversationsTab, setConversationsTab] = useState(false);
+  const [showWelcomeMessage, setShowWelcomeMessage] = useState(false);
   const [adminDash, setAdminDash] = useState(false);
   const [fsUser, setFsUser] = useState(null);
   const [fsMatch, setFsMatch] = useState(null);
@@ -17,7 +16,7 @@ function App() {
 
   useEffect(() => {
     if (user) {
-      setProfileTab(true);
+      setShowWelcomeMessage(true);
     }
   }, [user]);
 
@@ -53,34 +52,12 @@ function App() {
   }, [user]);
 
   const navHandler = (renderCondition) => {
-    const tabs = {
-      'Conversations': () => toggleTabs(true, false, false, false),
-      'Matches': () => toggleTabs(false, true, false, false),
-      'Home': () => toggleTabs(false, false, true, false),
-      'My Story': () => { }, // Handle My Story logic here
-      'All Off': () => toggleTabs(false, false, false, false),
-      'Logout': () => {
-        toggleTabs(false, false, false, false);
-        auth.signOut();
-        // setFsUser(null);
-      },
-      'Admin': () => setAdminDash(!adminDash),
+    if (renderCondition === 'welcome') {
+      setShowWelcomeMessage(!WelcomeMessage);
     };
+  }
 
-    const tabHandler = tabs[renderCondition];
-    if (tabHandler) {
-      tabHandler();
-    } else {
-      console.log('switch default NAV');
-    }
-  };
 
-  const toggleTabs = (conversations, matchList, profile, admin) => {
-    setConversationsTab(conversations);
-    setMatchListTab(matchList);
-    setProfileTab(profile);
-    setAdminDash(admin);
-  };
 
   const updateFsUser = (updatedUser) => {
     setFsUser(updatedUser);
@@ -90,7 +67,12 @@ function App() {
   return (
     <div className="App">
       <div className='app-container'>
-        <Nav user={user} navHandler={navHandler} fsUser={fsUser} profileTab={profileTab} conversationsTab={conversationsTab}matchListTab={matchListTab} adminDash={adminDash}/>
+        <Nav 
+          user={user} 
+          navHandler={navHandler} 
+          fsUser={fsUser} 
+          adminDash={adminDash}/>
+
         <div className='app-inner-container'>
           <div className='app-body'>
             {error && <div>Error: {error.message}</div>}
@@ -100,12 +82,10 @@ function App() {
                   user={user}
                   fsUser={fsUser}
                   match={fsMatch}
-                  profileTab={profileTab}
-                  matchListTab={matchListTab}
                   adminDash={adminDash}
-                  conversationsTab={conversationsTab}
                   navHandler={navHandler}
                   updateFsUser={updateFsUser}
+                  showWelcomeMessage={showWelcomeMessage}
                 />
               ) : (
                 <UserAuth user={user} />
