@@ -1,21 +1,14 @@
 .chatroom {
   display: flex;
-  height: 80vh;
-  margin:1rem;
 }
 
 .message-window {
-  border-radius: 2rem 0 0 2rem ;
   flex-grow: 1;
-  background-color: #f1f1f1;
-  padding: 16px;
-}
-.message-window {
-  flex-grow: 1;
-  background-color: #f1f1f1;
+  background-color: #b3b3b3;
   display: flex;
   flex-direction: column;
   padding: 16px;
+  height: 80vh;
 }
 
 .message-content {
@@ -51,7 +44,7 @@ button {
 
 .right-third {
   width: 5%;
-  background-color: #f9f9f9;
+  background-color: #5a5a5a;
   border-left: 1px solid #ccc;
   overflow-y: auto;
   transition: width 0.3s ease;
