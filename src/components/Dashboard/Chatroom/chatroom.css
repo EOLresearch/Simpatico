@@ -31,10 +31,21 @@
 
 input[type="text"] {
   flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  box-sizing: border-box;
 }
 
 button {
-  margin-left: 8px;
+  margin-left: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 
@@ -57,3 +68,4 @@ button {
   background-color: #ddd;
   margin: 5px;
 }
+
