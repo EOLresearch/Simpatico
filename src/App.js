@@ -4,21 +4,15 @@ import Nav from './components/Nav/Nav';
 import Dashboard from './components/Dashboard/Dashboard';
 import UserAuth from './components/UserAuth/UserAuth';
 import { firestore, auth } from './firebase-config';
-import WelcomeMessage from './components/Dashboard/WelcomeMessage';
 
 function App() {
   const [user] = useAuthState(auth);
-  const [showWelcomeMessage, setShowWelcomeMessage] = useState(false);
+  const [showWelcomeMessage, setShowWelcomeMessage] = useState(true);
   const [adminDash, setAdminDash] = useState(false);
   const [fsUser, setFsUser] = useState(null);
   const [fsMatch, setFsMatch] = useState(null);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    if (user) {
-      setShowWelcomeMessage(true);
-    }
-  }, [user]);
 
   useEffect(() => {
     const fetchUserAndMatch = async () => {
@@ -32,7 +26,6 @@ function App() {
         if (!userSnapshot.empty) {
           const userData = userSnapshot.docs[0].data();
           setFsUser(userData);
-
           if (userData.simpaticoMatch) {
             const matchDoc = await usersRef.doc(userData.simpaticoMatch).get();
             if (matchDoc.exists) {
@@ -53,10 +46,15 @@ function App() {
 
   const navHandler = (renderCondition) => {
     if (renderCondition === 'welcome') {
-      setShowWelcomeMessage(!WelcomeMessage);
-    };
+      setShowWelcomeMessage(false);
+    } else if (renderCondition === 'Logout') {
+      auth.signOut();
+      setShowWelcomeMessage(false);
+      setFsUser(null);
+      setFsMatch(null);
+    }
+    
   }
-
 
 
   const updateFsUser = (updatedUser) => {
@@ -100,4 +98,4 @@ function App() {
   );
 }
 
-export default App;
+export default App; 

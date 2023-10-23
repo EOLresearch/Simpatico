@@ -8,8 +8,8 @@
 }
 
 .nav-container img {
-  height: 12rem;
-  width: 12rem;
+  height: 10rem;
+  width: 10rem;
   border-radius: 50%;
   object-fit: cover;
   position: absolute;
@@ -59,7 +59,7 @@
 }
 
 .nav-body ul li {
-  padding: 1.3rem;
+  padding: 0.8rem 1.3rem;
   font-size: 1.3rem;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }

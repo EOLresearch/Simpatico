@@ -6,7 +6,6 @@ import { RxPerson } from "react-icons/rx";
 import { IoPeopleCircleOutline, IoChatbubblesSharp } from "react-icons/io5";
 
 import WelcomeMessage from './WelcomeMessage';
-import MatchView from './MatchView/MatchView';
 import Chatroom from './Chatroom/Chatroom';
 
 import AdminDashboard from './AdminDashboard/AdminDashboard';
@@ -55,7 +54,7 @@ function Dashboard({
             { showWelcomeMessage === true &&
               <WelcomeMessage fsUser={fsUser} match={match} navHandler={navHandler} />
             }
-            <MatchView match={match} fsUser={fsUser} />
+
             <Chatroom fsUser={fsUser} match={match} />
           </div>
         }
@@ -64,14 +63,6 @@ function Dashboard({
   );
 }
 
-Dashboard.propTypes = {
-  user: PropTypes.object.isRequired,
-  fsUser: PropTypes.object,
-  profileTab: PropTypes.bool.isRequired,
-  matchListTab: PropTypes.bool.isRequired,
-  conversationsTab: PropTypes.bool.isRequired,
-  adminDash: PropTypes.bool.isRequired,
-  navHandler: PropTypes.func.isRequired,
-};
+
 
 export default Dashboard;
