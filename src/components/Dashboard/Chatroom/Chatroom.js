@@ -5,25 +5,42 @@ import DiscussionsList from './DiscussionsList';
 import ConversationsList from './ConversationsList';
 
 function Chatroom() {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [activeList, setActiveList] = useState(null);
+  const [leftExpanded, setLeftExpanded] = useState(false);
+  const [rightExpanded, setRightExpanded] = useState(false);
+  const [activeLeftList, setActiveLeftList] = useState(null);
+  const [activeRightList, setActiveRightList] = useState('discussions');
   const [message, setMessage] = useState("");
 
-  const renderList = () => {
-    if (activeList === 'contacts') return <ContactsList />;
-    if (activeList === 'discussions') return <DiscussionsList />;
-    if (activeList === 'conversations') return <ConversationsList />;
+  const renderLeftList = () => {
+    if (activeLeftList === 'contacts') return <ContactsList />;
+    if (activeLeftList === 'conversations') return <ConversationsList />;
+    return null;
+  };
+
+  const renderRightList = () => {
+    if (activeRightList === 'discussions') return <DiscussionsList />;
     return null;
   };
 
   const handleSendMessage = () => {
     console.log("Sending message: ", message);
-
     setMessage(""); // Clear the input
   };
 
   return (
     <div className="chatroom">
+      <div className={`left-panel ${leftExpanded ? 'expanded' : ''}`}>
+        <button className="toggle-btn" onClick={() => setLeftExpanded(!leftExpanded)}>
+          {leftExpanded ? '-' : '+'}
+        </button>
+        {leftExpanded && (
+          <div>
+            <button onClick={() => setActiveLeftList('contacts')}>Contacts</button>
+            <button onClick={() => setActiveLeftList('conversations')}>Conversations</button>
+          </div>
+        )}
+        {leftExpanded && renderLeftList()}
+      </div>
       <div className="message-window">
         <div className="message-content">
           {/* Your message content here */}
@@ -38,22 +55,14 @@ function Chatroom() {
           <button onClick={handleSendMessage}>Send</button>
         </div>
       </div>
-      <div className={`right-third ${isExpanded ? 'expanded' : ''}`}>
-        <button className="toggle-btn" onClick={() => setIsExpanded(!isExpanded)}>
-          {isExpanded ? '-' : '+'}
+      <div className={`right-panel ${rightExpanded ? 'expanded' : ''}`}>
+        <button className="toggle-btn" onClick={() => setRightExpanded(!rightExpanded)}>
+          {rightExpanded ? '-' : '+'}
         </button>
-        {isExpanded && (
-          <div>
-            <button className="toggle-btn" onClick={() => setActiveList('contacts')}>Contacts</button>
-            <button className="toggle-btn" onClick={() => setActiveList('discussions')}>Discussions</button>
-            <button className="toggle-btn" onClick={() => setActiveList('conversations')}>Conversations</button>
-          </div>
-        )}
-        {isExpanded && renderList()}
+        {rightExpanded && renderRightList()}
       </div>
     </div>
   );
-  
 }
 
 export default Chatroom;
