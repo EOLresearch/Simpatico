@@ -72,6 +72,7 @@ export const reAuth = (email, password, displayToggle, setAnError) => {
     displayToggle(true)
 
   }).catch((error) => {
+    // An error ocurred
     console.log(error.message)
     setAnError(error.message)
   });
@@ -81,12 +82,14 @@ export const updateUserEmail = async (uid, newEmail) => {
   const userRef = firestore.collection('users').doc(uid);
   const userAuth = auth.currentUser;
 
+  // First, update the email in Firebase Auth
   if (userAuth) {
     await userAuth.updateEmail(newEmail).catch(error => {
       console.error("Error updating email in Auth: ", error);
       throw error;
     });
 
+    // Send verification email to the new email address
     await userAuth.sendEmailVerification().catch(error => {
       console.error("Error sending verification email: ", error);
       throw error;
@@ -95,6 +98,7 @@ export const updateUserEmail = async (uid, newEmail) => {
     throw new Error("No authenticated user found.");
   }
 
+  // Then, update the email in Firestore
   return userRef.update({ email: newEmail })
     .catch(error => {
       console.error("Error updating email in Firestore: ", error);
@@ -108,7 +112,7 @@ export const sendResetPasswordEmail = async (email) => {
       console.log("Password reset email sent!");
   } catch (error) {
       console.error("Error sending password reset email: ", error);
-      throw error; 
+      throw error; // Forward the error so you can notify the user or handle it in your UI.
   }
 };
 
