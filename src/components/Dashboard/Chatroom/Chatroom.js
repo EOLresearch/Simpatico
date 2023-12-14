@@ -5,8 +5,8 @@ import DiscussionsList from './DiscussionsList';
 import ConversationsList from './ConversationsList';
 
 function Chatroom() {
-  const [leftExpanded, setLeftExpanded] = useState(false);
-  const [rightExpanded, setRightExpanded] = useState(false);
+  const [leftExpanded, setLeftExpanded] = useState(true);
+  const [rightExpanded, setRightExpanded] = useState(true);
   const [activeLeftList, setActiveLeftList] = useState(null);
   const [activeRightList, setActiveRightList] = useState('discussions');
   const [message, setMessage] = useState("");
