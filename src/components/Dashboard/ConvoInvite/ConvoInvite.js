@@ -1,6 +1,6 @@
 import './convoInvite.css';
 import { useState } from "react";
-import { convoMutualConsentToggle } from '../../../helpers/firebaseHelpers';
+import { convoMutualConsentToggle } from '../../../helpers/firebasehelpers';
 
 export default function ConvoInvite({ fsUser, convo, createConvo }) {
 

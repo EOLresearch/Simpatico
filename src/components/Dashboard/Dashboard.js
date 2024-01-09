@@ -11,7 +11,7 @@ import Profile from './Profile/Profile'
 import AdminDashboard from './AdminDashboard/AdminDashboard';
 import { firestore } from '../../firebase-config';
 import PropTypes from 'prop-types';
-import { convoMutualConsentToggle, createConvo } from '../../helpers/firebaseHelpers'
+import { convoMutualConsentToggle, createConvo } from '../../helpers/firebasehelpers';
 
 function Dashboard({
   user,
