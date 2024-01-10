@@ -11,7 +11,7 @@ import Chatroom from './Chatroom/Chatroom';
 import AdminDashboard from './AdminDashboard/AdminDashboard';
 import { firestore } from '../../firebase-config';
 import PropTypes from 'prop-types';
-import { convoMutualConsentToggle, createConvo } from '../../helpers/firebaseHelpers'
+import { convoMutualConsentToggle, createConvo } from '../../helpers/firebasehelpers';
 
 function Dashboard({
   user,
@@ -45,6 +45,8 @@ function Dashboard({
     setShowChatWindow(true);
   }
 
+  // first idea is that each user shold have a welcome message on their user record giving admins the power to give custom or pre-written welcome messages to each user- you have been matched with this person for this reason, etc. 
+
   return (
     <IconContext.Provider value={{ className: "react-icons-dashboard" }}>
       <div className='dashboard-container'>
@@ -54,7 +56,6 @@ function Dashboard({
             { showWelcomeMessage === true &&
               <WelcomeMessage fsUser={fsUser} match={match} navHandler={navHandler} />
             }
-
             <Chatroom fsUser={fsUser} match={match} />
           </div>
         }

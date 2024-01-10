@@ -6,14 +6,23 @@
 .left-panel,
 .right-panel {
   width: 5%;
-  background-color: #31605b;
-  /* border: 1px solid #ccc; */
+  background-color: #a8e5df2b;
   transition: width 0.3s ease;
+  border: 5px rgba(255, 255, 255, 0.493) solid;
 }
 
 .left-panel.expanded,
 .right-panel.expanded {
   width: 33%;
+}
+
+.left-panel{
+  border-radius: 0 1rem 1rem 0;
+  border-left:none;
+}
+.right-panel{
+  border-radius: 1rem 0 0 1rem;
+  border-right:none;
 }
 
 /* Message Window */
@@ -23,8 +32,9 @@
   display: flex;
   flex-direction: column;
   margin: 1rem;
-  height: 81vh;
+  height: 80vh;
   border-radius: 2rem;
+  border: 5px #a8e5df5a solid;
 }
 
 .message-content {
