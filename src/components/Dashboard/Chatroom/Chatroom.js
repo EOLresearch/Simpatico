@@ -30,9 +30,9 @@ function Chatroom() {
   return (
     <div className="chatroom">
       <div className={`left-panel ${leftExpanded ? 'expanded' : ''}`}>
-        {/* <button className="toggle-btn" onClick={() => setLeftExpanded(!leftExpanded)}>
+        <button className="toggle-btn" onClick={() => setLeftExpanded(!leftExpanded)}>
           {leftExpanded ? '-' : '+'}
-        </button> */}
+        </button>
         {leftExpanded && (
           <div>
             <button onClick={() => setActiveLeftList('contacts')}>Contacts</button>
@@ -56,9 +56,9 @@ function Chatroom() {
         </div>
       </div>
       <div className={`right-panel ${rightExpanded ? 'expanded' : ''}`}>
-        {/* <button className="toggle-btn" onClick={() => setRightExpanded(!rightExpanded)}>
+        <button className="toggle-btn" onClick={() => setRightExpanded(!rightExpanded)}>
           {rightExpanded ? '-' : '+'}
-        </button> */}
+        </button>
         {rightExpanded && renderRightList()}
       </div>
     </div>
