@@ -31,7 +31,7 @@ function Chatroom() {
     <div className="chatroom">
       <div className={`left-panel ${leftExpanded ? 'expanded' : ''}`}>
         <button className="toggle-btn" onClick={() => setLeftExpanded(!leftExpanded)}>
-          {leftExpanded ? '-' : '+'}
+          {leftExpanded ? '<' : '>'}
         </button>
         {leftExpanded && (
           <div>
@@ -57,7 +57,7 @@ function Chatroom() {
       </div>
       <div className={`right-panel ${rightExpanded ? 'expanded' : ''}`}>
         <button className="toggle-btn" onClick={() => setRightExpanded(!rightExpanded)}>
-          {rightExpanded ? '-' : '+'}
+          {rightExpanded ? '>' : '<'}
         </button>
         {rightExpanded && renderRightList()}
       </div>

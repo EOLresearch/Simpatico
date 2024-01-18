@@ -3,7 +3,7 @@ import React from 'react';
 function DiscussionsList({ discussions }) {
     return (
         <div className="discussions-list">
-            {/* Render discussions here */}
+            <h2>discussions</h2>
         </div>
     );
 }
