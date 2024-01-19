@@ -29,6 +29,7 @@ const Nav = ({ user, navHandler, fsUser, profileTab, conversationsTab, matchList
             <ul>
               <NavItem identifier="Logout" icon={<FaArrowLeft size="1rem" />} label="Logout" onClick={() => navHandler("Logout")} />
               <NavItem identifier="Account" icon={<RiUserSettingsLine size="1rem" />} label="Account options" onClick={() => navHandler("Account")} />
+              <NavItem identifier="adminDash" icon={<IoPeopleCircleOutline size="1rem" />} label="Admin Dashboard" onClick={() => navHandler("adminDash")} />
             </ul>
           </div>
         </div>

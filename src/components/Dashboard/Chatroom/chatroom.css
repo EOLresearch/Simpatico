@@ -179,3 +179,23 @@ button {
   top: 0.5rem;
   left:1rem;
 }
+
+.matchcard-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1rem;
+  color: rgba(0, 0, 0, 0.65);
+  background-color: #5bcabf;
+  border: 5px rgba(0, 0, 0, 0.571) solid;
+  padding: 1rem;
+
+}
+
+.matchcard-container .header{
+  width: 100%;
+
+}
+.matchcard-container .body {
+  filter: blur(5px);
+}

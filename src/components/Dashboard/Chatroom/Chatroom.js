@@ -22,8 +22,8 @@ function Chatroom({ fsUser, match}) {
   };
 
   const renderRightList = () => {
-    if (activeRightList === 'prompts') return <PromptsList />; //turn this into prompts
-    if (activeRightList === 'match') return <MatchCard />;
+    if (activeRightList === 'prompts') return <PromptsList contact={match}/>; //turn this into prompts
+    if (activeRightList === 'match') return <MatchCard contact={match}/>;
     return null;
   };
 
@@ -49,7 +49,6 @@ function Chatroom({ fsUser, match}) {
       </div>
       <div className="message-window">
         <div className="message-content">
-          {/* Your message content here */}
         </div>
         <div className="message-input-wrapper">
           <input
