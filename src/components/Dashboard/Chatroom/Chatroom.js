@@ -8,7 +8,7 @@ import { RxCaretRight, RxCaretLeft } from "react-icons/rx";
 import { IconContext } from 'react-icons';
 
 
-function Chatroom() {
+function Chatroom({ fsUser, match}) {
   const [leftExpanded, setLeftExpanded] = useState(false);
   const [rightExpanded, setRightExpanded] = useState(false);
   const [activeLeftList, setActiveLeftList] = useState('contacts');
@@ -16,8 +16,8 @@ function Chatroom() {
   const [message, setMessage] = useState("");
 
   const renderLeftList = () => {
-    if (activeLeftList === 'contacts') return <ContactsList />;
-    if (activeLeftList === 'conversations') return <ConversationsList />;
+    if (activeLeftList === 'contacts') return <ContactsList contact={match}/>;
+    if (activeLeftList === 'conversations') return <ConversationsList contact={match}/>;
     return null;
   };
 
@@ -41,8 +41,8 @@ function Chatroom() {
         </button>
         {leftExpanded && (
           <div className='slider-btns'>
-            <button onClick={() => setActiveLeftList('contacts')}>Contacts</button>
-            <button onClick={() => setActiveLeftList('conversations')}>Conversations</button>
+            <button className={`${activeLeftList === 'contacts' ? 'activated-left' : ''}`} onClick={() => setActiveLeftList('contacts')}>Contacts</button>
+            <button className={`${activeLeftList === 'conversations' ? 'activated-left' : ''}`} onClick={() => setActiveLeftList('conversations')}>Conversations</button>
           </div>
         )}
         {leftExpanded && renderLeftList()}
@@ -63,13 +63,13 @@ function Chatroom() {
       </div>
       <div className={`right-panel ${rightExpanded ? 'expanded' : ''}`}>
         <button className="toggle-btn" onClick={() => setRightExpanded(!rightExpanded)}>
-          {rightExpanded ? <RxCaretLeft /> : <RxCaretRight />}
+          {rightExpanded ? <RxCaretRight /> : <RxCaretLeft />}
         </button>
 
           {rightExpanded && (
             <div className='slider-btns'>
-              <button onClick={() => setActiveRightList('prompts')}>Prompts</button>
-              <button onClick={() => setActiveRightList('match')}>Match</button>
+              <button className={`${activeRightList === 'match' ? 'activated-right' : ''}`}  onClick={() => setActiveRightList('match')}>Match</button>
+              <button className={`${activeRightList === 'prompts' ? 'activated-right' : ''}`}  onClick={() => setActiveRightList('prompts')}>Prompts</button>
             </div>
           )}
         
