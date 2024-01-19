@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import './chatroom.css';
 import ContactsList from './ContactsList';
-import DiscussionsList from './DiscussionsList';
+import PromptsList from './PromptsList';
 import ConversationsList from './ConversationsList';
+import MatchCard from './MatchCard';
+import { RxCaretRight, RxCaretLeft } from "react-icons/rx";
+import { IconContext } from 'react-icons';
+
 
 function Chatroom() {
-  const [leftExpanded, setLeftExpanded] = useState(true);
-  const [rightExpanded, setRightExpanded] = useState(true);
-  const [activeLeftList, setActiveLeftList] = useState(null);
-  const [activeRightList, setActiveRightList] = useState('discussions');
+  const [leftExpanded, setLeftExpanded] = useState(false);
+  const [rightExpanded, setRightExpanded] = useState(false);
+  const [activeLeftList, setActiveLeftList] = useState('contacts');
+  const [activeRightList, setActiveRightList] = useState('match');
   const [message, setMessage] = useState("");
 
   const renderLeftList = () => {
@@ -18,7 +22,8 @@ function Chatroom() {
   };
 
   const renderRightList = () => {
-    if (activeRightList === 'discussions') return <DiscussionsList />;
+    if (activeRightList === 'prompts') return <PromptsList />; //turn this into prompts
+    if (activeRightList === 'match') return <MatchCard />;
     return null;
   };
 
@@ -28,13 +33,14 @@ function Chatroom() {
   };
 
   return (
+    <IconContext.Provider value={{ className: "react-icons-chatroom" }}>
     <div className="chatroom">
       <div className={`left-panel ${leftExpanded ? 'expanded' : ''}`}>
         <button className="toggle-btn" onClick={() => setLeftExpanded(!leftExpanded)}>
-          {leftExpanded ? '<' : '>'}
+          {leftExpanded ? <RxCaretLeft /> : <RxCaretRight />}
         </button>
         {leftExpanded && (
-          <div>
+          <div className='slider-btns'>
             <button onClick={() => setActiveLeftList('contacts')}>Contacts</button>
             <button onClick={() => setActiveLeftList('conversations')}>Conversations</button>
           </div>
@@ -57,11 +63,20 @@ function Chatroom() {
       </div>
       <div className={`right-panel ${rightExpanded ? 'expanded' : ''}`}>
         <button className="toggle-btn" onClick={() => setRightExpanded(!rightExpanded)}>
-          {rightExpanded ? '>' : '<'}
+          {rightExpanded ? <RxCaretLeft /> : <RxCaretRight />}
         </button>
-        {rightExpanded && renderRightList()}
+
+          {rightExpanded && (
+            <div className='slider-btns'>
+              <button onClick={() => setActiveRightList('prompts')}>Prompts</button>
+              <button onClick={() => setActiveRightList('match')}>Match</button>
+            </div>
+          )}
+        
+        {rightExpanded && (renderRightList())}
       </div>
     </div>
+    </IconContext.Provider>
   );
 }
 
