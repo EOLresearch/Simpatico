@@ -6,43 +6,14 @@ import UserAuth from './components/UserAuth/UserAuth';
 import { firestore, auth } from './firebase-config';
 
 function App() {
-  const [user] = useAuthState(auth);
+  const [user] = useAuthState(auth); // going to need a cognito switheroo here
   const [showWelcomeMessage, setShowWelcomeMessage] = useState(true);
   const [adminDash, setAdminDash] = useState(false);
-  const [fsUser, setFsUser] = useState(null);
-  const [fsMatch, setFsMatch] = useState(null);
+  const [fsUser, setFsUser] = useState(null); // no more firestore, this is now a mysql stored user to sinc with the cognito user 
+  const [fsMatch, setFsMatch] = useState(null); // lets rename to simpaticoMatch
   const [error, setError] = useState(null);
 
-
-  useEffect(() => {
-    const fetchUserAndMatch = async () => {
-      if (!user) return;
-
-      const usersRef = firestore.collection('users');
-      const userQuery = usersRef.where('email', '==', user.email);
-
-      try {
-        const userSnapshot = await userQuery.get();
-        if (!userSnapshot.empty) {
-          const userData = userSnapshot.docs[0].data();
-          setFsUser(userData);
-          if (userData.simpaticoMatch) {
-            const matchDoc = await usersRef.doc(userData.simpaticoMatch).get();
-            if (matchDoc.exists) {
-              setFsMatch(matchDoc.data());
-            } else {
-              throw new Error("No such match user document!");
-            }
-          }
-        }
-      } catch (error) {
-        setError(error);
-        console.log('Error getting documents: ', error);
-      }
-    };
-
-    fetchUserAndMatch();
-  }, [user]);
+  //will need a useEffect to fetch the user, the user's conversations, and the user's contacts
 
   const navHandler = (renderCondition) => {
     if (renderCondition === 'welcome') {

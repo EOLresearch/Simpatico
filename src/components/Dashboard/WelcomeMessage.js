@@ -11,7 +11,7 @@ function WelcomeMessage({ fsUser, match, navHandler }) {
           <img className='profile-image' alt={`Profile of ${fsUser.displayName}`} src={fsUser.photoURL} />
         </div>
         <div className='header-text'>
-          <p><strong>Hello, {fsUser.displayName}.</strong></p>
+          <p><strong>Hello, Charles</strong></p>
           <p>Thank you for joining <strong>SIMPATICO</strong>.</p>
         </div>
         <button onClick={e => navHandler('welcome')}>X</button>
