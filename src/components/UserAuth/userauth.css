@@ -90,3 +90,15 @@ h5 {
 .fields-container form [type=number] {
   width: unset;
 }
+
+.forgotPassForm {
+  background-color: white;
+  margin: 5% auto;
+  padding: 3rem 8rem;
+  border: 1rem solid #064d4556;
+} 
+.forgotPassForm button{
+  width: 70%;
+  background-color: #31605b;
+  color: white;
+}
