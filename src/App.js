@@ -24,14 +24,7 @@ function App() {
       setFsUser(null);
       setFsMatch(null);
     }
-    
   }
-
-
-  const updateFsUser = (updatedUser) => {
-    setFsUser(updatedUser);
-  };
-
 
   return (
     <div className="App">
@@ -53,7 +46,6 @@ function App() {
                   match={fsMatch}
                   adminDash={adminDash}
                   navHandler={navHandler}
-                  updateFsUser={updateFsUser}
                   showWelcomeMessage={showWelcomeMessage}
                 />
               ) : (

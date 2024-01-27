@@ -7,16 +7,9 @@ textarea {
   all: unset;
 }
 
-h3, h5{
-  margin:0.3rem;
-}
-
-.auth-wrapper {
-  color: #31605b;
-  text-align: center;
-  width: 100%;
-  padding-top: 1rem;
-  padding-bottom: 3rem;
+h3,
+h5 {
+  margin: 0.3rem;
 }
 
 .auth-wrapper button {
@@ -25,9 +18,7 @@ h3, h5{
   font-size: 1rem;
   color: #31605b;
 }
-.login{
-  margin-top:15%;
-}
+
 .callout-container {
   display: flex;
   justify-content: center;
@@ -50,21 +41,39 @@ h3, h5{
   width: 100%;
 }
 
-.fields-container #login {
+.fields-container .login {
   color: black;
-  margin: 0 auto;
+  margin: 5% auto;
   display: flex;
   flex-direction: column;
   text-align: left;
   max-width: 45%;
-  position: relative;
-  margin-top: 2rem;
+  background-color: #ffffff;
+  padding: 3rem 8rem;
+  border-radius: 0.5rem;
+  border: 1rem solid #064d4556;
 }
+.fields-container .login h1{
+  font-size: 1.5rem;
+  color: rgba(0, 0, 0, 0.564);
+
+
+}
+
+.fields-container .login input {
+  padding: 1rem;
+  background-color: transparent;
+}
+
+.fields-container .login input::placeholder {
+  color: rgba(0, 0, 0, 0.442);
+}
+
 
 .fields-container form label {
   font-size: 1rem;
   color: rgba(0, 0, 0, 0.442);
-  padding: 0.5rem;;
+  padding: 0.5rem;
 }
 
 .fields-container form input {
@@ -74,9 +83,10 @@ h3, h5{
   color: rgba(0, 0, 0, 0.842);
 }
 
-.fields-container form [type=date]{
-  width:unset;
+.fields-container form [type=date] {
+  width: unset;
 }
-.fields-container form [type=number]{
-  width:unset;
+
+.fields-container form [type=number] {
+  width: unset;
 }

@@ -69,7 +69,6 @@ const UserAuth = ({ user }) => {
       <div className="auth-container">
         {view === 'login' && (
           <div className="fields-container login">
-            <h4>Log in to your profile</h4>
 
             {user && !user.emailVerified && (
               <div onClick={() => auth.signOut()} className='modal-bg'>
@@ -81,7 +80,8 @@ const UserAuth = ({ user }) => {
               </div>
             )}
 
-            <form id="login" onSubmit={handleLogin}>
+            <form className="login" onSubmit={handleLogin}>
+            <h1>Login</h1>
               <div className='input-container'>
                 <i className="fas fa-envelope"></i>
                 <input id="email" type="email" placeholder="Your Email Address" value={email} onChange={handleChange} name="email" required />
