@@ -1,5 +1,7 @@
 .chatroom {
   display: flex;
+  height: 100%;
+  overflow: hidden;
 }
 
 /* Left and Right Panels */
@@ -17,14 +19,14 @@
 
 .left-panel .toggle-btn {
   position: absolute;
-  right: 0; /* Aligns to the right of the left panel */
-  top: 10px; /* Adjust vertical position as needed */
+  right: 0; 
+  top: 10px;
 }
 
 .right-panel .toggle-btn {
   position: absolute;
-  left: 0; /* Aligns to the left of the right panel */
-  top: 10px; /* Adjust vertical position as needed */
+  left: 0; 
+  top: 10px;
 }
 
 .left-panel.expanded,
@@ -48,9 +50,9 @@
   display: flex;
   flex-direction: column;
   margin: 1rem;
-  height: 80vh;
   border-radius: 2rem;
   border: 5px #a8e5df5a solid;
+  height: 80vh;
 }
 
 .message-content {
