@@ -15,7 +15,7 @@ const NavItem = ({ identifier, icon, label, onClick, style }) => (
   </li>
 );
 
-const Nav = ({ user, navHandler, fsUser, profileTab, conversationsTab, matchListTab, adminDash }) => {
+const Nav = ({ user, navHandler }) => {
   const navStyles = user ? "" : "no-user-nav";
 
   return (

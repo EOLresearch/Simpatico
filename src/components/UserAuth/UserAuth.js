@@ -5,10 +5,9 @@ import PropTypes from 'prop-types';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import UserDetailsForm from './UserDetailsForm/UserDetailsForm';
 import './userauth.css';
-import { auth } from '../../firebase-config';
 
 
-const UserAuth = ({ user }) => {
+const UserAuth = ({  }) => {
   const [view, setView] = useState('login');
   const [error, setError] = useState('');
   const [email, setEmail] = useState('');
@@ -16,26 +15,22 @@ const UserAuth = ({ user }) => {
 
   const handleSendResetEmail = async (e) => {
     e.preventDefault();
-    try {
-      await auth.sendPasswordResetEmail(email);
-      console.log("Password reset email sent");
-      setError("passwordreset");
-    } catch (error) {
-      console.error(error);
-      setError(error.message);
-    }
+
+    console.log('password reset email function fired');
+    // try {
+    //   await auth.sendPasswordResetEmail(email);
+    //   console.log("Password reset email sent");
+    //   setError("passwordreset");
+    // } catch (error) {
+    //   console.error(error);
+    //   setError(error.message);
+    // }
   }
 
   const handleLogin = (e) => {
     e.preventDefault();
 
-    auth.signInWithEmailAndPassword( email, password)
-      .then(() => {
-        // Signed in successfully
-      })
-      .catch((error) => {
-        setError(error.message);
-      });
+    console.log('login function fired');
   }
 
   const handleChange = (e) => {
@@ -52,8 +47,7 @@ const UserAuth = ({ user }) => {
   }
 
   const handleSendVerificationEmail = () => {
-    console.log('verification email sent');
-    auth.currentUser.sendEmailVerification();
+    console.log('verification email function fired');
   }
 
   const handleToggleView = (view) => {
@@ -70,18 +64,9 @@ const UserAuth = ({ user }) => {
         {view === 'login' && (
           <div className="fields-container login">
 
-            {user && !user.emailVerified && (
-              <div onClick={() => auth.signOut()} className='modal-bg'>
-                <div className='user-verify'>
-                  <p>Please check your email to verify your account</p>
-                  <button onClick={handleSendVerificationEmail}>Resend Verification Email</button>
-                  <button onClick={() => auth.signOut()}>close</button>
-                </div>
-              </div>
-            )}
 
             <form className="login" onSubmit={handleLogin}>
-            <h1>Login</h1>
+              <h1>Login</h1>
               <div className='input-container'>
                 <i className="fas fa-envelope"></i>
                 <input id="email" type="email" placeholder="Your Email Address" value={email} onChange={handleChange} name="email" required />
@@ -120,9 +105,5 @@ const UserAuth = ({ user }) => {
     </div>
   );
 }
-
-UserAuth.propTypes = {
-  user: PropTypes.object,
-};
 
 export default UserAuth;
