@@ -5,12 +5,13 @@ import UserAuth from './components/UserAuth/UserAuth';
 import { useAuth } from './components/UserAuth/AuthContext';
 
 function App() {
-  const { user, signIn, signOut } = useAuth();
+  const { cognitoUser, signIn, signOut } = useAuth();
   const [showWelcomeMessage, setShowWelcomeMessage] = useState(true);
   const [adminDash, setAdminDash] = useState(false);
-  const [fsUser, setFsUser] = useState(null); // no more firestore, this is now a mysql stored user to sinc with the cognito user 
-  const [fsMatch, setFsMatch] = useState(null); // lets rename to simpaticoMatch
+  const [user, setUser] = useState(null);
+  const [simpaticoMatch, setSimpaticoMatch] = useState(null);
   const [error, setError] = useState(null);
+
   //will need a useEffect to fetch the user, the user's conversations, and the user's contacts
 
 
@@ -19,39 +20,40 @@ function App() {
       setShowWelcomeMessage(false);
     } else if (renderCondition === 'Logout') {
       setShowWelcomeMessage(false);
-      setFsUser(null);
-      setFsMatch(null);
+      setUser(null);
+      simpaticoMatch(null);
     }
   }
-  console.log('Received user in component:', user);
+  console.log('Received user in component:', cognitoUser);
+  
   return (
-      <div className="App">
-        <div className='app-container'>
-          <Nav
-            navHandler={navHandler}
-            adminDash={adminDash}
-          />
+    <div className="App">
+      <div className='app-container'>
+        <Nav
+          navHandler={navHandler}
+          adminDash={adminDash}
+        />
 
-          <div className='app-inner-container'>
-            <div className='app-body'>
-              {error && <div>Error: {error.message}</div>}
+        <div className='app-inner-container'>
+          <div className='app-body'>
+            {error && <div>Error: {error.message}</div>}
 
-              {user && (
-                // Render the Dashboard currently only if user is not null
-                <Dashboard
-                  user={user}
-                  match={fsMatch}
-                  adminDash={adminDash}
-                  navHandler={navHandler}
-                  showWelcomeMessage={showWelcomeMessage}
-                />
-              )}
+            {cognitoUser && (
+              // Render the Dashboard currently only if user is not null
+              <Dashboard
+                user={user}
+                simpaticoMatch={simpaticoMatch}
+                adminDash={adminDash}
+                navHandler={navHandler}
+                showWelcomeMessage={showWelcomeMessage}
+              />
+            )}
 
-              {!user && <UserAuth />}
-            </div>
+            {!cognitoUser && <UserAuth />}
           </div>
         </div>
       </div>
+    </div>
   );
 }
 

@@ -1,7 +1,4 @@
-// UserAuth.js
 import React, { useState } from "react";
-// import { signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
-import PropTypes from 'prop-types';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import UserDetailsForm from './UserDetailsForm/UserDetailsForm';
 import './userauth.css';
@@ -15,16 +12,7 @@ const UserAuth = ({  }) => {
 
   const handleSendResetEmail = async (e) => {
     e.preventDefault();
-
     console.log('password reset email function fired');
-    // try {
-    //   await auth.sendPasswordResetEmail(email);
-    //   console.log("Password reset email sent");
-    //   setError("passwordreset");
-    // } catch (error) {
-    //   console.error(error);
-    //   setError(error.message);
-    // }
   }
 
   const handleLogin = (e) => {
