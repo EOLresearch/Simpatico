@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
-import { createUserWithEmailAndPassword } from "firebase/auth";
 import ErrorMessage from '../../ErrorMessage/ErrorMessage';
 import './userdetailsform.css';
 
@@ -8,13 +7,9 @@ import Section from './Section';
 import InputField from './InputField';
 import SelectField from './SelectField';
 
-import { reAuth, updateUserEmail, sendResetPasswordEmail, updateUserDetails } from '../../../helpers/firebasehelpers-legacy';
-
-import { auth, firestore } from '../../../firebase-config';
-
 import { US_STATES, RACE_OPTIONS, ETHNICITY_OPTIONS, BIOLOGICAL_SEX_OPTIONS, EDUCATION_OPTIONS, HOUSEHOLD_OPTIONS, KINSHIP_OPTIONS, CAUSE_OPTIONS } from "../../../helpers/optionsArrays";
 
-const UserDetailsForm = ({ handleToggle, fsUser, updateFsUser }) => {
+const UserDetailsForm = ({ handleToggle }) => {
   const [anError, setAnError] = useState('')
   const [consent, setConsent] = useState(false)
   const [isUpdateForm, setIsUpdateForm] = useState(false)
@@ -58,12 +53,12 @@ const UserDetailsForm = ({ handleToggle, fsUser, updateFsUser }) => {
     setUserDetails(prevDetails => ({ ...prevDetails, photoURL: getRandomAvatarURL(avatarOptions) }));
   }, []);
 
-  useEffect(() => {
-    if (fsUser) {
-      setIsUpdateForm(true)
-      setUserDetails(prevDetails => ({ ...prevDetails, ...fsUser }));
-    }
-  }, [fsUser]);
+  // useEffect(() => {
+  //   if (fsUser) {
+  //     setIsUpdateForm(true)
+  //     setUserDetails(prevDetails => ({ ...prevDetails, ...fsUser }));
+  //   }
+  // }, [fsUser]);
 
   const cancelError = () => {
     setAnError('')
@@ -117,8 +112,8 @@ const UserDetailsForm = ({ handleToggle, fsUser, updateFsUser }) => {
       delete userDetails.confirmPass;
       delete userDetails.email;
 
-      updateUserDetails(fsUser.uid, userDetails);
-      updateFsUser(userDetails);
+      // updateUserDetails(fsUser.uid, userDetails);
+      // updateFsUser(userDetails);
       alert("Your details have been updated!")
       return;
     } else {
@@ -141,27 +136,9 @@ const UserDetailsForm = ({ handleToggle, fsUser, updateFsUser }) => {
   }
 
   const createNewUser = async (e) => {
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, userDetails.email, userDetails.password);
-      const user = userCredential.user;
+    e.preventDefault();
 
-      const newUser = {
-        uid: user.uid,
-        ...userDetails,
-        simpaticoMatch: '',
-      };
-
-      delete newUser.password;
-      delete newUser.confirmPass;
-
-      const usersRef = firestore.collection('users');
-      await usersRef.doc(user.uid).set(newUser);
-      await auth.currentUser.sendEmailVerification();
-      handleToggle(e);
-    } catch (error) {
-      console.log(error.code, error.message);
-      setAnError(error.code);
-    }
+    console.log('createNewUser function fired');
   }
 
   const over18Bouncer = (bdayString) => {
@@ -185,7 +162,7 @@ const UserDetailsForm = ({ handleToggle, fsUser, updateFsUser }) => {
   }
 
   const handlePasswordReset = () => {
-    sendResetPasswordEmail(userDetails.email)
+    // sendResetPasswordEmail(userDetails.email)
     setResetEmailSent(true);
   }
 
@@ -199,10 +176,10 @@ const UserDetailsForm = ({ handleToggle, fsUser, updateFsUser }) => {
     if (validateEmail(newEmail)) {
       // Continue with the email update
       if (changeConfirmation) {
-        updateUserEmail(userDetails.uid, newEmail)
+        // updateUserEmail(userDetails.uid, newEmail)
         setShowConfirmMessage(false)
         setChangeEmailDisplay(false)
-        auth.signOut()
+        // auth.signOut()
       } else {
         setAnError("noemailchange")
       }
@@ -255,7 +232,7 @@ const UserDetailsForm = ({ handleToggle, fsUser, updateFsUser }) => {
       {(anError !== "")
         ? <ErrorMessage error={anError} cancelError={cancelError} /> : null
       }
-      <button type="button" onClick={e => reAuth(userDetails.email, userDetails.password, setAccountInfoDisplayToggle, setAnError)} className='account-login-btn'>Login</button>
+      <button type="button"  className='account-login-btn'>Login</button>
     </>
   );
 

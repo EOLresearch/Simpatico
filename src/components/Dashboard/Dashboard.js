@@ -1,17 +1,9 @@
 import './dashboard.css';
 import { useState, useEffect } from 'react';
 import { IconContext } from 'react-icons';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { RxPerson } from "react-icons/rx";
-import { IoPeopleCircleOutline, IoChatbubblesSharp } from "react-icons/io5";
-
 import WelcomeMessage from './WelcomeMessage';
 import Chatroom from './Chatroom/Chatroom';
-
 import AdminDashboard from './AdminDashboard/AdminDashboard';
-import { firestore } from '../../firebase-config';
-import PropTypes from 'prop-types';
-import { convoMutualConsentToggle, createConvo } from '../../helpers/firebasehelpers-legacy';
 
 function Dashboard({
   user,
@@ -25,19 +17,11 @@ function Dashboard({
 
   const [showChatWindow, setShowChatWindow] = useState(false);
 
-  const conversationsRef = firestore.collection('conversations');
-  const convoQuery = conversationsRef.where("users", "array-contains", uid);
-  const [convos] = useCollectionData(convoQuery);
 
-  useEffect(() => {
-    if (!convos) return;
-    const requestArray = convos.filter(c => c.mutualConsent === false && c.userData.receiver.uid === fsUser.uid);
-    setConvoRequests(requestArray);
-    setShowNotification(requestArray.length > 0);
-  }, [convos, fsUser]);
+
 
   const chatHandler = (e, documentID) => {
-    setDocID(documentID);
+    // setDocID(documentID);
     setShowChatWindow(true);
   }
 

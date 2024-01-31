@@ -87,7 +87,7 @@ const UserAuth = ({  }) => {
         )}
 
         {view === 'register' && (
-          <UserDetailsForm fsUser={null} handleToggle={() => handleToggleView('login')} />
+          <UserDetailsForm  handleToggle={() => handleToggleView('login')} />
         )}
       </div>
     </div>

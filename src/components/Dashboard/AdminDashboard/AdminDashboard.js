@@ -1,8 +1,6 @@
 import './admindashboard.css';
 import UserDisplay from './UserDisplay/UserDisplay';
 import { useEffect } from "react";
-import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { firestore } from '../../../firebase-config';
 import PropTypes from 'prop-types';
 
 function AdminDashboard({ fsUser, navHandler }) {
@@ -14,15 +12,13 @@ function AdminDashboard({ fsUser, navHandler }) {
     }
   }, [fsUser, navHandler]);
 
-  const usersRef = firestore.collection('users');
-  const [users] = useCollectionData(usersRef);
 
   // Placeholder for view switching feature
   // const renderView = () => {
   //   switch (view) {
   //     case 'Cards':
   //   }
-  // };
+  // }
 
   return (
     <div className='admin-dashboard-container'>
@@ -35,14 +31,11 @@ function AdminDashboard({ fsUser, navHandler }) {
           </div> */}
         </div>
         <div className='admin-dashboard-body'>
-          <UserDisplay users={users} />
+          <UserDisplay  />
         </div>
       </div>
     </div>
   );
 }
-AdminDashboard.propTypes = {
-  fsUser: PropTypes.object.isRequired,
-  navHandler: PropTypes.func.isRequired,
-};
+
 export default AdminDashboard;

@@ -14,10 +14,13 @@ function App() {
 
   //will need a useEffect to fetch the user, the user's conversations, and the user's contacts
 
-
   const navHandler = (renderCondition) => {
     if (renderCondition === 'welcome') {
       setShowWelcomeMessage(false);
+    } else if (renderCondition === 'adminDash') {
+      setAdminDash(true);
+    } else if (renderCondition === 'Dashboard') {
+      setAdminDash(false);
     } else if (renderCondition === 'Logout') {
       setShowWelcomeMessage(false);
       setUser(null);
@@ -25,13 +28,12 @@ function App() {
     }
   }
   console.log('Received user in component:', cognitoUser);
-  
+
   return (
     <div className="App">
       <div className='app-container'>
         <Nav
           navHandler={navHandler}
-          adminDash={adminDash}
         />
 
         <div className='app-inner-container'>
@@ -42,8 +44,7 @@ function App() {
               // Render the Dashboard currently only if user is not null
               <Dashboard
                 user={user}
-                simpaticoMatch={simpaticoMatch}
-                adminDash={adminDash}
+                simpaticoMatch={simpaticoMatch} 
                 navHandler={navHandler}
                 showWelcomeMessage={showWelcomeMessage}
               />
