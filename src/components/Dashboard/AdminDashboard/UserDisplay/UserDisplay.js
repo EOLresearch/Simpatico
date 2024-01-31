@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import UserCardFilterContainer from './UserCardFilterContainer/UserCardFilterContainer'
 import './userdisplay.css'
-import { updateSimpaticoMatch, removeSimpaticoMatch } from '../../../../helpers/firebasehelpers';
+import { updateSimpaticoMatch, removeSimpaticoMatch } from '../../../../helpers/firebasehelpers-legacy';
 import PropTypes from 'prop-types';
 
 import { KINSHIP_OPTIONS } from '../../../../helpers/optionsArrays';

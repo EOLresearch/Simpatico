@@ -1,4 +1,5 @@
 
+//this file is not useed after switch to cognito - but keeping for reference
 import { auth, firestore, firebase } from "../firebase-config";
 const usersCollection = firestore.collection('users');
 

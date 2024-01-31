@@ -11,7 +11,7 @@ import Chatroom from './Chatroom/Chatroom';
 import AdminDashboard from './AdminDashboard/AdminDashboard';
 import { firestore } from '../../firebase-config';
 import PropTypes from 'prop-types';
-import { convoMutualConsentToggle, createConvo } from '../../helpers/firebasehelpers';
+import { convoMutualConsentToggle, createConvo } from '../../helpers/firebasehelpers-legacy';
 
 function Dashboard({
   user,
@@ -23,10 +23,6 @@ function Dashboard({
   updateFsUser
 }) {
 
-  const { uid } = user;
-  const [docID, setDocID] = useState();
-  const [convoRequests, setConvoRequests] = useState([]);
-  const [showNotification, setShowNotification] = useState(false);
   const [showChatWindow, setShowChatWindow] = useState(false);
 
   const conversationsRef = firestore.collection('conversations');

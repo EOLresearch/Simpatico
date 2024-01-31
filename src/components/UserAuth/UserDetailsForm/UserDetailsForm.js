@@ -8,7 +8,7 @@ import Section from './Section';
 import InputField from './InputField';
 import SelectField from './SelectField';
 
-import { reAuth, updateUserEmail, sendResetPasswordEmail, updateUserDetails } from '../../../helpers/firebasehelpers';
+import { reAuth, updateUserEmail, sendResetPasswordEmail, updateUserDetails } from '../../../helpers/firebasehelpers-legacy';
 
 import { auth, firestore } from '../../../firebase-config';
 
