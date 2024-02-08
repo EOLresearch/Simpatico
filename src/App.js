@@ -13,6 +13,7 @@ function App() {
   const [error, setError] = useState(null);
 
   //will need a useEffect to fetch the user, the user's conversations, and the user's contacts
+  //i want to add the functionality to change the color of the application at will, in css its all just opacities based on the background color so it should just come downto changing that.
 
   const navHandler = (renderCondition) => {
     if (renderCondition === 'welcome') {
@@ -27,6 +28,7 @@ function App() {
       simpaticoMatch(null);
     }
   }
+  
   console.log('Received user in component:', cognitoUser);
 
   return (

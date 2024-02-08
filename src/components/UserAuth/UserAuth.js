@@ -4,7 +4,7 @@ import UserDetailsForm from './UserDetailsForm/UserDetailsForm';
 import './userauth.css';
 
 
-const UserAuth = ({  }) => {
+const UserAuth = () => {
   const [view, setView] = useState('login');
   const [error, setError] = useState('');
   const [email, setEmail] = useState('');
@@ -17,7 +17,7 @@ const UserAuth = ({  }) => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-
+    
     console.log('login function fired');
   }
 
@@ -87,7 +87,7 @@ const UserAuth = ({  }) => {
         )}
 
         {view === 'register' && (
-          <UserDetailsForm  handleToggle={() => handleToggleView('login')} />
+          <UserDetailsForm handleToggle={() => handleToggleView('login')} />
         )}
       </div>
     </div>

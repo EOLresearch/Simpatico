@@ -42,6 +42,7 @@ export const AuthProvider = ({ children }) => {
 
     const signIn = (username, password) => {
 
+      //the cognitoUser object should be what cognito returns, not username
       setCognitoUser({ username });
     };
 
