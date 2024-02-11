@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useAuth } from "./AuthContext";
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import UserDetailsForm from './UserDetailsForm/UserDetailsForm';
 import './userauth.css';
@@ -9,6 +10,7 @@ const UserAuth = () => {
   const [error, setError] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { cognitoUser, signIn, signOut } = useAuth();
 
   const handleSendResetEmail = async (e) => {
     e.preventDefault();
@@ -17,7 +19,7 @@ const UserAuth = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    
+    signIn();
     console.log('login function fired');
   }
 
@@ -51,8 +53,6 @@ const UserAuth = () => {
       <div className="auth-container">
         {view === 'login' && (
           <div className="fields-container login">
-
-
             <form className="login" onSubmit={handleLogin}>
               <h1>Login</h1>
               <div className='input-container'>

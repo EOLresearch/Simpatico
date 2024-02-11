@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
+import jwtDecode from 'jwt-decode';
 
 const AuthContext = createContext();
 const exampleDBUser = {
@@ -23,38 +24,56 @@ const exampleDBUser = {
   "admin": true,
   "consent": "false"
 }
-const exampleCognitoUser = {
-  "sub": "12345678-user-uuid-1234",
-  "aud": "app-client-id",
-  "email_verified": true,
-  "event_id": "event-id-1234",
-  "token_use": "id",
-  "auth_time": 1611695988,
-  "iss": "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_example",
-  "cognito:username": "janedoe",
-  "exp": 1611699588,
-  "iat": 1611695988,
-  "email": "janedoe@example.com"
-}
 
 export const AuthProvider = ({ children }) => {
-    const [cognitoUser, setCognitoUser] = useState(exampleCognitoUser);
+  const [cognitoUser, setCognitoUser] = useState();
 
-    const signIn = (username, password) => {
+  const signIn = (email, password) => {
+    //ok this function needs to shoot a request to amazon cognito and authenticate the user
+    //then it needs to check local DB for userCreds and userProfile based on email
+    //probably just have two state variables for userCreds and userProfile
 
-      //the cognitoUser object should be what cognito returns, not username
-      setCognitoUser({ username });
-    };
+    // Simulated response from Amazon Cognito upon successful authentication
+    // const mockResponse = {
+    //   "AuthenticationResult": {
+    //     "AccessToken": "eyJz9sdfsdfsdfsd...sdfwefwef",
+    //     "ExpiresIn": 3600,
+    //     "TokenType": "Bearer",
+    //     "RefreshToken": "eyJjdHkiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...sdfwefwef",
+    //     "IdToken": "eyJraWQiOiJLTzRVMWZs...sdfsdfsdfsdf"
+    //   },
+    //   "ChallengeParameters": {}
+    // };
+    // const idToken = mockResponse.AuthenticationResult.IdToken;
 
-    const signOut = () => {
-      setCognitoUser(null);
-    };
+    // const decodedToken = jwtDecode(idToken);
 
-    return (
-        <AuthContext.Provider value={{ cognitoUser, signIn, signOut }}>
-            {children}
-        </AuthContext.Provider>
-    );
+    // const decodedToken = {
+    //   "sub": "12345678-user-uuid-1234",
+    //   "aud": "app-client-id",
+    //   "email_verified": true,
+    //   "event_id": "event-id-1234",
+    //   "token_use": "id",
+    //   "auth_time": 1611695988,
+    //   "iss": "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_example",
+    //   "cognito:username": "janedoe",
+    //   "exp": 1611699588,
+    //   "iat": 1611695988,
+    //   "email": "janedoe@example.com"
+    // }
+
+    setCognitoUser(decodedToken);
+  };
+
+  const signOut = () => {
+    setCognitoUser(null);
+  };
+
+  return (
+    <AuthContext.Provider value={{ cognitoUser, signIn, signOut }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export const useAuth = () => useContext(AuthContext);
