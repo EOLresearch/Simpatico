@@ -1,27 +1,21 @@
 import React, { createContext, useContext, useState } from 'react';
 import jwtDecode from 'jwt-decode';
+import axios from 'axios';
 
 const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [userCreds, setUserCreds] = useState();
   const [userProfile, setUserProfile] = useState();
 
-  const signIn = (email, password) => {
-
-    // Simulated response from Amazon Cognito upon successful authentication
-    // const mockResponse = {
-    //   "AuthenticationResult": {
-    //     "AccessToken": "eyJz9sdfsdfsdfsd...sdfwefwef",
-    //     "ExpiresIn": 3600,
-    //     "TokenType": "Bearer",
-    //     "RefreshToken": "eyJjdHkiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...sdfwefwef",
-    //     "IdToken": "eyJraWQiOiJLTzRVMWZs...sdfsdfsdfsdf"
-    //   },
-    //   "ChallengeParameters": {}
-    // };
-    // const idToken = mockResponse.AuthenticationResult.IdToken;
-
-    // const decodedToken = jwtDecode(idToken);
+  const signIn = async (email, password) => {
+       // Mocking a request to Amazon Cognito
+       const mockCognitoResponse = {
+        AuthenticationResult: {
+          IdToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZXhwIjoxNjE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+          // Other tokens and data omitted for brevity
+        }
+      };
+      // const decodedToken = jwtDecode(mockCognitoResponse.AuthenticationResult.IdToken);
 
     const decodedToken = {
       "sub": "12345678-user-uuid-1234",
@@ -31,24 +25,33 @@ export const AuthProvider = ({ children }) => {
       "token_use": "id",
       "auth_time": 1611695988,
       "iss": "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_example",
-      "cognito:username": "janedoe",
+      "cognito:username": "cognito-123",
       "exp": 1611699588,
       "iat": 1611695988,
-      "email": "janedoe@example.com"
+      "email": "fakeuser@example.com"
     }
 
-    const userCredentials = {
-      cognito_user_id: decodedToken['cognito:username'],
-      email: decodedToken['email'],
-      isAdmin: false,
-      displayName: "",
-      photoURL: "",
-    };
+    //go find userCreds and userProfile in my localDB based on email
 
-    //use the email to fetch the user profile
-    // setUserProfile({});
+    try {
+      const credentialsResponse = await axios.get(`http://localhost:3001/user/data/${decodedToken.email}`);
+      if (credentialsResponse.data) {
+        setUserCreds(credentialsResponse.data.UserCredentials);
+        setUserProfile(credentialsResponse.data.UserProfile);
+      }
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+      // Handle error (e.g., user not found, server error)
+    }
 
-    setUserCreds(userCredentials);
+    // const userCredentials = {
+    //   cognito_user_id: decodedToken['cognito:username'],
+    //   email: decodedToken['email'],
+    //   isAdmin: false,
+    //   displayName: "",
+    //   photoURL: "", // add a placeholder instead of leaving blank
+    // };
+
   };
 
   const signOut = () => {

@@ -5,7 +5,7 @@ import UserAuth from './components/UserAuth/UserAuth';
 import { useAuth } from './components/UserAuth/AuthContext';
 
 function App() {
-  const { userCreds, userProfile, signIn, signOut } = useAuth();
+  const { userCreds, userProfile, signOut } = useAuth();
   const [showWelcomeMessage, setShowWelcomeMessage] = useState(true);
   const [adminDash, setAdminDash] = useState(false);
   const [user, setUser] = useState(null);
@@ -31,7 +31,7 @@ function App() {
     }
   }
 
-  console.log('Received user in component:', userCreds);
+  console.log('Received user in component:', userCreds, userProfile);
 
   return (
     <div className="App">

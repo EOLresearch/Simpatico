@@ -3,7 +3,7 @@ const mysql = require('mysql2');
 const cors = require('cors');
 
 const app = express();
-const port = 3000;
+const port = 3001;
 
 // Middleware
 app.use(cors());
@@ -45,7 +45,7 @@ app.get('/user/profile/:id', (req, res) => {
   });
 });
 
-app.get('/user/by-email/:email', async (req, res) => {
+app.get('/user/data/:email', async (req, res) => {
   const { email } = req.params;
 
   try {
