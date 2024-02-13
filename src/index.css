@@ -5,12 +5,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-body {
   margin: 0;
   font-size: 18px;
   font-weight: 400;
+  /* box-sizing: border-box; */
 }
 
 .app-container {
@@ -26,5 +24,11 @@ body {
 .app-inner-container {
   flex: 1;
   background-color: #31605b;
-
+  display: flex;
+  justify-content: center;
+}
+.app-body{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

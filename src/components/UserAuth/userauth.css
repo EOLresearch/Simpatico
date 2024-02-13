@@ -38,18 +38,14 @@ h5 {
 }
 
 .fields-container {
-  width: 100%;
+  /* width: 100%; */
 }
 
 .fields-container .login {
   color: black;
-  margin: 5% auto;
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  max-width: 45%;
   background-color: #ffffff;
   padding: 3rem 8rem;
+  min-width: 35rem;
   border-radius: 0.5rem;
   border: 1rem solid #064d4556;
 }
@@ -89,6 +85,13 @@ h5 {
 
 .fields-container form [type=number] {
   width: unset;
+}
+.input-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem 0;
 }
 
 .forgotPassForm {

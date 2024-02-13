@@ -52,7 +52,7 @@ const UserAuth = () => {
       </div>
       <div className="auth-container">
         {view === 'login' && (
-          <div className="fields-container login">
+          <div className="fields-container">
             <form className="login" onSubmit={handleLogin}>
               <h1>Login</h1>
               <div className='input-container'>

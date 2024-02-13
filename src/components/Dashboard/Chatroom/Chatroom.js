@@ -11,8 +11,8 @@ import { IconContext } from 'react-icons';
 function Chatroom({ userProfile, match}) {
   const [leftExpanded, setLeftExpanded] = useState(false);
   const [rightExpanded, setRightExpanded] = useState(false);
-  const [activeLeftList, setActiveLeftList] = useState('contacts');
-  const [activeRightList, setActiveRightList] = useState('match');
+  const [activeLeftList, setActiveLeftList] = useState('');
+  const [activeRightList, setActiveRightList] = useState('');
   const [message, setMessage] = useState("");
 
   const renderLeftList = () => {

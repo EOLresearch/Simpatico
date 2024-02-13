@@ -1,7 +1,9 @@
 .chatroom {
   display: flex;
-  height: 100%;
-  overflow: hidden;
+  width: 100vw;
+  height: 80vh;
+  /* overflow: hidden; */
+  margin-top:15vh;
 }
 
 /* Left and Right Panels */
@@ -14,18 +16,19 @@
   display: flex;
   flex-direction: column;
   /* align-items: center; */
-  position: relative;
+  /* position: relative; */
+  /* height: 80vh; */
 }
 
 .left-panel .toggle-btn {
-  position: absolute;
-  right: 0; 
+  /* position: absolute;  */
+  right: 10px; 
   top: 10px;
 }
 
 .right-panel .toggle-btn {
-  position: absolute;
-  left: 0; 
+  /* position: absolute; */
+  left: 10px; 
   top: 10px;
 }
 
@@ -52,7 +55,6 @@
   margin: 1rem;
   border-radius: 2rem;
   border: 5px #a8e5df5a solid;
-  height: 80vh;
 }
 
 .message-content {
@@ -100,6 +102,7 @@ button {
 }
 .react-icons-chatroom{
   font-size: 5rem;
+  /* position: relative; */
 }
 
 .slider-btns{
