@@ -44,14 +44,6 @@ export const AuthProvider = ({ children }) => {
       // Handle error (e.g., user not found, server error)
     }
 
-    // const userCredentials = {
-    //   cognito_user_id: decodedToken['cognito:username'],
-    //   email: decodedToken['email'],
-    //   isAdmin: false,
-    //   displayName: "",
-    //   photoURL: "", // add a placeholder instead of leaving blank
-    // };
-
   };
 
   const signOut = () => {

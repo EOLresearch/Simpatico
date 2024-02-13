@@ -23,28 +23,12 @@ connection.connect(err => {
   console.log('Connected to MySQL Server!');
 });
 
-// Define routes
+// Routes
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.get('/user/profile/:id', (req, res) => {
-  const { id } = req.params;
-
-  connection.query('SELECT * FROM UserProfile WHERE user_id = ?', [id], (err, results) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).send('Error retrieving user profile');
-    }
-
-    if (results.length === 0) {
-      return res.status(404).send('User profile not found');
-    }
-
-    res.json(results[0]);
-  });
-});
-
+// Get user data by email - this is the initial request from the frontend
 app.get('/user/data/:email', async (req, res) => {
   const { email } = req.params;
 
@@ -76,9 +60,7 @@ app.get('/user/data/:email', async (req, res) => {
   }
 });
 
-
-
-// Example: Get all users
+// Get all users
 app.get('/users', (req, res) => {
   connection.query('SELECT * FROM UserCredentials', (err, results) => {
     if (err) throw err;

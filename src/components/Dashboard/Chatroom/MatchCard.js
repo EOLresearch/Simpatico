@@ -1,12 +1,12 @@
 import React from 'react';
 
-const MatchCard = ({contact, navha}) => {
+const MatchCard = ({contact}) => {
   return (
     <div className="matchcard-container">
       <div className='header'>
         {/* <h1>Welcome to SIMPATICO</h1> */}
         <div className='image-container'>
-          <img className='profile-image' alt={`Profile of ${contact.displayName}`} src={contact.photoURL} />
+          {/* <img className='profile-image' alt={`Profile of ${contact.displayName}`} src={contact.photoURL} /> */}
         </div>
         <div className='header-text'>
           <p><strong>Brian Crenshaw</strong></p>

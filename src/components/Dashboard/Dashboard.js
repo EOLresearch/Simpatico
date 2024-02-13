@@ -6,7 +6,8 @@ import Chatroom from './Chatroom/Chatroom';
 import AdminDashboard from './AdminDashboard/AdminDashboard';
 
 function Dashboard({
-  user,
+  userCreds,
+  userProfile,
   fsUser,
   match,
   adminDash,
@@ -31,12 +32,12 @@ function Dashboard({
     <IconContext.Provider value={{ className: "react-icons-dashboard" }}>
       <div className='dashboard-container'>
         {adminDash === true ?
-          <AdminDashboard fsUser={fsUser} navHandler={navHandler} /> :
+          <AdminDashboard userProfile={userProfile} navHandler={navHandler} /> :
           <div className='dashboard-body'>
             { showWelcomeMessage === true &&
-              <WelcomeMessage fsUser={fsUser} match={match} navHandler={navHandler} />
+              <WelcomeMessage userProfile={userProfile} match={match} navHandler={navHandler} />
             }
-            <Chatroom fsUser={fsUser} match={match} />
+            <Chatroom userProfile={userProfile} match={match} />
           </div>
         }
       </div>

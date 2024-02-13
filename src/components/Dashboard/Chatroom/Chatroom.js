@@ -8,7 +8,7 @@ import { RxCaretRight, RxCaretLeft } from "react-icons/rx";
 import { IconContext } from 'react-icons';
 
 
-function Chatroom({ fsUser, match}) {
+function Chatroom({ userProfile, match}) {
   const [leftExpanded, setLeftExpanded] = useState(false);
   const [rightExpanded, setRightExpanded] = useState(false);
   const [activeLeftList, setActiveLeftList] = useState('contacts');
@@ -16,14 +16,14 @@ function Chatroom({ fsUser, match}) {
   const [message, setMessage] = useState("");
 
   const renderLeftList = () => {
-    if (activeLeftList === 'contacts') return <ContactsList contact={match}/>;
-    if (activeLeftList === 'conversations') return <ConversationsList contact={match}/>;
+    if (activeLeftList === 'contacts') return <ContactsList contacts={[]}/>;
+    if (activeLeftList === 'conversations') return <ConversationsList conversations={[]}/>;
     return null;
   };
 
   const renderRightList = () => {
-    if (activeRightList === 'prompts') return <PromptsList contact={match}/>; //turn this into prompts
-    if (activeRightList === 'match') return <MatchCard contact={match}/>;
+    if (activeRightList === 'prompts') return <PromptsList prompts={[]}/>; //turn this into prompts
+    if (activeRightList === 'match') return <MatchCard match={match}/>;
     return null;
   };
 

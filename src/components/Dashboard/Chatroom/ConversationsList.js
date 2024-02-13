@@ -3,7 +3,7 @@ import { RxCaretRight, RxCaretLeft } from "react-icons/rx";
 import { IconContext } from 'react-icons';
 
 
-function ConversationsList({ contact }) {
+function ConversationsList({  }) {
   return (
     <IconContext.Provider value={{ className: "react-icons-contacts" }}>
       <div className="conversations-list">
