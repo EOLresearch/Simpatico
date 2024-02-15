@@ -6,7 +6,7 @@ CREATE TABLE UserCredentials (
   displayName VARCHAR(255),
   photoURL VARCHAR(255)
 );
-CREATE TABLE UserProfile (
+CREATE TABLE UserProfiles (
   user_id INT PRIMARY KEY, 
   bioSex VARCHAR(50),
   birthDate DATE,
@@ -23,6 +23,7 @@ CREATE TABLE UserProfile (
   race VARCHAR(255),
   residence VARCHAR(255),
   simpaticoMatch VARCHAR(255),
+  welcome_message TEXT,
   FOREIGN KEY (user_id) REFERENCES UserCredentials(id)
 );
 CREATE TABLE Conversations (
@@ -49,7 +50,7 @@ CREATE TABLE Messages (
   FOREIGN KEY (conversation_id) REFERENCES Conversations(id),
   FOREIGN KEY (sender_id) REFERENCES UserCredentials(id)
 );
-CREATE TABLE User_Conversation (
+CREATE TABLE User_Conversations (
   user_id INT,
   conversation_id INT,
   joined_at DATETIME DEFAULT CURRENT_TIMESTAMP,
