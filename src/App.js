@@ -5,11 +5,9 @@ import UserAuth from './components/UserAuth/UserAuth';
 import { useAuth } from './components/UserAuth/AuthContext';
 
 function App() {
-  const { userData, userProfile, signOut } = useAuth();
+  const { userData, signOut } = useAuth();
   const [showWelcomeMessage, setShowWelcomeMessage] = useState(true);
   const [adminDash, setAdminDash] = useState(false);
-  const [user, setUser] = useState(null);
-  const [simpaticoMatch, setSimpaticoMatch] = useState(null);
   const [error, setError] = useState(null);
 
   //will need a useEffect to fetch the user, the user's conversations, and the user's contacts
@@ -25,7 +23,6 @@ function App() {
     } else if (renderCondition === 'Logout') {
       signOut();
       setShowWelcomeMessage(false);
-      setUser(null);
     }
   }
 
@@ -47,10 +44,9 @@ function App() {
               // Render the Dashboard currently only if user is not null
               <Dashboard
                 userData={userData}
-                userProfile={userProfile}
-                simpaticoMatch={simpaticoMatch} 
                 navHandler={navHandler}
                 showWelcomeMessage={showWelcomeMessage}
+                adminDash={adminDash}
               />
             )}
             {!userData && <UserAuth />}

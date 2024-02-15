@@ -12,14 +12,8 @@ function Dashboard({
   showWelcomeMessage,
 }) {
 
-  const [showChatWindow, setShowChatWindow] = useState(false);
-
-
-
-
   const chatHandler = (e, documentID) => {
-    // setDocID(documentID);
-    setShowChatWindow(true);
+    console.log('chat handler fired');
   }
 
   // first idea is that each user shold have a welcome message on their user record giving admins the power to give custom or pre-written welcome messages to each user- you have been matched with this person for this reason, etc. 
