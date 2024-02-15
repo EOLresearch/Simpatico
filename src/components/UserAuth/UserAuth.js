@@ -20,7 +20,7 @@ const UserAuth = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     signIn();
-    console.log('login function fired');
+    console.log('login function fired from userauth');
   }
 
   const handleChange = (e) => {
