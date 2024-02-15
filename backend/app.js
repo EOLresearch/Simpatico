@@ -28,11 +28,6 @@ connection.connect(err => {
 });
 
 // Routes
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
-
-// Get user data by email - this is the initial request from the frontend
 app.get('/user/data/:email', async (req, res) => {
   const { email } = req.params;
 
@@ -50,13 +45,24 @@ app.get('/user/data/:email', async (req, res) => {
     // Query for UserProfile
     const profileQuery = 'SELECT * FROM UserProfiles WHERE user_id = ?';
     const [profileResults] = await connection.promise().query(profileQuery, [userCredentials.id]);
-    
-    const userProfile = profileResults[0] || null; // userProfile might be null if not found
+    const userProfile = profileResults[0] || null; // UserProfile might be null if not found
 
-    // Respond with separately structured data
+    // Query for User's Contacts
+    const contactsQuery = 'SELECT * FROM Contacts WHERE user_id = ?';
+    const [contactsResults] = await connection.promise().query(contactsQuery, [userCredentials.id]);
+    const userContacts = contactsResults[0] || null; // UserContacts might be null if not found
+
+    // Query for User's Conversations
+    const conversationsQuery = 'SELECT Conversations.* FROM Conversations JOIN User_Conversations ON Conversations.id = User_Conversations.conversation_id WHERE User_Conversations.user_id = ?';
+    const [conversationsResults] = await connection.promise().query(conversationsQuery, [userCredentials.id]);
+    const userConversations = conversationsResults[0] || null; // UserConversations might be null if not found
+
+    // Respond with structured data
     res.json({
       UserCredentials: userCredentials,
-      UserProfile: userProfile
+      UserProfile: userProfile,
+      UserContacts: userContacts,
+      UserConversations: userConversations
     });
   } catch (err) {
     console.error(err);

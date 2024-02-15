@@ -5,7 +5,7 @@ import UserAuth from './components/UserAuth/UserAuth';
 import { useAuth } from './components/UserAuth/AuthContext';
 
 function App() {
-  const { userCreds, userProfile, signOut } = useAuth();
+  const { userData, userProfile, signOut } = useAuth();
   const [showWelcomeMessage, setShowWelcomeMessage] = useState(true);
   const [adminDash, setAdminDash] = useState(false);
   const [user, setUser] = useState(null);
@@ -29,30 +29,31 @@ function App() {
     }
   }
 
-  console.log('Received user in component:', userCreds, userProfile);
+  console.log('Received user in component:', userData);
 
   return (
     <div className="App">
       <div className='app-container'>
         <Nav
           navHandler={navHandler}
+          userData={userData}
         />
 
         <div className='app-inner-container'>
           <div className='app-body'>
             {error && <div>Error: {error.message}</div>}
 
-            {userCreds && (
+            {userData && (
               // Render the Dashboard currently only if user is not null
               <Dashboard
-                userCreds={userCreds}
+                userData={userData}
                 userProfile={userProfile}
                 simpaticoMatch={simpaticoMatch} 
                 navHandler={navHandler}
                 showWelcomeMessage={showWelcomeMessage}
               />
             )}
-            {!userCreds && <UserAuth />}
+            {!userData && <UserAuth />}
           </div>
         </div>
       </div>

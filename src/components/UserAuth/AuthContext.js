@@ -4,8 +4,12 @@ import axios from 'axios';
 
 const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
-  const [userCreds, setUserCreds] = useState();
-  const [userProfile, setUserProfile] = useState();
+  const [userData, setUserData] = useState({
+    UserCredentials: null,
+    UserProfile: null,
+    UserContacts: null,
+    UserConversations: null
+  });
 
   const signIn = async (email, password) => {
        // Mocking a request to Amazon Cognito
@@ -34,11 +38,9 @@ export const AuthProvider = ({ children }) => {
     //go find userCreds and userProfile in my localDB based on email
 
     try {
-      const credentialsResponse = await axios.get(`http://localhost:3001/user/data/${decodedToken.email}`);
-      if (credentialsResponse.data) {
-        setUserCreds(credentialsResponse.data.UserCredentials);
-        setUserProfile(credentialsResponse.data.UserProfile);
-      }
+      const response = await axios.get(`http://localhost:3001/user/data/${decodedToken.email}`);
+      console.log('User data:', response.data)
+      setUserData(response.data);
     } catch (error) {
       console.error('Error fetching user data:', error);
       // Handle error (e.g., user not found, server error)
@@ -47,11 +49,11 @@ export const AuthProvider = ({ children }) => {
   };
 
   const signOut = () => {
-    setUserCreds(null);
+    setUserData(null);
   };
 
   return (
-    <AuthContext.Provider value={{ userCreds, userProfile, signIn, signOut }}>
+    <AuthContext.Provider value={{ userData, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );
