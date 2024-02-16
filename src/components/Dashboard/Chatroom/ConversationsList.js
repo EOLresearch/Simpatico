@@ -5,15 +5,16 @@ import { IconContext } from 'react-icons';
 
 function ConversationsList({ conversations }) {
 
+  console.log(conversations)
   if (!conversations || !conversations.length) {
     return <div>No conversations available</div>;
   }
   return (
     <IconContext.Provider value={{ className: "react-icons-contacts" }}>
-      <div className="conversations-list">
+      <div className="flex-list">
 
           {conversations.map((conversation, index) => (
-            <div key={index} className="conversation">
+            <div key={index} className="chatroom-item">
               <p>{conversation.name}</p>
             </div>
           ))}

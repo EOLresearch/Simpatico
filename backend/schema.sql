@@ -3,11 +3,12 @@ CREATE TABLE UserCredentials (
   cognito_user_id VARCHAR(255) UNIQUE NOT NULL,
   isAdmin BOOLEAN,
   email VARCHAR(255) UNIQUE NOT NULL,
-  displayName VARCHAR(255),
-  photoURL VARCHAR(255)
 );
 CREATE TABLE UserProfiles (
   user_id INT PRIMARY KEY, 
+    displayName VARCHAR(255), 
+  photoURL VARCHAR(255),
+  -- moved from UserCreds
   bioSex VARCHAR(50),
   birthDate DATE,
   cause VARCHAR(255),

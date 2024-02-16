@@ -57,12 +57,27 @@ app.get('/user/data/:email', async (req, res) => {
     const [conversationsResults] = await connection.promise().query(conversationsQuery, [userCredentials.id]);
     const userConversations = conversationsResults[0] || null; // UserConversations might be null if not found
 
-    // Respond with structured data
+    let allConversationsWithParticipants = [];
+    for (let conversation of conversationsResults) {
+      const participantsQuery = `
+        SELECT UserCredentials.* 
+        FROM UserCredentials 
+        JOIN User_Conversations ON UserCredentials.id = User_Conversations.user_id 
+        WHERE User_Conversations.conversation_id = ?`;
+      const [participantsResults] = await connection.promise().query(participantsQuery, [conversation.id]);
+      
+      // Combine conversation info with participant info
+      allConversationsWithParticipants.push({
+        ...conversation,
+        participants: participantsResults
+      });
+    }
+    
     res.json({
       UserCredentials: userCredentials,
       UserProfile: userProfile,
-      UserContacts: userContacts,
-      UserConversations: userConversations
+      UserContacts: contactsResults,
+      UserConversations: allConversationsWithParticipants
     });
   } catch (err) {
     console.error(err);

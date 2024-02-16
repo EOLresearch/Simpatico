@@ -131,10 +131,10 @@ button {
   border-radius: 0.2rem 0.2rem 0.2rem 2rem; 
 }
 
-.contact-list{
+.flex-list{
   display: flex;
 }
-.contact{
+.chatroom-item{
   display: flex;
   background-color: #ffffff72;
   justify-content: left;
@@ -143,34 +143,32 @@ button {
   margin: 1rem;
   cursor: pointer;
 }
-.contact:hover{
+.chatroom-item:hover{
   background-color: #ffffff;
   transition: background-color 0.3s ease;
 }
 
-.contact-body{
+.chatroom-item-body{
   margin-left: 1rem;
 }
-.contact-body h5{
+.chatroom-item-body h5{
   margin: 0;
   padding: 0;
   font-size: 1.2rem;
 }
-.contact-body p{
+.chatroom-item-body p{
   margin: 0;
   padding: 0;
   font-size: 1rem;
   color: #504f4f;
 }
-.contact-body h6{
+.chatroom-item-body h6{
   margin: 0;
   padding: 0;
   font-size: 1rem;
   margin-top:1rem;
   color: #504f4f;
 }
-
-
 
 .convo-starter{
   display:flex;

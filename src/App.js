@@ -40,16 +40,17 @@ function App() {
           <div className='app-body'>
             {error && <div>Error: {error.message}</div>}
 
-            {userData && (
-              // Render the Dashboard currently only if user is not null
+            {userData && userData.UserCredentials && userData.UserProfile ? (
+              // Render the Dashboard only if userData and its required properties are not null
               <Dashboard
                 userData={userData}
                 navHandler={navHandler}
                 showWelcomeMessage={showWelcomeMessage}
                 adminDash={adminDash}
               />
+            ) : (
+              <UserAuth />
             )}
-            {!userData && <UserAuth />}
           </div>
         </div>
       </div>

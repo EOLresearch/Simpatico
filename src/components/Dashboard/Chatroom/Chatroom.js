@@ -17,7 +17,7 @@ function Chatroom({ userData }) {
 
   const renderLeftList = () => {
     if (activeLeftList === 'contacts') return <ContactsList contacts={[]}/>;
-    if (activeLeftList === 'conversations') return <ConversationsList conversations={[userData.UserConversations]}/>;
+    if (activeLeftList === 'conversations') return <ConversationsList conversations={userData.UserConversations}/>;
     return null;
   };
 
