@@ -15,6 +15,7 @@ function ConversationsList({ conversations }) {
 
           {conversations.map((conversation, index) => (
             <div key={index} className="chatroom-item">
+              <h4>{conversation.participants[0].displayName}</h4>
               <p>{conversation.name}</p>
             </div>
           ))}
