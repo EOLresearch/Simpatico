@@ -38,7 +38,7 @@ const UserDetailsForm = ({ handleToggle }) => {
     cause: '',
     deceasedAge: '',
     lossExp: '',
-    admin:true,
+    admin: true,
   });
 
   useEffect(() => {
@@ -232,7 +232,7 @@ const UserDetailsForm = ({ handleToggle }) => {
       {(anError !== "")
         ? <ErrorMessage error={anError} cancelError={cancelError} /> : null
       }
-      <button type="button"  className='account-login-btn'>Login</button>
+      <button type="button" className='account-login-btn'>Login</button>
     </>
   );
 
@@ -301,9 +301,9 @@ const UserDetailsForm = ({ handleToggle }) => {
               <input className="btn sub-btn" type="submit" value="Submit" />
             </div>
           </form>
+          <button onClick={handleToggle} className='btn btn-back'>{isUpdateForm ? "Return to Home" : <strong>Back to Login</strong>} </button>
         </div>
       </div>
-      <button onClick={handleToggle} className='btn btn-back margin-top-3'>{isUpdateForm ? "Return to Home" : <strong>Back to Login</strong>} </button>
     </div>
   );
 }
