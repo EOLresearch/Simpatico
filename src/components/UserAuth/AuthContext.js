@@ -43,7 +43,6 @@ export const AuthProvider = ({ children }) => {
       setUserData(response.data);
     } catch (error) {
       console.error('Error fetching user data:', error);
-      // Handle error (e.g., user not found, server error)
     }
 
   };

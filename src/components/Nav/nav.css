@@ -6,7 +6,7 @@
   color: white;
   background-color: #31605b;
   box-sizing: border-box;
-  position: absolute;
+  /* position: absolute; */
 }
 
 .nav-container img {

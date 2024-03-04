@@ -27,8 +27,3 @@ body {
   display: flex;
   justify-content: center;
 }
-.app-body{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}

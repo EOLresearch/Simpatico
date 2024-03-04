@@ -48,6 +48,7 @@ h5 {
   min-width: 35rem;
   border-radius: 0.5rem;
   border: 1rem solid #064d4556;
+  margin-top:2rem;
 }
 .fields-container .login h1{
   font-size: 1.5rem;
@@ -89,7 +90,6 @@ h5 {
 .input-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
   margin: 1rem 0;
 }
