@@ -3,14 +3,14 @@ import React, { useEffect, useState } from 'react';
 {/* <AiOutlineDown /> : <AiOutlineUp /> */}
 
 
-function Section({ title, children, isUpdate }) {
+function Section({ title, children, openIs }) {
   const [isOpen, setIsOpen] = useState(false);
 
-  // useEffect(() => {
-  //   if (isUpdate) {
-  //     setIsOpen(false);
-  //   }
-  // }, [isUpdate]);
+  useEffect(() => {
+    if (openIs) {
+      setIsOpen(true);
+    }
+  }, [openIs]);
 
   return (
     <div className="reg-section">

@@ -99,44 +99,30 @@ const UserDetailsForm = ({ handleToggle }) => {
       setAnError('noconsent');
       return;
     }
-
-    if (isUpdateForm) {
-      handleToggle(e);
-
-      delete userDetails.password;
-      delete userDetails.confirmPass;
-      delete userDetails.email;
-
-      // updateUserDetails(fsUser.uid, userDetails);
-      // updateFsUser(userDetails);
-      alert("Your details have been updated!")
-      return;
-    } else {
       createNewUser(e);
-    }
   }
-  const handleUpdateUserEmail = () => {
-    setShowConfirmMessage(true)
-    if (validateEmail(newEmail)) {
-      // Continue with the email update
-      if (changeConfirmation) {
-        // updateUserEmail(userDetails.uid, newEmail)
-        setShowConfirmMessage(false)
-        setChangeEmailDisplay(false)
-        // auth.signOut()
-      } else {
-        setAnError("noemailchange")
-      }
-    } else {
-      console.error("Invalid email format");
-      setAnError("Invalid email format");
-      throw new Error("Invalid email format");
-    }
-  }
-  const handlePasswordReset = () => {
-    // sendResetPasswordEmail(userDetails.email)
-    setResetEmailSent(true);
-  }
+  // const handleUpdateUserEmail = () => {
+  //   setShowConfirmMessage(true)
+  //   if (validateEmail(newEmail)) {
+  //     // Continue with the email update
+  //     if (changeConfirmation) {
+  //       // updateUserEmail(userDetails.uid, newEmail)
+  //       setShowConfirmMessage(false)
+  //       setChangeEmailDisplay(false)
+  //       // auth.signOut()
+  //     } else {
+  //       setAnError("noemailchange")
+  //     }
+  //   } else {
+  //     console.error("Invalid email format");
+  //     setAnError("Invalid email format");
+  //     throw new Error("Invalid email format");
+  //   }
+  // }
+  // const handlePasswordReset = () => {
+  //   // sendResetPasswordEmail(userDetails.email)
+  //   setResetEmailSent(true);
+  // }
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === 'changeConfirmation') {
@@ -153,8 +139,11 @@ const UserDetailsForm = ({ handleToggle }) => {
 
   const createNewUser = async (e) => {
     e.preventDefault();
-
+    const { password, confirmPass, email, ...userDeets } = userDetails;
+    const cognitoDeets = { password, confirmPass, email };
     console.log('createNewUser function fired');
+    console.log(userDeets)
+    console.log(cognitoDeets)
   }
 
   //utilities
@@ -192,56 +181,57 @@ const UserDetailsForm = ({ handleToggle }) => {
     </>
   );
 
-  const accountButtons = (
-    <div className="account-btns">
-      <button type="button" onClick={e => setChangeEmailDisplay(true)}>Change Email</button>
-      <button type="button" onClick={handlePasswordReset}>Reset Password</button>
-    </div>
-  );
+  // const accountButtons = (
+  //   <div className="account-btns">
+  //     <button type="button" onClick={e => setChangeEmailDisplay(true)}>Change Email</button>
+  //     <button type="button" onClick={handlePasswordReset}>Reset Password</button>
+  //   </div>
+  // );
 
-  const emailChange = (
-    <div className="change-email-input-container">
-      <h5>Enter your new email address below.</h5>
-      <InputField label="" type="email" name="newEmail" placeholder="New Email" id="newEmail" value={newEmail} iconClass="fas fa-envelope" onChange={handleChange} />
-      {showConfirmMessage &&
-        <div className='confirm'>
-          <input type="checkbox" name="changeConfirmation" id="changeConfirmation" value={changeConfirmation} onChange={handleChange}></input>
-          <label htmlFor="changeConfirmation">Change account email address used for login from {userDetails.email} to {newEmail} ?</label>
-        </div>}
-      <h5>Changing your login email will log you off and send the new address a verifcation email.</h5>
-      {(anError !== "")
-        ? <ErrorMessage error={anError} cancelError={cancelError} /> : null
-      }
-      <button type="button" onClick={handleUpdateUserEmail} className='account-login-btn'>{showConfirmMessage ? "Update Email" : "Confirm"}</button>
-      <button type="button" onClick={e => setChangeEmailDisplay(false)} className='account-login-btn'>Back</button>
-    </div>
-  );
+  // const emailChange = (
+  //   <div className="change-email-input-container">
+  //     <h5>Enter your new email address below.</h5>
+  //     <InputField label="" type="email" name="newEmail" placeholder="New Email" id="newEmail" value={newEmail} iconClass="fas fa-envelope" onChange={handleChange} />
+  //     {showConfirmMessage &&
+  //       <div className='confirm'>
+  //         <input type="checkbox" name="changeConfirmation" id="changeConfirmation" value={changeConfirmation} onChange={handleChange}></input>
+  //         <label htmlFor="changeConfirmation">Change account email address used for login from {userDetails.email} to {newEmail} ?</label>
+  //       </div>}
+  //     <h5>Changing your login email will log you off and send the new address a verifcation email.</h5>
+  //     {(anError !== "")
+  //       ? <ErrorMessage error={anError} cancelError={cancelError} /> : null
+  //     }
+  //     <button type="button" onClick={handleUpdateUserEmail} className='account-login-btn'>{showConfirmMessage ? "Update Email" : "Confirm"}</button>
+  //     <button type="button" onClick={e => setChangeEmailDisplay(false)} className='account-login-btn'>Back</button>
+  //   </div>
+  // );
 
-  const loginToChangeDetails = (
-    <>
-      <h5>Please confirm your login to change account details.</h5>
-      <InputField label="" type="email" name="email" placeholder="Email" id="email" value={userDetails.email} iconClass="fas fa-envelope" onChange={handleChange} />
-      <InputField label="" type="password" name="password" placeholder="Password" id="password" value={userDetails.password} iconClass="fas fa-lock" onChange={handleChange} />
-      {(anError !== "")
-        ? <ErrorMessage error={anError} cancelError={cancelError} /> : null
-      }
-      <button type="button" className='account-login-btn'>Login</button>
-    </>
-  );
+  // const loginToChangeDetails = (
+  //   <>
+  //     <h5>Please confirm your login to change account details.</h5>
+  //     <InputField label="" type="email" name="email" placeholder="Email" id="email" value={userDetails.email} iconClass="fas fa-envelope" onChange={handleChange} />
+  //     <InputField label="" type="password" name="password" placeholder="Password" id="password" value={userDetails.password} iconClass="fas fa-lock" onChange={handleChange} />
+  //     {(anError !== "")
+  //       ? <ErrorMessage error={anError} cancelError={cancelError} /> : null
+  //     }
+  //     <button type="button" className='account-login-btn'>Login</button>
+  //   </>
+  // );
 
-  const resetEmailSentMessage = (
-    <div>
-      <h5>Password reset email has been sent to {userDetails.email}!</h5>
-      <button type="button" onClick={e => setResetEmailSent(false)} className='account-login-btn'>Okay</button>
-    </div>
-  );
+  // const resetEmailSentMessage = (
+  //   <div>
+  //     <h5>Password reset email has been sent to {userDetails.email}!</h5>
+  //     <button type="button" onClick={e => setResetEmailSent(false)} className='account-login-btn'>Okay</button>
+  //   </div>
+  // );
 
   return (
     <div className="auth-wrapper">
       <div className='fields-container register'>
         <form onSubmit={handleSubmit}>
-          <Section title="Account Info" isUpdate={isUpdateForm}>
-            {
+          <Section title="Account Info" openIs={true}>
+            {defaultForm}
+            {/* {
               isUpdateForm
                 ? (
                   resetEmailSent
@@ -253,11 +243,11 @@ const UserDetailsForm = ({ handleToggle }) => {
                     )
                 )
                 : defaultForm
-            }
+            } */}
           </Section>
           {/* plan is to turn this first section into its own component because of how unique it is that way it can handle its own error state too */}
 
-          <Section title="Personal Info" isUpdate={isUpdateForm}>
+          <Section title="Personal Info">
             <SelectField label="Home State" name="residence" placeholder="Home State" id="residence" value={userDetails.residence} onChange={handleChange} options={US_STATES} />
             <InputField label="Birth Date" type="date" name="birthDate" placeholder="e.g. 01/01/1990" id="birthDate" value={userDetails.birthDate} onChange={handleChange} />
             <SelectField label="What race best describes you?" name="race" placeholder="Race" id="race" value={userDetails.race} onChange={handleChange} options={RACE_OPTIONS} />
@@ -267,7 +257,7 @@ const UserDetailsForm = ({ handleToggle }) => {
             <SelectField label="Please describe your living situation." name="household" placeholder="Living Situation" id="household" value={userDetails.household} onChange={handleChange} options={HOUSEHOLD_OPTIONS} />
             <InputField label="Tell us some of your hobbies" type="textarea" name="hobbies" placeholder="Hobbies" id="hobbies" value={userDetails.hobbies} onChange={handleChange} />
           </Section>
-          <Section title="Your Story" isUpdate={isUpdateForm}>
+          <Section title="Your Story" >
             <InputField label="What date did you experience your loss?" type="date" name="lossDate" placeholder="e.g. 01/01/1990" id="lossDate" value={userDetails.lossDate} onChange={handleChange} />
             <SelectField label="Relationship to the deceased" name="kinship" placeholder="Relationship to deceased" id="kinship" value={userDetails.kinship} onChange={handleChange} options={KINSHIP_OPTIONS} />
             <SelectField label="Cause of Death" name="cause" placeholder="Cause of death" id="cause" value={userDetails.cause} onChange={handleChange} options={CAUSE_OPTIONS} />
