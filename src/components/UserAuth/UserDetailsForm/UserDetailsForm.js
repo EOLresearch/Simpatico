@@ -6,10 +6,13 @@ import './userdetailsform.css';
 import Section from './Section';
 import InputField from './InputField';
 import SelectField from './SelectField';
+import { useAuth } from './components/UserAuth/AuthContext';
+
 
 import { US_STATES, RACE_OPTIONS, ETHNICITY_OPTIONS, BIOLOGICAL_SEX_OPTIONS, EDUCATION_OPTIONS, HOUSEHOLD_OPTIONS, KINSHIP_OPTIONS, CAUSE_OPTIONS } from "../../../helpers/optionsArrays";
 
 const UserDetailsForm = ({ handleToggle }) => {
+  const { createNewUser } = useAuth();
   const [anError, setAnError] = useState('')
   const [consent, setConsent] = useState(false)
   const [isUpdateForm, setIsUpdateForm] = useState(false)
@@ -135,15 +138,6 @@ const UserDetailsForm = ({ handleToggle }) => {
       setNewEmail(value)
     }
     setUserDetails(prevState => ({ ...prevState, [name]: value }));
-  }
-
-  const createNewUser = async (e) => {
-    e.preventDefault();
-    const { password, confirmPass, email, ...userDeets } = userDetails;
-    const cognitoDeets = { password, confirmPass, email };
-    console.log('createNewUser function fired');
-    console.log(userDeets)
-    console.log(cognitoDeets)
   }
 
   //utilities

@@ -51,8 +51,13 @@ export const AuthProvider = ({ children }) => {
     setUserData(null);
   };
 
+  const createUser = async (userDeets) => {
+    console.log('Creating user with:', userDeets);
+  }
+
+
   return (
-    <AuthContext.Provider value={{ userData, signIn, signOut }}>
+    <AuthContext.Provider value={{ userData, signIn, signOut, createUser }}>
       {children}
     </AuthContext.Provider>
   );
