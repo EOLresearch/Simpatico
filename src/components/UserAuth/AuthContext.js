@@ -11,6 +11,7 @@ export const AuthProvider = ({ children }) => {
     UserConversations: null
   });
 
+  
   const signIn = async (email, password) => {
        // Mocking a request to Amazon Cognito
        const mockCognitoResponse = {

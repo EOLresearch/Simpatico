@@ -6,13 +6,13 @@ import './userdetailsform.css';
 import Section from './Section';
 import InputField from './InputField';
 import SelectField from './SelectField';
-import { useAuth } from './components/UserAuth/AuthContext';
+import { useAuth } from '../AuthContext'
 
 
 import { US_STATES, RACE_OPTIONS, ETHNICITY_OPTIONS, BIOLOGICAL_SEX_OPTIONS, EDUCATION_OPTIONS, HOUSEHOLD_OPTIONS, KINSHIP_OPTIONS, CAUSE_OPTIONS } from "../../../helpers/optionsArrays";
 
 const UserDetailsForm = ({ handleToggle }) => {
-  const { createNewUser } = useAuth();
+  const { createUser } = useAuth();
   const [anError, setAnError] = useState('')
   const [consent, setConsent] = useState(false)
   const [isUpdateForm, setIsUpdateForm] = useState(false)
@@ -102,7 +102,7 @@ const UserDetailsForm = ({ handleToggle }) => {
       setAnError('noconsent');
       return;
     }
-      createNewUser(e);
+    createUser(e);
   }
   // const handleUpdateUserEmail = () => {
   //   setShowConfirmMessage(true)
